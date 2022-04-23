@@ -43,4 +43,13 @@ public class UserInformationController {
 
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
+
+    @GetMapping("me")
+    public Object getMyProfile(){
+
+        UserResponseDTO rp = service.getMyProfile();
+
+        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+    }
+
 }

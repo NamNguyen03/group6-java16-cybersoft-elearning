@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
+import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.mapper.UserMapper;
 import com.group6.java16.cybersoft.user.model.ELUser;
@@ -72,4 +73,10 @@ public class UserInformationServiceImpl implements UserInformationService{
             rp.getContent().stream().map(UserMapper.INSTANCE::toUserResponseDTO).collect(Collectors.toList()));
     }
     
+    @Override
+    public UserResponseDTO getMyProfile() {
+        String usernameCurrent = UserPrincipal.getUsernameCurrent();
+
+        return UserMapper.INSTANCE.toUserResponseDTO( repository.findByUsername(usernameCurrent).get());
+    }
 }

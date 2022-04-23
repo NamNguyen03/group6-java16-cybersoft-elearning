@@ -8,4 +8,5 @@ public interface UserInformationService {
 
     PageResponseModel<UserResponseDTO> search(PageRequestModel pageRequestModel);
 
+    UserResponseDTO getMyProfile();
 }
