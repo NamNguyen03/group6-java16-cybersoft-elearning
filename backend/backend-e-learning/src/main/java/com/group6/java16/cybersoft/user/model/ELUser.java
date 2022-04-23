@@ -40,4 +40,8 @@ public class ELUser extends BaseEntity {
 	private String hobbies;
 	
 	private String facebook;
+
+	private String gender;
+
+	private String phone;
 }
