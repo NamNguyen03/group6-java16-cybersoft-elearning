@@ -1,20 +1,31 @@
 package com.group6.java16.cybersoft.course.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 
+import com.group6.java16.cybersoft.common.model.PageRequestModel;
+import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseReponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
+//import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 
 @Service
+@PropertySources({ @PropertySource("classpath:/validation/message.properties") })
 public class CourseManagementServiceImple implements CourseManagementService {
 
 	@Autowired
@@ -23,7 +34,7 @@ public class CourseManagementServiceImple implements CourseManagementService {
 	@Autowired
 	private ServiceHelper<ELCourse> serviceCourseHelper;
 
-	@Value("${user.not-found}")
+	@Value("${course.not-found}")
 	private String errorsCourseNotFound;
 
 	@Override
@@ -67,9 +78,8 @@ public class CourseManagementServiceImple implements CourseManagementService {
 
 	@Override
 	public void deleteById(String id) {
-		
+		courseRepository.delete(serviceCourseHelper.getEntityById(id, courseRepository, errorsCourseNotFound));
 	}
-
 	private boolean checkString(String s) {
 		if (s == null || s.length() == 0) {
 			return false;
@@ -84,5 +94,35 @@ public class CourseManagementServiceImple implements CourseManagementService {
 		return true;
 	}
 
+	@Override
+	public PageResponseModel<CourseReponseDTO> search(PageRequestModel pageRequestModel) {
+		int page = pageRequestModel.getPageCurrent() - 1;
+		int size = pageRequestModel.getItemPerPage();
+		boolean isAscending = pageRequestModel.isIncrementSort();
+		String fieldNameSearch = pageRequestModel.getFieldNameSearch();
+		String fieldNameSort = pageRequestModel.getFieldNameSort();
+		String valueSearch = pageRequestModel.getValueSearch();
+		Pageable pageable = PageRequest.of(page, size);
+		Page<ELCourse> rp = null;
+
+		if (null != fieldNameSort && fieldNameSort.matches("courseName")) {
+			pageable = PageRequest.of(page, size,
+					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
+
+		}
+
+		// coursename
+		if ("courseName".equals(fieldNameSearch)) {
+			rp = courseRepository.searchByCourseName(valueSearch, pageable);
+		}
+
+		// if firstName not existed then search all
+		if (rp == null) {
+			rp = courseRepository.findAll(pageable);
+		}
+
+		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(), 
+	            rp.getContent().stream().map(CourseMapper.INSTANCE::toCourseResponseDTO).collect(Collectors.toList()));
+	}
 
 }

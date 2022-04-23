@@ -1,4 +1,4 @@
-export class CourseCreate {
+export class CourseCreate{
 
     courseName: string;
     courseTime: number;

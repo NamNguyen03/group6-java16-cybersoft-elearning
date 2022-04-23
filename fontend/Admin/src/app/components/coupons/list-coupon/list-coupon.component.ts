@@ -1,5 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { response } from 'express';
+import { CourseClient } from 'src/app/api-clients/course.client';
+import { PageRequestModel, SearchRequest } from 'src/app/api-clients/model/common.model';
 import { listCouponsDB } from 'src/app/shared/tables/list-coupon';
 
 @Component({
@@ -9,11 +12,13 @@ import { listCouponsDB } from 'src/app/shared/tables/list-coupon';
 })
 export class ListCouponComponent implements OnInit {
 
-  public digital_categories:  = [];
+  public course_list = [];
   public selected = [];
+  rq: SearchRequest = {};
 
-  constructor(  private datePipe: DatePipe) {
+  constructor( private courseClient: CourseClient) {
   //this.digital_categories = listCouponsDB.list_coupons; 
+  
   }
 
   onSelect({ selected }) {
@@ -50,38 +55,22 @@ export class ListCouponComponent implements OnInit {
             title: 'description',
             editable: false,
         },
-        createdDate: {
-            title: 'Created Date',
-            valuePrepareFunction: (createdDate) => {
-                return this.datePipe.transform(
-                    new Date(createdDate),
-                    'dd MMM yyyy'
-                );
-            },
-            editable: false,
-        },
-        createdBy: {
-            title: 'Created By',
-            editable: false,
-        },
-        lastModifiedAt: {
-            title: 'Last Modified At',
-            valuePrepareFunction: (lastModifiedAt) => {
-                return this.datePipe.transform(
-                    new Date(lastModifiedAt),
-                    'dd MMM yyyy'
-                );
-            },
-            editable: false,
-        },
-        lastModifiedBy: {
-            title: 'Last Modified By',
-            editable: false,
-        },
+        
     },
 };
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loadData();
+  }
 
+   loadData(){
+     this.courseClient.SearchRequest(this.rq).subscribe(
+      response =>{
+        console.log(response);
+        this.course_list = response.content.items;
+      }
+    );
+    
+}
 
 }

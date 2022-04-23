@@ -19,7 +19,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     NgbModule,
     CKEditorModule,
     ReactiveFormsModule,
-    NgxDatatableModule,Ng2SmartTableModule
+    NgxDatatableModule,
+    Ng2SmartTableModule
   ]
 })
 export class CouponsModule { }

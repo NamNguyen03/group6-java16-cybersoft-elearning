@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbDateStruct, NgbDate, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { response } from 'express';
 import { CourseClient } from 'src/app/api-clients/course.client';
+import { PageRequestModel } from 'src/app/api-clients/model/common.model';
 import { CourseCreate } from 'src/app/api-clients/model/course.model';
 
 @Component({
