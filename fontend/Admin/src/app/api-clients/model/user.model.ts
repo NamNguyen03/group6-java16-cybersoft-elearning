@@ -20,18 +20,38 @@ export class UserCreate {
 }
 
 export class UserRp{
-    id!: string;
-    username!: string;
-    displayName!: string;
-    email!: string;
-    firstName!: string;
-    lastName!: string;
-    avatar!: string;
-    department!: string;
-    major!: string;
-    hobbies!: string;
-    facebook!: string;
-    status!: string;
+    id: string;
+    username: string;
+    displayName: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    avatar: string;
+    department: string;
+    major: string;
+    hobbies: string;
+    facebook: string;
+    status: string;
+    gender: string;
+    phone: string;
+
+    constructor(){
+       this.id = "";
+       this.username = "";
+       this.displayName = "";
+       this.firstName = "";
+       this.lastName = "";
+       this.avatar = "";
+       this.department = "";
+       this.major = "";
+       this.hobbies = "";
+       this.facebook = "";
+       this.status = "";
+       this.gender = "";
+       this.phone = "";
+       this.email = "";
+
+    }
 }
 
 export class LoginRequest{
@@ -45,6 +65,6 @@ export class LoginRequest{
 }
 
 export class LoginResponse{
-    jwt!: string;
-    displayName!: string;
+    jwt: string;
+    displayName: string;
 }

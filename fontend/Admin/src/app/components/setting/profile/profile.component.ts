@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserRp } from 'src/app/api-clients/model/user.model';
+import { UserClient } from 'src/app/api-clients/user.client';
 
 @Component({
   selector: 'app-profile',
@@ -7,8 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  public profile: UserRp = new UserRp();
 
-  ngOnInit() { }
+  constructor(private _userClient: UserClient) { }
+
+  ngOnInit() {
+    this.getData();
+   }
+
+  getData(): void{
+    this._userClient.getMyProfile().subscribe(
+      response => console.log(response) //this.profile = response.content
+    )
+  }
 
 }

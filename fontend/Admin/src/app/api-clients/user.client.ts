@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class UserClient {
     private _apiEndpoint = `${environment.api}users`
     private _apiLogin = `${environment.api}auth/login`;
+    private _apiGetMyProfile = `${this._apiEndpoint}/me`;
 
     constructor(protected httpClient: HttpClient) {}
 
@@ -34,5 +35,9 @@ export class UserClient {
 
     delete(id: string): Observable<Response<string>>{
         return this.httpClient.delete<Response<string>>(this._apiEndpoint + "/" + id);
+    }
+
+    getMyProfile(): Observable<Response<UserRp>>{
+        return this.httpClient.get<Response<UserRp>>(this._apiGetMyProfile);
     }
 }
