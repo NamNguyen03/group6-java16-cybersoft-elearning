@@ -9,6 +9,7 @@ import { CouponsRoutingModule } from './coupons-routing.module';
 import { ListCouponComponent } from './list-coupon/list-coupon.component';
 import { CreateCouponComponent } from './create-coupon/create-coupon.component';
 import { CKEditorModule } from 'ngx-ckeditor';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
   declarations: [ListCouponComponent, CreateCouponComponent],
@@ -18,7 +19,7 @@ import { CKEditorModule } from 'ngx-ckeditor';
     NgbModule,
     CKEditorModule,
     ReactiveFormsModule,
-    NgxDatatableModule
+    NgxDatatableModule,Ng2SmartTableModule
   ]
 })
 export class CouponsModule { }

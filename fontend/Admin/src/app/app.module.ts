@@ -24,6 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { TokenInterceptor } from './shared/service/interceptor/token.interceptor';
 import { ExceptionInterceptor } from './shared/service/interceptor/exception.interceptor';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { ExceptionInterceptor } from './shared/service/interceptor/exception.int
     PagesModule,
     MediaModule,
     MenusModule,
-    UsersModule
+    UsersModule,
+    Ng2SmartTableModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {

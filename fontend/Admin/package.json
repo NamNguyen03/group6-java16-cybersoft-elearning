@@ -47,6 +47,7 @@
     "ngx-dropzone-wrapper": "^8.0.0",
     "ngx-owl-carousel-o": "^2.0.3",
     "ngx-slimscroll": "^8.1.0",
+    "ngx-toastr": "^14.3.0",
     "rxjs": "~6.6.0",
     "screenfull": "^5.0.1",
     "sweetalert2": "^11.4.8",
