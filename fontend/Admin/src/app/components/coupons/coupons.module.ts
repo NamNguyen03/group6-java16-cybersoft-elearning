@@ -8,6 +8,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CouponsRoutingModule } from './coupons-routing.module';
 import { ListCouponComponent } from './list-coupon/list-coupon.component';
 import { CreateCouponComponent } from './create-coupon/create-coupon.component';
+import { CKEditorModule } from 'ngx-ckeditor';
 
 @NgModule({
   declarations: [ListCouponComponent, CreateCouponComponent],
@@ -15,6 +16,7 @@ import { CreateCouponComponent } from './create-coupon/create-coupon.component';
     CommonModule,
     CouponsRoutingModule,
     NgbModule,
+    CKEditorModule,
     ReactiveFormsModule,
     NgxDatatableModule
   ]

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbDateStruct, NgbDate, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { response } from 'express';
+import { CourseClient } from 'src/app/api-clients/course.client';
+import { CourseCreate } from 'src/app/api-clients/model/course.model';
 
 @Component({
   selector: 'app-create-coupon',
@@ -15,10 +19,8 @@ export class CreateCouponComponent implements OnInit {
   public date: { year: number, month: number };
   public modelFooter: NgbDateStruct;
 
-  constructor(private formBuilder: FormBuilder, private calendar: NgbCalendar) {
+  constructor(private courseClient: CourseClient,private formBuilder: FormBuilder, private calendar: NgbCalendar) {
     this.createGeneralForm();
-    this.createRestrictionForm();
-    this.createUsageForm();
   }
 
   selectToday() {
@@ -27,33 +29,26 @@ export class CreateCouponComponent implements OnInit {
 
   createGeneralForm() {
     this.generalForm = this.formBuilder.group({
-      name: [''],
-      code: [''],
-      start_date: [''],
-      end_date: [''],
-      free_shipping: [''],
-      quantity: [''],
-      discount_type: [''],
-      status: [''],
+      courseName: ['',Validators.required],
+      courseTime: ['',Validators.required],
+      description: ['',Validators.required],
     });
   }
-
-  createRestrictionForm() {
-    this.restrictionForm = this.formBuilder.group({
-      products: [''],
-      category: [''],
-      min: [''],
-      max: ['']
-    })
-  }
-
-  createUsageForm() {
-    this.usageForm = this.formBuilder.group({
-      limit: [''],
-      customer: ['']
-    })
-  }
   ngOnInit() {
+
+  }
+  saveCourse(): void{
+    let coursename = this.generalForm.controls['courseName'].value;
+    let coursetime = this.generalForm.controls['courseTime'].value;
+    let desc = this.generalForm.controls['description'].value;
+
+     if(this.generalForm.valid){
+      this.courseClient.createCourse(new CourseCreate(coursename,coursetime,desc)).subscribe(
+        response =>{
+          console.log(response);
+        }
+      )
+    }
 
   }
 

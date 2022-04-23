@@ -68,9 +68,9 @@ export class NavService {
 			]
 		},
 		{
-			title: 'Coupons', icon: 'tag', type: 'sub', active: false, children: [
-				{ path: '/coupons/list-coupons', title: 'List Coupons', type: 'link' },
-				{ path: '/coupons/create-coupons', title: 'Create Coupons', type: 'link' },
+			title: 'Courses', icon: 'tag', type: 'sub', active: false, children: [
+				{ path: '/courses/list-course', title: 'List Courses', type: 'link' },
+				{ path: '/courses/create-course', title: 'Create Courses', type: 'link' },
 			]
 		},
 		{

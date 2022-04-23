@@ -8,19 +8,19 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'list-coupons',
+        path: 'list-course',
         component: ListCouponComponent,
         data: {
-          title: "List Coupons",
-          breadcrumb: "List Coupons"
+          title: "List Course",
+          breadcrumb: "List Course"
         }
       },
       {
-        path: 'create-coupons',
+        path: 'create-course',
         component: CreateCouponComponent,
         data: {
-          title: "Create Coupon",
-          breadcrumb: "Create Coupons"
+          title: "Create Course",
+          breadcrumb: "Create Course"
         }
       }
     ]

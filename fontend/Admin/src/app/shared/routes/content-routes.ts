@@ -20,10 +20,10 @@ export const content: Routes = [
     }
   },
   {
-    path: 'coupons',
+    path: 'courses',
     loadChildren: () => import('../../components/coupons/coupons.module').then(m => m.CouponsModule),
     data: {
-      breadcrumb: "Coupons"
+      breadcrumb: "Courses"
     }
   },
   {
