@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserCreate } from 'src/app/api-clients/model/user.model';
@@ -12,7 +13,9 @@ export class CreateUserComponent implements OnInit {
   public accountForm: FormGroup;
   public permissionForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private _toastr: ToastrService,
+    private formBuilder: FormBuilder,
     private userClient: UserClient) {
     this.createAccountForm();
   }
@@ -43,7 +46,7 @@ export class CreateUserComponent implements OnInit {
 
     if(this.accountForm.valid){
      this.userClient.createUser(new UserCreate(username, password, displayName, email, status, firstName, lastName)).subscribe(rp => {
-       console.log(rp);
+      this._toastr.success('Success', 'Create User success!');
      })
     }
   }

@@ -6,5 +6,7 @@ import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 public interface UserManagementService {
 
     UserResponseDTO createUser(UserCreateDTO user);
+
+    void deleteUser(String id);
     
 }

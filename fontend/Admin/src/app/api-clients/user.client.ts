@@ -25,23 +25,14 @@ export class UserClient {
 
     }   
 
-    searchUsers(
-        rq: any
-    ): Observable<Response<UserRp>> {
-        const options = {
-            params: { ...rq },
-        };
-
-        return this.httpClient.get<Response<UserRp>>(this._apiEndpoint, options);
-    }
-
-    searchAll(pageRequest:PageRequest): Observable<Response<PageResponse<UserRp>>>{
+    search(pageRequest:PageRequest): Observable<Response<PageResponse<UserRp>>>{
         const options = {
             params: { ...pageRequest },
         };
-
         return this.httpClient.get<Response<PageResponse<UserRp>>>(this._apiEndpoint , options);
+    }
 
-    
+    delete(id: string): Observable<Response<string>>{
+        return this.httpClient.delete<Response<string>>(this._apiEndpoint + "/" + id);
     }
 }
