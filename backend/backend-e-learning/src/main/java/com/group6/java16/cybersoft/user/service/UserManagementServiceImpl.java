@@ -1,6 +1,9 @@
 package com.group6.java16.cybersoft.user.service;
 
+import java.io.IOException;
+
 import com.group6.java16.cybersoft.common.exception.BusinessException;
+import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
@@ -16,6 +19,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
@@ -35,6 +39,9 @@ public class UserManagementServiceImpl implements UserManagementService{
 
     @Value("${user.email.existed}")
     private String errorsEmailExisted;
+
+    @Autowired
+    private MyFirebaseService firebaseFileService;
 
     @Override
     public UserResponseDTO createUser(UserCreateDTO user) {
@@ -89,6 +96,19 @@ public class UserManagementServiceImpl implements UserManagementService{
         if(serviceUserHelper.isValidString(rq.getPhone())){
             user.setPhone(rq.getPhone());
         }
+
+        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
+    }
+
+
+    @Override
+    public UserResponseDTO updateMyAvatar(MultipartFile file) {
+        String avatar = firebaseFileService.saveFile(file);
+        
+        String username = UserPrincipal.getUsernameCurrent();
+        ELUser user = userRepository.findByUsername(username).get();
+
+        user.setAvatar(avatar);
 
         return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
     }

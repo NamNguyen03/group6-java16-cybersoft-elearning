@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import lombok.experimental.PackagePrivate;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("api/v1/users")
@@ -38,7 +38,7 @@ public class UserManagementController {
 
         UserResponseDTO rp = service.createUser(rq);
 
-        return ResponseHelper.getResponse(rp, HttpStatus.CREATED, false);
+        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
 
     @DeleteMapping("{id}")
@@ -51,6 +51,14 @@ public class UserManagementController {
     public Object updateMyProfile(@RequestBody UpdateMyProfileDTO rq){
         UserResponseDTO rp = service.updateMyProfile(rq);
 
-        return ResponseHelper.getResponse(rp, HttpStatus.CREATED, false);
+        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+    }
+
+    @PutMapping("me/avatar")
+    public Object updateAvatar(@RequestParam(name = "file") MultipartFile file) {
+
+        UserResponseDTO rp = service.updateMyAvatar(file);
+
+        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
 }
