@@ -1,6 +1,9 @@
 package com.group6.java16.cybersoft.user.service;
 
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
+import com.group6.java16.cybersoft.common.util.UserPrincipal;
+import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.mapper.UserMapper;
@@ -30,6 +33,8 @@ public class UserManagementServiceImpl implements UserManagementService{
     @Value("${user.not-found}")
     private String errorsUserNotFound;
 
+    @Value("${user.email.existed}")
+    private String errorsEmailExisted;
 
     @Override
     public UserResponseDTO createUser(UserCreateDTO user) {
@@ -42,5 +47,49 @@ public class UserManagementServiceImpl implements UserManagementService{
     public void deleteUser(String id) {
         ELUser user = serviceUserHelper.getEntityById(id, userRepository, errorsUserNotFound);
         userRepository.delete(user);
+    }
+
+
+    @Override
+    public UserResponseDTO updateMyProfile(UpdateMyProfileDTO rq) {
+        String username = UserPrincipal.getUsernameCurrent();
+        ELUser user = userRepository.findByUsername(username).get();
+
+        if(serviceUserHelper.isValidString(rq.getDisplayName())){
+            user.setDisplayName(rq.getDisplayName());
+        }
+
+        if(serviceUserHelper.isValidString(rq.getEmail())){
+            if(!rq.getEmail().equals(user.getEmail()) && userRepository.existsByEmail(rq.getEmail())){
+                throw new BusinessException(errorsEmailExisted);    
+            }
+            user.setEmail(rq.getEmail());
+        }
+
+        if(serviceUserHelper.isValidString(rq.getFirstName())){
+            user.setFirstName(rq.getFirstName());
+        }
+
+        if(serviceUserHelper.isValidString(rq.getLastName())){
+            user.setLastName(rq.getLastName());
+        }
+
+        if(serviceUserHelper.isValidString(rq.getHobbies())){
+            user.setHobbies(rq.getHobbies());
+        }
+
+        if(serviceUserHelper.isValidString(rq.getFacebook())){
+            user.setFacebook(rq.getFacebook());
+        }
+
+        if(serviceUserHelper.isValidString(rq.getGender())){
+            user.setGender(rq.getGender());
+        }
+
+        if(serviceUserHelper.isValidString(rq.getPhone())){
+            user.setPhone(rq.getPhone());
+        }
+
+        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
     }
 }

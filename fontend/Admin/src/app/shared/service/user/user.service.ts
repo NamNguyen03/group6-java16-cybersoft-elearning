@@ -21,8 +21,12 @@ export class UserService {
 
   public setJWT(jwt: string, displayName: string): void{
     localStorage.setItem('jwt', jwt);
+    this.setDisplayName(displayName);
+  }
+
+  public setDisplayName(displayName: string): void{
+    this._$displayName.next(displayName);
     localStorage.setItem('displayName', displayName);
-    this._getDisplayName();
   }
 
   private _getDisplayName(): void {

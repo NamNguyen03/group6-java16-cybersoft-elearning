@@ -4,6 +4,7 @@ import { UserRp } from 'src/app/api-clients/model/user.model';
 import { UserClient } from 'src/app/api-clients/user.client';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-list-user',
@@ -13,10 +14,10 @@ import { ToastrService } from 'ngx-toastr';
 export class ListUserComponent implements OnInit {
   public user_list: UserRp[] = [];
 
-  private _pageRequest = new PageRequest(0, 10, null, true, null, null);
+  private _pageRequest = new PageRequest(0, 2, null, true, null, null);
 
-  constructor(private _userClient: UserClient, private _toastr: ToastrService) {
-    
+  constructor(private _userClient: UserClient, private _toastr: ToastrService, private route: ActivatedRoute) {
+    this.getPageDetails();
   }
 
   public settings = {
@@ -69,6 +70,16 @@ export class ListUserComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
+  }
+
+  getPageDetails(){
+    this.route.queryParams.subscribe(params => {
+      let pageCurrent = params['page'] == (undefined || null) ? 1 : params['page'];
+
+      this._pageRequest = new PageRequest(pageCurrent, 2, null, true, null, null);
+      this.loadData();
+
+  });
   }
 
   loadData(): void{

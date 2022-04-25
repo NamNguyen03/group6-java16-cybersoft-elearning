@@ -1,6 +1,6 @@
 import { environment } from './../../environments/environment';
 import { Injectable } from "@angular/core";
-import { LoginRequest, UserCreate, UserRp, LoginResponse } from './model/user.model';
+import { LoginRequest, UserCreate, UserRp, LoginResponse, UpdateMyProfileRq } from './model/user.model';
 import { Observable } from 'rxjs';
 import { PageRequest, PageResponse, Response } from './model/common.model';
 import { HttpClient } from '@angular/common/http';
@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class UserClient {
     private _apiEndpoint = `${environment.api}users`
     private _apiLogin = `${environment.api}auth/login`;
-    private _apiGetMyProfile = `${this._apiEndpoint}/me`;
+    private _apiMyProfile = `${this._apiEndpoint}/me`;
 
     constructor(protected httpClient: HttpClient) {}
 
@@ -38,6 +38,10 @@ export class UserClient {
     }
 
     getMyProfile(): Observable<Response<UserRp>>{
-        return this.httpClient.get<Response<UserRp>>(this._apiGetMyProfile);
+        return this.httpClient.get<Response<UserRp>>(this._apiMyProfile);
+    }
+
+    updateMyProfile(rq: UpdateMyProfileRq): Observable<Response<UserRp>>{
+        return this.httpClient.put<Response<UserRp>>(this._apiMyProfile, rq)
     }
 }

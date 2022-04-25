@@ -68,3 +68,26 @@ export class LoginResponse{
     jwt: string;
     displayName: string;
 }
+
+export class UpdateMyProfileRq{
+    
+    displayName: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    hobbies: string;
+    facebook: string;
+    gender: string;
+    phone: string;
+
+    constructor(displayName: string, email: string, firstName: string, lastName: string, hobbies: string, facebook: string, gender: string, phone: string){
+        this.displayName = displayName;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.hobbies = hobbies;
+        this.facebook = facebook;
+        this.gender = gender;
+        this.phone = phone;
+    }
+}

@@ -11,13 +11,12 @@ import { UserClient } from 'src/app/api-clients/user.client';
 })
 export class CreateUserComponent implements OnInit {
   public accountForm: FormGroup;
-  public permissionForm: FormGroup;
 
   constructor(
     private _toastr: ToastrService,
     private formBuilder: FormBuilder,
     private userClient: UserClient) {
-    this.createAccountForm();
+  
   }
 
   createAccountForm() {
@@ -33,6 +32,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.createAccountForm();
   }
 
   createUser(){
@@ -45,7 +45,7 @@ export class CreateUserComponent implements OnInit {
     let displayName = this.accountForm.controls['displayName'].value;
 
     if(this.accountForm.valid){
-     this.userClient.createUser(new UserCreate(username, password, displayName, email, status, firstName, lastName)).subscribe(rp => {
+     this.userClient.createUser(new UserCreate(username, password, displayName, email, status, firstName, lastName)).subscribe(() => {
       this._toastr.success('Success', 'Create User success!');
      })
     }
