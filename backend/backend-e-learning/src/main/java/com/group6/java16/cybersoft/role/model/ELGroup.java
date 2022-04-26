@@ -34,19 +34,19 @@ public class ELGroup  extends BaseEntity {
     private Set<ELUser> users = new LinkedHashSet<ELUser>();
     
     
-//    public void addRole(ELRole role) {
-//		roles.add(role);
-//		role.getGroups().add(this);
-//	}
-//    
-//    public void removeRole(ELRole role) {
-//		roles.remove(role);
-//		role.getGroups().remove(this);
-//	}
-//    
-//    public void clearRole() {
-//	
-//    	this.roles.clear();
-  //  }
+    public void addRole(ELRole role) {
+		roles.add(role);
+		role.getGroups().add(this);
+	}
+    
+    public void removeRole(ELRole role) {
+		roles.remove(role);
+		role.getGroups().remove(this);
+	}
+    
+    public void clearRole() {
+	
+    	this.roles.clear();
+    }
 }
 
