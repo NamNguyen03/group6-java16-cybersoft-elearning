@@ -12,7 +12,7 @@ import { SalesModule } from './components/sales/sales.module';
 import { CoursesModule } from './components/course/courses.module';
 import { RolesModule } from './components/roles/roles.module';
 import { MediaModule } from './components/media/media.module';
-import { MenusModule } from './components/menus/menus.module';
+import { GroupModule } from './components/group/group.module';
 import { VendorsModule } from './components/vendors/vendors.module';
 import { UsersModule } from './components/users/users.module';
 import { LocalizationModule } from './components/localization/localization.module';
@@ -51,7 +51,7 @@ import { ToastrModule } from 'ngx-toastr';
     CoursesModule,
     RolesModule,
     MediaModule,
-    MenusModule,
+    GroupModule,
     UsersModule,
     Ng2SmartTableModule,
     ToastrModule.forRoot()

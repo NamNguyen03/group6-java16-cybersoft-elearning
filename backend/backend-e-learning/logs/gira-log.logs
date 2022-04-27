@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 11:45:11 [background-preinit] INFO    --- o.h.v.i.u.Version - HV000001: Hibernate Validator 6.2.2.Final
 11:45:11 [main] INFO    --- c.g.j.c.Application - Starting Application using Java 11.0.12 on LAPTOP-R9VHUM4B with PID 17880 (D:\BackEnd_JavaWeb_Cybersoft\Java_backend_cybersoft\New folder\group6-java16-cybersoft-elearning\backend\backend-e-learning\target\classes started by Phạm Huy Phần in D:\BackEnd_JavaWeb_Cybersoft\Java_backend_cybersoft\New folder\group6-java16-cybersoft-elearning\backend\backend-e-learning)
 11:45:11 [main] DEBUG   --- c.g.j.c.Application - Running with Spring Boot v2.5.10, Spring v5.3.16
@@ -2535,3 +2536,37 @@ io.jsonwebtoken.ExpiredJwtException: JWT expired at 2022-04-27T13:58:34Z. Curren
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-embed-core-9.0.58.jar:9.0.58]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.58.jar:9.0.58]
 	at java.lang.Thread.run(Thread.java:834) [?:?]
+=======
+07:17:31 [background-preinit] INFO    --- o.h.v.i.u.Version - HV000001: Hibernate Validator 6.2.2.Final
+07:17:31 [main] INFO    --- c.g.j.c.b.BackedELearningApplicationTests - Starting BackedELearningApplicationTests using Java 11.0.12 on nam with PID 31170 (started by nam in /media/nam/f9ab70ee-682c-4adc-90fa-bcb7cf204ee2/code/code_public/e-learning/repo/backend/backend-e-learning)
+07:17:31 [main] DEBUG   --- c.g.j.c.b.BackedELearningApplicationTests - Running with Spring Boot v2.5.10, Spring v5.3.16
+07:17:31 [main] INFO    --- c.g.j.c.b.BackedELearningApplicationTests - No active profile set, falling back to 1 default profile: "default"
+07:17:32 [main] INFO    --- o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+07:17:32 [main] INFO    --- o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 87 ms. Found 4 JPA repository interfaces.
+07:17:33 [main] INFO    --- o.f.c.i.l.VersionPrinter - Flyway Community Edition 7.7.3 by Redgate
+07:17:33 [main] INFO    --- c.z.h.HikariDataSource - HikariPool-1 - Starting...
+07:17:33 [main] INFO    --- c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+07:17:33 [main] INFO    --- o.f.c.i.d.b.DatabaseType - Database: jdbc:postgresql://localhost:5432/elearning (PostgreSQL 14.2)
+07:17:33 [main] WARN    --- o.f.c.i.d.b.Database - Flyway upgrade recommended: org.flywaydb.core.internal.database.postgresql.PostgreSQLDatabaseType@17d2b646 14.2 is newer than this version of Flyway and support has not been tested. The latest supported version of org.flywaydb.core.internal.database.postgresql.PostgreSQLDatabaseType@17d2b646 is 13.
+07:17:33 [main] INFO    --- o.f.c.i.c.DbValidate - Successfully validated 6 migrations (execution time 00:00.035s)
+07:17:33 [main] INFO    --- o.f.c.i.c.DbMigrate - Current version of schema "public": 6
+07:17:33 [main] INFO    --- o.f.c.i.c.DbMigrate - Schema "public" is up to date. No migration necessary.
+07:17:33 [main] INFO    --- o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+07:17:33 [main] INFO    --- o.h.Version - HHH000412: Hibernate ORM core version 5.4.33
+07:17:33 [main] INFO    --- o.h.a.c.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+07:17:33 [main] INFO    --- o.h.d.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+07:17:34 [main] INFO    --- o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+07:17:34 [main] INFO    --- o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+07:17:35 [main] WARN    --- o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+07:17:35 [main] INFO    --- o.s.b.a.e.w.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+07:17:36 [main] INFO    --- s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+07:17:36 [main] INFO    --- o.s.s.w.DefaultSecurityFilterChain - Will not secure Ant [pattern='/api/v1/**']
+07:17:36 [main] INFO    --- s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
+07:17:36 [main] INFO    --- s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+07:17:36 [main] INFO    --- s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
+07:17:36 [main] INFO    --- s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: searchUsingGET_1
+07:17:37 [main] INFO    --- c.g.j.c.b.BackedELearningApplicationTests - Started BackedELearningApplicationTests in 5.775 seconds (JVM running for 6.912)
+07:17:37 [SpringApplicationShutdownHook] INFO    --- o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+07:17:37 [SpringApplicationShutdownHook] INFO    --- c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+07:17:37 [SpringApplicationShutdownHook] INFO    --- c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+>>>>>>> a9b9f13ca65179d28aadefa5e2ac0bd1d403dc8f

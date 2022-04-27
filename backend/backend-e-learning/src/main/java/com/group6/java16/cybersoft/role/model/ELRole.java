@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,12 +27,10 @@ public class ELRole extends BaseEntity {
 	private String name;
 
 	private String description;
-	
+
 	@Builder.Default
 	@JsonIgnore
-    @ManyToMany(mappedBy = "roles")
-    private Set<ELGroup> groups = new LinkedHashSet<ELGroup>();
-   
-
+	@ManyToMany(mappedBy = "roles")
+	private Set<ELGroup> groups = new LinkedHashSet<ELGroup>();
 
 }

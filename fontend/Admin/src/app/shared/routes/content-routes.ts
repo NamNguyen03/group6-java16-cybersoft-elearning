@@ -38,10 +38,10 @@ export const content: Routes = [
     loadChildren: () => import('../../components/media/media.module').then(m => m.MediaModule),
   },
   {
-    path: 'menus',
-    loadChildren: () => import('../../components/menus/menus.module').then(m => m.MenusModule),
+    path: 'groups',
+    loadChildren: () => import('../../components/group/group.module').then(m => m.GroupModule),
     data: {
-      breadcrumb: "Menus"
+      breadcrumb: "Groups"
     }
   },
   {

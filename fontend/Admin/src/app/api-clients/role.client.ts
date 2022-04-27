@@ -31,8 +31,8 @@ export class RoleClient {
         return this.httpClient.delete<Response<string>>(this.apiEndpoint+"/"+id);
 
     }
+
     updateById(id:string,rq:BaseRole): Observable<Response<RoleResponse>>{
-        
         
         return this.httpClient.put<Response<RoleResponse>>(this.apiEndpoint+"/"+id,rq);
 
