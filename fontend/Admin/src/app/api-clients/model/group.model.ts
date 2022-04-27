@@ -1,3 +1,5 @@
+import { BaseRole } from "./role.model";
+
 export class BaseGroup{
     name: string;
     description: string;
@@ -12,6 +14,7 @@ export class GroupResponse {
     id: string;
     name: string;
     description: string;
+    roles: BaseRole[]; 
 }
 export class SearchGroup{
     pageCurrent: number ;

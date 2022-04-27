@@ -12,13 +12,13 @@ export class GroupClient {
 
     constructor(protected httpClient: HttpClient) {}
 
-    createRole(role: BaseGroup): Observable<Response<GroupResponse>>{
+    createGroup(group: BaseGroup): Observable<Response<GroupResponse>>{
 
-        return this.httpClient.post<Response<GroupResponse>>(this.apiEndpoint , role);
+        return this.httpClient.post<Response<GroupResponse>>(this.apiEndpoint , group);
 
     }
 
-    searchAll(pageRequest:PageRequest): Observable<Response<PageResponse<GroupResponse>>>{
+    search(pageRequest:PageRequest): Observable<Response<PageResponse<GroupResponse>>>{
         const options = {
             params: { ...pageRequest },
         };
