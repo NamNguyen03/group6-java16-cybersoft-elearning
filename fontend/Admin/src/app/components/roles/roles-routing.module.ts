@@ -1,26 +1,26 @@
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ListPageComponent } from './list-page/list-page.component';
-import { CreatePageComponent } from './create-page/create-page.component';
+import { ListRoleComponent } from './list-role/list-role.component';
+import { CreatePageComponent } from './create-role/create-role.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'list-page',
-        component: ListPageComponent,
+        path: 'list-role',
+        component: ListRoleComponent,
         data: {
-          title: "List Page",
-          breadcrumb: "List Page"
+          title: "List Role",
+          breadcrumb: "List Role"
         }
       },
       {
-        path: 'create-page',
+        path: 'create-role',
         component: CreatePageComponent,
         data: {
-          title: "Create Page",
-          breadcrumb: "Create Page"
+          title: "Create Role",
+          breadcrumb: "Create Role"
         }
       }
     ]
