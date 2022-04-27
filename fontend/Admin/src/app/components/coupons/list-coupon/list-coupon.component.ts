@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { response } from 'express';
 import { ToastrService } from 'ngx-toastr';
 import { CourseClient } from 'src/app/api-clients/course.client';
-import { PageRequestModel, SearchRequest } from 'src/app/api-clients/model/common.model';
+import { PageRequestModel } from 'src/app/api-clients/model/common.model';
 import { listCouponsDB } from 'src/app/shared/tables/list-coupon';
 import Swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseUpdateInformation } from 'src/app/api-clients/model/course.model';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-list-coupon',
@@ -18,12 +19,25 @@ export class ListCouponComponent implements OnInit {
 
   public course_list = [];
   public selected = [];
-  rq: SearchRequest = {};
-  private _pageRequest = new PageRequestModel(0, 2, null, true, null, null);
+  public searchForm: FormGroup;
+  pageRequet: PageRequestModel = new PageRequestModel(1,10,
+    null,
+    true,
+    null,
+    null);
 
-  constructor( private courseClient: CourseClient,
-    private toastr: ToastrService,private route: ActivatedRoute) {
-  }
+  constructor(private courseClient: CourseClient,
+    private form: FormBuilder,
+    private toastr: ToastrService,
+    private _router: Router,
+    private route: ActivatedRoute) {
+  this.searchForm = this.form.group({
+  fieldNameSort:[''],
+  isIncrementSort:[''],
+  fieldNameSearch:[''],
+  valueFieldNameSearch: ['']
+  })
+}
 
   onSelect({ selected }) {
     this.selected.splice(0, this.selected.length);
@@ -33,7 +47,7 @@ export class ListCouponComponent implements OnInit {
   public settings = {
     pager: {
         display: true,
-        perPage: 5,
+        perPage: 10,
     },
     delete: {
       deleteButtonContent: 'Delete',
@@ -64,18 +78,29 @@ export class ListCouponComponent implements OnInit {
     },
 };
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadData();
   }
 
-   loadData(){
-     this.courseClient.SearchRequest(this.rq).subscribe(
-      response =>{
-        console.log(response);
-        this.course_list = response.content.items;
+  loadData() {
+    this.route.queryParams.subscribe(params =>{
+      let fieldNameSort = params['fieldNameSort'] == undefined ? null: params['fieldNameSort'];
+      let isIncrementSort = params['isIncrementSort'] == (undefined||null) ? true : params['isIncrementSort'];
+      let fieldNameSearch = params['fieldNameSearch'] == undefined ? '': params['fieldNameSearch'];
+      let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
+
+      this.pageRequet = new PageRequestModel(1,10,fieldNameSort,isIncrementSort,fieldNameSearch,valueFieldNameSearch)
+      console.log(this.pageRequet);
+      this.courseClient.searchRequest(this.pageRequet).subscribe(
+        response =>{
+          console.log(response);
+          this.course_list = response.content.items;
       }
       
-    );    
+    );  
+    }) 
+
+
   }
 
   onDeleteConfirm(event) {
@@ -134,4 +159,16 @@ export class ListCouponComponent implements OnInit {
 
   }
 
+  
+  search(){
+    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
+    let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
+    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
+    let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
+    this._router.navigate(['/courses/list-course'],{
+      queryParams: {'fieldNameSort':fieldNameSort,'isIncr ementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
+      
+    })
+    
+  }
 }

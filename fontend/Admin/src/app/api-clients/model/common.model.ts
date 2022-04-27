@@ -14,32 +14,27 @@ export class PageResponseModel<T>{
 }
 
 export class PageRequestModel{
-      pageCurrent:number;
-	  itemPerPage:number;
-	  fieldNameSort:String;
-	  isIncrementSort:true;
-	  fieldNameSearch:String;
-      valueSearch:String;
-      
-      constructor(pageCurrent:number,
-        itemPerPage:number,
-        fieldNameSort:String,
-        isIncrementSort:true,
-        fieldNameSearch:String,
-        valueSearch:String){
+    pageCurrent: number;
+    itemPerPage: number;
+    fieldNameSort: string;
+    isIncrementSort: boolean;
+    fieldNameSearch: string;
+    valueFieldNameSearch: string;
+
+    constructor(
+        pageCurrent: number,
+        itemPerPage: number,
+        fieldNameSort: string,
+        isIncrementSort: boolean,
+        fieldNameSearch: string,
+        valueFieldNameSearch: string){
+        
         this.pageCurrent = pageCurrent <=0 ? 1 : pageCurrent;
-		this.itemPerPage = itemPerPage <=0 ? 10 : itemPerPage;
+        this.itemPerPage = itemPerPage <=0 ? 10 : itemPerPage;
 		this.fieldNameSort = fieldNameSort;
 		this.isIncrementSort = isIncrementSort;
 		this.fieldNameSearch = fieldNameSearch;
-		this.valueSearch = valueSearch;
-      }
-}
+		this.valueFieldNameSearch = valueFieldNameSearch;
 
-export class SearchRequest {
-    searchTerm?: string;
-    sort?: string;
-    pageNumber?: string;
-    pageSize?: string;
-    isLockout?: string;
+      }
 }
