@@ -1,6 +1,5 @@
 package com.group6.java16.cybersoft.role.service;
 
-import javax.validation.Valid;
 
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
@@ -11,7 +10,7 @@ public interface GroupService {
 
 	PageResponseModel<GroupResponseDTO> search(PageRequestModel pageRequestModel);
 
-	GroupResponseDTO save(String id, @Valid GroupDTO dto);
+	GroupResponseDTO save(String id, GroupDTO dto);
 
 	void deleteByid(String id);
 

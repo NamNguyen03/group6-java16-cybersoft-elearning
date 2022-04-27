@@ -66,8 +66,8 @@ public class GroupManagementController {
 			
 		}
 	    
-	    @PutMapping
-	    public Object updateGroup(@RequestParam String id,@RequestBody @Valid GroupDTO dto,BindingResult bindingResult ){
+	    @PutMapping("{id}")
+	    public Object updateGroup(@PathVariable("id") String id,@RequestBody @Valid GroupDTO dto,BindingResult bindingResult ){
 	        if(bindingResult.hasErrors()){
 	            return ResponseHelper.getResponse(bindingResult,HttpStatus.BAD_REQUEST, true);
 	        }

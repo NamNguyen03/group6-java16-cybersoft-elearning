@@ -103,7 +103,7 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public GroupResponseDTO save(String id, @Valid GroupDTO dto) {
+	public GroupResponseDTO save(String id, GroupDTO dto) {
 		if(id == null || "".equals(id)) {
 			return GroupMapper.INSTANCE.toGroupResponseDTO(groupRepository.save(GroupMapper.INSTANCE.toModel(dto)));
 		}
