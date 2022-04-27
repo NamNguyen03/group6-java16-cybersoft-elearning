@@ -5,11 +5,12 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.group6.java16.cybersoft.common.model.BaseEntity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,11 +27,5 @@ public class ELRole extends BaseEntity {
 	private String name;
 
 	private String description;
-	
-	@JsonIgnore
-    @ManyToMany(mappedBy = "roles")
-    private Set<ELGroup> groups = new LinkedHashSet<ELGroup>();
-   
-
 
 }

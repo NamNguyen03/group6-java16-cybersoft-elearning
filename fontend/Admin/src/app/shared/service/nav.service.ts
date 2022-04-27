@@ -83,9 +83,9 @@ export class NavService {
 			title: 'Media', path: '/media', icon: 'camera', type: 'link', active: false
 		},
 		{
-			title: 'Menus', icon: 'align-left', type: 'sub', active: false, children: [
-				{ path: '/menus/list-menu', title: 'Menu Lists', type: 'link' },
-				{ path: '/menus/create-menu', title: 'Create Menu', type: 'link' },
+			title: 'Group', icon: 'align-left', type: 'sub', active: false, children: [
+				{ path: '/groups/list-group', title: 'Group List', type: 'link' },
+				{ path: '/groups/create-group', title: 'Create Group', type: 'link' },
 			]
 		},
 		{
