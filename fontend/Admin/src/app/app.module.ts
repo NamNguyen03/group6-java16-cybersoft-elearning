@@ -10,7 +10,7 @@ import { SharedModule } from './shared/shared.module';
 import { ProductsModule } from './components/products/products.module';
 import { SalesModule } from './components/sales/sales.module';
 import { CouponsModule } from './components/coupons/coupons.module';
-import { PagesModule } from './components/pages/pages.module';
+import { RolesModule } from './components/roles/roles.module';
 import { MediaModule } from './components/media/media.module';
 import { MenusModule } from './components/menus/menus.module';
 import { VendorsModule } from './components/vendors/vendors.module';
@@ -24,6 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { TokenInterceptor } from './shared/service/interceptor/token.interceptor';
 import { ExceptionInterceptor } from './shared/service/interceptor/exception.interceptor';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -47,10 +49,12 @@ import { ExceptionInterceptor } from './shared/service/interceptor/exception.int
     SalesModule,
     VendorsModule,
     CouponsModule,
-    PagesModule,
+    RolesModule,
     MediaModule,
     MenusModule,
-    UsersModule
+    UsersModule,
+    Ng2SmartTableModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {
