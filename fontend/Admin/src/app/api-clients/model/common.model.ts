@@ -6,14 +6,12 @@ export class Response<T>{
     timeStamp!: Date;
     status!: number;
 }
-
-export class PageResponseModel<T>{
-    totalPage: number;
+export class PageResponse<T>{
     pageCurrent: number;
-    items: T[];
+    totalPage: number;
+    items : T[] ;
 }
-
-export class PageRequestModel{
+export class PageRequest{
     pageCurrent: number;
     itemPerPage: number;
     fieldNameSort: string;
@@ -36,5 +34,10 @@ export class PageRequestModel{
 		this.fieldNameSearch = fieldNameSearch;
 		this.valueFieldNameSearch = valueFieldNameSearch;
 
-      }
+
+    }
+    
+
 }
+    
+

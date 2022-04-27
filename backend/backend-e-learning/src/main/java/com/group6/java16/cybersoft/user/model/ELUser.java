@@ -50,8 +50,6 @@ public class ELUser extends BaseEntity {
 	private String hobbies;
 
 	private String facebook;
-<<<<<<< HEAD
-=======
 
 	private String gender;
 
@@ -61,5 +59,4 @@ public class ELUser extends BaseEntity {
 	@JoinTable(name = "el_group_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
 	private Set<ELGroup> groups = new LinkedHashSet<ELGroup>();
 
->>>>>>> 674648686ab7ca3134202090ed4579d8190e9112
 }
