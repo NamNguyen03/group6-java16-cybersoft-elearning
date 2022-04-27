@@ -47,6 +47,7 @@ export class CreateCouponComponent implements OnInit {
       this.courseClient.createCourse(new CourseCreate(coursename,coursetime,desc)).subscribe(
         response =>{
           console.log(response);
+          this.createGeneralForm();
         }
       )
     }

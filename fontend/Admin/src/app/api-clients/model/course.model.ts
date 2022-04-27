@@ -17,3 +17,15 @@ export class CourseRp{
     description!: string;
 }
 
+export class CourseUpdateInformation {
+    courseName: string;
+    courseTime: number;
+    description: string;
+
+    constructor(coursename: string, coursetime: number, description: string){
+        this.courseName = coursename;
+        this.courseTime = coursetime;
+        this.description = description;
+    }
+}
+

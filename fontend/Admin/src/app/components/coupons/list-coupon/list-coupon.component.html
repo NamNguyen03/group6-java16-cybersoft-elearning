@@ -8,15 +8,16 @@
                 </div>
                 <div class="card-body">
                     <div class="custom-datatable">
-                        <button class="btn btn-primary mr-1 mb-3" style="float: right;">Delete</button>
-                        <div class="clearfix"></div>
+                        <button class="btn btn-secondary mr-1 mb-3" style="float: right;" [routerLink]="'/courses/create-course'">Create Course</button>
+                        
                         <div class="table-responsive">
                             <ng2-smart-table
                                 [settings]="settings"
                                 [source]="course_list"
+                                (deleteConfirm)="onDeleteConfirm($event)"
+                                (editConfirm)="onSaveConfirm($event)"
                             ></ng2-smart-table>
                         </div>
-        
                     </div>
                 </div>
             </div>
