@@ -23,7 +23,7 @@ public class UserCreateDTO {
     @Size(min = 6, max = 100, message = "{user.password.size}")
 	private String password;
 
-	@NotBlank(message = "{user.display-name.not-blank")
+	@NotBlank(message = "{user.display-name.not-blank}")
 	private String displayName;
 	
     @Email(message = "{user.email.invalid}")
@@ -36,4 +36,10 @@ public class UserCreateDTO {
     private String firstName;
 
     private String lastName;
+
+	@NotBlank(message = "{user.gender.not-blank}")
+	private String gender;
+
+	private String phone;
 }
+

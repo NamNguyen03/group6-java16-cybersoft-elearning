@@ -36,5 +36,7 @@ export class RatesComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  searchConfirm($event){
+    
+  }
 }
