@@ -25,6 +25,7 @@ import com.group6.java16.cybersoft.role.service.GroupService;
 
 
 
+
 @RestController
 @RequestMapping("api/v1/groups")
 @CrossOrigin(origins = "*")
@@ -52,7 +53,19 @@ public class GroupManagementController {
 	        return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 
 	    }
-
+	    
+	    @PostMapping
+		public Object createGroup(@RequestBody @Valid GroupDTO dto,BindingResult bindingResult) {
+			if(bindingResult.hasErrors()) {
+				return ResponseHelper.getResponse(bindingResult, HttpStatus.BAD_REQUEST, true);
+			}
+			
+			GroupResponseDTO response = service.save(null,dto);
+			
+			return ResponseHelper.getResponse(response, HttpStatus.OK, false); 
+			
+		}
+	    
 	    @PutMapping
 	    public Object updateGroup(@RequestParam String id,@RequestBody @Valid GroupDTO dto,BindingResult bindingResult ){
 	        if(bindingResult.hasErrors()){
@@ -70,7 +83,7 @@ public class GroupManagementController {
 	    	return ResponseHelper.getResponse("Delete successfully", HttpStatus.OK, false);
 	    }
 	    
-	    @PostMapping("add-group/{user-id}/{group-id}")
+	    @PostMapping("add-group/{group-id}/{role-id}")
 	    public Object addRole(@PathVariable(value="group-id")String groupId,@PathVariable(value="role-id")String roleId) {
 	    	GroupResponseDTO response = service.addRole(groupId,roleId);
 	    	

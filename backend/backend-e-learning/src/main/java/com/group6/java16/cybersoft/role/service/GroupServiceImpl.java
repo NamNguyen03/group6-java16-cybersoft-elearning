@@ -25,9 +25,6 @@ import com.group6.java16.cybersoft.role.model.ELRole;
 import com.group6.java16.cybersoft.role.repository.ELGroupRepository;
 import com.group6.java16.cybersoft.role.repository.ELRoleRepository;
 
-import gira.com.example.Giraproject.role.model.GiraGroup;
-
-
 
 
 @Service
@@ -88,12 +85,6 @@ public class GroupServiceImpl implements GroupService {
     }
 
 	@Override
-	public GroupResponseDTO updateGroup(String id, @Valid GroupDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void deleteByid(String id) {
 		ELGroup group = groupServiceHelper.getEntityById(id, groupRepository, messagesGroupIdNotFound);
 		groupRepository.delete(group);
@@ -107,8 +98,25 @@ public class GroupServiceImpl implements GroupService {
 
 		group.addRole(role);
 		ELGroup modufiedGroup = groupRepository.save(group);
-		GroupResponseDTO dto = GroupMapper.INSTANCE.toGroupResponseDTO(modufiedGroup);
-		return dto;
+		
+		return GroupMapper.INSTANCE.toGroupResponseDTO(modufiedGroup);
+	}
+
+	@Override
+	public GroupResponseDTO save(String id, @Valid GroupDTO dto) {
+		if(id == null || "".equals(id)) {
+			return GroupMapper.INSTANCE.toGroupResponseDTO(groupRepository.save(GroupMapper.INSTANCE.toModel(dto)));
+		}
+		ELGroup group = groupServiceHelper.getEntityById(id, groupRepository, messagesGroupIdNotFound);
+		
+		 if(groupServiceHelper.isValidString(dto.getName())){
+	            group.setName(dto.getName());
+	        }
+		 if(groupServiceHelper.isValidString(dto.getDescription())){
+	            group.setDescription(dto.getDescription());
+	        }
+
+		return GroupMapper.INSTANCE.toGroupResponseDTO(groupRepository.save(group));
 	}
 	
 
