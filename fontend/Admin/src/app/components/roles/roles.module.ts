@@ -7,13 +7,13 @@ import { CKEditorModule } from 'ngx-ckeditor';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
-import { PagesRoutingModule } from './pages-routing.module';
-import { ListPageComponent } from './list-page/list-page.component';
-import { CreatePageComponent } from './create-page/create-page.component';
+import { PagesRoutingModule } from './roles-routing.module';
+import { ListRoleComponent } from './list-role/list-role.component';
+import { CreatePageComponent } from './create-role/create-role.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
-  declarations: [ListPageComponent, CreatePageComponent],
+  declarations: [ListRoleComponent, CreatePageComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,
@@ -25,4 +25,4 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 
   ]
 })
-export class PagesModule { }
+export class RolesModule { }

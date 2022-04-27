@@ -28,7 +28,7 @@ export const content: Routes = [
   },
   {
     path: 'roles',
-    loadChildren: () => import('../../components/pages/pages.module').then(m => m.PagesModule),
+    loadChildren: () => import('../../components/roles/roles.module').then(m => m.RolesModule),
     data: {
       breadcrumb: "Roles"
     }

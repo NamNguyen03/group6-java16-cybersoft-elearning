@@ -1,5 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
 import { BaseRole } from 'src/app/api-clients/model/role.model';
@@ -7,14 +9,15 @@ import { RoleClient } from 'src/app/api-clients/role.client';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-list-page',
-  templateUrl: './list-page.component.html',
-  styleUrls: ['./list-page.component.scss'],
+  selector: 'app-list-role',
+  templateUrl: './list-role.component.html',
+  styleUrls: ['./list-role.component.scss'],
 })
-export class ListPageComponent implements OnInit {
+export class ListRoleComponent implements OnInit {
   public list_role: BaseRole[] = [];
+  public searchForm: FormGroup;
 
-  rq: PageRequest = new PageRequest(1,
+  pageRequest: PageRequest = new PageRequest(1,
     10,
     null,
     true,
@@ -22,10 +25,23 @@ export class ListPageComponent implements OnInit {
     null);
 
   constructor(private roleClient: RoleClient,
-    private toastr: ToastrService) {
+              private form: FormBuilder,
+              private toastr: ToastrService,
+              private _router: Router,
+              private route: ActivatedRoute) {
+    this.searchForm = this.form.group({
+      fieldNameSort:[''],
+      isIncrementSort:[''],
+      fieldNameSearch:[''],
+      valueFieldNameSearch: ['']
+    })
+
+
+
    
   }
   ngOnInit(): void {
+    
     this.loadData();
   }
 
@@ -42,7 +58,7 @@ export class ListPageComponent implements OnInit {
         confirmSave: true,
     },
     actions: {
-        custom: true,
+        custom: false,
         delete: true,
         add: false,
     },
@@ -56,17 +72,26 @@ export class ListPageComponent implements OnInit {
         editable: true,
       }
 
-  }
+    }
   
   }
 
   loadData() {
-     this.roleClient.searchAll(this.rq).subscribe(
-      response =>
-      {
-        console.log(response)
-        this.list_role= response.content.items
-      });
+    this.route.queryParams.subscribe(params =>{
+      let fieldNameSort = params['fieldNameSort'] == undefined ? null: params['fieldNameSort'];
+      let isIncrementSort = params['isIncrementSort'] == (undefined||null) ? true : params['isIncrementSort'];
+      let fieldNameSearch = params['fieldNameSearch'] == undefined ? '': params['fieldNameSearch'];
+      let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
+
+      this.pageRequest = new PageRequest(1,10,fieldNameSort,isIncrementSort,fieldNameSearch,valueFieldNameSearch)
+      this.roleClient.search(this.pageRequest).subscribe(
+        response =>
+        {
+          this.list_role= response.content.items
+        });
+    }) 
+
+
   }
   onDeleteConfirm(event) {
     Swal.fire({
@@ -108,13 +133,14 @@ export class ListPageComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: 'Yes, update it!',
     }).then((result) => {
       if (result.isConfirmed) {
         let isLoadData = false;
-        console.log(event)
-        this.roleClient.updateById(event.data.id,event.data.new).subscribe(
-          response => 
+        console.log(event.newdata)
+          let roleUpdate = new BaseRole(event.newData.name,event.newData.description)
+         this.roleClient.updateById(event.data.id,roleUpdate).subscribe(
+          () => 
             { 
               isLoadData=true;
               this.toastr.success('Success','Update role success')
@@ -127,7 +153,21 @@ export class ListPageComponent implements OnInit {
                   
            }
           });
-}
+  }
+
+  search(){
+    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
+    let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
+    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
+    let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
+    this._router.navigate(['/roles/list-role'],{
+      queryParams: {'fieldNameSort':fieldNameSort,'isIncrementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
+
+    })
+    
+    
+    
+  }
   
 
 }

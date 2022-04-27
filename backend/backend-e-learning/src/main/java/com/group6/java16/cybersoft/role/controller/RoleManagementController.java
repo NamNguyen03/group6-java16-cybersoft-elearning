@@ -58,8 +58,8 @@ public class RoleManagementController {
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
 	
-	@PutMapping("{role-id}")
-	public Object updateRole(@PathVariable("role-id") String id, @RequestBody @Valid RoleDTO dto,BindingResult bindingResult) {
+	@PutMapping("{id}")
+	public Object updateRole(@PathVariable("id") String id, @RequestBody @Valid RoleDTO dto,BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			return ResponseHelper.getResponse(bindingResult, HttpStatus.BAD_REQUEST, true);
 		}
@@ -71,8 +71,8 @@ public class RoleManagementController {
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
 	
-	@DeleteMapping("{role-id}")
-	public Object deleteRole(@PathVariable("role-id") String id) {
+	@DeleteMapping("{id}")
+	public Object deleteRole(@PathVariable("id") String id) {
 		service.deleteById(id);
     	return ResponseHelper.getResponse("Delete successfully", HttpStatus.OK, false);
 	}

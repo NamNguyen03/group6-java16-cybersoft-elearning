@@ -20,4 +20,6 @@ public interface ELRoleRepository extends JpaRepository<ELRole, UUID> {
 
 	Optional<ELRole> findByName(String name);
 
+	boolean existsByName(String name);
+
 }

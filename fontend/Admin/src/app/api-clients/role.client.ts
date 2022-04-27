@@ -17,8 +17,7 @@ export class RoleClient {
         return this.httpClient.post<Response<RoleResponse>>(this.apiEndpoint , role);
 
     }
-    
-    searchAll(pageRequest:PageRequest): Observable<Response<PageResponse<RoleResponse>>>{
+    search(pageRequest:PageRequest): Observable<Response<PageResponse<RoleResponse>>>{
         const options = {
             params: { ...pageRequest },
         };

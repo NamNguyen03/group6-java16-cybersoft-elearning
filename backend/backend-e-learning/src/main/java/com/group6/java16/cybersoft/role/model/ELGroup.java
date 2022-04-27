@@ -18,13 +18,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Entity
 @Table(name = "el_group")
-public class ELGroup  extends BaseEntity {
-    
-    private String name;
-    private String description;
+public class ELGroup extends BaseEntity {
 
-    
-    
-    
 }
-

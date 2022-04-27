@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ListPageComponent } from './list-page/list-page.component';
-import { CreatePageComponent } from './create-page/create-page.component';
+import { ListRoleComponent } from './list-role/list-role.component';
+import { CreatePageComponent } from './create-role/create-role.component';
 
 const routes: Routes = [
   {
@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: 'list-role',
-        component: ListPageComponent,
+        component: ListRoleComponent,
         data: {
           title: "List Role",
           breadcrumb: "List Role"
