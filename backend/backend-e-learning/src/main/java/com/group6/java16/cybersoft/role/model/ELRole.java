@@ -28,9 +28,9 @@ public class ELRole extends BaseEntity {
 
 	private String description;
 
-	
 	@Builder.Default
 	@JsonIgnore
-    @ManyToMany(mappedBy = "roles")
-    private Set<ELGroup> groups = new LinkedHashSet<ELGroup>();
+	@ManyToMany(mappedBy = "roles")
+	private Set<ELGroup> groups = new LinkedHashSet<ELGroup>();
+
 }

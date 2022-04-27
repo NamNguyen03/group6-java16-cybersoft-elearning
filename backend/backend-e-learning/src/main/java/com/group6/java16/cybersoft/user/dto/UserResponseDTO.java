@@ -33,8 +33,4 @@ public class UserResponseDTO {
 	private String facebook;
 
     private UserStatus status;
-
-	private String gender;
-
-	private String phone;
 }

@@ -1,6 +1,5 @@
 package com.group6.java16.cybersoft.user.model;
 
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -13,7 +12,6 @@ import com.group6.java16.cybersoft.user.model.ELUser;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
 
 @Getter
 @Setter
@@ -58,10 +56,10 @@ public class ELUser extends BaseEntity {
 	public void addGroup(ELGroup group) {
 		groups.add(group);
 		group.getUsers().add(this);
-	  }
-	  
-	  public void removeGroup(ELGroup group) {
+	}
+
+	public void removeGroup(ELGroup group) {
 		groups.remove(group);
 		group.getUsers().remove(this);
-	  }
+	}
 }

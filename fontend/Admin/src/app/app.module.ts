@@ -9,7 +9,7 @@ import { DashboardModule } from './components/dashboard/dashboard.module';
 import { SharedModule } from './shared/shared.module';
 import { ProductsModule } from './components/products/products.module';
 import { SalesModule } from './components/sales/sales.module';
-import { CouponsModule } from './components/coupons/coupons.module';
+import { CoursesModule } from './components/course/courses.module';
 import { RolesModule } from './components/roles/roles.module';
 import { MediaModule } from './components/media/media.module';
 import { GroupModule } from './components/group/group.module';
@@ -48,7 +48,7 @@ import { ToastrModule } from 'ngx-toastr';
     ProductsModule,
     SalesModule,
     VendorsModule,
-    CouponsModule,
+    CoursesModule,
     RolesModule,
     MediaModule,
     GroupModule,
