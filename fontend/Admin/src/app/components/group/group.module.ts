@@ -8,7 +8,6 @@ import { CKEditorModule } from 'ngx-ckeditor';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { ListGroupComponent } from './list-group/list-group.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { PagesRoutingModule } from '../pages/pages-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GroupRoutingModule } from './group-routing.module';
 
