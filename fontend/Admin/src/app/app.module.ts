@@ -9,7 +9,7 @@ import { DashboardModule } from './components/dashboard/dashboard.module';
 import { SharedModule } from './shared/shared.module';
 import { ProductsModule } from './components/products/products.module';
 import { SalesModule } from './components/sales/sales.module';
-import { CoursesModule } from './components/coupons/courses.module';
+import { CoursesModule } from './components/course/courses.module';
 import { RolesModule } from './components/roles/roles.module';
 import { MediaModule } from './components/media/media.module';
 import { MenusModule } from './components/menus/menus.module';
