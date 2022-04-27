@@ -74,9 +74,9 @@ export class NavService {
 			]
 		},
 		{
-			title: 'Pages', icon: 'clipboard', type: 'sub', active: false, children: [
-				{ path: '/pages/list-page', title: 'List Page', type: 'link' },
-				{ path: '/pages/create-page', title: 'Create Page', type: 'link' },
+			title: 'Role', icon: 'clipboard', type: 'sub', active: false, children: [
+				{ path: '/roles/list-role', title: 'List Role', type: 'link' },
+				{ path: '/roles/create-role', title: 'Create Role', type: 'link' },
 			]
 		},
 		{

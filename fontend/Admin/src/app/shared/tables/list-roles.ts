@@ -1,4 +1,4 @@
-export class listPagesDB {
+export class listRolesDB {
     static list_pages = [
         {
             "name": "Product List",
