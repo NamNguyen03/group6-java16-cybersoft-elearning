@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ListCouponComponent } from './list-coupon/list-coupon.component';
-import { CreateCouponComponent } from './create-coupon/create-coupon.component';
+import { ListCourseComponent } from './list-course/list-course.component';
+import { CreateCourseComponent } from './create-course/create-course.component';
 
 const routes: Routes = [
   {
@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: 'list-course',
-        component: ListCouponComponent,
+        component: ListCourseComponent,
         data: {
           title: "List Course",
           breadcrumb: "List Course"
@@ -17,7 +17,7 @@ const routes: Routes = [
       },
       {
         path: 'create-course',
-        component: CreateCouponComponent,
+        component: CreateCourseComponent,
         data: {
           title: "Create Course",
           breadcrumb: "Create Course"
@@ -31,4 +31,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CouponsRoutingModule { }
+export class CoursesRoutingModule { }

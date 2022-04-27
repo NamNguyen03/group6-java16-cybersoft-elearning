@@ -1,9 +1,8 @@
 
 import { environment } from './../../environments/environment';
 import { Injectable } from "@angular/core";
-import { LoginRequest, UserCreate, UserRp, LoginResponse } from './model/user.model';
 import { Observable } from 'rxjs';
-import { PageRequestModel, PageResponseModel, Response } from './model/common.model';
+import { PageRequest, PageResponse, Response } from './model/common.model';
 import { HttpClient } from '@angular/common/http';
 import { CourseCreate, CourseRp, CourseUpdateInformation } from './model/course.model';
 
@@ -22,16 +21,16 @@ export class CourseClient {
 
     }
 
-    findAllCourse(pageRequet:PageRequestModel): Observable<Response<PageResponseModel<CourseRp>>>{
-        return this.httpClient.post<Response<PageResponseModel<CourseRp>>>(this._apiEndpoint, pageRequet);
+    findAllCourse(pageRequet:PageRequest): Observable<Response<PageResponse<CourseRp>>>{
+        return this.httpClient.post<Response<PageResponse<CourseRp>>>(this._apiEndpoint, pageRequet);
     }
 
-    searchRequest(pageRequest:PageRequestModel): Observable<Response<PageResponseModel<CourseRp>>>{
+    searchRequest(pageRequest:PageRequest): Observable<Response<PageResponse<CourseRp>>>{
         const options = {
             params: { ...pageRequest },
         };
 
-        return this.httpClient.get<Response<PageResponseModel<CourseRp>>>(this._apiEndpoint , options);
+        return this.httpClient.get<Response<PageResponse<CourseRp>>>(this._apiEndpoint , options);
     }
     deleteCourse(id: string): Observable<Response<string>>{
         return this.httpClient.delete<Response<string>>(this._apiEndpoint + "/" + id);

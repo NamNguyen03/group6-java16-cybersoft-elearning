@@ -1,26 +1,23 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { response } from 'express';
 import { ToastrService } from 'ngx-toastr';
 import { CourseClient } from 'src/app/api-clients/course.client';
-import { PageRequestModel } from 'src/app/api-clients/model/common.model';
-import { listCouponsDB } from 'src/app/shared/tables/list-coupon';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseUpdateInformation } from 'src/app/api-clients/model/course.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { PageRequest } from 'src/app/api-clients/model/common.model';
 
 @Component({
-  selector: 'app-list-coupon',
-  templateUrl: './list-coupon.component.html',
-  styleUrls: ['./list-coupon.component.scss']
+  selector: 'app-list-course',
+  templateUrl: './list-course.component.html',
+  styleUrls: ['./list-course.component.scss']
 })
-export class ListCouponComponent implements OnInit {
+export class ListCourseComponent implements OnInit {
 
   public course_list = [];
   public selected = [];
   public searchForm: FormGroup;
-  pageRequet: PageRequestModel = new PageRequestModel(1,10,
+  pageRequet: PageRequest = new PageRequest(1,10,
     null,
     true,
     null,
@@ -89,11 +86,10 @@ export class ListCouponComponent implements OnInit {
       let fieldNameSearch = params['fieldNameSearch'] == undefined ? '': params['fieldNameSearch'];
       let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
 
-      this.pageRequet = new PageRequestModel(1,10,fieldNameSort,isIncrementSort,fieldNameSearch,valueFieldNameSearch)
+      this.pageRequet = new PageRequest(1,10,fieldNameSort,isIncrementSort,fieldNameSearch,valueFieldNameSearch)
       console.log(this.pageRequet);
       this.courseClient.searchRequest(this.pageRequet).subscribe(
         response =>{
-          console.log(response);
           this.course_list = response.content.items;
       }
       
@@ -104,7 +100,6 @@ export class ListCouponComponent implements OnInit {
   }
 
   onDeleteConfirm(event) {
-    console.log('hello');
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -142,9 +137,7 @@ export class ListCouponComponent implements OnInit {
     }).then((result) => {
         if (result.isConfirmed) {
           let isLoadData = false;
-          console.log('save', event);
           event.confirm.resolve(event.newData);
-          console.log(event.newData.id);
           let courseUpdate = new CourseUpdateInformation(event.newData.courseName,event.newData.courseTime,event.newData.description);
           this.courseClient.updateCourse(event.data.id,courseUpdate).subscribe(() => {
             

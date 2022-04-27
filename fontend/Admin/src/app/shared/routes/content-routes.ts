@@ -21,7 +21,7 @@ export const content: Routes = [
   },
   {
     path: 'courses',
-    loadChildren: () => import('../../components/coupons/coupons.module').then(m => m.CouponsModule),
+    loadChildren: () => import('../../components/coupons/courses.module').then(m => m.CoursesModule),
     data: {
       breadcrumb: "Courses"
     }

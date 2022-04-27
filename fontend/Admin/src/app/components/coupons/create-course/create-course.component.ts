@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbDateStruct, NgbDate, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { response } from 'express';
+import { ToastrService } from 'ngx-toastr';
 import { CourseClient } from 'src/app/api-clients/course.client';
-import { PageRequestModel } from 'src/app/api-clients/model/common.model';
 import { CourseCreate } from 'src/app/api-clients/model/course.model';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-create-coupon',
-  templateUrl: './create-coupon.component.html',
-  styleUrls: ['./create-coupon.component.scss']
+  selector: 'app-create-course',
+  templateUrl: './create-course.component.html',
+  styleUrls: ['./create-course.component.scss']
 })
-export class CreateCouponComponent implements OnInit {
+export class CreateCourseComponent implements OnInit {
   public generalForm: FormGroup;
   public restrictionForm: FormGroup;
   public usageForm: FormGroup;
@@ -20,7 +20,7 @@ export class CreateCouponComponent implements OnInit {
   public date: { year: number, month: number };
   public modelFooter: NgbDateStruct;
 
-  constructor(private courseClient: CourseClient,private formBuilder: FormBuilder, private calendar: NgbCalendar) {
+  constructor(private courseClient: CourseClient,private formBuilder: FormBuilder, private calendar: NgbCalendar,private toastr: ToastrService) {
     this.createGeneralForm();
   }
 
@@ -46,8 +46,7 @@ export class CreateCouponComponent implements OnInit {
      if(this.generalForm.valid){
       this.courseClient.createCourse(new CourseCreate(coursename,coursetime,desc)).subscribe(
         response =>{
-          console.log(response);
-          this.createGeneralForm();
+          this.toastr.success('Success','Create role success');
         }
       )
     }
