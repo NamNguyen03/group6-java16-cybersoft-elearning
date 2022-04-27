@@ -1,4 +1,4 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListRoleComponent } from './list-role/list-role.component';
 import { CreatePageComponent } from './create-role/create-role.component';
