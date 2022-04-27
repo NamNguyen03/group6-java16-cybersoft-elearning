@@ -45,10 +45,10 @@ public class GroupServiceImpl implements GroupService {
 	private ServiceHelper<ELRole> roleServiceHelper;
 	
 	
-	@Value("${group.findById.idnotfound}")
+	@Value("${group.id.not-found}")
 	private String messagesGroupIdNotFound;
 	
-	@Value("${role.findById.idnotfound}")
+	@Value("${role.id.not-found}")
 	private String messagesRoleIdNotFound;
 
 
