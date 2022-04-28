@@ -33,9 +33,8 @@ export class CreateGroupComponent implements OnInit {
     let name = this.generalForm.controls['name'].value;
     let description = this.generalForm.controls['description'].value;
     this.groupClient.createGroup(new BaseGroup(name,description)).subscribe
-    (response =>{
-      this.toastr.success('Success','Create role success')
-    })
+      (() => this.toastr.success('Success','Create role success')
+    );
   }
 
 

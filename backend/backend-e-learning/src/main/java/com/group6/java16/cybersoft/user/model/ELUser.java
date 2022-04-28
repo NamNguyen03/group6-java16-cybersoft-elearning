@@ -1,16 +1,17 @@
 package com.group6.java16.cybersoft.user.model;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-import javax.persistence.Table;
-import lombok.experimental.SuperBuilder;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.group6.java16.cybersoft.common.model.BaseEntity;
+import com.group6.java16.cybersoft.role.model.ELGroup;
+import com.group6.java16.cybersoft.user.model.ELUser;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
@@ -48,4 +49,17 @@ public class ELUser extends BaseEntity {
 
 	private String phone;
 
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinTable(name = "el_group_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+	private Set<ELGroup> groups = new LinkedHashSet<ELGroup>();
+
+	public void addGroup(ELGroup group) {
+		groups.add(group);
+		group.getUsers().add(this);
+	}
+
+	public void removeGroup(ELGroup group) {
+		groups.remove(group);
+		group.getUsers().remove(this);
+	}
 }
