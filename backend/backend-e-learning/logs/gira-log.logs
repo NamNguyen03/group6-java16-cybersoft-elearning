@@ -1,42 +1,46 @@
-07:53:17 [background-preinit] INFO    --- o.h.v.i.u.Version - HV000001: Hibernate Validator 6.2.2.Final
-07:53:17 [main] INFO    --- c.g.j.c.Application - Starting Application using Java 11.0.12 on nam with PID 5265 (/media/nam/f9ab70ee-682c-4adc-90fa-bcb7cf204ee2/code/code_public/e-learning/repo/backend/backend-e-learning/target/classes started by nam in /media/nam/f9ab70ee-682c-4adc-90fa-bcb7cf204ee2/code/code_public/e-learning/repo/backend/backend-e-learning)
-07:53:17 [main] DEBUG   --- c.g.j.c.Application - Running with Spring Boot v2.5.10, Spring v5.3.16
-07:53:17 [main] INFO    --- c.g.j.c.Application - No active profile set, falling back to 1 default profile: "default"
-07:53:18 [main] INFO    --- o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-07:53:18 [main] INFO    --- o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 50 ms. Found 4 JPA repository interfaces.
-07:53:18 [main] INFO    --- o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-07:53:18 [main] INFO    --- o.a.c.h.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-07:53:18 [main] INFO    --- o.a.c.c.StandardService - Starting service [Tomcat]
-07:53:18 [main] INFO    --- o.a.c.c.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.58]
-07:53:18 [main] INFO    --- o.a.c.c.C.[.[.[/] - Initializing Spring embedded WebApplicationContext
-07:53:18 [main] INFO    --- o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1190 ms
-07:53:18 [main] INFO    --- o.f.c.i.l.VersionPrinter - Flyway Community Edition 7.7.3 by Redgate
-07:53:18 [main] INFO    --- c.z.h.HikariDataSource - HikariPool-1 - Starting...
-07:53:18 [main] INFO    --- c.z.h.HikariDataSource - HikariPool-1 - Start completed.
-07:53:18 [main] INFO    --- o.f.c.i.d.b.DatabaseType - Database: jdbc:postgresql://localhost:5432/elearning (PostgreSQL 14.2)
-07:53:18 [main] WARN    --- o.f.c.i.d.b.Database - Flyway upgrade recommended: org.flywaydb.core.internal.database.postgresql.PostgreSQLDatabaseType@53ba1175 14.2 is newer than this version of Flyway and support has not been tested. The latest supported version of org.flywaydb.core.internal.database.postgresql.PostgreSQLDatabaseType@53ba1175 is 13.
-07:53:18 [main] INFO    --- o.f.c.i.c.DbValidate - Successfully validated 6 migrations (execution time 00:00.017s)
-07:53:18 [main] INFO    --- o.f.c.i.c.DbMigrate - Current version of schema "public": 6
-07:53:18 [main] INFO    --- o.f.c.i.c.DbMigrate - Schema "public" is up to date. No migration necessary.
-07:53:19 [main] INFO    --- o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-07:53:19 [main] INFO    --- o.h.Version - HHH000412: Hibernate ORM core version 5.4.33
-07:53:19 [main] INFO    --- o.h.a.c.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-07:53:19 [main] INFO    --- o.h.d.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-07:53:19 [main] INFO    --- o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-07:53:19 [main] INFO    --- o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-07:53:19 [main] DEBUG   --- c.g.j.c.s.j.JwtAuthorizationFilter - Filter 'jwtAuthorizationFilter' configured for use
-07:53:20 [main] WARN    --- o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-07:53:20 [main] INFO    --- o.s.b.a.e.w.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
-07:53:20 [main] INFO    --- s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-07:53:20 [main] INFO    --- o.s.s.w.DefaultSecurityFilterChain - Will not secure Ant [pattern='/api/v1/**']
-07:53:20 [main] INFO    --- o.a.c.h.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-07:53:20 [main] INFO    --- o.s.b.w.e.t.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-07:53:20 [main] INFO    --- s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
-07:53:20 [main] INFO    --- s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
-07:53:20 [main] INFO    --- s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
-07:53:20 [main] INFO    --- s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: searchUsingGET_1
-07:53:20 [main] INFO    --- s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: searchUsingGET_2
-07:53:20 [main] INFO    --- c.g.j.c.Application - Started Application in 3.702 seconds (JVM running for 4.094)
-07:53:47 [http-nio-8080-exec-1] INFO    --- o.a.c.c.C.[.[.[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-07:53:47 [http-nio-8080-exec-1] INFO    --- o.s.w.s.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-07:53:47 [http-nio-8080-exec-1] INFO    --- o.s.w.s.DispatcherServlet - Completed initialization in 2 ms
+19:11:28 [background-preinit] INFO    --- o.h.v.i.u.Version - HV000001: Hibernate Validator 6.2.2.Final
+19:11:28 [main] INFO    --- c.g.j.c.Application - Starting Application using Java 11.0.12 on DESKTOP-FBCS80O with PID 18348 (C:\Users\trunghau\OneDrive\Desktop\Elearning_new\group6-java16-cybersoft-elearning\backend\backend-e-learning\target\classes started by trunghau in C:\Users\trunghau\OneDrive\Desktop\Elearning_new\group6-java16-cybersoft-elearning\backend\backend-e-learning)
+19:11:28 [main] DEBUG   --- c.g.j.c.Application - Running with Spring Boot v2.5.10, Spring v5.3.16
+19:11:28 [main] INFO    --- c.g.j.c.Application - No active profile set, falling back to 1 default profile: "default"
+19:11:31 [main] INFO    --- o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+19:11:32 [main] INFO    --- o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 271 ms. Found 4 JPA repository interfaces.
+19:11:34 [main] INFO    --- o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+19:11:34 [main] INFO    --- o.a.c.h.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+19:11:34 [main] INFO    --- o.a.c.c.StandardService - Starting service [Tomcat]
+19:11:34 [main] INFO    --- o.a.c.c.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.58]
+19:11:34 [main] INFO    --- o.a.c.c.C.[.[.[/] - Initializing Spring embedded WebApplicationContext
+19:11:34 [main] INFO    --- o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 6121 ms
+19:11:36 [main] INFO    --- o.f.c.i.l.VersionPrinter - Flyway Community Edition 7.7.3 by Redgate
+19:11:36 [main] INFO    --- c.z.h.HikariDataSource - HikariPool-1 - Starting...
+19:11:37 [main] INFO    --- c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+19:11:37 [main] INFO    --- o.f.c.i.d.b.DatabaseType - Database: jdbc:postgresql://localhost:55419/elearning (PostgreSQL 14.2)
+19:11:37 [main] WARN    --- o.f.c.i.d.b.Database - Flyway upgrade recommended: org.flywaydb.core.internal.database.postgresql.PostgreSQLDatabaseType@f810c18 14.2 is newer than this version of Flyway and support has not been tested. The latest supported version of org.flywaydb.core.internal.database.postgresql.PostgreSQLDatabaseType@f810c18 is 13.
+19:11:38 [main] INFO    --- o.f.c.i.c.DbValidate - Successfully validated 6 migrations (execution time 00:00.404s)
+19:11:38 [main] INFO    --- o.f.c.i.c.DbMigrate - Current version of schema "public": 6
+19:11:38 [main] INFO    --- o.f.c.i.c.DbMigrate - Schema "public" is up to date. No migration necessary.
+19:11:38 [main] INFO    --- o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+19:11:38 [main] INFO    --- o.h.Version - HHH000412: Hibernate ORM core version 5.4.33
+19:11:39 [main] INFO    --- o.h.a.c.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+19:11:39 [main] INFO    --- o.h.d.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+19:11:42 [main] INFO    --- o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+19:11:42 [main] INFO    --- o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+19:11:43 [main] DEBUG   --- c.g.j.c.s.j.JwtAuthorizationFilter - Filter 'jwtAuthorizationFilter' configured for use
+19:11:44 [main] WARN    --- o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+19:11:45 [main] INFO    --- o.s.b.a.e.w.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+19:11:46 [main] INFO    --- s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+19:11:47 [main] INFO    --- o.s.s.w.DefaultSecurityFilterChain - Will not secure Ant [pattern='/api/v1/**']
+19:11:48 [main] INFO    --- o.a.c.h.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+19:11:48 [main] INFO    --- o.s.b.w.e.t.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+19:11:48 [main] INFO    --- s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
+19:11:48 [main] INFO    --- s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+19:11:48 [main] INFO    --- s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
+19:11:48 [main] INFO    --- s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: searchUsingGET_1
+19:11:48 [main] INFO    --- s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: searchUsingGET_2
+19:11:48 [main] INFO    --- c.g.j.c.Application - Started Application in 21.755 seconds (JVM running for 23.821)
+19:12:05 [http-nio-8080-exec-2] INFO    --- o.a.c.c.C.[.[.[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+19:12:05 [http-nio-8080-exec-2] INFO    --- o.s.w.s.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+19:12:05 [http-nio-8080-exec-2] INFO    --- o.s.w.s.DispatcherServlet - Completed initialization in 12 ms
+22:20:38 [HikariPool-1 housekeeper] WARN    --- c.z.h.p.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3h29s598ms81탎400ns).
+11:36:04 [HikariPool-1 housekeeper] WARN    --- c.z.h.p.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13h15m33s365ms426탎600ns).
+13:03:16 [HikariPool-1 housekeeper] WARN    --- c.z.h.p.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m40s270ms448탎200ns).
+16:18:05 [HikariPool-1 housekeeper] WARN    --- c.z.h.p.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h23m16s470ms656탎700ns).
