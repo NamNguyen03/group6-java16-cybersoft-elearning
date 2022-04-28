@@ -5,6 +5,7 @@ import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
+import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.mapper.UserMapper;
@@ -111,4 +112,30 @@ public class UserManagementServiceImpl implements UserManagementService{
 
         return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
     }
+
+
+    @Override
+    public UserResponseDTO update(String id, UpdateUserDTO user) {
+        ELUser u = serviceUserHelper.getEntityById(id, userRepository, errorsUserNotFound);
+        if(serviceUserHelper.isValidString(user.getEmail())){
+            if(!u.getEmail().equals(user.getEmail()) && userRepository.existsByEmail(user.getEmail())){
+                throw new BusinessException(errorsEmailExisted);    
+            }
+            u.setEmail(user.getEmail());
+        }
+
+        if(serviceUserHelper.isValidString(user.getDepartment())){
+            u.setDepartment(user.getDepartment());
+        }
+
+        if(serviceUserHelper.isValidString(user.getMajor())){
+            u.setMajor(user.getMajor());
+        }
+        u.setStatus(user.getStatus());
+
+        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(u));
+    }
+
+
+    
 }

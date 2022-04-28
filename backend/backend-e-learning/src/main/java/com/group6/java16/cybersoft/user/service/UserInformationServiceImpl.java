@@ -66,6 +66,7 @@ public class UserInformationServiceImpl implements UserInformationService{
 
         //if firstName not existed then search all
         if(rp == null ){
+            pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
             rp = repository.findAll(pageable);
         }
 

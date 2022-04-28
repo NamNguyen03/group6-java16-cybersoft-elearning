@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
-import { UserRp } from 'src/app/api-clients/model/user.model';
+import { UpdateUserRq, UserRp } from 'src/app/api-clients/model/user.model';
 import { UserClient } from 'src/app/api-clients/user.client';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +17,7 @@ export class ListUserComponent implements OnInit {
   public user_list: UserRp[] = [];
   public searchForm: FormGroup;
   public pages = [];
-  private _pageRequest = new PageRequest(0, 2, null, true, null, null);
+  private _pageRequest = new PageRequest(0, 10, null, true, null, null);
   public pageCurrent = 1;
 
   constructor(private _userClient: UserClient, 
@@ -36,6 +36,9 @@ export class ListUserComponent implements OnInit {
     },
     delete: {
         confirmDelete: true,
+    },
+    edit: {
+      confirmSave: true,
     },
     actions: {
         custom: false,
@@ -100,7 +103,7 @@ export class ListUserComponent implements OnInit {
       let fieldNameSearch = params['fieldNameSearch'] == undefined ? '': params['fieldNameSearch'];
       let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
       this.pageCurrent = params['page'] == undefined ? 1 : params['page'];
-      this._pageRequest = new PageRequest(this.pageCurrent, 2, fieldNameSort, isIncrementSort, fieldNameSearch, valueFieldNameSearch);
+      this._pageRequest = new PageRequest(this.pageCurrent, 10, fieldNameSort, isIncrementSort, fieldNameSearch, valueFieldNameSearch);
       this.loadData();
 
   });
@@ -116,7 +119,7 @@ export class ListUserComponent implements OnInit {
   }
 
 
-  onDeleteConfirm(event) {
+  onDeleteConfirm(event: any): void {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -140,6 +143,38 @@ export class ListUserComponent implements OnInit {
         }
     });
 
+  }
+
+  onSaveConfirm(event: any): void {
+    
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let id = event.newData.id;
+        let email = event.newData.email;
+        let department = event.newData.department;
+        let major = event.newData.major;
+        let status = event.newData.status;
+        let isLoadData = false;
+
+        this._userClient.updateUser(id, new UpdateUserRq(email, status, major, department)).subscribe(
+          () => {
+            this.loadData();
+            isLoadData = true;
+            this._toastr.success('Success', 'Update User Successfully')
+          }
+        )
+        if(!isLoadData) {
+          this.loadData();
+        }
+      }});
   }
 
   search(){

@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
+import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.service.UserManagementService;
@@ -50,6 +51,13 @@ public class UserManagementController {
     @PutMapping("me")
     public Object updateMyProfile(@RequestBody UpdateMyProfileDTO rq){
         UserResponseDTO rp = service.updateMyProfile(rq);
+
+        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+    }
+
+    @PutMapping("{id}")
+    public Object updateUser(@RequestBody UpdateUserDTO rq, @PathVariable("id") String id){
+        UserResponseDTO rp = service.update(id, rq);
 
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }

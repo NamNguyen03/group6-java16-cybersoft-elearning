@@ -49,6 +49,7 @@ public class ELUser extends BaseEntity {
 	private String phone;
 
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@Builder.Default
 	@JoinTable(name = "el_group_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
 	private Set<ELGroup> groups = new LinkedHashSet<ELGroup>();
 

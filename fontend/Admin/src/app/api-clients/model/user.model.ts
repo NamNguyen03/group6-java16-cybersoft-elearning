@@ -95,3 +95,17 @@ export class UpdateMyProfileRq{
         this.phone = phone;
     }
 }
+
+export class UpdateUserRq{
+    email: string;
+    status: string;
+    major: string;
+    department: string;
+
+    constructor(email: string, status: string, major: string, department){
+        this.email = email;
+        this.status = status;
+        this.major = major;
+        this.department = department;
+    }
+}

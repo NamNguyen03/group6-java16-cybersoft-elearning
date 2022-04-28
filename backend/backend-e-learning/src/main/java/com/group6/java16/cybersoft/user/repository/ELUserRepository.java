@@ -36,4 +36,5 @@ public interface ELUserRepository extends JpaRepository<ELUser, UUID>  {
     @Query( value =  "Select u from ELUser u where u.lastName like %:lastName% ")
     Page<ELUser> searchByLastName(@Param("lastName") String lastName, Pageable pageable);
 
+
 }
