@@ -1,0 +1,69 @@
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>List Group</h5>
+                </div>
+                <div class="card-body">
+                    <div class="custom-datatable">
+                        
+                        <div class="col-xl-7">
+                            <form class="needs-validation" [formGroup]="searchForm" novalidate>
+                                <div class="search-form">
+                                    <div class="form-group row">
+                                        <label for="validationCustom01" class="col-xl-3 col-sm-4 mb-0">Field Name Sort </label>
+                                        <select class="form-control digits col-xl-8 col-sm-7"
+                                            id="exampleFormControlSelect1" name="fieldNameSort" formControlName="fieldNameSort">
+                                            <option value="">--Select--</option>
+                                            <option value ="name" >Name</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Sort </label>
+                                        <select class="form-control digits col-xl-8 col-sm-7"
+                                            id="exampleFormControlSelect1" name="isIncrementSort" formControlName="isIncrementSort">
+                                            <option value="true">Sort Increment</option>
+                                            <option value="false">Sort Descending</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Field Name Search </label>
+                                        <select class="form-control digits col-xl-8 col-sm-7"
+                                            id="exampleFormControlSelect1" name="fieldNameSearch" formControlName="fieldNameSearch">
+                                            <option value="">--Select--</option>
+                                            <option value ="name">Name</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="validationCustom03" class="col-xl-3 col-sm-4 mb-0">Value Search </label>
+                                        <input class="form-control col-xl-8 col-sm-7" id="validationCustom03"
+                                            type="text" name="valueFieldNameSearch" formControlName="valueFieldNameSearch" required="">
+                                    </div>
+                                    
+                                </div>
+                            </form>
+                            <div class="form-group row mb-0">
+                                <div class="product-buttons col-sm-8 offset-xl-3 offset-sm-4">
+                                    <button type="button" class="btn btn-primary mr-1 mb-5"(click)="search()">Search</button>
+                                  
+                                </div>
+                            </div>
+                        </div>  
+                       
+                        <div class="table-responsive">
+                                <ng2-smart-table
+                                    [settings]="settings"
+                                    [source]="list_group"
+                                    (deleteConfirm)="onDeleteConfirm($event)"
+                                    (editConfirm)="onSaveConfirm($event)"
+                                ></ng2-smart-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
