@@ -33,7 +33,15 @@ public class UserCreateDTO {
 
 	private UserStatus status = UserStatus.ACTIVE;
 
+	@NotBlank(message = "{user.first-name.not-blank}")
     private String firstName;
 
+	@NotBlank(message = "{user.last-name.not-blank}")
     private String lastName;
+
+	@NotBlank(message = "{user.department.not-blank}")
+	private String department;
+	
+	@NotBlank(message = "{user.major.not-blank}")
+	private String major;
 }

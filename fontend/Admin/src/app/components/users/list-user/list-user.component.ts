@@ -4,7 +4,9 @@ import { UserRp } from 'src/app/api-clients/model/user.model';
 import { UserClient } from 'src/app/api-clients/user.client';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { PageService } from 'src/app/shared/service/page/page.service';
 
 @Component({
   selector: 'app-list-user',
@@ -13,11 +15,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ListUserComponent implements OnInit {
   public user_list: UserRp[] = [];
-
+  public searchForm: FormGroup;
+  public pages = [];
   private _pageRequest = new PageRequest(0, 2, null, true, null, null);
+  public pageCurrent = 1;
 
-  constructor(private _userClient: UserClient, private _toastr: ToastrService, private route: ActivatedRoute) {
-    this.getPageDetails();
+  constructor(private _userClient: UserClient, 
+    private _router: Router,
+    private form: FormBuilder,
+    private _pageService: PageService,
+    private _toastr: ToastrService, 
+    private route: ActivatedRoute) {
+    
   }
 
   public settings = {
@@ -43,12 +52,12 @@ export class ListUserComponent implements OnInit {
             type: 'email',
             editable: true,
         },
-        firstName: {
-          title: 'First Name',
+        department: {
+          title: 'Department',
           editable: true,
         },
-        lastName: {
-            title: 'Last Name',
+        major: {
+            title: 'Major',
             editable: true,
         },
         status: {
@@ -69,14 +78,29 @@ export class ListUserComponent implements OnInit {
 };
 
   ngOnInit() {
-    this.loadData();
+    this.getPageDetails();
+    this.createFormSearch();
+    
   }
 
-  getPageDetails(){
-    this.route.queryParams.subscribe(params => {
-      let pageCurrent = params['page'] == (undefined || null) ? 1 : params['page'];
+  private createFormSearch() {
+    this.searchForm = this.form.group({
+      fieldNameSort:[''],
+      isIncrementSort:[''],
+      fieldNameSearch:[''],
+      valueFieldNameSearch: ['']
+    })
+  }
 
-      this._pageRequest = new PageRequest(pageCurrent, 2, null, true, null, null);
+  getPageDetails(): void{
+   
+    this.route.queryParams.subscribe(params => {
+      let fieldNameSort = params['fieldNameSort'] == undefined ? null: params['fieldNameSort'];
+      let isIncrementSort = params['isIncrementSort'] == (undefined||null) ? true : params['isIncrementSort'];
+      let fieldNameSearch = params['fieldNameSearch'] == undefined ? '': params['fieldNameSearch'];
+      let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
+      this.pageCurrent = params['page'] == undefined ? 1 : params['page'];
+      this._pageRequest = new PageRequest(this.pageCurrent, 2, fieldNameSort, isIncrementSort, fieldNameSearch, valueFieldNameSearch);
       this.loadData();
 
   });
@@ -86,6 +110,7 @@ export class ListUserComponent implements OnInit {
     this._userClient.search(this._pageRequest).subscribe(
       response =>{
         this.user_list = response.content.items;
+        this.pages = this._pageService.getPager(response.content.pageCurrent, response.content.totalPage);
       }
     );
   }
@@ -115,6 +140,36 @@ export class ListUserComponent implements OnInit {
         }
     });
 
+  }
+
+  search(){
+    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
+    let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
+    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
+    let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
+    
+    this._router.navigate(['/users/list-user'],{
+      queryParams: {
+        'page':this.pageCurrent,
+        'fieldNameSort':fieldNameSort,
+        'isIncrementSort':isIncrementSort,
+        'fieldNameSearch':fieldNameSearch,
+        'valueFieldNameSearch':valueFieldNameSearch}
+
+    })
+  }
+
+  clickPage(index: string): void {
+    if(index == 'next'){
+      this.pageCurrent++;
+    }
+    if(index == 'prev'){
+      this.pageCurrent--;
+    }
+    if(index != 'prev' && index != 'next'){
+      this.pageCurrent = Number(index);
+    }
+    this.search();
   }
 }
 

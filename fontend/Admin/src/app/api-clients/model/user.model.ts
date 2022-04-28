@@ -7,8 +7,10 @@ export class UserCreate {
     status: string;
     firstName: string;
     lastName: string;
+    department: string;
+    major: string;
 
-    constructor(username: string, password: string, displayName: string, email: string, status: string, firstName: string, lastName: string){
+    constructor(username: string, password: string, displayName: string, email: string, status: string, firstName: string, lastName: string, department: string, major: string){
         this.username = username;
         this.password = password;
         this.displayName = displayName;
@@ -16,6 +18,8 @@ export class UserCreate {
         this.status = status;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.department = department;
+        this.major = major;
     }
 }
 

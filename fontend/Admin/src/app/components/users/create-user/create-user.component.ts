@@ -27,7 +27,9 @@ export class CreateUserComponent implements OnInit {
       password: ['',[Validators.required, Validators.minLength(6)]],
       username: ['', Validators.required],
       status: ['' , Validators.required],
-      displayName: ['', Validators.required]
+      displayName: ['', Validators.required],
+      department: ['', Validators.required],
+      major: ['', Validators.required],
     })
   }
 
@@ -43,9 +45,11 @@ export class CreateUserComponent implements OnInit {
     let lastName = this.accountForm.controls['lastName'].value;
     let status = this.accountForm.controls['status'].value;
     let displayName = this.accountForm.controls['displayName'].value;
+    let department = this.accountForm.controls['department'].value;
+    let major = this.accountForm.controls['major'].value;
 
     if(this.accountForm.valid){
-     this.userClient.createUser(new UserCreate(username, password, displayName, email, status, firstName, lastName)).subscribe(() => {
+     this.userClient.createUser(new UserCreate(username, password, displayName, email, status, firstName, lastName, department, major)).subscribe(() => {
       this._toastr.success('Success', 'Create User success!');
      })
     }

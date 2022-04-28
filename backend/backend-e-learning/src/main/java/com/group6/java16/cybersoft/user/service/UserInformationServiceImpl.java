@@ -34,7 +34,7 @@ public class UserInformationServiceImpl implements UserInformationService{
         Pageable pageable = PageRequest.of(page, size);
         Page<ELUser> rp = null;
 
-        if (null != fieldNameSort && fieldNameSort.matches("username|displayName|email|firstName|lastName")) {
+        if (null != fieldNameSort && fieldNameSort.matches("username|displayName|email|firstName|lastName|major|department|status")) {
             pageable = PageRequest.of(page, size, isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
 
         }

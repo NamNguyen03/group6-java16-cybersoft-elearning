@@ -1,7 +1,5 @@
 package com.group6.java16.cybersoft.user.service;
 
-import java.io.IOException;
-
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
@@ -46,18 +44,6 @@ public class UserManagementServiceImpl implements UserManagementService{
     @Override
     public UserResponseDTO createUser(UserCreateDTO user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        
-//        // map dto to user
-//        ELUser u = UserMapper.INSTANCE.toModel(user);
-//        // save user return user
-//        
-//        ELUser usered = userRepository.save(u);
-//        
-//        // map user to dto
-//        
-//        UserResponseDTO rp = UserMapper.INSTANCE.toUserResponseDTO(usered);
-//        
-//        return rp;
         
         return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(UserMapper.INSTANCE.toModel(user)));
     }
