@@ -39,5 +39,17 @@ jobs:
 
     - name: Build with Maven
       run: cd backend/backend-e-learning && mvn -B package --file pom.xml
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
 
+    - name: Install dependencies
+      run: npm install
 
+    - name: Run tests
+      run: cd fontend/Admin && npm run test:headless
+
+    - name: Build
+      run: cd fontend/Admin &&  npm run build:prod
