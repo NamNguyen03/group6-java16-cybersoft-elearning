@@ -16,4 +16,6 @@ public interface ELGroupRepository extends JpaRepository<ELGroup, UUID> {
     @Query(value = "Select r from ELGroup r where r.name like %:name% ")
     Page<ELGroup> searchByName(@Param("name") String name, Pageable pageable);
 
+    boolean existsByName(String name);
+
 }
