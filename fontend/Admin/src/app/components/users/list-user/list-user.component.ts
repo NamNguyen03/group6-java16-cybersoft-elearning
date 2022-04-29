@@ -19,6 +19,7 @@ export class ListUserComponent implements OnInit {
   public pages = [];
   private _pageRequest = new PageRequest(0, 10, null, true, null, null);
   public pageCurrent = 1;
+  public isSearch =false;
 
   constructor(private _userClient: UserClient, 
     private _router: Router,
@@ -86,6 +87,9 @@ export class ListUserComponent implements OnInit {
     
   }
 
+  toggleSearch(){
+    this.isSearch=!this.isSearch;
+  }
   private createFormSearch() {
     this.searchForm = this.form.group({
       fieldNameSort:[''],

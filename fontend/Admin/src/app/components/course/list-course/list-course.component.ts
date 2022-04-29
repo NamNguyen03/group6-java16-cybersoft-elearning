@@ -13,7 +13,7 @@ import { PageRequest } from 'src/app/api-clients/model/common.model';
   styleUrls: ['./list-course.component.scss']
 })
 export class ListCourseComponent implements OnInit {
-
+  public isSearch = false;
   public course_list = [];
   public selected = [];
   public searchForm: FormGroup;
@@ -41,6 +41,9 @@ export class ListCourseComponent implements OnInit {
     this.selected.push(...selected);
   }
 
+  toggleSearch(){
+    this.isSearch=!this.isSearch;
+  }
   public settings = {
     pager: {
         display: true,

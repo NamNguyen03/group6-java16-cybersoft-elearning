@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 export class ListGroupComponent implements OnInit {
   public list_group: BaseGroup[] = [];
   public searchForm: FormGroup;
+  public isSearch = false;
 
   pageRequest: PageRequest = new PageRequest(1,
     10,
@@ -44,7 +45,9 @@ export class ListGroupComponent implements OnInit {
     this.loadData();
   }
 
-
+  toggleSearch(){
+    this.isSearch=!this.isSearch;
+  }
   public settings = {
     pager: {
         display: true,
