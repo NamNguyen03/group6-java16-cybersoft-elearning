@@ -44,6 +44,8 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '16'
+    - name: install angular 13
+      run: npm install -g @angular/cli@13
 
     - name: Install dependencies
       run: cd fontend/Admin && npm install
