@@ -46,7 +46,7 @@ jobs:
         node-version: '16'
 
     - name: Install dependencies
-      run: cd fontend/Admin && npm install
+      run: cd fontend/Admin && npm install  --force
 
     - name: Run tests
       run: cd fontend/Admin && npm run test:headless
