@@ -42,7 +42,7 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 		ELCourse c = CourseMapper.INSTANCE.toModel(dto);
 
-		// save course return user
+		// save course return course
 		ELCourse cour = courseRepository.save(c);
 
 		// Map userv to dto

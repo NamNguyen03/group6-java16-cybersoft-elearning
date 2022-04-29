@@ -11,7 +11,7 @@ import com.group6.java16.cybersoft.course.model.ELCourse;
 public interface CourseMapper {
 	CourseMapper INSTANCE = Mappers.getMapper(CourseMapper.class);
     
-    ELCourse toModel(CourseCreateDTO user);
+    ELCourse toModel(CourseCreateDTO course);
 
     CourseReponseDTO toCourseResponseDTO(ELCourse course);
 }
