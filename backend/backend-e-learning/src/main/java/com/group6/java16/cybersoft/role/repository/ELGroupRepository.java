@@ -13,9 +13,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ELGroupRepository extends JpaRepository<ELGroup, UUID> {
-	@Query( value =  "Select r from ELGroup r where r.name like %:name% ")
-	Page<ELGroup> searchByName(@Param("name")String name, Pageable pageable);
-	
-	
-    
+    @Query(value = "Select r from ELGroup r where r.name like %:name% ")
+    Page<ELGroup> searchByName(@Param("name") String name, Pageable pageable);
+
 }

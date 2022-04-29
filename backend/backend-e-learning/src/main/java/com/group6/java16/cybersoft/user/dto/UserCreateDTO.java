@@ -16,32 +16,32 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 public class UserCreateDTO {
-    @Size(min = 3, max = 100, message = "{user.username.size}")
+	@Size(min = 3, max = 100, message = "{user.username.size}")
 	@UniqueUsername(message = "{user.username.existed}")
 	private String username;
 
-    @Size(min = 6, max = 100, message = "{user.password.size}")
+	@Size(min = 6, max = 100, message = "{user.password.size}")
 	private String password;
 
 	@NotBlank(message = "{user.display-name.not-blank")
 	private String displayName;
-	
-    @Email(message = "{user.email.invalid}")
+
+	@Email(message = "{user.email.invalid}")
 	@UniqueEmail(message = "{user.email.existed}")
-    @Size(min = 3, max = 100, message = "{user.email.size}")
+	@Size(min = 3, max = 100, message = "{user.email.size}")
 	private String email;
 
 	private UserStatus status = UserStatus.ACTIVE;
 
 	@NotBlank(message = "{user.first-name.not-blank}")
-    private String firstName;
+	private String firstName;
 
 	@NotBlank(message = "{user.last-name.not-blank}")
-    private String lastName;
+	private String lastName;
 
 	@NotBlank(message = "{user.department.not-blank}")
 	private String department;
-	
+
 	@NotBlank(message = "{user.major.not-blank}")
 	private String major;
 }
