@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 export class ListRoleComponent implements OnInit {
   public list_role: BaseRole[] = [];
   public searchForm: FormGroup;
+  public isSearch = false;
 
   pageRequest: PageRequest = new PageRequest(1,
     10,
@@ -29,22 +30,22 @@ export class ListRoleComponent implements OnInit {
               private toastr: ToastrService,
               private _router: Router,
               private route: ActivatedRoute) {
+
     this.searchForm = this.form.group({
       fieldNameSort:[''],
       isIncrementSort:[''],
       fieldNameSearch:[''],
       valueFieldNameSearch: ['']
     })
-
-
-
-   
   }
   ngOnInit(): void {
     
     this.loadData();
   }
 
+  toggleSearch(){
+    this.isSearch=!this.isSearch;
+  }
 
   public settings = {
     pager: {
@@ -104,11 +105,9 @@ export class ListRoleComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
         if (result.isConfirmed) {
-          let isLoadData = false;
-          
+          let isLoadData = false;     
           this.roleClient.deleteById(event.data.id).subscribe(
-            response => 
-            { 
+            () => { 
               isLoadData=true;
 
               this.toastr.success('Success','Delete role success')
@@ -116,12 +115,7 @@ export class ListRoleComponent implements OnInit {
             });
             if(!isLoadData){
               this.loadData();
-
-            }
-        
-           }
-    });
-    
+            }}});
   }
 
 
@@ -140,19 +134,14 @@ export class ListRoleComponent implements OnInit {
         console.log(event.newdata)
           let roleUpdate = new BaseRole(event.newData.name,event.newData.description)
          this.roleClient.updateById(event.data.id,roleUpdate).subscribe(
-          () => 
-            { 
+          () =>{ 
               isLoadData=true;
               this.toastr.success('Success','Update role success')
               this.loadData();
             });
             if(!isLoadData){
               this.loadData();
-
-            }
-                  
-           }
-          });
+            }}});
   }
 
   search(){
@@ -160,14 +149,9 @@ export class ListRoleComponent implements OnInit {
     let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
     let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
     let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
+
     this._router.navigate(['/roles/list-role'],{
       queryParams: {'fieldNameSort':fieldNameSort,'isIncrementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
-
-    })
-    
-    
-    
-  }
+    })}
   
-
 }

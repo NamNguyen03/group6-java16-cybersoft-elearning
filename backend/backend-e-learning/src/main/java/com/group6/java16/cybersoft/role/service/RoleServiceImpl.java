@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
@@ -40,7 +41,8 @@ public class RoleServiceImpl implements RoleService {
 	@Value("${role.id.not-found}")
 	private String messagesRoleIdNotFound;
 
-
+	@Value("${role.name.existed}")
+	private String messagesRoleNameExisted;
 
 	@Override
 	public RoleResponseDTO createRole( RoleDTO dto) {
@@ -84,14 +86,15 @@ public class RoleServiceImpl implements RoleService {
 	public RoleResponseDTO update(String id, RoleDTO dto) {
 		ELRole role = roleServiceHelper.getEntityById(id, roleRepository, messagesRoleIdNotFound);
 
-
-		if(!role.getName().equals(dto.getName())){
-
-			if(!roleRepository.existsByName(dto.getName())){
-
-				role.setName(dto.getName());
+		if(roleServiceHelper.isValidString(dto.getName()) && !role.getName().equals(dto.getName())){
+	
+			if(roleRepository.existsByName(dto.getName())){
+				throw new BusinessException(messagesRoleNameExisted);
 			}
+
+			role.setName(dto.getName());
 		}
+
 		if(roleServiceHelper.isValidString(dto.getDescription())) {
 			role.setDescription(dto.getDescription());
 		}

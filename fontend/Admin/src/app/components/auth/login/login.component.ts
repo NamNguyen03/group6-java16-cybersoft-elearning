@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.valid){
       this.userClient.login(new LoginRequest(username, password))
         .subscribe(response => {
-          this.userService.setJWT(response.content.jwt ,response.content.displayName);
+          this.userService.setJWT(response.content);
           this.route.navigate(['dashboard/default']);
         });
     }
