@@ -36,20 +36,17 @@ public class ELRole extends BaseEntity {
 	@JsonIgnore
 	@ManyToMany(mappedBy = "roles")
 	private Set<ELGroup> groups = new LinkedHashSet<ELGroup>();
-	
+
 	@Builder.Default
 	@JsonIgnore
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-	@JoinTable(name = "el_role_program",
-				joinColumns = @JoinColumn(name = "role_id"),
-				inverseJoinColumns = @JoinColumn(name = "program_id"))
-    private Set<ELProgram> programs = new LinkedHashSet();
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	@JoinTable(name = "el_role_program", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "program_id"))
+	private Set<ELProgram> programs = new LinkedHashSet();
 
-    
 	public void addProgram(ELProgram program) {
-        programs.add(program);
-        program.getRoles().add(this);
+		programs.add(program);
+		program.getRoles().add(this);
 
-    }
+	}
 
 }
