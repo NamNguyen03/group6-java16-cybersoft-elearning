@@ -1,6 +1,6 @@
 import { environment } from './../../environments/environment';
 import { Injectable } from "@angular/core";
-import { LoginRequest, UserCreate, UserRp, LoginResponse, UpdateMyProfileRq, UpdateUserRq } from './model/user.model';
+import { LoginRequest, UserCreate, UserRp, UpdateMyProfileRq, UpdateUserRq } from './model/user.model';
 import { Observable } from 'rxjs';
 import { PageRequest, PageResponse, Response } from './model/common.model';
 import { HttpClient } from '@angular/common/http';
@@ -21,8 +21,8 @@ export class UserClient {
 
     }
 
-    login(rq: LoginRequest): Observable<Response<LoginResponse>>{
-        return this.httpClient.post<Response<LoginResponse>>(this._apiLogin, rq);
+    login(rq: LoginRequest): Observable<Response<string>>{
+        return this.httpClient.post<Response<string>>(this._apiLogin, rq);
 
     }   
 

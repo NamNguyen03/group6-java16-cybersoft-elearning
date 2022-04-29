@@ -1,7 +1,9 @@
+import { UserRp } from 'src/app/api-clients/model/user.model';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { NavService, Menu } from '../../service/nav.service';
 import { UserService } from '../../service/user/user.service';
+import { UserClient } from 'src/app/api-clients/user.client';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,16 +12,26 @@ import { UserService } from '../../service/user/user.service';
   encapsulation: ViewEncapsulation.None
 })
 export class SidebarComponent {
-  public displayName = 'Sidebar';
+  public userCurrent: UserRp;
   public menuItems: Menu[];
   public url: any;
   public fileurl: any;
 
-  constructor(private router: Router, public navServices: NavService, private userService: UserService) {
+  constructor(private router: Router, 
+    private _userClient: UserClient,
+    public navServices: NavService, 
+    private _userService: UserService) {
+
+    console.log(_userService.getTokenRemainingTime())
+    if(_userService.getTokenRemainingTime()){
+      this._userClient.getMyProfile().subscribe(rp => this._userService.setUserCurrent(rp.content))
+    }
+
+    this._userService.$userCurrent.subscribe(user => this.userCurrent = user);
+    
+
     this.navServices.items.subscribe(menuItems => {
       this.menuItems = menuItems
-
-      userService.$displayName.subscribe(displayName => {this.displayName = displayName});
 
       this.router.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {

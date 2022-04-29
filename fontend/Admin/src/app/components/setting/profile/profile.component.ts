@@ -91,7 +91,7 @@ export class ProfileComponent implements OnInit {
         this.profile = response.content;
         this.isUpdateProfile = false;
         this._toastr.success('Success', 'Update Profile success!');
-        this._userService.setDisplayName(response.content.displayName);
+        this._userService.setUserCurrent(response.content);
       }
     )
   }
