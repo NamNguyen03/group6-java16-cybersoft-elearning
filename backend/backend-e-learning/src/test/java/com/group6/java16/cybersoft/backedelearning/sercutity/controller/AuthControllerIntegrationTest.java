@@ -45,7 +45,6 @@ public class AuthControllerIntegrationTest {
     @Test
     public void givenJsonObject_whenLoginDTOValidIsUsedLogin_theReturnResponseStatus200() throws Exception{
         LoginRequestDTO rq = new LoginRequestDTO("nam","1236782123");
-
         Gson gson = new Gson();
         String json = gson.toJson(rq);
 

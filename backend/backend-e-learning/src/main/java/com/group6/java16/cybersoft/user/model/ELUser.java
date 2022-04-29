@@ -17,6 +17,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Entity
+@Builder
 @Table(name = "el_user")
 public class ELUser extends BaseEntity {
 	private String username;

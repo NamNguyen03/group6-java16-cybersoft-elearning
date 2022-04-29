@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class UserResponseDTO {
     private UUID id;
 
@@ -28,6 +29,8 @@ public class UserResponseDTO {
 	
 	private String major;
 	
+	private String phone;
+
 	private String hobbies;
 	
 	private String facebook;

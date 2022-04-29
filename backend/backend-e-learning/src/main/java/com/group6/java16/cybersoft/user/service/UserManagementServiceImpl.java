@@ -60,15 +60,15 @@ public class UserManagementServiceImpl implements UserManagementService {
         String username = UserPrincipal.getUsernameCurrent();
         ELUser user = userRepository.findByUsername(username).get();
 
-        if (serviceUserHelper.isValidString(rq.getDisplayName())) {
-            user.setDisplayName(rq.getDisplayName());
-        }
-
         if (serviceUserHelper.isValidString(rq.getEmail())) {
             if (!rq.getEmail().equals(user.getEmail()) && userRepository.existsByEmail(rq.getEmail())) {
                 throw new BusinessException(errorsEmailExisted);
             }
             user.setEmail(rq.getEmail());
+        }
+        
+        if (serviceUserHelper.isValidString(rq.getDisplayName())) {
+            user.setDisplayName(rq.getDisplayName());
         }
 
         if (serviceUserHelper.isValidString(rq.getFirstName())) {
