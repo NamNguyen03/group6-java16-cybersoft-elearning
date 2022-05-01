@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { LoginRequest, UserCreate, UserRp, UpdateMyProfileRq, UpdateUserRq } from './model/user.model';
 import { Observable } from 'rxjs';
 import { PageRequest, PageResponse, Response } from './model/common.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -12,6 +12,7 @@ export class UserClient {
     private _apiEndpoint = `${environment.api}users`
     private _apiLogin = `${environment.api}auth/login`;
     private _apiMyProfile = `${this._apiEndpoint}/me`;
+    private _apiUpdateAvatar = `${this._apiMyProfile}/avatar`;
 
     constructor(protected httpClient: HttpClient) {}
 
@@ -48,4 +49,12 @@ export class UserClient {
     updateUser(id, rq: UpdateUserRq): Observable<Response<UserRp>>{
         return this.httpClient.put<Response<UserRp>>(this._apiEndpoint + "/" + id, rq)
     }
+
+    uploadAvatar( file: File): Observable<Response<UserRp>>{
+
+        let formData = new FormData();
+        formData.append('file', file);
+    
+        return this.httpClient.put<Response<UserRp>>(this._apiUpdateAvatar, formData);
+      }
 }

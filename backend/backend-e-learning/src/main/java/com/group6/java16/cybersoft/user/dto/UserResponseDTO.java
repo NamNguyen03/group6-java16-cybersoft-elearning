@@ -24,6 +24,8 @@ public class UserResponseDTO {
 	private String lastName;
 
 	private String avatar;
+
+	private String gender;
 	
 	private String department;
 	

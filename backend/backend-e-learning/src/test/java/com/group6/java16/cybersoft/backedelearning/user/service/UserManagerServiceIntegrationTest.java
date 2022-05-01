@@ -97,6 +97,7 @@ public class UserManagerServiceIntegrationTest {
             .username("nam")
             .displayName("Nam")
             .firstName("Nguyen")
+            .gender("male")
             .lastName("Nam")
             .hobbies("swimming")
             .facebook("facebook.com")
