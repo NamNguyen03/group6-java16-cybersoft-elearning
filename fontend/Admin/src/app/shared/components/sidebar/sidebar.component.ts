@@ -22,7 +22,6 @@ export class SidebarComponent {
     public navServices: NavService, 
     private _userService: UserService) {
 
-    console.log(_userService.getTokenRemainingTime())
     if(_userService.getTokenRemainingTime()){
       this._userClient.getMyProfile().subscribe(rp => this._userService.setUserCurrent(rp.content))
     }
