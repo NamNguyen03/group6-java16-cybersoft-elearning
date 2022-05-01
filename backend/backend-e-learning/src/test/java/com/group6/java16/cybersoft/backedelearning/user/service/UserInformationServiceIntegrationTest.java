@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
@@ -16,12 +17,16 @@ import com.group6.java16.cybersoft.user.service.UserInformationServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @SpringBootTest
 public class UserInformationServiceIntegrationTest {
@@ -52,5 +57,46 @@ public class UserInformationServiceIntegrationTest {
         assertEquals(expected.getItems(), rp.getItems());
         assertEquals(expected.getTotalPage(), rp.getTotalPage());
         assertEquals(expected.getPageCurrent(), rp.getPageCurrent());
+    }
+
+    @Test
+    public void whenGetMyProfile_theReturnUserResponse(){
+        
+        Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("nam");
+
+        ELUser user =  ELUser.builder()
+            .email("nam@gmail.com")
+            .username("nam")
+            .displayName("Nam")
+            .firstName("Nguyen")
+            .lastName("Nam")
+            .hobbies("swimming")
+            .facebook("facebook.com")
+            .phone("11111222222")
+            .build();
+
+        when(userRepository.findByUsername("nam")).thenReturn(Optional.of(user));
+
+    
+        UserResponseDTO expected = UserResponseDTO.builder()
+            .email("nam@gmail.com")
+            .username("nam")
+            .displayName("Nam")
+            .firstName("Nguyen")
+            .lastName("Nam")
+            .hobbies("swimming")
+            .facebook("facebook.com")
+            .phone("11111222222")
+            .build();
+
+
+        when(mapper.toUserResponseDTO(user)).thenReturn(expected);
+
+        assertEquals(expected, service.getMyProfile());
     }
 }

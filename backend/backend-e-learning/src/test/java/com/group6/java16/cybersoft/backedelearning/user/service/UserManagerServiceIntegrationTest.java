@@ -88,9 +88,7 @@ public class UserManagerServiceIntegrationTest {
             .username("nam")
             .build();
 
-        when(userRepository.findByUsername("nam")).thenReturn(Optional.of(
-           user
-        ));
+        when(userRepository.findByUsername("nam")).thenReturn(Optional.of(user));
 
         when(userRepository.save(user)).thenReturn(user);
     
@@ -154,5 +152,6 @@ public class UserManagerServiceIntegrationTest {
         assertEquals(expected, service.update(id.toString(), rq));
     }
 
+   
 
 }

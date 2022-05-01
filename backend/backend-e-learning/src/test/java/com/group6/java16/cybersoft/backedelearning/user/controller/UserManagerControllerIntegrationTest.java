@@ -9,6 +9,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import java.util.UUID;
 
 import com.google.gson.Gson;
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
@@ -86,4 +87,27 @@ public class UserManagerControllerIntegrationTest {
             .andExpect(status().isOk())
             .andExpect(content().string(containsString(results)));
     }
+
+    @Test
+    @WithMockUser("nam")
+    public void givenJsonObject_whenUpdateUser_theReturnStatus400AndResponseHelper() throws Exception{
+        UpdateUserDTO rq = UpdateUserDTO
+            .builder()
+            .major("IT")
+            .build();
+        Gson gson = new Gson();
+        String json = gson.toJson(rq);
+
+        when( service.update("5117d63c-a38e-4042-9f69-94f7d7777985",rq)).thenThrow(new BusinessException("User not found."));
+
+        String results = "{\"hasErrors\":true,\"content\":null,\"errors\":\"User not found.\"";
+
+        mvc.perform(put("/api/v1/users/5117d63c-a38e-4042-9f69-94f7d7777985")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andDo(print())
+            .andExpect(status().isBadRequest())
+            .andExpect(content().string(containsString(results)));
+    }
+    
 }
