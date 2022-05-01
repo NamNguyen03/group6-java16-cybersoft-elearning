@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
+import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.service.UserManagementService;
 
@@ -52,6 +53,33 @@ public class UserManagerControllerIntegrationTest {
         String results = "\"hasErrors\":false,\"content\":{\"id\":\"5117d63c-a38e-4042-9f69-94f7d7777985\",\"username\":\"nam\",\"displayName\":\"Nam Nguyen\"";
 
         mvc.perform(put("/api/v1/users/me")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().string(containsString(results)));
+    }
+
+    @Test
+    @WithMockUser("nam")
+    public void givenJsonObject_whenUpdateUser_theReturnStatus200AndResponseHelper() throws Exception{
+        UpdateUserDTO rq = UpdateUserDTO
+            .builder()
+            .major("IT")
+            .build();
+        Gson gson = new Gson();
+        String json = gson.toJson(rq);
+
+        when( service.update("5117d63c-a38e-4042-9f69-94f7d7777985",rq)).thenReturn(UserResponseDTO
+            .builder()
+            .id(UUID.fromString("5117d63c-a38e-4042-9f69-94f7d7777985"))
+            .username("nam")
+            .displayName("Nam Nguyen")
+            .build());
+        
+        String results = "\"hasErrors\":false,\"content\":{\"id\":\"5117d63c-a38e-4042-9f69-94f7d7777985\",\"username\":\"nam\",\"displayName\":\"Nam Nguyen\"";
+
+        mvc.perform(put("/api/v1/users/5117d63c-a38e-4042-9f69-94f7d7777985")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
             .andDo(print())

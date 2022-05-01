@@ -51,7 +51,7 @@ public class AuthServiceIntegrationTest {
         
         LoginRequestDTO loginDTO = new LoginRequestDTO("nam","12345665");
 
-        ELUser user = new ELUser().builder()
+        ELUser user = ELUser.builder()
             .password("xyz123")
             .username("nam")
             .build();
@@ -67,7 +67,7 @@ public class AuthServiceIntegrationTest {
     public void whenLoginDTOValidIsUsedLogin_thenReturnJWT(){
         LoginRequestDTO loginDTO = new LoginRequestDTO("nam","12345665");
 
-        ELUser user = new ELUser().builder()
+        ELUser user = ELUser.builder()
             .password("xyz123")
             .username("nam")
             .build();

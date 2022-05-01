@@ -1,5 +1,6 @@
 package com.group6.java16.cybersoft.course.service;
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
@@ -24,13 +26,13 @@ import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class CourseManagementServiceImpl implements CourseManagementService {
+public class CourseManagementServiceImpl extends ServiceHelper<ELCourse> implements CourseManagementService {
 
 	@Autowired
 	private ELCourseRepository courseRepository;
 
-	@Autowired
-	private ServiceHelper<ELCourse> serviceCourseHelper;
+	@Value("${entity.id.invalid}")
+    private String errorsIdInvalid;
 
 	@Value("${course.not-found}")
 	private String errorsCourseNotFound;
@@ -39,7 +41,6 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 	public CourseReponseDTO createCourse(CourseCreateDTO dto) {
 
 		// Map dto to course
-
 		ELCourse c = CourseMapper.INSTANCE.toModel(dto);
 
 		// save course return user
@@ -53,9 +54,10 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	@Override
 	public CourseReponseDTO updateCourse(CourseUpdateDTO rq, String id) {
-		ELCourse courseCurrent = serviceCourseHelper.getEntityById(id, courseRepository, errorsCourseNotFound);
+		ELCourse courseCurrent = getById(id);
 		ELCourse course = setUpdateCourse(courseCurrent, rq);
 		return CourseMapper.INSTANCE.toCourseResponseDTO(courseRepository.save(course));
+		
 	}
 
 	private ELCourse setUpdateCourse(ELCourse courseCurrent, CourseUpdateDTO rq) {
@@ -76,7 +78,7 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	@Override
 	public void deleteById(String id) {
-		courseRepository.delete(serviceCourseHelper.getEntityById(id, courseRepository, errorsCourseNotFound));
+		courseRepository.delete(getById(id));
 	}
 	private boolean checkString(String s) {
 		if (s == null || s.length() == 0) {
@@ -121,6 +123,21 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(), 
 	            rp.getContent().stream().map(CourseMapper.INSTANCE::toCourseResponseDTO).collect(Collectors.toList()));
+	}
+
+	@Override
+	protected String getMessageIdInvalid() {
+		return errorsIdInvalid;
+	}
+
+	@Override
+	protected JpaRepository<ELCourse, UUID> getRepository() {
+		return courseRepository;
+	}
+
+	@Override
+	protected String getErrorNotFound() {
+		return errorsCourseNotFound;
 	}
 
 }

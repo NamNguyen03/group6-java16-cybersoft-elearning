@@ -1,5 +1,7 @@
 package com.group6.java16.cybersoft.user.service;
 
+import java.util.UUID;
+
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
@@ -16,13 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class UserManagementServiceImpl implements UserManagementService {
+public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements UserManagementService {
 
     @Autowired
     private ELUserRepository userRepository;
@@ -30,14 +33,14 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Autowired
     private PasswordEncoder encoder;
 
-    @Autowired
-    private ServiceHelper<ELUser> serviceUserHelper;
-
     @Value("${user.not-found}")
     private String errorsUserNotFound;
 
     @Value("${user.email.existed}")
     private String errorsEmailExisted;
+
+    @Value("${entity.id.invalid}")
+    private String errorsIdInvalid;
 
     @Autowired
     private MyFirebaseService firebaseFileService;
@@ -51,7 +54,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public void deleteUser(String id) {
-        ELUser user = serviceUserHelper.getEntityById(id, userRepository, errorsUserNotFound);
+        ELUser user = getById(id);
         userRepository.delete(user);
     }
 
@@ -60,38 +63,38 @@ public class UserManagementServiceImpl implements UserManagementService {
         String username = UserPrincipal.getUsernameCurrent();
         ELUser user = userRepository.findByUsername(username).get();
 
-        if (serviceUserHelper.isValidString(rq.getEmail())) {
+        if (isValidString(rq.getEmail())) {
             if (!rq.getEmail().equals(user.getEmail()) && userRepository.existsByEmail(rq.getEmail())) {
                 throw new BusinessException(errorsEmailExisted);
             }
             user.setEmail(rq.getEmail());
         }
         
-        if (serviceUserHelper.isValidString(rq.getDisplayName())) {
+        if (isValidString(rq.getDisplayName())) {
             user.setDisplayName(rq.getDisplayName());
         }
 
-        if (serviceUserHelper.isValidString(rq.getFirstName())) {
+        if (isValidString(rq.getFirstName())) {
             user.setFirstName(rq.getFirstName());
         }
 
-        if (serviceUserHelper.isValidString(rq.getLastName())) {
+        if (isValidString(rq.getLastName())) {
             user.setLastName(rq.getLastName());
         }
 
-        if (serviceUserHelper.isValidString(rq.getHobbies())) {
+        if (isValidString(rq.getHobbies())) {
             user.setHobbies(rq.getHobbies());
         }
 
-        if (serviceUserHelper.isValidString(rq.getFacebook())) {
+        if (isValidString(rq.getFacebook())) {
             user.setFacebook(rq.getFacebook());
         }
 
-        if (serviceUserHelper.isValidString(rq.getGender())) {
+        if (isValidString(rq.getGender())) {
             user.setGender(rq.getGender());
         }
 
-        if (serviceUserHelper.isValidString(rq.getPhone())) {
+        if (isValidString(rq.getPhone())) {
             user.setPhone(rq.getPhone());
         }
 
@@ -112,24 +115,39 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public UserResponseDTO update(String id, UpdateUserDTO user) {
-        ELUser u = serviceUserHelper.getEntityById(id, userRepository, errorsUserNotFound);
-        if (serviceUserHelper.isValidString(user.getEmail())) {
+        ELUser u = getById(id);
+        if (isValidString(user.getEmail())) {
             if (!u.getEmail().equals(user.getEmail()) && userRepository.existsByEmail(user.getEmail())) {
                 throw new BusinessException(errorsEmailExisted);
             }
             u.setEmail(user.getEmail());
         }
 
-        if (serviceUserHelper.isValidString(user.getDepartment())) {
+        if (isValidString(user.getDepartment())) {
             u.setDepartment(user.getDepartment());
         }
 
-        if (serviceUserHelper.isValidString(user.getMajor())) {
+        if (isValidString(user.getMajor())) {
             u.setMajor(user.getMajor());
         }
         u.setStatus(user.getStatus());
 
         return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(u));
+    }
+
+    @Override
+    protected String getMessageIdInvalid() {
+        return errorsIdInvalid;
+    }
+
+    @Override
+    protected JpaRepository<ELUser, UUID> getRepository() {
+        return userRepository;
+    }
+
+    @Override
+    protected String getErrorNotFound() {
+        return errorsUserNotFound;
     }
 
 }

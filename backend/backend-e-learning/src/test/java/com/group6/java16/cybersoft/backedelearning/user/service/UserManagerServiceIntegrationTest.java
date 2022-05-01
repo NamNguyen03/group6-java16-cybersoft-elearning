@@ -2,16 +2,22 @@ package com.group6.java16.cybersoft.backedelearning.user.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
+import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.mapper.UserMapper;
 import com.group6.java16.cybersoft.user.model.ELUser;
+import com.group6.java16.cybersoft.user.model.UserStatus;
 import com.group6.java16.cybersoft.user.repository.ELUserRepository;
 import com.group6.java16.cybersoft.user.service.UserManagementService;
 import com.group6.java16.cybersoft.user.service.UserManagementServiceImpl;
@@ -21,6 +27,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,9 +37,6 @@ public class UserManagerServiceIntegrationTest {
     @Mock
     private ELUserRepository userRepository;
 
-    @Mock
-    private ServiceHelper<ELUser> serviceUserHelper;
-    
     @Mock
     private UserMapper mapper;
 
@@ -111,4 +115,49 @@ public class UserManagerServiceIntegrationTest {
 
         assertEquals(expected, service.updateMyProfile(rq));
     }
+
+
+    @Test
+    public void whenUpdateUserSuccessfully_theReturnUserResponse(){
+        UUID id = UUID.randomUUID();
+        ELUser user = ELUser.builder()
+            .id(id)
+            .email("s@gmail.com")
+            .username("nam")
+            .displayName("Nam")
+            .firstName("Nguyen")
+            .lastName("Nam")
+            .hobbies("swimming")
+            .facebook("facebook.com")
+            .phone("11111222222")
+            .status(UserStatus.ACTIVE)
+            .build();
+        when(userRepository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(user));
+        
+        when(userRepository.existsByUsername("nam@gmail.com")).thenReturn(false);
+        UpdateUserDTO rq = UpdateUserDTO.builder()
+            .email("nam@gmail.com")
+            .department("IT")
+            .major("dev")
+            .build();
+        when(userRepository.save(user)).thenReturn(user);
+        UserResponseDTO expected = UserResponseDTO.builder()
+            .id(id)
+            .email("nam@gmail.com")
+            .username("nam")
+            .displayName("Nam")
+            .firstName("Nguyen")
+            .lastName("Nam")
+            .hobbies("swimming")
+            .facebook("facebook.com")
+            .department("IT")
+            .major("dev")
+            .phone("11111222222")
+            .build();
+        when(mapper.toUserResponseDTO(user)).thenReturn(expected);
+
+        assertEquals(expected, service.update(id.toString(), rq));
+    }
+
+
 }
