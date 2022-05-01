@@ -16,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @NoArgsConstructor
 @SuperBuilder
+@AllArgsConstructor
 @Entity
 @Table(name = "el_user")
 public class ELUser extends BaseEntity {
@@ -48,10 +49,10 @@ public class ELUser extends BaseEntity {
 
 	private String phone;
 
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@Builder.Default
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinTable(name = "el_group_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
-	private Set<ELGroup> groups = new LinkedHashSet<ELGroup>();
+	private Set<ELGroup> groups = new LinkedHashSet();
 
 	public void addGroup(ELGroup group) {
 		groups.add(group);
