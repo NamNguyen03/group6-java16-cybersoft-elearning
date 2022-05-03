@@ -27,12 +27,12 @@ public class ELGroup extends BaseEntity {
   @JsonIgnore
   @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
   @JoinTable(name = "el_group_role", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private Set<ELRole> roles = new LinkedHashSet<ELRole>();
+  private Set<ELRole> roles = new LinkedHashSet<>();
 
   @Builder.Default
   @JsonIgnore
   @ManyToMany(mappedBy = "groups")
-  private Set<ELUser> users = new LinkedHashSet<ELUser>();
+  private Set<ELUser> users = new LinkedHashSet<>();
 
   public void addRole(ELRole role) {
     roles.add(role);

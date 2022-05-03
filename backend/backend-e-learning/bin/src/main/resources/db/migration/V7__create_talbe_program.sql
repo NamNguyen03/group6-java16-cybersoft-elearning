@@ -20,6 +20,6 @@ CREATE TABLE el_role_program (
 );
 
 ALTER TABLE IF EXISTS el_role_program 
-	ADD CONSTRAINT FK_ROLE FOREIGN KEY ( role_id ) REFERENCES gira_role(id);
+	ADD CONSTRAINT FK_ROLE FOREIGN KEY ( role_id ) REFERENCES el_role(id);
 ALTER TABLE IF EXISTS el_role_program 
-	ADD CONSTRAINT FK_PROGRAM FOREIGN KEY ( program_id ) REFERENCES gira_program(id);
+	ADD CONSTRAINT FK_PROGRAM FOREIGN KEY ( program_id ) REFERENCES el_program(id);

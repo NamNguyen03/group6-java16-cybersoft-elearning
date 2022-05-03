@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { UserRp } from 'src/app/api-clients/model/user.model';
 import { NavService } from '../../service/nav.service';
+import { UserService } from '../../service/user/user.service';
 
 @Component({
   selector: 'app-header',
@@ -10,11 +12,12 @@ export class HeaderComponent implements OnInit {
   public right_sidebar: boolean = false;
   public open: boolean = false;
   public openNav: boolean = false;
+  public userCurrent: UserRp;
   public isOpenMobile : boolean;
 
   @Output() rightSidebarEvent = new EventEmitter<boolean>();
 
-  constructor(public navServices: NavService) { }
+  constructor(public navServices: NavService, private _userService: UserService) { }
 
   collapseSidebar() {
     this.open = !this.open;
@@ -30,6 +33,8 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  ngOnInit() {  }
+  ngOnInit() { 
+    this._userService.$userCurrent.subscribe(user => this.userCurrent = user);
+   }
 
 }

@@ -1,6 +1,7 @@
 package com.group6.java16.cybersoft.role.service;
 
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
@@ -30,13 +32,13 @@ import com.group6.java16.cybersoft.role.repository.ELRoleRepository;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleService {
 
 	@Autowired
 	private ELRoleRepository roleRepository;
 
-	@Autowired
-	private ServiceHelper<ELRole> roleServiceHelper;
+	@Value("${entity.id.invalid}")
+    private String errorsIdInvalid;
 
 	@Value("${role.id.not-found}")
 	private String messagesRoleIdNotFound;
@@ -84,9 +86,9 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public RoleResponseDTO update(String id, RoleDTO dto) {
-		ELRole role = roleServiceHelper.getEntityById(id, roleRepository, messagesRoleIdNotFound);
+		ELRole role = getById(id);
 
-		if(roleServiceHelper.isValidString(dto.getName()) && !role.getName().equals(dto.getName())){
+		if(isValidString(dto.getName()) && !role.getName().equals(dto.getName())){
 	
 			if(roleRepository.existsByName(dto.getName())){
 				throw new BusinessException(messagesRoleNameExisted);
@@ -95,20 +97,38 @@ public class RoleServiceImpl implements RoleService {
 			role.setName(dto.getName());
 		}
 
-		if(roleServiceHelper.isValidString(dto.getDescription())) {
+		if(isValidString(dto.getDescription())) {
 			role.setDescription(dto.getDescription());
 		}
 
 		return RoleMapper.INSTANCE.toResponseDTO(roleRepository.save(role));
-
+		
 	}
 
 
 	@Override
 	public void deleteById(String id) {
-		ELRole role = roleServiceHelper.getEntityById(id, roleRepository, messagesRoleIdNotFound);
+		ELRole role = getById(id);
 		roleRepository.delete(role);
 
+	}
+
+
+	@Override
+	protected String getMessageIdInvalid() {
+		return errorsIdInvalid;
+	}
+
+
+	@Override
+	protected JpaRepository<ELRole, UUID> getRepository() {
+		return roleRepository;
+	}
+
+
+	@Override
+	protected String getErrorNotFound() {
+		return messagesRoleIdNotFound;
 	}
 
 }
