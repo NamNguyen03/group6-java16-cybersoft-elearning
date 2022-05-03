@@ -1,6 +1,5 @@
 package com.group6.java16.cybersoft.course.dto;
 
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 

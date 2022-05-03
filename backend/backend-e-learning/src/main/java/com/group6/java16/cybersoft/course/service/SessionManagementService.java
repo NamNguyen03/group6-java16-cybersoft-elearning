@@ -9,6 +9,5 @@ import com.group6.java16.cybersoft.course.dto.SessionUpdateDTO;
 public interface SessionManagementService {
 	SessionReponseDTO updateSession( SessionUpdateDTO rq, String id);
 	SessionReponseDTO createSession(SessionCreateDTO dto);
-	void deleteById(String id);
 	PageResponseModel<SessionReponseDTO> search(PageRequestModel pageRequestModel);
 }

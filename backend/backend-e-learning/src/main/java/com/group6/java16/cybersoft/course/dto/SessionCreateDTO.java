@@ -1,5 +1,6 @@
 package com.group6.java16.cybersoft.course.dto;
 
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -22,4 +23,7 @@ public class SessionCreateDTO {
 	
 	@NotBlank(message = "{session.description.not-blank}")
 	private String sessionDescription;
+	
+	@NotBlank(message = "{session.courseid.not-blank}")
+	private String course_id;
 }

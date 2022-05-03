@@ -46,7 +46,7 @@ public class SessionManagementController {
 	}
 
 	@PutMapping("{id}")
-	public Object updateCourse(@PathVariable("id") String id, @Valid @RequestBody SessionUpdateDTO rq,
+	public Object updateSession(@PathVariable("id") String id, @Valid @RequestBody SessionUpdateDTO rq,
 			BindingResult result) {
 
 		if (result.hasErrors()) {
@@ -77,13 +77,5 @@ public class SessionManagementController {
 		));
 
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
-    }
-	
-	@DeleteMapping("{id}")
-    public Object delete(@PathVariable("id") String id){
-
-        service.deleteById(id);
-
-        return ResponseHelper.getResponse("", HttpStatus.OK, false);
     }
 }

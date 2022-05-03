@@ -1,5 +1,6 @@
 package com.group6.java16.cybersoft.course.dto;
 
+import java.util.Set;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -14,4 +15,5 @@ public class CourseReponseDTO {
 	private String courseName;
 	private int courseTime;
 	private String description;
+	private Set<SessionReponseDTO> sessions;
 }

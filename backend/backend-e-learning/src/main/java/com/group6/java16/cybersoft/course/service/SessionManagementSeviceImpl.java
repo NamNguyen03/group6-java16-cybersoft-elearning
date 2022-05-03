@@ -42,9 +42,10 @@ public class SessionManagementSeviceImpl implements SessionManagementService {
 	@Override
 	public SessionReponseDTO updateSession(SessionUpdateDTO rq, String id) {
 			
-		ELSession sessionCurrent = serviceSessionHelper.getEntityById(id, sessionRepository, errorsSessionNotFound);
-		ELSession session = setUpdateSession(sessionCurrent, rq);
-		return SessionMapper.INSTANCE.toSessionResponseDTO(sessionRepository.save(session));
+//		ELSession sessionCurrent = serviceSessionHelper.getEntityById(id, sessionRepository, errorsSessionNotFound);
+//		ELSession session = setUpdateSession(sessionCurrent, rq);
+//		return SessionMapper.INSTANCE.toSessionResponseDTO(sessionRepository.save(session));
+		return null;
 	}
 	
 	private ELSession setUpdateSession(ELSession sessionCurrent, SessionUpdateDTO rq) {
@@ -85,11 +86,6 @@ public class SessionManagementSeviceImpl implements SessionManagementService {
 		SessionReponseDTO srp = SessionMapper.INSTANCE.toSessionResponseDTO(session);
 
 		return srp;
-	}
-
-	@Override
-	public void deleteById(String id) {
-		sessionRepository.delete(serviceSessionHelper.getEntityById(id, sessionRepository, errorsSessionNotFound));
 	}
 
 	@Override
