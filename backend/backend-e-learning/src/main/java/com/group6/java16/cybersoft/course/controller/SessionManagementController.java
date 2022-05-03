@@ -22,9 +22,9 @@ import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseReponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
-import com.group6.java16.cybersoft.course.dto.SessionCreateDTO;
-import com.group6.java16.cybersoft.course.dto.SessionReponseDTO;
-import com.group6.java16.cybersoft.course.dto.SessionUpdateDTO;
+import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
+import com.group6.java16.cybersoft.course.dto.LessonReponseDTO;
+import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
 import com.group6.java16.cybersoft.course.service.SessionManagementService;
 
 @RestController
@@ -35,25 +35,25 @@ public class SessionManagementController {
 	private SessionManagementService service;
 	
 	@PostMapping
-	public Object createSession(@Valid @RequestBody SessionCreateDTO rq, BindingResult result) {
+	public Object createSession(@Valid @RequestBody LessonCreateDTO rq, BindingResult result) {
 		if (result.hasErrors()) {
 			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
 		}
 
-		SessionReponseDTO rp = service.createSession(rq);
+		LessonReponseDTO rp = service.createSession(rq);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.CREATED, false);
 	}
 
 	@PutMapping("{id}")
-	public Object updateSession(@PathVariable("id") String id, @Valid @RequestBody SessionUpdateDTO rq,
+	public Object updateSession(@PathVariable("id") String id, @Valid @RequestBody LessonUpdateDTO rq,
 			BindingResult result) {
 
 		if (result.hasErrors()) {
 			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
 		}
 
-		SessionReponseDTO rp = service.updateSession(rq, id);
+		LessonReponseDTO rp = service.updateSession(rq, id);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
@@ -67,7 +67,7 @@ public class SessionManagementController {
         @RequestParam(value = "valueFieldNameSearch", required = false) String valueFieldNameSearch
         ){
         
-        PageResponseModel<SessionReponseDTO> rp = service.search(new PageRequestModel(
+        PageResponseModel<LessonReponseDTO> rp = service.search(new PageRequestModel(
 			pageCurrent,
 			itemPerPage,
 			fieldNameSort,

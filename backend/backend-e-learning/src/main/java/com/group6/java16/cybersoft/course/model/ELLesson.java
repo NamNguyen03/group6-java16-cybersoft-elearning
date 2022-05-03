@@ -30,6 +30,6 @@ public class ELLesson extends BaseEntity{
 	private String content;
 	
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinColumn(name = "course_id")
+	@JoinColumn(name = "course_id",referencedColumnName = "id")
 	private ELCourse course;
 }

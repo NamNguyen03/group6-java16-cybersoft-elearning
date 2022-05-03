@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
-public class SessionCreateDTO {
+public class LessonCreateDTO {
 	@Size(min = 6,max = 100,message = "{session.name.size}")
 	@NotBlank(message = "{session.name.not-blank}")
 	@UniqueSessionName(message = "{session.name.existed}")

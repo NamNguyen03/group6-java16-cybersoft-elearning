@@ -15,5 +15,5 @@ public class CourseReponseDTO {
 	private String courseName;
 	private int courseTime;
 	private String description;
-	private Set<SessionReponseDTO> sessions;
+	private Set<LessonReponseDTO> sessions;
 }

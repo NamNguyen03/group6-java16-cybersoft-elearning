@@ -20,9 +20,9 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.course.dto.CourseReponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
-import com.group6.java16.cybersoft.course.dto.SessionCreateDTO;
-import com.group6.java16.cybersoft.course.dto.SessionReponseDTO;
-import com.group6.java16.cybersoft.course.dto.SessionUpdateDTO;
+import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
+import com.group6.java16.cybersoft.course.dto.LessonReponseDTO;
+import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.mapper.SessionMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
@@ -46,7 +46,7 @@ public class SessionManagementSeviceImpl extends ServiceHelper<ELSession> implem
     private String errorsIdInvalid;
 
 	@Override
-	public SessionReponseDTO updateSession(SessionUpdateDTO rq, String id) {
+	public LessonReponseDTO updateSession(LessonUpdateDTO rq, String id) {
 			
 //		ELSession sessionCurrent = serviceSessionHelper.getEntityById(id, sessionRepository, errorsSessionNotFound);
 //		ELSession session = setUpdateSession(sessionCurrent, rq);
@@ -54,7 +54,7 @@ public class SessionManagementSeviceImpl extends ServiceHelper<ELSession> implem
 		return null;
 	}
 	
-	private ELSession setUpdateSession(ELSession sessionCurrent, SessionUpdateDTO rq) {
+	private ELSession setUpdateSession(ELSession sessionCurrent, LessonUpdateDTO rq) {
 		if (checkString(rq.getSessionName())) {
 			sessionCurrent.setSessionName(rq.getSessionName());
 		}
@@ -78,7 +78,7 @@ public class SessionManagementSeviceImpl extends ServiceHelper<ELSession> implem
 	}
 
 	@Override
-	public SessionReponseDTO createSession(SessionCreateDTO dto) {
+	public LessonReponseDTO createSession(LessonCreateDTO dto) {
 		
 
 		// Map dto to session
@@ -91,13 +91,13 @@ public class SessionManagementSeviceImpl extends ServiceHelper<ELSession> implem
 		ELSession session = sessionRepository.save(s);
 
 		// Map session to dto
-		SessionReponseDTO srp = SessionMapper.INSTANCE.toSessionResponseDTO(session);
+		LessonReponseDTO srp = SessionMapper.INSTANCE.toSessionResponseDTO(session);
 
 		return srp;
 	}
 
 	@Override
-	public PageResponseModel<SessionReponseDTO> search(PageRequestModel pageRequestModel) {
+	public PageResponseModel<LessonReponseDTO> search(PageRequestModel pageRequestModel) {
 		int page = pageRequestModel.getPageCurrent() - 1;
 		int size = pageRequestModel.getItemPerPage();
 		boolean isAscending = pageRequestModel.isIncrementSort();

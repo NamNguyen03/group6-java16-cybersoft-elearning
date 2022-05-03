@@ -2,13 +2,13 @@ package com.group6.java16.cybersoft.course.service;
 
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
-import com.group6.java16.cybersoft.course.dto.SessionCreateDTO;
-import com.group6.java16.cybersoft.course.dto.SessionReponseDTO;
-import com.group6.java16.cybersoft.course.dto.SessionUpdateDTO;
+import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
+import com.group6.java16.cybersoft.course.dto.LessonReponseDTO;
+import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
 
 public interface SessionManagementService {
-	SessionReponseDTO updateSession( SessionUpdateDTO rq, String id);
-	SessionReponseDTO createSession(SessionCreateDTO dto);
-	PageResponseModel<SessionReponseDTO> search(PageRequestModel pageRequestModel);
+	LessonReponseDTO updateSession( LessonUpdateDTO rq, String id);
+	LessonReponseDTO createSession(LessonCreateDTO dto);
+	PageResponseModel<LessonReponseDTO> search(PageRequestModel pageRequestModel);
 	void deleteById(String id);
 }

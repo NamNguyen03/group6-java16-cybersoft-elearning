@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SessionReponseDTO {
+public class LessonReponseDTO {
 	private UUID id;
 	
 	private String sessionName;

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SessionUpdateDTO {
+public class LessonUpdateDTO {
 	
 	private String sessionName;
 	
