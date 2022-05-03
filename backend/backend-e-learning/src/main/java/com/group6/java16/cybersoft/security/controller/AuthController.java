@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.security.dto.LoginRequestDTO;
-import com.group6.java16.cybersoft.security.dto.LoginResponseDTO;
 import com.group6.java16.cybersoft.security.service.AuthService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class AuthController {
 			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
 		}
 
-        LoginResponseDTO rp = service.login(rq);
+        String rp = service.login(rq);
 
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }

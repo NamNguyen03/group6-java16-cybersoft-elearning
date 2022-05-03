@@ -4,12 +4,12 @@
         <div class="col-xl-4">
             <div class="card">
                 <div class="card-body">
-                    <div class="profile-details text-center">
-                        <img src="assets/images/dashboard/designer.jpg" alt=""
+                    <div class="profile-details text-center" style="cursor: pointer;" (click)="toggleAction()">
+                        <img src="{{profile.avatar}}" alt=""
                             class="img-fluid img-90 rounded-circle blur-up lazyloaded">
-                        <h5 class="f-w-600 mb-0">John deo</h5>
-                        <span>johndeo@gmail.com</span>
-                        <div class="social">
+                        <h5 class="f-w-600 mb-0">{{profile.displayName}}</h5>
+                        <span>{{profile.email}}</span>
+                        <!-- <div class="social">
                             <div class="form-group btn-showcase">
                                 <button class="btn social-btn btn-fb d-inline-block">
                                     <i class="fa fa-facebook"></i></button>
@@ -18,9 +18,9 @@
                                 <button class="btn social-btn btn-google d-inline-block mr-0"><i
                                         class="fa fa-twitter"></i></button>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
-                    <hr>
+                    <!-- <hr>
                     <div class="project-status">
                         <h5 class="f-w-600">Employee Status</h5>
                         <div class="media">
@@ -50,134 +50,141 @@
                                 </div>
                             </div>
                         </div>
+                    </div> -->
+                </div>
+            </div>
+            <div *ngIf="isActions" class="card mt-5">
+                <div class="card-body" style="text-align:center">
+                    <div *ngIf="!isUpdateAvatar">
+                        <button class="btn btn-secondary mr-1 mb-2">Reset password</button>
+                        <button class="btn btn-secondary mr-1" (click)="goToUpdateAvatar()">Change avatar</button>
+                    </div>
+                    <div *ngIf="isUpdateAvatar">
+                        <h3>Choose your avatar</h3>
+                        <input class="form-control form-control-sm mb-2" id="formFileSm" type="file" (change)="changeInputAvatar($event)"/>
+                        <button class="btn btn-secondary mr-1" (click)="cancelUploadAvatar()">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
+        <div>
+
+        </div>
         <div class="col-xl-8">
             <div class="card tab2-card">
                 <div class="card-body">
-                    <ngb-tabset class="tab-coupon profile-tabs">
-                        <ngb-tab>
-                            <ng-template ngbTabTitle>
-                                <app-feather-icons [icon]="'user'"></app-feather-icons>Profile</ng-template>
-                            <ng-template ngbTabContent>
-                                <div class="tab-pane fade show active" id="top-profile" role="tabpanel"
+                   
+                                <div *ngIf="!isUpdateProfile" class="tab-pane fade show active" id="top-profile" role="tabpanel"
                                     aria-labelledby="top-profile-tab">
-                                    <h5 class="f-w-600"> Profile</h5>
                                     <div class="table-responsive profile-table">
+                                        <h4 style="font-weight: 600">My Profile</h4>
                                         <table class="table table-responsive">
                                             <tbody>
                                                 <tr>
                                                     <td>First Name:</td>
-                                                    <td>Johan</td>
+                                                    <td>{{profile.firstName}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Last Name:</td>
-                                                    <td>Deo</td>
+                                                    <td>{{profile.lastName}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Email:</td>
-                                                    <td>johndeo@gmail.com</td>
+                                                    <td>Username:</td>
+                                                    <td>{{profile.username}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Hobbies:</td>
+                                                    <td>{{profile.hobbies}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Facebook:</td>
+                                                    <td>{{profile.facebook}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Display Name:</td>
+                                                    <td>{{profile.displayName}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Gender:</td>
-                                                    <td>Male</td>
+                                                    <td>{{profile.gender}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Mobile Number:</td>
-                                                    <td>2124821463</td>
+                                                    <td>Phone:</td>
+                                                    <td>{{profile.phone}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>DOB:</td>
-                                                    <td>Dec, 15 1993</td>
+                                                    <td>Email:</td>
+                                                    <td>{{profile.email}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Location:</td>
-                                                    <td>USA</td>
+                                                    <td>Department:</td>
+                                                    <td>{{profile.department}}</td>
                                                 </tr>
+                                                <tr>
+                                                    <td>Major:</td>
+                                                    <td>{{profile.major}}</td>
+                                                </tr>
+                                               
                                             </tbody>
                                         </table>
                                     </div>
+                                    <button class="btn btn-secondary mr-1" (click)="goToUpdateProfile()">Go to update profile</button>
                                 </div>
-                            </ng-template>
-                        </ngb-tab>
-                        <ngb-tab>
-                            <ng-template ngbTabTitle>
-                                <i data-feather="settings"></i> Contact</ng-template>
-                            <ng-template ngbTabContent>
-                                <div class="account-setting">
-                                    <h5 class="f-w-600">Notifications</h5>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label class="d-block" for="chk-ani">
-                                                <input class="checkbox_animated" id="chk-ani" type="checkbox">
-                                                Allow Desktop Notifications
-                                            </label>
-                                            <label class="d-block" for="chk-ani1">
-                                                <input class="checkbox_animated" id="chk-ani1" type="checkbox">
-                                                Enable Notifications
-                                            </label>
-                                            <label class="d-block" for="chk-ani2">
-                                                <input class="checkbox_animated" id="chk-ani2" type="checkbox">
-                                                Get notification for my own activity
-                                            </label>
-                                            <label class="d-block mb-0" for="chk-ani3">
-                                                <input class="checkbox_animated" id="chk-ani3" type="checkbox"
-                                                    checked="">
-                                                DND
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="account-setting deactivate-account">
-                                    <h5 class="f-w-600">Deactivate Account</h5>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label class="d-block" for="edo-ani">
-                                                <input class="radio_animated" id="edo-ani" type="radio" name="rdo-ani"
-                                                    checked="">
-                                                I have a privacy concern
-                                            </label>
-                                            <label class="d-block" for="edo-ani1">
-                                                <input class="radio_animated" id="edo-ani1" type="radio" name="rdo-ani">
-                                                This is temporary
-                                            </label>
-                                            <label class="d-block mb-0" for="edo-ani2">
-                                                <input class="radio_animated" id="edo-ani2" type="radio" name="rdo-ani"
-                                                    checked="">
-                                                Other
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-primary">Deactivate Account</button>
-                                </div>
-                                <div class="account-setting deactivate-account">
-                                    <h5 class="f-w-600">Delete Account</h5>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label class="d-block" for="edo-ani3">
-                                                <input class="radio_animated" id="edo-ani3" type="radio" name="rdo-ani1"
-                                                    checked="">
-                                                No longer usable
-                                            </label>
-                                            <label class="d-block" for="edo-ani4">
-                                                <input class="radio_animated" id="edo-ani4" type="radio"
-                                                    name="rdo-ani1">
-                                                Want to switch on other account
-                                            </label>
-                                            <label class="d-block mb-0" for="edo-ani5">
-                                                <input class="radio_animated" id="edo-ani5" type="radio" name="rdo-ani1"
-                                                    checked="">
-                                                Other
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-primary">Delete Account</button>
-                                </div>
-                            </ng-template>
-                        </ngb-tab>
-                    </ngb-tabset>
+                     <div *ngIf="isUpdateProfile" >
+                        <form [formGroup]="profileForm" class="needs-validation user-add" novalida>
+                            <h4>Update Profile</h4>
+                            <div class="form-group row">
+                                <label for="validationCustom0" class="col-xl-3 col-md-4">
+                                    First Name</label>
+                                <input class="form-control col-xl-8 col-md-7"
+                                    type="text" required="" name="firstName" formControlName="firstName">
+                            </div>
+                            <div class="form-group row">
+                                <label for="validationCustom1" class="col-xl-3 col-md-4">Last
+                                    Name</label>
+                                <input class="form-control col-xl-8 col-md-7"
+                                    type="text" name="lastName" formControlName="lastName">
+                            </div>
+                            <div class="form-group row">
+                                <label for="validationCustom2" class="col-xl-3 col-md-4">
+                                    Email</label>
+                                <input class="form-control col-xl-8 col-md-7" id="validationCustom2"
+                                    type="email" name="email" formControlName="email">
+                            </div>
+                            <div class="form-group row">
+                                <label for="validationCustom2" class="col-xl-3 col-md-4">
+                                    Hobbies</label>
+                                <input class="form-control col-xl-8 col-md-7" id="validationCustom2"
+                                    type="text" name="hobbies" formControlName="hobbies">
+                            </div>
+                            <div class="form-group row">
+                                <label for="validationCustom3" class="col-xl-3 col-md-4">
+                                    Facebook</label>
+                                <input class="form-control col-xl-8 col-md-7" id="validationCustom3"
+                                    type="text" name="facebook" formControlName="facebook">
+                            </div>
+                            <div class="form-group row">
+                                <label for="validationCustom4" class="col-xl-3 col-md-4">
+                                    Display Name</label>
+                                <input class="form-control col-xl-8 col-md-7" id="validationCustom4"
+                                    type="text" required="" name="displayName" formControlName="displayName">
+                            </div>
+                            <div class="form-group row">
+                                <label for="validationCustom4" class="col-xl-3 col-md-4">
+                                    Gender</label>
+                                <input class="form-control col-xl-8 col-md-7" id="validationCustom4"
+                                    type="text" required="" name="gender" formControlName="gender">
+                            </div>
+                            <div class="form-group row">
+                                <label for="validationCustom4" class="col-xl-3 col-md-4">
+                                    Phone</label>
+                                <input class="form-control col-xl-8 col-md-7" id="validationCustom4"
+                                    type="text" required="" name="phone" formControlName="phone">
+                            </div>
+                        </form>
+                        <button class="btn btn-primary mr-1" (click)="updateProfile()">Submit</button>
+                        <button class="btn btn-secondary mr-1" (click)="goToProfile()">Cancel</button>
+                     </div>
                 </div>
             </div>
         </div>

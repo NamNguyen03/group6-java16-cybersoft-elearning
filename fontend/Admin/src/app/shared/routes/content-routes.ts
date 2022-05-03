@@ -20,17 +20,17 @@ export const content: Routes = [
     }
   },
   {
-    path: 'coupons',
-    loadChildren: () => import('../../components/coupons/coupons.module').then(m => m.CouponsModule),
+    path: 'courses',
+    loadChildren: () => import('../../components/course/courses.module').then(m => m.CoursesModule),
     data: {
-      breadcrumb: "Coupons"
+      breadcrumb: "Courses"
     }
   },
   {
-    path: 'pages',
-    loadChildren: () => import('../../components/pages/pages.module').then(m => m.PagesModule),
+    path: 'roles',
+    loadChildren: () => import('../../components/roles/roles.module').then(m => m.RolesModule),
     data: {
-      breadcrumb: "Pages"
+      breadcrumb: "Roles"
     }
   },
   {
@@ -38,10 +38,10 @@ export const content: Routes = [
     loadChildren: () => import('../../components/media/media.module').then(m => m.MediaModule),
   },
   {
-    path: 'menus',
-    loadChildren: () => import('../../components/menus/menus.module').then(m => m.MenusModule),
+    path: 'groups',
+    loadChildren: () => import('../../components/group/group.module').then(m => m.GroupModule),
     data: {
-      breadcrumb: "Menus"
+      breadcrumb: "Groups"
     }
   },
   {

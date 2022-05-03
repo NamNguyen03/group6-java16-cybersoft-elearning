@@ -68,24 +68,24 @@ export class NavService {
 			]
 		},
 		{
-			title: 'Coupons', icon: 'tag', type: 'sub', active: false, children: [
-				{ path: '/coupons/list-coupons', title: 'List Coupons', type: 'link' },
-				{ path: '/coupons/create-coupons', title: 'Create Coupons', type: 'link' },
+			title: 'Courses', icon: 'tag', type: 'sub', active: false, children: [
+				{ path: '/courses/list-course', title: 'List Courses', type: 'link' },
+				{ path: '/courses/create-course', title: 'Create Courses', type: 'link' },
 			]
 		},
 		{
-			title: 'Pages', icon: 'clipboard', type: 'sub', active: false, children: [
-				{ path: '/pages/list-page', title: 'List Page', type: 'link' },
-				{ path: '/pages/create-page', title: 'Create Page', type: 'link' },
+			title: 'Role', icon: 'clipboard', type: 'sub', active: false, children: [
+				{ path: '/roles/list-role', title: 'List Role', type: 'link' },
+				{ path: '/roles/create-role', title: 'Create Role', type: 'link' },
 			]
 		},
 		{
 			title: 'Media', path: '/media', icon: 'camera', type: 'link', active: false
 		},
 		{
-			title: 'Menus', icon: 'align-left', type: 'sub', active: false, children: [
-				{ path: '/menus/list-menu', title: 'Menu Lists', type: 'link' },
-				{ path: '/menus/create-menu', title: 'Create Menu', type: 'link' },
+			title: 'Group', icon: 'align-left', type: 'sub', active: false, children: [
+				{ path: '/groups/list-group', title: 'Group List', type: 'link' },
+				{ path: '/groups/create-group', title: 'Create Group', type: 'link' },
 			]
 		},
 		{
