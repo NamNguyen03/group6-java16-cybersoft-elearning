@@ -1,5 +1,6 @@
 package com.group6.java16.cybersoft.course.service;
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import com.group6.java16.cybersoft.common.model.BaseEntity;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
@@ -24,20 +27,23 @@ import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.mapper.SessionMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.model.ELSession;
+import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 import com.group6.java16.cybersoft.course.repository.ELSessionRepository;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class SessionManagementSeviceImpl implements SessionManagementService {
+public class SessionManagementSeviceImpl extends ServiceHelper<ELSession> implements SessionManagementService {
 	
 	@Autowired
 	private ELSessionRepository sessionRepository;
-
 	@Autowired
-	private ServiceHelper<ELSession> serviceSessionHelper;
+	private ELCourseRepository courseRepository;
 	
 	@Value("${session.not-found}")
 	private String errorsSessionNotFound;
+	
+	@Value("${entity.id.invalid}")
+    private String errorsIdInvalid;
 
 	@Override
 	public SessionReponseDTO updateSession(SessionUpdateDTO rq, String id) {
@@ -78,8 +84,10 @@ public class SessionManagementSeviceImpl implements SessionManagementService {
 		// Map dto to session
 
 		ELSession s = SessionMapper.INSTANCE.toModel(dto);
+		ELCourse c = courseRepository.findById(UUID.fromString(dto.getCourse_id())).get();
 
 		// save session return session
+		s.setCourse(c);
 		ELSession session = sessionRepository.save(s);
 
 		// Map session to dto
@@ -117,6 +125,26 @@ public class SessionManagementSeviceImpl implements SessionManagementService {
 
 		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(), 
 	            rp.getContent().stream().map(SessionMapper.INSTANCE::toSessionResponseDTO).collect(Collectors.toList()));
+	}
+
+	@Override
+	public void deleteById(String id) {
+		sessionRepository.delete(getById(id));
+	}
+
+	@Override
+	protected String getMessageIdInvalid() {
+		return errorsIdInvalid;
+	}
+
+	@Override
+	protected JpaRepository<ELSession, UUID> getRepository() {
+		return sessionRepository;
+	}
+
+	@Override
+	protected String getErrorNotFound() {
+		return errorsSessionNotFound;
 	}
 
 }

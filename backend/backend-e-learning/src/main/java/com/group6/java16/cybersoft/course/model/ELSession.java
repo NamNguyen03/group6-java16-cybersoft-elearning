@@ -31,7 +31,7 @@ public class ELSession extends BaseEntity {
 	@Column(name = "session_description")
 	private String sessionDescription;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinColumn(name = "course_id",referencedColumnName = "id")
 	private ELCourse course;
 

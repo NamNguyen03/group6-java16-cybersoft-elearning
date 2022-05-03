@@ -10,4 +10,5 @@ public interface SessionManagementService {
 	SessionReponseDTO updateSession( SessionUpdateDTO rq, String id);
 	SessionReponseDTO createSession(SessionCreateDTO dto);
 	PageResponseModel<SessionReponseDTO> search(PageRequestModel pageRequestModel);
+	void deleteById(String id);
 }

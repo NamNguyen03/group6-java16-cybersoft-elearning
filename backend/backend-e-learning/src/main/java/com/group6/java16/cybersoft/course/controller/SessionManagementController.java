@@ -78,4 +78,11 @@ public class SessionManagementController {
 
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
+	@DeleteMapping("{id}")
+    public Object delete(@PathVariable("id") String id){
+
+        service.deleteById(id);
+
+        return ResponseHelper.getResponse("", HttpStatus.OK, false);
+    }
 }
