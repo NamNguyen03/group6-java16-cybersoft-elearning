@@ -54,9 +54,77 @@ public class UserInformationServiceIntegrationTest {
 
         PageResponseModel<UserResponseDTO> rp = service.search(rq);
     
-        assertEquals(expected.getItems(), rp.getItems());
-        assertEquals(expected.getTotalPage(), rp.getTotalPage());
-        assertEquals(expected.getPageCurrent(), rp.getPageCurrent());
+        //search all
+        assertEquals(expected.getItems(), rp.getItems(), "search all User error");
+        assertEquals(expected.getTotalPage(), rp.getTotalPage(), "search all User error");
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "search all User error");
+
+
+        //search username
+        rq = new PageRequestModel(1,10, null, true, "username", "name");
+        when(userRepository.searchByUsername("name",pageable)).thenReturn(page);
+        
+        rp = service.search(rq);
+
+        assertEquals(expected.getItems(), rp.getItems(), "search User by username error");
+        assertEquals(expected.getTotalPage(), rp.getTotalPage(), "search User by username error");
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "search User by username error");
+        
+
+        //search display name
+        rq = new PageRequestModel(1,10, null, true, "displayName", "value");
+        when(userRepository.searchByDisplayName("value", pageable)).thenReturn(page);
+
+        rp = service.search(rq);
+
+        assertEquals(expected.getItems(), rp.getItems(), "search User by display name error");
+        assertEquals(expected.getTotalPage(), rp.getTotalPage(), "search User by display name error");
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "search User by display name error");
+
+
+         //search email
+         rq = new PageRequestModel(1,10, null, true, "email", "value");
+         when(userRepository.searchByEmail("value", pageable)).thenReturn(page);
+
+         rp = service.search(rq);
+
+         assertEquals(expected.getItems(), rp.getItems(), "search User by email error");
+         assertEquals(expected.getTotalPage(), rp.getTotalPage(), "search User by email error");
+         assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "search User by email error");
+
+
+         //search first name
+         rq = new PageRequestModel(1,10, null, true, "firstName", "value");
+         when(userRepository.searchByFirstName("value", pageable)).thenReturn(page);
+
+         rp = service.search(rq);
+
+         assertEquals(expected.getItems(), rp.getItems(), "search User by first name error");
+         assertEquals(expected.getTotalPage(), rp.getTotalPage(), "search User by first name error");
+         assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "search User by first name error");
+
+
+         //search last name
+         rq = new PageRequestModel(1,10, null, true, "lastName", "value");
+         when(userRepository.searchByLastName("value",pageable)).thenReturn(page);
+
+         rp = service.search(rq);
+
+         assertEquals(expected.getItems(), rp.getItems(), "search User by last name error");
+         assertEquals(expected.getTotalPage(), rp.getTotalPage(), "search User by last name error");
+         assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "search User by last name error");
+
+
+        //search all and sort
+        rq = new PageRequestModel(1,11, "firstName", true, null, null);
+        pageable = PageRequest.of(0, 11, Sort.by("firstName").ascending());
+        when(userRepository.findAll(pageable)).thenReturn(page);
+        
+        rp = service.search(rq);
+        
+        assertEquals(expected.getItems(), rp.getItems(), "sort all User error");
+        assertEquals(expected.getTotalPage(), rp.getTotalPage(), "sort all User error");
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "sort all User error");
     }
 
     @Test

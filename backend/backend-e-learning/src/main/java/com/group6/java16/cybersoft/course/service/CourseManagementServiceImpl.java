@@ -18,7 +18,7 @@ import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
-import com.group6.java16.cybersoft.course.dto.CourseReponseDTO;
+import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
@@ -38,7 +38,7 @@ public class CourseManagementServiceImpl extends ServiceHelper<ELCourse> impleme
 	private String errorsCourseNotFound;
 
 	@Override
-	public CourseReponseDTO createCourse(CourseCreateDTO dto) {
+	public CourseResponseDTO createCourse(CourseCreateDTO dto) {
 
 		// Map dto to course
 		ELCourse c = CourseMapper.INSTANCE.toModel(dto);
@@ -46,14 +46,14 @@ public class CourseManagementServiceImpl extends ServiceHelper<ELCourse> impleme
 		// save course return user
 		ELCourse cour = courseRepository.save(c);
 
-		// Map userv to dto
-		CourseReponseDTO crp = CourseMapper.INSTANCE.toCourseResponseDTO(cour);
+		// Map user to dto
+		CourseResponseDTO crp = CourseMapper.INSTANCE.toCourseResponseDTO(cour);
 
 		return crp;
 	}
 
 	@Override
-	public CourseReponseDTO updateCourse(CourseUpdateDTO rq, String id) {
+	public CourseResponseDTO updateCourse(CourseUpdateDTO rq, String id) {
 		ELCourse courseCurrent = getById(id);
 		ELCourse course = setUpdateCourse(courseCurrent, rq);
 		return CourseMapper.INSTANCE.toCourseResponseDTO(courseRepository.save(course));
@@ -95,7 +95,7 @@ public class CourseManagementServiceImpl extends ServiceHelper<ELCourse> impleme
 	}
 
 	@Override
-	public PageResponseModel<CourseReponseDTO> search(PageRequestModel pageRequestModel) {
+	public PageResponseModel<CourseResponseDTO> search(PageRequestModel pageRequestModel) {
 		int page = pageRequestModel.getPageCurrent() - 1;
 		int size = pageRequestModel.getItemPerPage();
 		boolean isAscending = pageRequestModel.isIncrementSort();
