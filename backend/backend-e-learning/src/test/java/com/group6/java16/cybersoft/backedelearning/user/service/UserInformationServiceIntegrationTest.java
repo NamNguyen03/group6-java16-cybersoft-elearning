@@ -41,7 +41,7 @@ public class UserInformationServiceIntegrationTest {
 
 
     @Test
-    public void whenExistsUserIsUsedToSearch_thenReturnPageResponseUser(){
+    public void whenExistsUserIsUsedToSearchAll_thenReturnPageResponseUser(){
         PageRequestModel rq = new PageRequestModel(1,10, null, true, null, null);
 
         Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
@@ -55,76 +55,129 @@ public class UserInformationServiceIntegrationTest {
         PageResponseModel<UserResponseDTO> rp = service.search(rq);
     
         //search all
-        assertEquals(expected.getItems(), rp.getItems(), "search all User error");
-        assertEquals(expected.getTotalPage(), rp.getTotalPage(), "search all User error");
-        assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "search all User error");
+        assertEquals(expected.getItems(), rp.getItems());
+        assertEquals(expected.getTotalPage(), rp.getTotalPage());
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent());
 
+    }
 
-        //search username
-        rq = new PageRequestModel(1,10, null, true, "username", "name");
-        when(userRepository.searchByUsername("name",pageable)).thenReturn(page);
-        
-        rp = service.search(rq);
+    
+    @Test
+    public void whenExistsUserIsUsedToSearchByUsername_thenReturnPageResponseUser(){
+        PageRequestModel rq =  new PageRequestModel(1,10, null, true, "username", "value");
 
-        assertEquals(expected.getItems(), rp.getItems(), "search User by username error");
-        assertEquals(expected.getTotalPage(), rp.getTotalPage(), "search User by username error");
-        assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "search User by username error");
-        
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
 
-        //search display name
-        rq = new PageRequestModel(1,10, null, true, "displayName", "value");
-        when(userRepository.searchByDisplayName("value", pageable)).thenReturn(page);
+        Page<ELUser> page = new PageImpl<ELUser>(new ArrayList<ELUser>(), pageable, 10l);
 
-        rp = service.search(rq);
+        when(userRepository.searchByUsername("value",pageable)).thenReturn(page);
 
-        assertEquals(expected.getItems(), rp.getItems(), "search User by display name error");
-        assertEquals(expected.getTotalPage(), rp.getTotalPage(), "search User by display name error");
-        assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "search User by display name error");
+        PageResponseModel<UserResponseDTO> expected = new PageResponseModel<UserResponseDTO>(1,1, new ArrayList<UserResponseDTO>());
 
+        PageResponseModel<UserResponseDTO> rp = service.search(rq);
+    
+        //search all
+        assertEquals(expected.getItems(), rp.getItems());
+        assertEquals(expected.getTotalPage(), rp.getTotalPage());
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent());
+    }
 
-         //search email
-         rq = new PageRequestModel(1,10, null, true, "email", "value");
-         when(userRepository.searchByEmail("value", pageable)).thenReturn(page);
+    @Test
+    public void whenExistsUserIsUsedToSearchByDisplayName_thenReturnPageResponseUser(){
+        PageRequestModel rq =  new PageRequestModel(1,10, null, true, "displayName", "value");
 
-         rp = service.search(rq);
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
 
-         assertEquals(expected.getItems(), rp.getItems(), "search User by email error");
-         assertEquals(expected.getTotalPage(), rp.getTotalPage(), "search User by email error");
-         assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "search User by email error");
+        Page<ELUser> page = new PageImpl<ELUser>(new ArrayList<ELUser>(), pageable, 10l);
 
+        when(userRepository.searchByDisplayName("value",pageable)).thenReturn(page);
 
-         //search first name
-         rq = new PageRequestModel(1,10, null, true, "firstName", "value");
-         when(userRepository.searchByFirstName("value", pageable)).thenReturn(page);
+        PageResponseModel<UserResponseDTO> expected = new PageResponseModel<UserResponseDTO>(1,1, new ArrayList<UserResponseDTO>());
 
-         rp = service.search(rq);
+        PageResponseModel<UserResponseDTO> rp = service.search(rq);
+    
+        //search all
+        assertEquals(expected.getItems(), rp.getItems());
+        assertEquals(expected.getTotalPage(), rp.getTotalPage());
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent());
+    }
 
-         assertEquals(expected.getItems(), rp.getItems(), "search User by first name error");
-         assertEquals(expected.getTotalPage(), rp.getTotalPage(), "search User by first name error");
-         assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "search User by first name error");
+    @Test
+    public void whenExistsUserIsUsedToSearchByEmail_thenReturnPageResponseUser(){
+        PageRequestModel rq =  new PageRequestModel(1,10, null, true, "email", "value");
 
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
 
-         //search last name
-         rq = new PageRequestModel(1,10, null, true, "lastName", "value");
-         when(userRepository.searchByLastName("value",pageable)).thenReturn(page);
+        Page<ELUser> page = new PageImpl<ELUser>(new ArrayList<ELUser>(), pageable, 10l);
 
-         rp = service.search(rq);
+        when(userRepository.searchByEmail("value",pageable)).thenReturn(page);
 
-         assertEquals(expected.getItems(), rp.getItems(), "search User by last name error");
-         assertEquals(expected.getTotalPage(), rp.getTotalPage(), "search User by last name error");
-         assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "search User by last name error");
+        PageResponseModel<UserResponseDTO> expected = new PageResponseModel<UserResponseDTO>(1,1, new ArrayList<UserResponseDTO>());
 
+        PageResponseModel<UserResponseDTO> rp = service.search(rq);
+    
+        //search all
+        assertEquals(expected.getItems(), rp.getItems());
+        assertEquals(expected.getTotalPage(), rp.getTotalPage());
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent());
+    }
 
-        //search all and sort
-        rq = new PageRequestModel(1,11, "firstName", true, null, null);
-        pageable = PageRequest.of(0, 11, Sort.by("firstName").ascending());
+    @Test
+    public void whenExistsUserIsUsedToSearchByFirstName_thenReturnPageResponseUser(){
+        PageRequestModel rq =  new PageRequestModel(1,10, null, true, "firstName", "value");
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
+
+        Page<ELUser> page = new PageImpl<ELUser>(new ArrayList<ELUser>(), pageable, 10l);
+
+        when(userRepository.searchByFirstName("value",pageable)).thenReturn(page);
+
+        PageResponseModel<UserResponseDTO> expected = new PageResponseModel<UserResponseDTO>(1,1, new ArrayList<UserResponseDTO>());
+
+        PageResponseModel<UserResponseDTO> rp = service.search(rq);
+    
+        //search all
+        assertEquals(expected.getItems(), rp.getItems());
+        assertEquals(expected.getTotalPage(), rp.getTotalPage());
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent());
+    }
+
+    @Test
+    public void whenExistsUserIsUsedToSearchByLastName_thenReturnPageResponseUser(){
+        PageRequestModel rq =  new PageRequestModel(1,10, null, true, "lastName", "value");
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
+
+        Page<ELUser> page = new PageImpl<ELUser>(new ArrayList<ELUser>(), pageable, 10l);
+
+        when(userRepository.searchByLastName("value",pageable)).thenReturn(page);
+
+        PageResponseModel<UserResponseDTO> expected = new PageResponseModel<UserResponseDTO>(1,1, new ArrayList<UserResponseDTO>());
+
+        PageResponseModel<UserResponseDTO> rp = service.search(rq);
+    
+        //search all
+        assertEquals(expected.getItems(), rp.getItems());
+        assertEquals(expected.getTotalPage(), rp.getTotalPage());
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent());
+    }
+
+    @Test
+    public void whenExistsUserIsUsedToSearchAllAndSort_thenReturnPageResponseUser(){
+        PageRequestModel rq = new PageRequestModel(1,10, "firstName", true, null, null);
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("firstName").ascending());
+
+        Page<ELUser> page = new PageImpl<ELUser>(new ArrayList<ELUser>(), pageable, 10l);
+
         when(userRepository.findAll(pageable)).thenReturn(page);
-        
-        rp = service.search(rq);
-        
-        assertEquals(expected.getItems(), rp.getItems(), "sort all User error");
-        assertEquals(expected.getTotalPage(), rp.getTotalPage(), "sort all User error");
-        assertEquals(expected.getPageCurrent(), rp.getPageCurrent(), "sort all User error");
+
+        PageResponseModel<UserResponseDTO> expected = new PageResponseModel<UserResponseDTO>(1,1, new ArrayList<UserResponseDTO>());
+
+        PageResponseModel<UserResponseDTO> rp = service.search(rq);
+        assertEquals(expected.getItems(), rp.getItems());
+        assertEquals(expected.getTotalPage(), rp.getTotalPage());
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent());
     }
 
     @Test

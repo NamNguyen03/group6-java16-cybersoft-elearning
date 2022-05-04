@@ -48,7 +48,6 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
     @Override
     public UserResponseDTO createUser(UserCreateDTO user) {
         user.setPassword(encoder.encode(user.getPassword()));
-
         return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(UserMapper.INSTANCE.toModel(user)));
     }
 
