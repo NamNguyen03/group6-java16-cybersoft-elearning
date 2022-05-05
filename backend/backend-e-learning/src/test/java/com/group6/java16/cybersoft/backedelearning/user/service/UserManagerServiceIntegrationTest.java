@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -109,6 +109,7 @@ public class UserManagerServiceIntegrationTest {
             .hobbies("swimming")
             .facebook("facebook.com")
             .phone("11111222222")
+            .groups(new LinkedHashSet<>())
             .build();
 
 
@@ -154,6 +155,7 @@ public class UserManagerServiceIntegrationTest {
             .department("IT")
             .major("dev")
             .phone("11111222222")
+            .groups(new LinkedHashSet<>())
             .build();
         when(mapper.toUserResponseDTO(user)).thenReturn(expected);
 

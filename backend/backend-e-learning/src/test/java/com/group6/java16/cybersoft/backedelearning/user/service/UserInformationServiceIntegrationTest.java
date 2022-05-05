@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
@@ -213,6 +214,7 @@ public class UserInformationServiceIntegrationTest {
             .hobbies("swimming")
             .facebook("facebook.com")
             .phone("11111222222")
+            .groups(new LinkedHashSet<>())
             .build();
 
 
