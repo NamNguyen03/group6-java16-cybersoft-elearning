@@ -9,12 +9,16 @@ import { catchError} from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Injectable({
     providedIn: 'root',
 })
 export class ExceptionInterceptor implements HttpInterceptor {
+
+    constructor(private _router: Router){}
+
     intercept(
         request: HttpRequest<any>,
         next: HttpHandler
@@ -29,7 +33,8 @@ export class ExceptionInterceptor implements HttpInterceptor {
                       })
                 }
 
-                if (error.status === 401) {
+                if (error.status === 401 || error.status === 403) {
+                    this._router.navigate(['auth/login']);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',

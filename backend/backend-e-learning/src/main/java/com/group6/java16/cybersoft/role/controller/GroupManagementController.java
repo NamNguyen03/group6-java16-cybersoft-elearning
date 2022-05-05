@@ -62,7 +62,7 @@ public class GroupManagementController {
 				return ResponseHelper.getResponse(bindingResult, HttpStatus.BAD_REQUEST, true);
 			}
 			
-			GroupResponseDTO response = service.save(null,dto);
+			GroupResponseDTO response = service.save(dto);
 			
 			return ResponseHelper.getResponse(response, HttpStatus.OK, false); 
 			
@@ -73,7 +73,8 @@ public class GroupManagementController {
 	        if(bindingResult.hasErrors()){
 	            return ResponseHelper.getResponse(bindingResult,HttpStatus.BAD_REQUEST, true);
 	        }
-	            GroupResponseDTO response = service.save(id,dto);
+	        
+			GroupResponseDTO response = service.update(id,dto);
 	        
 	        return ResponseHelper.getResponse(response, HttpStatus.OK,false);
 	    }
@@ -81,7 +82,7 @@ public class GroupManagementController {
 	    @DeleteMapping("{id}")
 	    public Object deleteUser(@PathVariable("id") String id) {
 	    	
-	    	service.deleteByid(id);
+	    	service.deleteById(id);
 	    	return ResponseHelper.getResponse("Delete successfully", HttpStatus.OK, false);
 	    }
 	    

@@ -4,8 +4,8 @@
         <div class="col-xl-4">
             <div class="card">
                 <div class="card-body">
-                    <div class="profile-details text-center">
-                        <img src="assets/images/dashboard/designer.jpg" alt=""
+                    <div class="profile-details text-center" style="cursor: pointer;" (click)="toggleAction()">
+                        <img src="{{profile.avatar}}" alt=""
                             class="img-fluid img-90 rounded-circle blur-up lazyloaded">
                         <h5 class="f-w-600 mb-0">{{profile.displayName}}</h5>
                         <span>{{profile.email}}</span>
@@ -20,7 +20,7 @@
                             </div>
                         </div> -->
                     </div>
-                    <hr>
+                    <!-- <hr>
                     <div class="project-status">
                         <h5 class="f-w-600">Employee Status</h5>
                         <div class="media">
@@ -50,9 +50,25 @@
                                 </div>
                             </div>
                         </div>
+                    </div> -->
+                </div>
+            </div>
+            <div *ngIf="isActions" class="card mt-5">
+                <div class="card-body" style="text-align:center">
+                    <div *ngIf="!isUpdateAvatar">
+                        <button class="btn btn-secondary mr-1 mb-2">Reset password</button>
+                        <button class="btn btn-secondary mr-1 mb-2" (click)="goToUpdateAvatar()">Change avatar</button>
+                    </div>
+                    <div *ngIf="isUpdateAvatar">
+                        <h3>Choose your avatar</h3>
+                        <input class="form-control form-control-sm mb-2" id="formFileSm" type="file" (change)="changeInputAvatar($event)"/>
+                        <button class="btn btn-secondary mr-1" (click)="cancelUploadAvatar()">Cancel</button>
                     </div>
                 </div>
             </div>
+        </div>
+        <div>
+
         </div>
         <div class="col-xl-8">
             <div class="card tab2-card">
@@ -112,7 +128,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <a class="btn btn-secondary mr-1" (click)="goToUpdateProfile()">Go to update profile</a>
+                                    <button class="btn btn-secondary mr-1" (click)="goToUpdateProfile()">Go to update profile</button>
                                 </div>
                      <div *ngIf="isUpdateProfile" >
                         <form [formGroup]="profileForm" class="needs-validation user-add" novalida>
@@ -166,8 +182,8 @@
                                     type="text" required="" name="phone" formControlName="phone">
                             </div>
                         </form>
-                        <a class="btn btn-primary mr-1" (click)="updateProfile()">Submit</a>
-                        <a class="btn btn-secondary mr-1" (click)="goToProfile()">Back</a>
+                        <button class="btn btn-primary mr-1" (click)="updateProfile()">Submit</button>
+                        <button class="btn btn-secondary mr-1" (click)="goToProfile()">Cancel</button>
                      </div>
                 </div>
             </div>

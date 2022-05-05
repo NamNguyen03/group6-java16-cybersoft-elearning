@@ -73,10 +73,6 @@ export class LoginRequest{
     }
 }
 
-export class LoginResponse{
-    jwt: string;
-    displayName: string;
-}
 
 export class UpdateMyProfileRq{
     

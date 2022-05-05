@@ -11,9 +11,11 @@ public interface GroupService {
 
 	PageResponseModel<GroupResponseDTO> search(PageRequestModel pageRequestModel);
 
-	GroupResponseDTO save(String id, GroupDTO dto);
+	GroupResponseDTO update(String id, GroupDTO dto);
+	
+	GroupResponseDTO save(GroupDTO dto);
 
-	void deleteByid(String id);
+	void deleteById(String id);
 
 	GroupResponseDTO addRole(String groupId, String roleId);
 

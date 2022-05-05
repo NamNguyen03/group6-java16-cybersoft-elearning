@@ -1,6 +1,6 @@
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { UpdateMyProfileRq, UserRp } from 'src/app/api-clients/model/user.model';
 import { UserClient } from 'src/app/api-clients/user.client';
 import { UserService } from 'src/app/shared/service/user/user.service';
@@ -16,7 +16,15 @@ export class ProfileComponent implements OnInit {
 
   public profile: UserRp = new UserRp();
 
+  public isActions = false;
+
+  public isUpdateAvatar = false;
+
   public profileForm: FormGroup;
+
+  public fileInputAvatar: any;
+
+
 
   constructor(
     private _toastr: ToastrService,
@@ -28,8 +36,24 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.getData();
     this.createProfileForm();
- 
+    this._userService.$userCurrent.subscribe(user => this.profile = user );
    }
+
+  toggleAction(): void {
+    this.isActions = !this.isActions;
+    if(!this.isActions){
+      this.isUpdateAvatar = false;
+    }
+   }
+
+   cancelUploadAvatar(): void {
+    this.isUpdateAvatar = false;
+  }
+
+
+  goToUpdateAvatar(): void {
+    this.isUpdateAvatar = true;
+  }
 
   goToProfile() {
     this.isUpdateProfile = false;
@@ -39,6 +63,17 @@ export class ProfileComponent implements OnInit {
     this.isUpdateProfile = true;
   }
 
+  changeInputAvatar(event: any): void{
+    this._userClient.uploadAvatar(event.target.files[0]).subscribe(
+      response => {
+        this._toastr.success('Success', 'Update avatar success!');
+        this._userService.setUserCurrent(response.content);
+        this.isUpdateAvatar = false;
+      }
+    )
+  }
+
+  
 
   getData(): void{
     this._userClient.getMyProfile().subscribe(
@@ -88,10 +123,9 @@ export class ProfileComponent implements OnInit {
 
     this._userClient.updateMyProfile(new UpdateMyProfileRq( displayName, email, firstName, lastName, hobbies, facebook, gender, phone)).subscribe(
       response => {
-        this.profile = response.content;
         this.isUpdateProfile = false;
         this._toastr.success('Success', 'Update Profile success!');
-        this._userService.setDisplayName(response.content.displayName);
+        this._userService.setUserCurrent(response.content);
       }
     )
   }

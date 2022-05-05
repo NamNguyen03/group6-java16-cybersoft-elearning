@@ -1,9 +1,9 @@
 import { environment } from './../../environments/environment';
 import { Injectable } from "@angular/core";
-import { LoginRequest, UserCreate, UserRp, LoginResponse, UpdateMyProfileRq, UpdateUserRq } from './model/user.model';
+import { LoginRequest, UserCreate, UserRp, UpdateMyProfileRq, UpdateUserRq } from './model/user.model';
 import { Observable } from 'rxjs';
 import { PageRequest, PageResponse, Response } from './model/common.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -12,6 +12,7 @@ export class UserClient {
     private _apiEndpoint = `${environment.api}users`
     private _apiLogin = `${environment.api}auth/login`;
     private _apiMyProfile = `${this._apiEndpoint}/me`;
+    private _apiUpdateAvatar = `${this._apiMyProfile}/avatar`;
 
     constructor(protected httpClient: HttpClient) {}
 
@@ -21,8 +22,8 @@ export class UserClient {
 
     }
 
-    login(rq: LoginRequest): Observable<Response<LoginResponse>>{
-        return this.httpClient.post<Response<LoginResponse>>(this._apiLogin, rq);
+    login(rq: LoginRequest): Observable<Response<string>>{
+        return this.httpClient.post<Response<string>>(this._apiLogin, rq);
 
     }   
 
@@ -59,4 +60,11 @@ export class UserClient {
         return this.httpClient.delete<Response<UserRp>>(this._apiEndpoint + "/" + userId + "/" + groupId)
     }
 
+    uploadAvatar( file: File): Observable<Response<UserRp>>{
+
+        let formData = new FormData();
+        formData.append('file', file);
+    
+        return this.httpClient.put<Response<UserRp>>(this._apiUpdateAvatar, formData);
+      }
 }

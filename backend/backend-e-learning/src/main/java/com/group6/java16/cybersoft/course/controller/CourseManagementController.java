@@ -21,7 +21,7 @@ import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
-import com.group6.java16.cybersoft.course.dto.CourseReponseDTO;
+import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.service.CourseManagementService;
 
@@ -38,7 +38,7 @@ public class CourseManagementController {
 			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
 		}
 
-		CourseReponseDTO rp = service.createCourse(rq);
+		CourseResponseDTO rp = service.createCourse(rq);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.CREATED, false);
 	}
@@ -51,7 +51,7 @@ public class CourseManagementController {
 			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
 		}
 
-		CourseReponseDTO rp = service.updateCourse(rq, id);
+		CourseResponseDTO rp = service.updateCourse(rq, id);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
@@ -65,7 +65,7 @@ public class CourseManagementController {
         @RequestParam(value = "valueFieldNameSearch", required = false) String valueFieldNameSearch
         ){
         
-        PageResponseModel<CourseReponseDTO> rp = service.search(new PageRequestModel(
+        PageResponseModel<CourseResponseDTO> rp = service.search(new PageRequestModel(
 			pageCurrent,
 			itemPerPage,
 			fieldNameSort,
