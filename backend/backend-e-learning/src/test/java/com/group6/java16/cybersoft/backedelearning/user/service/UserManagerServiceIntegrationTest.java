@@ -1,8 +1,10 @@
 package com.group6.java16.cybersoft.backedelearning.user.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
+
 
 import java.util.Optional;
 import java.util.UUID;
@@ -10,6 +12,7 @@ import java.util.UUID;
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
+import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.mapper.UserMapper;
 import com.group6.java16.cybersoft.user.model.ELUser;
@@ -26,6 +29,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
 public class UserManagerServiceIntegrationTest {
@@ -34,6 +38,9 @@ public class UserManagerServiceIntegrationTest {
 
     @Mock
     private UserMapper mapper;
+
+    @Mock
+    private PasswordEncoder encoder;
 
     @InjectMocks
     private UserManagementService service = new UserManagementServiceImpl();
@@ -153,6 +160,12 @@ public class UserManagerServiceIntegrationTest {
         assertEquals(expected, service.update(id.toString(), rq));
     }
 
-   
+   @Test
+   public void whenCreateUserSuccessfully_theReturnUserResponseDTO(){
+        UserCreateDTO rq = new UserCreateDTO("username", "password", "displayName", "email@gmail.com", 
+            UserStatus.ACTIVE, "firstName", "lastName", "department", "major");
+            
+        assertDoesNotThrow( () ->service.createUser(rq));
+   }
 
 }
