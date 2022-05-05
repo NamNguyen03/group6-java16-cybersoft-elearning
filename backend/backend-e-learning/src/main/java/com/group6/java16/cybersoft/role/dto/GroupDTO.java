@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GroupDTO {
+	
 	private String name;
 	
 	private String description;

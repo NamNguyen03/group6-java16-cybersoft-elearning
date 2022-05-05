@@ -4,6 +4,10 @@ import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
+import com.group6.java16.cybersoft.role.model.ELGroup;
+import com.group6.java16.cybersoft.role.model.ELRole;
+import com.group6.java16.cybersoft.role.repository.ELGroupRepository;
+import com.group6.java16.cybersoft.role.repository.ELRoleRepository;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
@@ -26,18 +30,27 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Autowired
     private ELUserRepository userRepository;
+    
+    @Autowired
+    private ELGroupRepository groupRepository;
 
     @Autowired
     private PasswordEncoder encoder;
 
     @Autowired
     private ServiceHelper<ELUser> serviceUserHelper;
+    
+    @Autowired
+    private ServiceHelper<ELGroup> serviceGroupHelper;
 
     @Value("${user.not-found}")
     private String errorsUserNotFound;
 
     @Value("${user.email.existed}")
     private String errorsEmailExisted;
+    
+    @Value("${group.id.not-found}")
+    private String errorsGroupIdNotFound;
 
     @Autowired
     private MyFirebaseService firebaseFileService;
@@ -131,5 +144,32 @@ public class UserManagementServiceImpl implements UserManagementService {
 
         return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(u));
     }
+
+	
+	@Override
+	public UserResponseDTO addGroup(String userId, String groupId) {
+		ELUser user = serviceUserHelper.getEntityById(userId, userRepository, errorsUserNotFound);
+		ELGroup group = serviceGroupHelper.getEntityById(groupId, groupRepository, errorsGroupIdNotFound);
+		
+		user.addGroup(group);
+		
+        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
+
+	}
+
+	@Override
+	public UserResponseDTO getProfile(String id) {
+		ELUser user = serviceUserHelper.getEntityById(id, userRepository, errorsUserNotFound);
+		return UserMapper.INSTANCE.toUserResponseDTO(user);
+	}
+
+	@Override
+	public UserResponseDTO deleteGroup(String userId, String groupId) {
+		ELUser user = serviceUserHelper.getEntityById(userId, userRepository, errorsUserNotFound);
+		ELGroup group = serviceGroupHelper.getEntityById(groupId, groupRepository, errorsGroupIdNotFound);
+		
+		user.removeGroup(group);
+		return  UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
+	}
 
 }

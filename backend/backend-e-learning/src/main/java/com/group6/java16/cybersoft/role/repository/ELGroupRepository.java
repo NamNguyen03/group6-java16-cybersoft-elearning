@@ -1,5 +1,6 @@
 package com.group6.java16.cybersoft.role.repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.role.model.ELGroup;
@@ -15,5 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface ELGroupRepository extends JpaRepository<ELGroup, UUID> {
     @Query(value = "Select r from ELGroup r where r.name like %:name% ")
     Page<ELGroup> searchByName(@Param("name") String name, Pageable pageable);
+
+  
 
 }
