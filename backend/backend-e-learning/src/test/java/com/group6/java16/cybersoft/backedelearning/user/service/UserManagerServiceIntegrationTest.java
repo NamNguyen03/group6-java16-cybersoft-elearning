@@ -2,12 +2,14 @@ package com.group6.java16.cybersoft.backedelearning.user.service;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 
 import java.util.Optional;
 import java.util.UUID;
 
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.notification.UserCreateModel;
 import com.group6.java16.cybersoft.common.service.notification.EmailSender;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
@@ -92,9 +94,34 @@ public class UserManagerServiceIntegrationTest {
         assertEquals(expected, service.updateMyProfile(rq));
     }
 
+    @Test
+    public void whenUpdateUserFails_thenThrowsBusinessException() throws Exception {
+        UUID id = UUID.randomUUID();
+        UpdateUserDTO user = UpdateUserDTO.builder()
+            .email("nam@gmail.com")
+            .build();
+
+        ELUser u = ELUser.builder()
+            .id(id)
+            .email("s@gmail.com")
+            .username("nam")
+            .displayName("Nam")
+            .firstName("Nguyen")
+            .lastName("Nam")
+            .hobbies("swimming")
+            .facebook("facebook.com")
+            .phone("11111222222")
+            .status(UserStatus.ACTIVE)
+            .build();
+        when(userRepository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(u));
+    
+        when(userRepository.existsByEmail(user.getEmail())).thenReturn(true);
+
+        assertThrows( BusinessException.class ,() -> service.update(id.toString(), user));
+    }
 
     @Test
-    public void whenUpdateUserSuccessfully_theReturnUserResponse(){
+    public void whenUpdateUserSuccessfully_thenReturnUserResponse(){
         UUID id = UUID.randomUUID();
         ELUser user = ELUser.builder()
             .id(id)
@@ -110,7 +137,6 @@ public class UserManagerServiceIntegrationTest {
             .build();
         when(userRepository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(user));
         
-        when(userRepository.existsByUsername("nam@gmail.com")).thenReturn(false);
         UpdateUserDTO rq = UpdateUserDTO.builder()
             .email("nam@gmail.com")
             .department("IT")
