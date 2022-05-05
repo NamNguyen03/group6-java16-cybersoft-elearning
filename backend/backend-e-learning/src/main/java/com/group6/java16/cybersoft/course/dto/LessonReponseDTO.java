@@ -10,11 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class LessonReponseDTO {
+	
 	private UUID id;
 	
-	private String sessionName;
+	private String name;
 	
-	private String img;
+	private String content;
 	
-	private String sessionDescription;
+	private String description;
 }

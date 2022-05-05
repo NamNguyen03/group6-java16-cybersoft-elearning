@@ -4,7 +4,7 @@ package com.group6.java16.cybersoft.course.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.group6.java16.cybersoft.validation.annotation.UniqueSessionName;
+import com.group6.java16.cybersoft.validation.annotation.UniqueLessonName;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,16 +14,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 public class LessonCreateDTO {
-	@Size(min = 6,max = 100,message = "{session.name.size}")
-	@NotBlank(message = "{session.name.not-blank}")
-	@UniqueSessionName(message = "{session.name.existed}")
-	private String sessionName;
+	@Size(min = 6,max = 100,message = "{lesson.name.size}")
+	@NotBlank(message = "{lesson.name.not-blank}")
+	@UniqueLessonName(message = "{lesson.name.existed}")
+	private String name;
 	
-	private String img;
+	@NotBlank(message = "{lesson.content.not-blank}")
+	private String content;
 	
-	@NotBlank(message = "{session.description.not-blank}")
-	private String sessionDescription;
+	@NotBlank(message = "{lesson.description.not-blank}")
+	private String description;
 	
-	@NotBlank(message = "{session.courseid.not-blank}")
+	@NotBlank(message = "{lesson.courseid.not-blank}")
 	private String course_id;
 }

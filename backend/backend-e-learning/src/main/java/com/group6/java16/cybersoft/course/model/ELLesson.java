@@ -23,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "el_lesson")
 public class ELLesson extends BaseEntity{
+	
 	private String name;
 	
 	private String description;

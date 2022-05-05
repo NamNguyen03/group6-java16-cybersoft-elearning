@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class LessonUpdateDTO {
 	
-	private String sessionName;
+	private String name;
 	
-	private String img;
+	private String content;
 	
-	private String sessionDescription;
+	private String description;
 }

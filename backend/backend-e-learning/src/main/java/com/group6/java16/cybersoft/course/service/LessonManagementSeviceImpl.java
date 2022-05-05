@@ -14,60 +14,57 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import com.group6.java16.cybersoft.common.model.BaseEntity;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
-import com.group6.java16.cybersoft.course.dto.CourseReponseDTO;
-import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonReponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
-import com.group6.java16.cybersoft.course.mapper.CourseMapper;
-import com.group6.java16.cybersoft.course.mapper.SessionMapper;
+import com.group6.java16.cybersoft.course.mapper.LessonMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
-import com.group6.java16.cybersoft.course.model.ELSession;
+import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
-import com.group6.java16.cybersoft.course.repository.ELSessionRepository;
+import com.group6.java16.cybersoft.course.repository.ELLessonRepository;
+
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class SessionManagementSeviceImpl extends ServiceHelper<ELSession> implements SessionManagementService {
+public class LessonManagementSeviceImpl extends ServiceHelper<ELLesson> implements LessonManagementService {
 	
 	@Autowired
-	private ELSessionRepository sessionRepository;
+	private ELLessonRepository lessonRepository;
+	
 	@Autowired
 	private ELCourseRepository courseRepository;
 	
-	@Value("${session.not-found}")
-	private String errorsSessionNotFound;
+	@Value("${lesson.not-found}")
+	private String errorslessonNotFound;
 	
 	@Value("${entity.id.invalid}")
     private String errorsIdInvalid;
 
 	@Override
-	public LessonReponseDTO updateSession(LessonUpdateDTO rq, String id) {
+	public LessonReponseDTO updateLesson(LessonUpdateDTO rq, String id) {
 			
-//		ELSession sessionCurrent = serviceSessionHelper.getEntityById(id, sessionRepository, errorsSessionNotFound);
-//		ELSession session = setUpdateSession(sessionCurrent, rq);
-//		return SessionMapper.INSTANCE.toSessionResponseDTO(sessionRepository.save(session));
-		return null;
+		ELLesson lessonCurrent = getById(id);
+		ELLesson lesson = setUpdatelesson(lessonCurrent, rq);
+		return LessonMapper.INSTANCE.toLessonResponseDTO(lessonRepository.save(lesson));
 	}
 	
-	private ELSession setUpdateSession(ELSession sessionCurrent, LessonUpdateDTO rq) {
-		if (checkString(rq.getSessionName())) {
-			sessionCurrent.setSessionName(rq.getSessionName());
+	private ELLesson setUpdatelesson(ELLesson lessonCurrent, LessonUpdateDTO rq) {
+		if (checkString(rq.getName())) {
+			lessonCurrent.setName(rq.getName());
 		}
 
-		if (checkString(rq.getImg())) {
-			sessionCurrent.setImg(rq.getImg());
+		if (checkString(rq.getContent())) {
+			lessonCurrent.setContent(rq.getContent());
 		}
 
-		if (checkString(rq.getSessionDescription())) {
-			sessionCurrent.setSessionDescription(rq.getSessionDescription());
+		if (checkString(rq.getDescription())) {
+			lessonCurrent.setDescription(rq.getDescription());
 		}
 
-		return sessionCurrent;
+		return lessonCurrent;
 	}
 	
 	private boolean checkString(String s) {
@@ -78,20 +75,20 @@ public class SessionManagementSeviceImpl extends ServiceHelper<ELSession> implem
 	}
 
 	@Override
-	public LessonReponseDTO createSession(LessonCreateDTO dto) {
+	public LessonReponseDTO createLesson(LessonCreateDTO dto) {
 		
 
-		// Map dto to session
+		// Map dto to lesson
 
-		ELSession s = SessionMapper.INSTANCE.toModel(dto);
+		ELLesson s = LessonMapper.INSTANCE.toModel(dto);
 		ELCourse c = courseRepository.findById(UUID.fromString(dto.getCourse_id())).get();
 
-		// save session return session
+		// save lesson return lesson
 		s.setCourse(c);
-		ELSession session = sessionRepository.save(s);
+		ELLesson lesson = lessonRepository.save(s);
 
-		// Map session to dto
-		LessonReponseDTO srp = SessionMapper.INSTANCE.toSessionResponseDTO(session);
+		// Map lesson to dto
+		LessonReponseDTO srp = LessonMapper.INSTANCE.toLessonResponseDTO(lesson);
 
 		return srp;
 	}
@@ -105,31 +102,31 @@ public class SessionManagementSeviceImpl extends ServiceHelper<ELSession> implem
 		String fieldNameSort = pageRequestModel.getFieldNameSort();
 		String valueSearch = pageRequestModel.getValueSearch();
 		Pageable pageable = PageRequest.of(page, size);
-		Page<ELSession> rp = null;
+		Page<ELLesson> rp = null;
 
-		if (null != fieldNameSort && fieldNameSort.matches("sessionName")) {
+		if (null != fieldNameSort && fieldNameSort.matches("name")) {
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
 
 		}
 
-		// coursename
-		if ("sessionName".equals(fieldNameSearch)) {
-			rp = sessionRepository.searchBySessionName(valueSearch, pageable);
+		// lessonName
+		if ("name".equals(fieldNameSearch)) {
+			rp = lessonRepository.searchByLessonName(valueSearch, pageable);
 		}
 
 		// if firstName not existed then search all
 		if (rp == null) {
-			rp = sessionRepository.findAll(pageable);
+			rp = lessonRepository.findAll(pageable);
 		}
 
 		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(), 
-	            rp.getContent().stream().map(SessionMapper.INSTANCE::toSessionResponseDTO).collect(Collectors.toList()));
+	            rp.getContent().stream().map(LessonMapper.INSTANCE::toLessonResponseDTO).collect(Collectors.toList()));
 	}
 
 	@Override
 	public void deleteById(String id) {
-		sessionRepository.delete(getById(id));
+		lessonRepository.delete(getById(id));
 	}
 
 	@Override
@@ -138,13 +135,13 @@ public class SessionManagementSeviceImpl extends ServiceHelper<ELSession> implem
 	}
 
 	@Override
-	protected JpaRepository<ELSession, UUID> getRepository() {
-		return sessionRepository;
+	protected JpaRepository<ELLesson, UUID> getRepository() {
+		return lessonRepository;
 	}
 
 	@Override
 	protected String getErrorNotFound() {
-		return errorsSessionNotFound;
+		return errorslessonNotFound;
 	}
 
 }

@@ -6,9 +6,9 @@ import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonReponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
 
-public interface SessionManagementService {
-	LessonReponseDTO updateSession( LessonUpdateDTO rq, String id);
-	LessonReponseDTO createSession(LessonCreateDTO dto);
+public interface LessonManagementService {
+	LessonReponseDTO updateLesson( LessonUpdateDTO rq, String id);
+	LessonReponseDTO createLesson(LessonCreateDTO dto);
 	PageResponseModel<LessonReponseDTO> search(PageRequestModel pageRequestModel);
 	void deleteById(String id);
 }

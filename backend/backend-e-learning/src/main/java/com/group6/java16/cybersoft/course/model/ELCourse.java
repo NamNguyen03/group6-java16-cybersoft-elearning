@@ -33,6 +33,6 @@ public class ELCourse extends BaseEntity {
 	private String description;
 	
 	@OneToMany(mappedBy = "course")
-	private Set<ELSession> sessions = new LinkedHashSet<ELSession>();
+	private Set<ELLesson> lessons = new LinkedHashSet<ELLesson>();
 
 }
