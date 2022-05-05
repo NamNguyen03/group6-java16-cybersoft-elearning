@@ -89,7 +89,6 @@ export class ProfileComponent implements OnInit {
     this.profileForm = this.formBuilder.group({
       firstName: [''],
       lastName: [''],
-      email: [''],
       displayName: [''],
       hobbies: [''],
       facebook: [''],
@@ -114,14 +113,13 @@ export class ProfileComponent implements OnInit {
   updateProfile(){
     let firstName = this.profileForm.controls['firstName'].value;
     let lastName = this.profileForm.controls['lastName'].value
-    let email = this.profileForm.controls['email'].value;
     let displayName = this.profileForm.controls['displayName'].value;
     let hobbies = this.profileForm.controls['hobbies'].value;
     let facebook = this.profileForm.controls['facebook'].value;
     let gender = this.profileForm.controls['gender'].value;
     let phone = this.profileForm.controls['phone'].value;
 
-    this._userClient.updateMyProfile(new UpdateMyProfileRq( displayName, email, firstName, lastName, hobbies, facebook, gender, phone)).subscribe(
+    this._userClient.updateMyProfile(new UpdateMyProfileRq( displayName, firstName, lastName, hobbies, facebook, gender, phone)).subscribe(
       response => {
         this.isUpdateProfile = false;
         this._toastr.success('Success', 'Update Profile success!');

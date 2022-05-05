@@ -72,7 +72,6 @@ export class LoginRequest{
 export class UpdateMyProfileRq{
     
     displayName: string;
-    email: string;
     firstName: string;
     lastName: string;
     hobbies: string;
@@ -80,9 +79,8 @@ export class UpdateMyProfileRq{
     gender: string;
     phone: string;
 
-    constructor(displayName: string, email: string, firstName: string, lastName: string, hobbies: string, facebook: string, gender: string, phone: string){
+    constructor(displayName: string, firstName: string, lastName: string, hobbies: string, facebook: string, gender: string, phone: string){
         this.displayName = displayName;
-        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.hobbies = hobbies;

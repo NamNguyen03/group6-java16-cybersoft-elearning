@@ -2,14 +2,11 @@ package com.group6.java16.cybersoft.backedelearning.user.service;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 
 import java.util.Optional;
 import java.util.UUID;
-
-import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
@@ -45,36 +42,11 @@ public class UserManagerServiceIntegrationTest {
     @InjectMocks
     private UserManagementService service = new UserManagementServiceImpl();
 
-    @Test
-    public void whenUpdateMyProfileExistsEmail_thenThrowBusinessException(){
-        UpdateMyProfileDTO rq = UpdateMyProfileDTO.builder()
-            .email("nam@gmail.com")
-            .build();
-        
-        Authentication authentication = Mockito.mock(Authentication.class);
-        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-
-        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
-        SecurityContextHolder.setContext(securityContext);
-        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("nam");
-
-        when(userRepository.findByUsername("nam")).thenReturn(Optional.of(
-            ELUser.builder()
-            .email("not-nam@gmail.com")
-            .username("nam")
-            .build()
-        ));
-
-        when(userRepository.existsByEmail("nam@gmail.com")).thenReturn(true);
-
-        assertThrows(BusinessException.class, () -> service.updateMyProfile(rq));
-    }
-
+   
 
     @Test
     public void whenUpdateMyProfileSuccess_theReturnUserResponse(){
         UpdateMyProfileDTO rq = UpdateMyProfileDTO.builder()
-            .email("nam@gmail.com")
             .displayName("Nam")
             .firstName("Nguyen")
             .lastName("Nam")
@@ -100,7 +72,6 @@ public class UserManagerServiceIntegrationTest {
         when(userRepository.save(user)).thenReturn(user);
     
         UserResponseDTO expected = UserResponseDTO.builder()
-            .email("nam@gmail.com")
             .username("nam")
             .displayName("Nam")
             .firstName("Nguyen")
