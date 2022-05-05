@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
-import { UpdateUserRq, UserRp } from 'src/app/api-clients/model/user.model';
+import { UserRp } from 'src/app/api-clients/model/user.model';
 import { UserClient } from 'src/app/api-clients/user.client';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { PageService } from 'src/app/shared/service/page/page.service';
 import { GroupClient } from 'src/app/api-clients/group.client';
-import { HttpClient, HttpClientJsonpModule, HttpEvent } from '@angular/common/http';
-import { BaseGroup, GroupResponse } from 'src/app/api-clients/model/group.model';
+import { GroupResponse } from 'src/app/api-clients/model/group.model';
 
 @Component({
     selector: 'app-add-group',
@@ -36,46 +34,13 @@ import { BaseGroup, GroupResponse } from 'src/app/api-clients/model/group.model'
     constructor(private _userClient: UserClient, 
       private _router: Router,
       private form: FormBuilder,
-      private _pageService: PageService,
       private _toastr: ToastrService, 
       private route: ActivatedRoute,
       private _GroupClient: GroupClient,
-      private http: HttpClient) {
+     ) {
       
     }
-    public settings = {
-      pager: {
-          display: true,
-          perPage: 10,
-      },
-      delete: {
-          confirmDelete: true,
-      },
-      edit: {
-        confirmSave: true,
-      },
-      actions: {
-          custom: false,
-          delete: true,
-          add: false,
-      },
-      columns: {
-          name: {
-              title: 'Group name',
-              editable: false,
-          },
-          roles: {
-              title: 'Role',
-              editable: false,
-          },
-          descripsion: {
-            title: 'Descripsion',
-            editable: false,
-          },
-       
-          
-      },
-    }
+    
     ngOnInit() {
        this.getData();
    
