@@ -7,6 +7,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 import java.util.UUID;
+
+import com.group6.java16.cybersoft.common.model.notification.UserCreateModel;
+import com.group6.java16.cybersoft.common.service.notification.EmailSender;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
@@ -42,7 +45,8 @@ public class UserManagerServiceIntegrationTest {
     @InjectMocks
     private UserManagementService service = new UserManagementServiceImpl();
 
-   
+    @Mock
+    private EmailSender<UserCreateModel> serviceSendEmailCreateUserSuccess;
 
     @Test
     public void whenUpdateMyProfileSuccess_theReturnUserResponse(){
@@ -58,7 +62,7 @@ public class UserManagerServiceIntegrationTest {
         
         Authentication authentication = Mockito.mock(Authentication.class);
         SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-
+        
         Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
         Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("nam");
@@ -135,7 +139,6 @@ public class UserManagerServiceIntegrationTest {
    public void whenCreateUserSuccessfully_theReturnUserResponseDTO(){
         UserCreateDTO rq = new UserCreateDTO("username", "password", "displayName", "email@gmail.com", 
             UserStatus.ACTIVE, "firstName", "lastName", "department", "major");
-            
         assertDoesNotThrow( () ->service.createUser(rq));
    }
 
