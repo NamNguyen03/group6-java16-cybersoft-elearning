@@ -21,6 +21,7 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.role.dto.GroupDTO;
 import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
+import com.group6.java16.cybersoft.role.dto.GroupUpdateDTO;
 import com.group6.java16.cybersoft.role.mapper.GroupMapper;
 import com.group6.java16.cybersoft.role.model.ELGroup;
 import com.group6.java16.cybersoft.role.model.ELRole;
@@ -38,7 +39,7 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 	private ELRoleRepository roleRepository;
 
 	@Value("${entity.id.invalid}")
-    private String errorsIdInvalid;
+	private String errorsIdInvalid;
 
 	@Value("${group.id.not-found}")
 	private String messagesGroupIdNotFound;
@@ -98,38 +99,38 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 	}
 
 	private ELRole getRoleById(String roleId) {
-        UUID uuid;
-        try{
-            uuid = UUID.fromString(roleId);
-        }catch(Exception e){
-            throw new BusinessException(errorsIdInvalid);
-        }
-        
-        Optional<ELRole> roleOpt = roleRepository.findById(uuid);
-        
-        if(roleOpt.isEmpty()){
-            throw new BusinessException(messagesRoleIdNotFound);
-        }
-        return roleOpt.get();
-    }
+		UUID uuid;
+		try {
+			uuid = UUID.fromString(roleId);
+		} catch (Exception e) {
+			throw new BusinessException(errorsIdInvalid);
+		}
 
-    @Override
-	public GroupResponseDTO save(GroupDTO dto) {
+		Optional<ELRole> roleOpt = roleRepository.findById(uuid);
 
-		return GroupMapper.INSTANCE.toGroupResponseDTO(groupRepository.save(GroupMapper.INSTANCE.toModel(dto)));
-		
+		if (roleOpt.isEmpty()) {
+			throw new BusinessException(messagesRoleIdNotFound);
+		}
+		return roleOpt.get();
 	}
 
 	@Override
-	public GroupResponseDTO update(String id, GroupDTO dto) {
+	public GroupResponseDTO save(GroupDTO dto) {
+
+		return GroupMapper.INSTANCE.toGroupResponseDTO(groupRepository.save(GroupMapper.INSTANCE.toModel(dto)));
+
+	}
+
+	@Override
+	public GroupResponseDTO update(String id, GroupUpdateDTO dto) {
 		ELGroup group = getById(id);
 
 		if (isValidString(dto.getName()) && !group.getName().equals(dto.getName())) {
 
-			if(groupRepository.existsByName(dto.getName())){
-				throw new BusinessException(messagesGroupExistedName);	
+			if (groupRepository.existsByName(dto.getName())) {
+				throw new BusinessException(messagesGroupExistedName);
 			}
-			
+
 			group.setName(dto.getName());
 		}
 		if (isValidString(dto.getDescription())) {
@@ -137,7 +138,7 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 		}
 
 		return GroupMapper.INSTANCE.toGroupResponseDTO(groupRepository.save(group));
-		
+
 	}
 
 	@Override

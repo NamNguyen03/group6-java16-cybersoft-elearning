@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CourseReponseDTO {
+public class CourseResponseDTO {
 	private UUID id;
 	private String courseName;
 	private int courseTime;

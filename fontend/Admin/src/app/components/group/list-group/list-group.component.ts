@@ -72,11 +72,8 @@ export class ListGroupComponent implements OnInit {
       description: {
         title: 'Description',
         editable: true,
-      },
-      roles: {
-        title: 'Role',
-       
       }
+      
     }
   
   }
@@ -165,7 +162,7 @@ export class ListGroupComponent implements OnInit {
     let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
     let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
     let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
-    this._router.navigate(['/roles/list-role'],{
+    this._router.navigate(['/groups/list-group'],{
       queryParams: {'fieldNameSort':fieldNameSort,'isIncrementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
 
     })

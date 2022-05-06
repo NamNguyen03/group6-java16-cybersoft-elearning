@@ -2,6 +2,7 @@ package com.group6.java16.cybersoft.backedelearning.user.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -12,7 +13,9 @@ import com.google.gson.Gson;
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
+import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
+import com.group6.java16.cybersoft.user.model.UserStatus;
 import com.group6.java16.cybersoft.user.service.UserManagementService;
 
 import org.junit.jupiter.api.Test;
@@ -110,4 +113,38 @@ public class UserManagerControllerIntegrationTest {
             .andExpect(content().string(containsString(results)));
     }
     
+
+    @Test
+    @WithMockUser("nam")
+    public void givenJsonObject_whenCreateUser_theReturnStatus200() throws Exception{
+        UserCreateDTO rq = new UserCreateDTO("username", "password", "displayName", "email@gmail.com", 
+            UserStatus.ACTIVE, "firstName", "lastName", "department", "major");
+        Gson gson = new Gson();
+        String json = gson.toJson(rq);
+
+        when(service.createUser(rq)).thenReturn(new UserResponseDTO());
+
+        mvc.perform(post("/api/v1/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andDo(print())
+            .andExpect(status().isOk());
+            
+    }
+
+    @Test
+    @WithMockUser("nam")
+    public void givenJsonObject_whenCreateUser_theReturnStatus400() throws Exception{
+        UserCreateDTO rq = new UserCreateDTO(null, "password", "displayName", "email@gmail.com", 
+            UserStatus.ACTIVE, "firstName", "lastName", "department", "major");
+        Gson gson = new Gson();
+        String json = gson.toJson(rq);
+
+        mvc.perform(post("/api/v1/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andDo(print())
+            .andExpect(status().isBadRequest());
+            
+    }
 }

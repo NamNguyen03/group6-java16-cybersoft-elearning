@@ -1,24 +1,17 @@
 package com.group6.java16.cybersoft.role.dto;
 
 
-import java.util.UUID;
-
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
+@AllArgsConstructor
 @Builder
-public class RoleResponseDTO {
-	
-	private UUID id;
-	
+public class RoleUpdateDTO {
 	private String name;
-	
 	private String description;
 
 }
