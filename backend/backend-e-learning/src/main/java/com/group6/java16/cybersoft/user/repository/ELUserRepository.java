@@ -3,6 +3,7 @@ package com.group6.java16.cybersoft.user.repository;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.group6.java16.cybersoft.role.model.ELRole;
 import com.group6.java16.cybersoft.user.model.ELUser;
 
 import org.springframework.data.domain.Page;
@@ -35,6 +36,7 @@ public interface ELUserRepository extends JpaRepository<ELUser, UUID>  {
 
     @Query( value =  "Select u from ELUser u where u.lastName like %:lastName% ")
     Page<ELUser> searchByLastName(@Param("lastName") String lastName, Pageable pageable);
+
 
 
 }

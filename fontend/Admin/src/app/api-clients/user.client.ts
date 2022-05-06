@@ -50,6 +50,16 @@ export class UserClient {
         return this.httpClient.put<Response<UserRp>>(this._apiEndpoint + "/" + id, rq)
     }
 
+    getProfile(id: string): Observable<Response<UserRp>>{
+        return this.httpClient.get<Response<UserRp>>(this._apiEndpoint+ "/" + id);
+    }
+    addGroupIntoUser(userId, groupId: String): Observable<Response<UserRp>>{
+        return this.httpClient.post<Response<UserRp>>(this._apiEndpoint + "/" + userId + "/" + groupId,'')
+    }
+    deleteGroupIntoUser(userId, groupId: String): Observable<Response<UserRp>>{
+        return this.httpClient.delete<Response<UserRp>>(this._apiEndpoint + "/" + userId + "/" + groupId)
+    }
+
     uploadAvatar( file: File): Observable<Response<UserRp>>{
 
         let formData = new FormData();

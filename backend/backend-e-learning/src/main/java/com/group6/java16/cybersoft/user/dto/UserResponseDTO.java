@@ -1,7 +1,10 @@
 package com.group6.java16.cybersoft.user.dto;
 
+import java.util.Set;
 import java.util.UUID;
 
+import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
+import com.group6.java16.cybersoft.role.dto.RoleResponseDTO;
 import com.group6.java16.cybersoft.user.model.UserStatus;
 
 import lombok.*;
@@ -38,4 +41,6 @@ public class UserResponseDTO {
 	private String facebook;
 
     private UserStatus status;
+    
+    private Set<GroupResponseDTO> groups;
 }
