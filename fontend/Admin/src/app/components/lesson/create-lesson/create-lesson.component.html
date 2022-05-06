@@ -1,0 +1,54 @@
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card tab2-card">
+                <div class="card-header">
+                    <h5> Create lesson</h5>
+                </div>
+                <div class="card-body">
+                                <div class="tab-pane fade active show" id="account" role="tabpanel"
+                                    aria-labelledby="account-tab">
+                                    <form [formGroup]="accountForm" 
+                                        class="needs-validation user-add" novalidate="">
+                                        <h4>General</h4>
+                                        <div class="form-group row">
+                                            <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Choose a course <span>*</span> </label>
+                                                <select class="form-control digits col-xl-8 col-sm-7"
+                                                    id="exampleFormControlSelect1" name="" formControlName="">
+                                                    <option value="true">Java back end.</option>
+                                                    <option value="false">Font end(HTML-CSS)</option>
+                                                </select>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom2" class="col-xl-3 col-md-4">
+                                                Lesson Name <span>*</span></label>
+                                            <input class="form-control col-xl-8 col-md-7" id="validationCustom0"
+                                                type="text" required="">
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom1" class="col-xl-3 col-md-4">
+                                                 Description</label>
+                                            <input class="form-control col-xl-8 col-md-7" id="validationCustom1"
+                                                type="text" required="">
+                                        </div>
+
+                                        
+                                    </form>
+                                </div>
+                            
+                    <div>
+                        <div>
+                            <label> Content<span>*</span></label>
+                            <angular-editor class="mb-3" id="editor1" formControlName="htmlContent1" [config]="editorConfig"></angular-editor>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->

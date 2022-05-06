@@ -95,9 +95,9 @@ export class NavService {
 			]
 		},
 		{
-			title: 'Vendors', icon: 'users', type: 'sub', active: false, children: [
-				{ path: '/vendors/list-vendors', title: 'Vendor List', type: 'link' },
-				{ path: '/vendors/create-vendors', title: 'Create Vendor', type: 'link' },
+			title: 'Lessons', icon: 'users', type: 'sub', active: false, children: [
+				{ path: '/lessons/list-lesson', title: 'Lesson List', type: 'link' },
+				{ path: '/lessons/create-lesson', title: 'Create Lesson', type: 'link' },
 			]
 		},
 		{

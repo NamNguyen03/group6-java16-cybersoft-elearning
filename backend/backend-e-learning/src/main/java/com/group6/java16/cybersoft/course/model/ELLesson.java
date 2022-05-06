@@ -24,10 +24,13 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "el_lesson")
 public class ELLesson extends BaseEntity{
 	
+	@Column(name = "name",unique = true,nullable = false)
 	private String name;
 	
+	@Column(name = "description")
 	private String description;
 	
+	@Column(name = "content",nullable = false)
 	private String content;
 	
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
