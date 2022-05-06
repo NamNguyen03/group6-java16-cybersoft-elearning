@@ -21,6 +21,7 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.role.dto.RoleDTO;
 import com.group6.java16.cybersoft.role.dto.RoleResponseDTO;
+import com.group6.java16.cybersoft.role.dto.RoleUpdateDTO;
 import com.group6.java16.cybersoft.role.service.RoleService;
 
 
@@ -59,10 +60,8 @@ public class RoleManagementController {
 	}
 	
 	@PutMapping("{id}")
-	public Object updateRole(@PathVariable("id") String id, @RequestBody @Valid RoleDTO dto,BindingResult bindingResult) {
-		if(bindingResult.hasErrors()) {
-			return ResponseHelper.getResponse(bindingResult, HttpStatus.BAD_REQUEST, true);
-		}
+	public Object updateRole(@PathVariable("id") String id, @RequestBody RoleUpdateDTO dto) {
+		
 		RoleResponseDTO response = service.update(id,dto);
 		
 		if(response ==null) {

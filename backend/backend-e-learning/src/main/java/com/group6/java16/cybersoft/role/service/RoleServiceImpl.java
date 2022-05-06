@@ -23,6 +23,7 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.role.dto.RoleDTO;
 import com.group6.java16.cybersoft.role.dto.RoleResponseDTO;
+import com.group6.java16.cybersoft.role.dto.RoleUpdateDTO;
 import com.group6.java16.cybersoft.role.mapper.RoleMapper;
 import com.group6.java16.cybersoft.role.model.ELRole;
 import com.group6.java16.cybersoft.role.repository.ELRoleRepository;
@@ -64,10 +65,12 @@ public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleServic
 		Pageable pageable = PageRequest.of(page, size);
 		Page<ELRole> rp = null;
 
-		if (null != fieldNameSort && fieldNameSort.matches("name|createdBy|createdAt")) {
+		if (null != fieldNameSort && fieldNameSort.matches("name")) {
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
-		}
+		}else{
+            pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
+        }
 
 		if("name".equals(fieldNameSearch)){
 			rp =  roleRepository.searchByName(valueSearch, pageable);
@@ -85,7 +88,7 @@ public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleServic
 
 
 	@Override
-	public RoleResponseDTO update(String id, RoleDTO dto) {
+	public RoleResponseDTO update(String id, RoleUpdateDTO dto) {
 		ELRole role = getById(id);
 
 		if(isValidString(dto.getName()) && !role.getName().equals(dto.getName())){
