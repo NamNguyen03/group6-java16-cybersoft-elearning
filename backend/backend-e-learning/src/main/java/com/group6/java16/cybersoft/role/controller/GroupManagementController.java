@@ -69,12 +69,11 @@ public class GroupManagementController {
 		}
 	    
 	    @PutMapping("{id}")
-	    public Object updateGroup(@PathVariable("id") String id,@RequestBody @Valid GroupUpdateDTO dto,BindingResult bindingResult ){
-	        if(bindingResult.hasErrors()){
-	            return ResponseHelper.getResponse(bindingResult,HttpStatus.BAD_REQUEST, true);
-	        }
-	        
-			GroupResponseDTO response = service.update(id,dto);
+	    public Object updateGroup(@PathVariable("id") String id,@RequestBody GroupUpdateDTO dto){
+	       	GroupResponseDTO response = service.update(id,dto);
+	       	if(response ==null) {
+				return ResponseHelper.getResponse("name invalid", HttpStatus.BAD_REQUEST, true);
+			}
 	        
 	        return ResponseHelper.getResponse(response, HttpStatus.OK,false);
 	    }

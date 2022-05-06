@@ -66,7 +66,9 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
 
-		}
+		}else{
+            pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
+        }
 
 		if ("name".equals(fieldNameSearch)) {
 			response = groupRepository.searchByName(valueSearch, pageable);
