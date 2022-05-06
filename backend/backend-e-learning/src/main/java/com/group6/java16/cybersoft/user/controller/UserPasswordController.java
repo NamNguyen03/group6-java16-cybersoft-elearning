@@ -8,6 +8,7 @@ import com.group6.java16.cybersoft.user.service.UserPasswordService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/v1/users/password")
+@CrossOrigin(origins = "*")
 public class UserPasswordController {
     @Autowired
     private UserPasswordService service;
