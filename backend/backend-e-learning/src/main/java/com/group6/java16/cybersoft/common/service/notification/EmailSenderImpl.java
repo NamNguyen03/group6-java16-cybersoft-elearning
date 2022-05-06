@@ -31,4 +31,5 @@ public abstract class EmailSenderImpl<T> implements EmailSender<T>{
         };
         session = Session.getInstance(props, auth);
     }
+
 }
