@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PageService } from 'src/app/shared/service/page/page.service';
+import { id } from '@swimlane/ngx-charts';
+
 
 @Component({
   selector: 'app-list-user',
@@ -15,6 +17,9 @@ import { PageService } from 'src/app/shared/service/page/page.service';
 })
 export class ListUserComponent implements OnInit {
   public user_list: UserRp[] = [];
+  public profile: UserRp = new UserRp();
+  public profileForm: FormGroup;
+
   public searchForm: FormGroup;
   public pages = [];
   private _pageRequest = new PageRequest(0, 10, null, true, null, null);
@@ -210,5 +215,53 @@ export class ListUserComponent implements OnInit {
     }
     this.search();
   }
+  onUserRowSelected(event) {
+     let userId = event.data.id;
+     console.log(userId)
+    
+    this._router.navigate(['/users/user-details'],{
+      queryParams: {'userId':userId}})
+
+  }
+
+  getData(id: string): void{
+    this._userClient.getProfile(id).subscribe(
+      response =>{
+        this.profile = response.content
+        this.createProfileForm();
+        this.setDefaultValueForm();
+      } 
+      
+    )
+  }
+
+  setDefaultValueForm(){
+    console.log(this.profileForm)
+    this.profileForm.patchValue({
+      firstName: this.profile.firstName,
+      lastName: this.profile.lastName,
+      email: this.profile.email,
+      displayName: this.profile.displayName,
+      hobbies: this.profile.hobbies,
+      facebook: this.profile.facebook,
+      gender: this.profile.gender,
+      phone: this.profile.phone,
+      groups: this.profile.groups,
+    })
+  }
+  createProfileForm() {
+    this.profileForm = this.form.group({
+      firstName: [''],
+      lastName: [''],
+      email: [''],
+      displayName: [''],
+      hobbies: [''],
+      facebook: [''],
+      gender: [''],
+      phone: [''],
+      groups:[],
+    })
+  }
 }
+
 

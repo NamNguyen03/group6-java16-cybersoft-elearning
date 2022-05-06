@@ -1,3 +1,5 @@
+import { BaseGroup, GroupResponse } from "./group.model";
+
 export class UserCreate {
 
     username: string;
@@ -24,6 +26,7 @@ export class UserCreate {
 }
 
 export class UserRp{
+    
     id: string;
     username: string;
     displayName: string;
@@ -38,6 +41,7 @@ export class UserRp{
     status: string;
     gender: string;
     phone: string;
+    groups: GroupResponse[];
 
     constructor(){
        this.id = "";
@@ -54,6 +58,7 @@ export class UserRp{
        this.gender = "";
        this.phone = "";
        this.email = "";
+       this.groups=[];
 
     }
 }

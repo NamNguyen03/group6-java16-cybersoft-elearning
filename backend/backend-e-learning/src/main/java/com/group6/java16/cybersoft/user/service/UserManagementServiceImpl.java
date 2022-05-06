@@ -1,5 +1,6 @@
 package com.group6.java16.cybersoft.user.service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
@@ -8,6 +9,8 @@ import com.group6.java16.cybersoft.common.service.notification.EmailSender;
 import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
+import com.group6.java16.cybersoft.role.model.ELGroup;
+import com.group6.java16.cybersoft.role.repository.ELGroupRepository;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
@@ -32,9 +35,15 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
 
     @Autowired
     private ELUserRepository userRepository;
+    
+    @Autowired
+    private ELGroupRepository groupRepository;
 
     @Autowired
     private PasswordEncoder encoder;
+    
+    
+
 
     @Autowired
     @Qualifier("emailSenderCreateSuccessfully")
@@ -45,6 +54,9 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
 
     @Value("${user.email.existed}")
     private String errorsEmailExisted;
+    
+    @Value("${group.id.not-found}")
+    private String errorsGroupIdNotFound;
 
     @Value("${entity.id.invalid}")
     private String errorsIdInvalid;
@@ -138,6 +150,33 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
         return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(u));
     }
 
+	
+	@Override
+	public UserResponseDTO addGroup(String userId, String groupId) {
+		ELUser user = getById(userId);
+		ELGroup group = getGroupById(groupId);
+		
+		user.addGroup(group);
+		
+        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
+
+	}
+
+	@Override
+	public UserResponseDTO getProfile(String id) {
+		ELUser user = getById(id);
+		return UserMapper.INSTANCE.toUserResponseDTO(user);
+	}
+
+	@Override
+	public UserResponseDTO deleteGroup(String userId, String groupId) {
+		ELUser user = getById(userId);
+		ELGroup group = getGroupById(groupId);
+		
+		user.removeGroup(group);
+		return  UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
+	}
+
     @Override
     protected String getMessageIdInvalid() {
         return errorsIdInvalid;
@@ -151,6 +190,22 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
     @Override
     protected String getErrorNotFound() {
         return errorsUserNotFound;
+    }
+    
+    private ELGroup getGroupById(String id) {
+        UUID uuid;
+        try{
+            uuid = UUID.fromString(id);
+        }catch(Exception e){
+            throw new BusinessException(getMessageIdInvalid());
+        }
+        
+        Optional<ELGroup> entityOpt = groupRepository.findById(uuid);
+        
+        if(entityOpt.isEmpty()){
+            throw new BusinessException(errorsGroupIdNotFound);
+        }
+        return entityOpt.get();
     }
 
 }

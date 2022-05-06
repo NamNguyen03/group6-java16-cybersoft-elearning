@@ -38,7 +38,7 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 	private ELRoleRepository roleRepository;
 
 	@Value("${entity.id.invalid}")
-    private String errorsIdInvalid;
+	private String errorsIdInvalid;
 
 	@Value("${group.id.not-found}")
 	private String messagesGroupIdNotFound;
@@ -98,26 +98,26 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 	}
 
 	private ELRole getRoleById(String roleId) {
-        UUID uuid;
-        try{
-            uuid = UUID.fromString(roleId);
-        }catch(Exception e){
-            throw new BusinessException(errorsIdInvalid);
-        }
-        
-        Optional<ELRole> roleOpt = roleRepository.findById(uuid);
-        
-        if(roleOpt.isEmpty()){
-            throw new BusinessException(messagesRoleIdNotFound);
-        }
-        return roleOpt.get();
-    }
+		UUID uuid;
+		try {
+			uuid = UUID.fromString(roleId);
+		} catch (Exception e) {
+			throw new BusinessException(errorsIdInvalid);
+		}
 
-    @Override
+		Optional<ELRole> roleOpt = roleRepository.findById(uuid);
+
+		if (roleOpt.isEmpty()) {
+			throw new BusinessException(messagesRoleIdNotFound);
+		}
+		return roleOpt.get();
+	}
+
+	@Override
 	public GroupResponseDTO save(GroupDTO dto) {
 
 		return GroupMapper.INSTANCE.toGroupResponseDTO(groupRepository.save(GroupMapper.INSTANCE.toModel(dto)));
-		
+
 	}
 
 	@Override
@@ -126,10 +126,10 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 
 		if (isValidString(dto.getName()) && !group.getName().equals(dto.getName())) {
 
-			if(groupRepository.existsByName(dto.getName())){
-				throw new BusinessException(messagesGroupExistedName);	
+			if (groupRepository.existsByName(dto.getName())) {
+				throw new BusinessException(messagesGroupExistedName);
 			}
-			
+
 			group.setName(dto.getName());
 		}
 		if (isValidString(dto.getDescription())) {
@@ -137,7 +137,7 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 		}
 
 		return GroupMapper.INSTANCE.toGroupResponseDTO(groupRepository.save(group));
-		
+
 	}
 
 	@Override
