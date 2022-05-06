@@ -3,7 +3,6 @@ package com.group6.java16.cybersoft.backedelearning.user.controller;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
-import com.group6.java16.cybersoft.user.repository.ELUserRepository;
 import com.group6.java16.cybersoft.user.service.UserInformationService;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,9 +27,6 @@ import org.springframework.test.web.servlet.MockMvc;
 public class UserInformationControllerIntegrationTest {
     @MockBean
     private UserInformationService service;
-
-    @MockBean
-    private ELUserRepository userRepository;
 
     @Autowired
     private MockMvc mvc;
@@ -61,14 +57,14 @@ public class UserInformationControllerIntegrationTest {
     public void givenJsonObject_whenGetMyProfile_theReturnStatus200AndResponseHelper() throws Exception{
         UserResponseDTO expected = UserResponseDTO.builder()
             .id(UUID.fromString("c6b4c4a5-366c-4cbb-9f2b-8b24c9c893f6"))
-            .username("nam111111111")
+            .username("nam")
             .displayName("Nam Nguyen")
             .build();
         
-        when(userRepository.existsByUsername("nam111111111")).thenReturn(true);
+      
         when(service.getMyProfile()).thenReturn(expected);
 
-        String results = "{\"hasErrors\":false,\"content\":{\"id\":\"c6b4c4a5-366c-4cbb-9f2b-8b24c9c893f6\",\"username\":\"nam111111111\",\"displayName\":\"Nam Nguyen\"";
+        String results = "{\"hasErrors\":false,\"content\":{\"id\":\"c6b4c4a5-366c-4cbb-9f2b-8b24c9c893f6\",\"username\":\"nam\",\"displayName\":\"Nam Nguyen\"";
 
         mvc.perform(get("/api/v1/users/me"))
             .andDo(print())
