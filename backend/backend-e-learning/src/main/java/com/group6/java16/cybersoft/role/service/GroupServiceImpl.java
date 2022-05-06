@@ -21,6 +21,7 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.role.dto.GroupDTO;
 import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
+import com.group6.java16.cybersoft.role.dto.GroupUpdateDTO;
 import com.group6.java16.cybersoft.role.mapper.GroupMapper;
 import com.group6.java16.cybersoft.role.model.ELGroup;
 import com.group6.java16.cybersoft.role.model.ELRole;
@@ -121,7 +122,7 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 	}
 
 	@Override
-	public GroupResponseDTO update(String id, GroupDTO dto) {
+	public GroupResponseDTO update(String id, GroupUpdateDTO dto) {
 		ELGroup group = getById(id);
 
 		if (isValidString(dto.getName()) && !group.getName().equals(dto.getName())) {
