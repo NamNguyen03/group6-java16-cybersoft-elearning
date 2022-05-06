@@ -10,6 +10,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
+import com.group6.java16.cybersoft.common.model.notification.UserCreateModel;
+import com.group6.java16.cybersoft.common.service.notification.EmailSender;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
@@ -45,36 +47,12 @@ public class UserManagerServiceIntegrationTest {
     @InjectMocks
     private UserManagementService service = new UserManagementServiceImpl();
 
-    @Test
-    public void whenUpdateMyProfileExistsEmail_thenThrowBusinessException(){
-        UpdateMyProfileDTO rq = UpdateMyProfileDTO.builder()
-            .email("nam@gmail.com")
-            .build();
-        
-        Authentication authentication = Mockito.mock(Authentication.class);
-        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-
-        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
-        SecurityContextHolder.setContext(securityContext);
-        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("nam");
-
-        when(userRepository.findByUsername("nam")).thenReturn(Optional.of(
-            ELUser.builder()
-            .email("not-nam@gmail.com")
-            .username("nam")
-            .build()
-        ));
-
-        when(userRepository.existsByEmail("nam@gmail.com")).thenReturn(true);
-
-        assertThrows(BusinessException.class, () -> service.updateMyProfile(rq));
-    }
-
+    @Mock
+    private EmailSender<UserCreateModel> serviceSendEmailCreateUserSuccess;
 
     @Test
     public void whenUpdateMyProfileSuccess_theReturnUserResponse(){
         UpdateMyProfileDTO rq = UpdateMyProfileDTO.builder()
-            .email("nam@gmail.com")
             .displayName("Nam")
             .firstName("Nguyen")
             .lastName("Nam")
@@ -86,7 +64,7 @@ public class UserManagerServiceIntegrationTest {
         
         Authentication authentication = Mockito.mock(Authentication.class);
         SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-
+        
         Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
         Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("nam");
@@ -100,7 +78,6 @@ public class UserManagerServiceIntegrationTest {
         when(userRepository.save(user)).thenReturn(user);
     
         UserResponseDTO expected = UserResponseDTO.builder()
-            .email("nam@gmail.com")
             .username("nam")
             .displayName("Nam")
             .firstName("Nguyen")
@@ -118,9 +95,34 @@ public class UserManagerServiceIntegrationTest {
         assertEquals(expected, service.updateMyProfile(rq));
     }
 
+    @Test
+    public void whenUpdateUserFails_thenThrowsBusinessException() throws Exception {
+        UUID id = UUID.randomUUID();
+        UpdateUserDTO user = UpdateUserDTO.builder()
+            .email("nam@gmail.com")
+            .build();
+
+        ELUser u = ELUser.builder()
+            .id(id)
+            .email("s@gmail.com")
+            .username("nam")
+            .displayName("Nam")
+            .firstName("Nguyen")
+            .lastName("Nam")
+            .hobbies("swimming")
+            .facebook("facebook.com")
+            .phone("11111222222")
+            .status(UserStatus.ACTIVE)
+            .build();
+        when(userRepository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(u));
+    
+        when(userRepository.existsByEmail(user.getEmail())).thenReturn(true);
+
+        assertThrows( BusinessException.class ,() -> service.update(id.toString(), user));
+    }
 
     @Test
-    public void whenUpdateUserSuccessfully_theReturnUserResponse(){
+    public void whenUpdateUserSuccessfully_thenReturnUserResponse(){
         UUID id = UUID.randomUUID();
         ELUser user = ELUser.builder()
             .id(id)
@@ -136,7 +138,6 @@ public class UserManagerServiceIntegrationTest {
             .build();
         when(userRepository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(user));
         
-        when(userRepository.existsByUsername("nam@gmail.com")).thenReturn(false);
         UpdateUserDTO rq = UpdateUserDTO.builder()
             .email("nam@gmail.com")
             .department("IT")
@@ -166,7 +167,6 @@ public class UserManagerServiceIntegrationTest {
    public void whenCreateUserSuccessfully_theReturnUserResponseDTO(){
         UserCreateDTO rq = new UserCreateDTO("username", "password", "displayName", "email@gmail.com", 
             UserStatus.ACTIVE, "firstName", "lastName", "department", "major");
-            
         assertDoesNotThrow( () ->service.createUser(rq));
    }
 

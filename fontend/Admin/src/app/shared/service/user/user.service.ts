@@ -24,6 +24,11 @@ export class UserService {
     localStorage.setItem('jwt', jwt);
   }
 
+  public logout(): void{
+    localStorage.setItem('jwt', '');
+    this._$userCurrent.next(null);
+  }
+
   public setUserCurrent(user: UserRp): void{
     this._$userCurrent.next(user);
   }

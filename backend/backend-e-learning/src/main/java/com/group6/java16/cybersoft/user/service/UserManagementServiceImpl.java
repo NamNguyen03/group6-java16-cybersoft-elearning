@@ -4,6 +4,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
+import com.group6.java16.cybersoft.common.model.notification.UserCreateModel;
+import com.group6.java16.cybersoft.common.service.notification.EmailSender;
 import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
@@ -18,6 +20,7 @@ import com.group6.java16.cybersoft.user.model.ELUser;
 import com.group6.java16.cybersoft.user.repository.ELUserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
@@ -42,6 +45,10 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
     
 
 
+    @Autowired
+    @Qualifier("emailSenderCreateSuccessfully")
+    private EmailSender<UserCreateModel> serviceSendEmailCreateUserSuccess;
+
     @Value("${user.not-found}")
     private String errorsUserNotFound;
 
@@ -54,13 +61,17 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
     @Value("${entity.id.invalid}")
     private String errorsIdInvalid;
 
+
     @Autowired
     private MyFirebaseService firebaseFileService;
 
     @Override
     public UserResponseDTO createUser(UserCreateDTO user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(UserMapper.INSTANCE.toModel(user)));
+        String password = user.getPassword();
+        user.setPassword(encoder.encode(password));
+        ELUser rp = userRepository.save(UserMapper.INSTANCE.toModel(user));
+        serviceSendEmailCreateUserSuccess.send("User Service", user.getEmail(), "Create Account Success", new UserCreateModel(user.getUsername(), password));
+        return UserMapper.INSTANCE.toUserResponseDTO(rp);
     }
 
     @Override
@@ -73,12 +84,6 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
     public UserResponseDTO updateMyProfile(UpdateMyProfileDTO rq) {
         String username = UserPrincipal.getUsernameCurrent();
         ELUser user = userRepository.findByUsername(username).get();
-        if (isValidString(rq.getEmail())) {
-            if (!rq.getEmail().equals(user.getEmail()) && userRepository.existsByEmail(rq.getEmail())) {
-                throw new BusinessException(errorsEmailExisted);
-            }
-            user.setEmail(rq.getEmail());
-        }
         
         if (isValidString(rq.getDisplayName())) {
             user.setDisplayName(rq.getDisplayName());

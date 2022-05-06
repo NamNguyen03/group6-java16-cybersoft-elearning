@@ -61,6 +61,7 @@ public class UserInformationControllerIntegrationTest {
             .displayName("Nam Nguyen")
             .build();
         
+      
         when(service.getMyProfile()).thenReturn(expected);
 
         String results = "{\"hasErrors\":false,\"content\":{\"id\":\"c6b4c4a5-366c-4cbb-9f2b-8b24c9c893f6\",\"username\":\"nam\",\"displayName\":\"Nam Nguyen\"";
