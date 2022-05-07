@@ -59,7 +59,7 @@ public class UserManagementController {
     @PutMapping("{id}")
     public Object updateUser(@RequestBody UpdateUserDTO rq, @PathVariable("id") String id) {
         UserResponseDTO rp = service.update(id, rq);
-
+        
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
 

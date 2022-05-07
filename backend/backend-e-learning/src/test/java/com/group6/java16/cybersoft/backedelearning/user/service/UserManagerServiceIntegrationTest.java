@@ -3,6 +3,8 @@ package com.group6.java16.cybersoft.backedelearning.user.service;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.LinkedHashSet;
@@ -52,15 +54,7 @@ public class UserManagerServiceIntegrationTest {
 
     @Test
     public void whenUpdateMyProfileSuccess_theReturnUserResponse(){
-        UpdateMyProfileDTO rq = UpdateMyProfileDTO.builder()
-            .displayName("Nam")
-            .firstName("Nguyen")
-            .lastName("Nam")
-            .hobbies("swimming")
-            .facebook("facebook.com")
-            .gender("male")
-            .phone("11111222222")
-            .build();
+        UpdateMyProfileDTO rq = new UpdateMyProfileDTO("displayName","","lastName","hobbies","facebook", "gender", "phone");
         
         Authentication authentication = Mockito.mock(Authentication.class);
         SecurityContext securityContext = Mockito.mock(SecurityContext.class);
@@ -69,38 +63,47 @@ public class UserManagerServiceIntegrationTest {
         SecurityContextHolder.setContext(securityContext);
         Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("nam");
 
+        UUID id = UUID.randomUUID();
+
+        ELUser u =  ELUser.builder().username("nam").id(id).groups(null).build();
+
         ELUser user =  ELUser.builder()
+            .id(id)
             .username("nam")
+            .displayName("displayName")
+            .facebook("facebook")
+            .gender("gender")
+            .groups(null)
+            .hobbies("hobbies")
+            .lastName("lastName")
+            .phone("phone")
             .build();
 
-        when(userRepository.findByUsername("nam")).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername("nam")).thenReturn(Optional.of(u));
 
-        when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.save(any())).thenReturn(user);
     
-        UserResponseDTO expected = UserResponseDTO.builder()
-            .username("nam")
-            .displayName("Nam")
-            .firstName("Nguyen")
-            .gender("male")
-            .lastName("Nam")
-            .hobbies("swimming")
-            .facebook("facebook.com")
-            .phone("11111222222")
-            .groups(new LinkedHashSet<>())
-            .build();
+        UserResponseDTO expected = new UserResponseDTO();
+        expected.setId(id);
+        expected.setUsername("nam");
+        expected.setDisplayName("displayName");
+        expected.setFacebook("facebook");
+        expected.setGender("gender");
+        expected.setGroups(null);
+        expected.setHobbies("hobbies");
+        expected.setLastName("lastName");
+        expected.setPhone("phone");
 
+        UserResponseDTO actual = service.updateMyProfile(rq);
 
-        when(mapper.toUserResponseDTO(user)).thenReturn(expected);
-
-        assertEquals(expected, service.updateMyProfile(rq));
+        assertEquals(expected,actual);
     }
 
     @Test
     public void whenUpdateUserFails_thenThrowsBusinessException() throws Exception {
         UUID id = UUID.randomUUID();
-        UpdateUserDTO user = UpdateUserDTO.builder()
-            .email("nam@gmail.com")
-            .build();
+        UpdateUserDTO user = new UpdateUserDTO();
+        user.setEmail("nam@gmail.com");
 
         ELUser u = ELUser.builder()
             .id(id)
@@ -134,40 +137,70 @@ public class UserManagerServiceIntegrationTest {
             .hobbies("swimming")
             .facebook("facebook.com")
             .phone("11111222222")
+            .groups(null)
             .status(UserStatus.ACTIVE)
             .build();
         when(userRepository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(user));
         
-        UpdateUserDTO rq = UpdateUserDTO.builder()
-            .email("nam@gmail.com")
-            .department("IT")
-            .major("dev")
-            .build();
-        when(userRepository.save(user)).thenReturn(user);
-        UserResponseDTO expected = UserResponseDTO.builder()
-            .id(id)
-            .email("nam@gmail.com")
-            .username("nam")
-            .displayName("Nam")
-            .firstName("Nguyen")
-            .lastName("Nam")
-            .hobbies("swimming")
-            .facebook("facebook.com")
-            .department("IT")
-            .major("dev")
-            .phone("11111222222")
-            .groups(new LinkedHashSet<>())
-            .build();
-        when(mapper.toUserResponseDTO(user)).thenReturn(expected);
-
-        assertEquals(expected, service.update(id.toString(), rq));
+        UpdateUserDTO rq = new UpdateUserDTO("nam@gmail.com","IT","dev",UserStatus.ACTIVE);
+        user.setEmail("nam@gmail.com");
+        user.setDepartment("IT");
+        user.setMajor("dev");
+        when(userRepository.save(any())).thenReturn(user);
+        UserResponseDTO expected = new UserResponseDTO();
+        expected.setId(id);
+        expected.setEmail("nam@gmail.com");
+        expected.setUsername("nam");
+        expected.setDisplayName("Nam");
+        expected.setFirstName("Nguyen");
+        expected.setLastName("Nam");
+        expected.setHobbies("swimming");
+        expected.setFacebook("facebook.com");
+        expected.setDepartment("IT");
+        expected.setMajor("dev");
+        expected.setPhone("11111222222");
+        expected.setGroups(null);
+        expected.setStatus(UserStatus.ACTIVE);
+        UserResponseDTO actual = service.update(id.toString(), rq);
+        assertEquals(expected,actual);
     }
 
    @Test
    public void whenCreateUserSuccessfully_theReturnUserResponseDTO(){
         UserCreateDTO rq = new UserCreateDTO("username", "password", "displayName", "email@gmail.com", 
             UserStatus.ACTIVE, "firstName", "lastName", "department", "major");
-        assertDoesNotThrow( () ->service.createUser(rq));
+        
+        UUID id = UUID.randomUUID();
+        ELUser user = ELUser.builder()
+            .id(id)
+            .username("username")
+            .password("password")
+            .displayName("displayName")
+            .email("email@gmail.com")
+            .status(UserStatus.ACTIVE)
+            .firstName("firstName")
+            .lastName("lastName")
+            .department("department")
+            .major("major")
+            .groups(null)
+            .build();
+        
+        when(userRepository.save(any())).thenReturn(user);
+
+        UserResponseDTO actual = service.createUser(rq);
+        UserResponseDTO expected = new UserResponseDTO();
+        expected.setId(id);
+        expected.setUsername("username");
+        expected.setDisplayName("displayName");
+        expected.setEmail("email@gmail.com");
+        expected.setFirstName("firstName");
+        expected.setLastName("lastName");
+        expected.setStatus(UserStatus.ACTIVE);
+        expected.setDepartment("department");
+        expected.setMajor("major");
+        expected.setGroups(null);
+
+        assertEquals(expected,actual);
    }
 
 }
