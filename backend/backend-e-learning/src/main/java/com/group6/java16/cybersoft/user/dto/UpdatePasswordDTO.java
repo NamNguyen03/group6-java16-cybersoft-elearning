@@ -10,7 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Builder
+@Getter
+@Setter
 public class UpdatePasswordDTO {
     @NotFoundUsername(message ="Username not existed.")
     private String username;

@@ -2,7 +2,6 @@ package com.group6.java16.cybersoft.user.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.notification.ResetPasswordModel;

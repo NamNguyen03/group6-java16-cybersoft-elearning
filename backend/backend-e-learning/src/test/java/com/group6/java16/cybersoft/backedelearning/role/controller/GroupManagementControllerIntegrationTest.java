@@ -24,6 +24,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.google.gson.Gson;
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.role.dto.GroupDTO;
@@ -116,22 +117,21 @@ public class GroupManagementControllerIntegrationTest {
 	
 	@Test
 	@WithMockUser("hau")
-	public void givenJsonObject_whenUpdateGroup_thenReturnStatus400AndResponseNull() throws Exception{
+	public void givenJsonObject_whenUpdateGroup_thenReturnStatus400() throws Exception{
 		GroupUpdateDTO rq = GroupUpdateDTO
 				.builder()
 				.name("LEADER")
 				.build();
 		Gson gson = new Gson(); 
 		String json = gson.toJson(rq);
-		when(service.update("5117d63c-a38e-4042-9f69-94f7d7777985",rq)).thenReturn(null);
+		when(service.update("5117d63c-a38e-4042-9f69-94f7d7777985",rq)).thenThrow(new BusinessException(""));
        
         
         mvc.perform(put("/api/v1/groups/5117d63c-a38e-4042-9f69-94f7d7777985")
         		.contentType(MediaType.APPLICATION_JSON)
         		.content(json))
         		.andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string(containsString("name invalid")));
+                .andExpect(status().isBadRequest());
 	}
 	
 	@Test

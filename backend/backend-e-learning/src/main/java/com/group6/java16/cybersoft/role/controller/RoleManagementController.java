@@ -63,10 +63,7 @@ public class RoleManagementController {
 	public Object updateRole(@PathVariable("id") String id, @RequestBody RoleUpdateDTO dto) {
 		
 		RoleResponseDTO response = service.update(id,dto);
-		
-		if(response ==null) {
-			return ResponseHelper.getResponse("name invalid", HttpStatus.BAD_REQUEST, true);
-		}
+
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
 	
