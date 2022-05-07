@@ -30,6 +30,7 @@ export class CourseDetailsComponent implements OnInit {
     private lessonClient: LessonClient,
     private form: FormBuilder,
     private route: ActivatedRoute,
+    private _router: Router,
     private toastr: ToastrService,) {
   }
 
@@ -116,6 +117,18 @@ export class CourseDetailsComponent implements OnInit {
 
         }
     });
+  }
+
+  // onLessonRowSelected(event) {
+  //   let lessonId = event.data.id;
+
+  //   this._router.navigate(['/lessons/create-lesson'], {
+  //     queryParams: { 'lessonId': lessonId }
+  //   })
+
+  // }
+  createLesson(){
+    this._router.navigate(["/lessons/create-lesson"])
   }
 
 }
