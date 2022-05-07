@@ -113,7 +113,9 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
             user.setPhone(rq.getPhone());
         }
 
-        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
+        ELUser newUser = userRepository.save(user);
+
+        return UserMapper.INSTANCE.toUserResponseDTO(newUser);
     }
 
     @Override
@@ -147,7 +149,9 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
         }
         u.setStatus(user.getStatus());
 
-        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(u));
+        ELUser newUser = userRepository.save(u);
+
+        return UserMapper.INSTANCE.toUserResponseDTO(newUser);
     }
 
 	
