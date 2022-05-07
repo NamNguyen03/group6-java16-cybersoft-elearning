@@ -122,7 +122,7 @@ export class ListCourseComponent implements OnInit {
           
           if(!isLoadData) {
             this.loadData();
-            this.toastr.success('Success', 'AAAAAAAAAAAAAAAAAAA');
+            this.toastr.success('Success', 'Delete Course fails!');
           }
         }
     });
@@ -167,4 +167,13 @@ export class ListCourseComponent implements OnInit {
     })
     
   }
+
+  onUserRowSelected(event) {
+    let courseId = event.data.id;
+   
+   this._router.navigate(['/courses/course-details'],{
+     queryParams: {'courseId':courseId}})
+
+ }
+
 }

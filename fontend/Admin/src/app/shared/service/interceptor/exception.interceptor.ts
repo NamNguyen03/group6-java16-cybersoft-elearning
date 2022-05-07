@@ -32,7 +32,6 @@ export class ExceptionInterceptor implements HttpInterceptor {
                         text: error.error.errors
                       })
                 }
-
                 if (error.status === 401 || error.status === 403) {
                     this._router.navigate(['auth/login']);
                     Swal.fire({

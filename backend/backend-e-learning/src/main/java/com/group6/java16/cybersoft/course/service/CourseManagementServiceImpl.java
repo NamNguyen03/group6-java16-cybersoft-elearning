@@ -1,5 +1,6 @@
 package com.group6.java16.cybersoft.course.service;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
@@ -22,7 +24,13 @@ import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
+import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
+import com.group6.java16.cybersoft.course.repository.ELLessonRepository;
+import com.group6.java16.cybersoft.role.model.ELGroup;
+import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
+import com.group6.java16.cybersoft.user.mapper.UserMapper;
+import com.group6.java16.cybersoft.user.model.ELUser;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
@@ -31,11 +39,17 @@ public class CourseManagementServiceImpl extends ServiceHelper<ELCourse> impleme
 	@Autowired
 	private ELCourseRepository courseRepository;
 
+	@Autowired
+	private ELLessonRepository lessonRepository;
+
 	@Value("${entity.id.invalid}")
-    private String errorsIdInvalid;
+	private String errorsIdInvalid;
 
 	@Value("${course.not-found}")
 	private String errorsCourseNotFound;
+
+	@Value("${lesson.id.not-found}")
+	private String errorsLessonIdNotFound;
 
 	@Override
 	public CourseResponseDTO createCourse(CourseCreateDTO dto) {
@@ -57,7 +71,7 @@ public class CourseManagementServiceImpl extends ServiceHelper<ELCourse> impleme
 		ELCourse courseCurrent = getById(id);
 		ELCourse course = setUpdateCourse(courseCurrent, rq);
 		return CourseMapper.INSTANCE.toCourseResponseDTO(courseRepository.save(course));
-		
+
 	}
 
 	private ELCourse setUpdateCourse(ELCourse courseCurrent, CourseUpdateDTO rq) {
@@ -80,6 +94,7 @@ public class CourseManagementServiceImpl extends ServiceHelper<ELCourse> impleme
 	public void deleteById(String id) {
 		courseRepository.delete(getById(id));
 	}
+
 	private boolean checkString(String s) {
 		if (s == null || s.length() == 0) {
 			return false;
@@ -121,8 +136,8 @@ public class CourseManagementServiceImpl extends ServiceHelper<ELCourse> impleme
 			rp = courseRepository.findAll(pageable);
 		}
 
-		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(), 
-	            rp.getContent().stream().map(CourseMapper.INSTANCE::toCourseResponseDTO).collect(Collectors.toList()));
+		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(),
+				rp.getContent().stream().map(CourseMapper.INSTANCE::toCourseResponseDTO).collect(Collectors.toList()));
 	}
 
 	@Override
@@ -138,6 +153,29 @@ public class CourseManagementServiceImpl extends ServiceHelper<ELCourse> impleme
 	@Override
 	protected String getErrorNotFound() {
 		return errorsCourseNotFound;
+	}
+
+	@Override
+	public CourseResponseDTO getDetailCourse(String id) {
+		ELCourse course = getById(id);
+		return CourseMapper.INSTANCE.toCourseResponseDTO(course);
+	}
+
+
+	private ELLesson getLessonById(String id) {
+		UUID uuid;
+		try {
+			uuid = UUID.fromString(id);
+		} catch (Exception e) {
+			throw new BusinessException(getMessageIdInvalid());
+		}
+
+		Optional<ELLesson> entityOpt = lessonRepository.findById(uuid);
+
+		if (entityOpt.isEmpty()) {
+			throw new BusinessException(errorsLessonIdNotFound);
+		}
+		return entityOpt.get();
 	}
 
 }

@@ -27,10 +27,12 @@ import { ExceptionInterceptor } from './shared/service/interceptor/exception.int
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ToastrModule } from 'ngx-toastr';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { CourseDetailsComponent } from './components/course-details/course-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    CourseDetailsComponent,
   ],
   imports: [
     BrowserAnimationsModule,

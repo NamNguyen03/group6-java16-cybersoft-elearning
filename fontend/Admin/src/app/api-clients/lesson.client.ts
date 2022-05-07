@@ -10,7 +10,7 @@ import { LessonRp } from "./model/lesson.model";
 })
 export class LessonClient {
     
-    private _apiEndpoint = `${environment.api}lesson`;
+    private _apiEndpoint = `${environment.api}lessons`;
 
     constructor(protected httpClient: HttpClient) {}
 
@@ -24,5 +24,9 @@ export class LessonClient {
         };
 
         return this.httpClient.get<Response<PageResponse<LessonRp>>>(this._apiEndpoint , options);
+    }
+
+    deleteLesson(id: string): Observable<Response<string>>{
+        return this.httpClient.delete<Response<string>>(this._apiEndpoint + "/" + id);
     }
 }

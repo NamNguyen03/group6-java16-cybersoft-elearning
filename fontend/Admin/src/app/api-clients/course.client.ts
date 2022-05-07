@@ -39,4 +39,9 @@ export class CourseClient {
     updateCourse(id: string, course:CourseUpdateInformation): Observable<Response<CourseRp>> {
         return this.httpClient.put<Response<CourseRp>>(this._apiEndpoint+"/" + id, course);
     }
+
+    getDetailCourse(id: string): Observable<Response<CourseRp>>{
+        return this.httpClient.get<Response<CourseRp>>(this._apiEndpoint+ "/" + id);
+    }
+
 }

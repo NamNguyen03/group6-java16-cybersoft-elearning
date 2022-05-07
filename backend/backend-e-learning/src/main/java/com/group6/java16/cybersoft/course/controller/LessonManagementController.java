@@ -75,6 +75,8 @@ public class LessonManagementController {
 
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
+	
+	
 	@DeleteMapping("{id}")
     public Object delete(@PathVariable("id") String id){
 
