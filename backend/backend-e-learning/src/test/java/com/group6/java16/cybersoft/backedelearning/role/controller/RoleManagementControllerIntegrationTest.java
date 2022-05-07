@@ -1,7 +1,7 @@
 package com.group6.java16.cybersoft.backedelearning.role.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -12,7 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,6 @@ import com.group6.java16.cybersoft.role.dto.RoleDTO;
 import com.group6.java16.cybersoft.role.dto.RoleResponseDTO;
 import com.group6.java16.cybersoft.role.dto.RoleUpdateDTO;
 import com.group6.java16.cybersoft.role.service.RoleService;
-import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -127,23 +125,19 @@ public class RoleManagementControllerIntegrationTest {
 				.build();
 		Gson gson = new Gson(); 
 		String json = gson.toJson(rq);
-		when(service.update("5117d63c-a38e-4042-9f69-94f7d7777985",rq)).thenReturn(null);
+		when(service.update(any(),any())).thenThrow(new BusinessException(""));
        
         
         mvc.perform(put("/api/v1/roles/5117d63c-a38e-4042-9f69-94f7d7777985")
         		.contentType(MediaType.APPLICATION_JSON)
         		.content(json))
         		.andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string(containsString("name invalid")));
+                .andExpect(status().isBadRequest());
 	}
 	
 	@Test
 	@WithMockUser("hau")
 	public void givenRoleId_whenDeleteRole_thenReturnStatus200AndResponseHelper() throws Exception{
-		
-		assertDoesNotThrow(() -> service.deleteById("5117d63c-a38e-4042-9f69-94f7d7777985"));
-       
         
         mvc.perform(delete("/api/v1/roles/5117d63c-a38e-4042-9f69-94f7d7777985")
         		.contentType(MediaType.APPLICATION_JSON))
