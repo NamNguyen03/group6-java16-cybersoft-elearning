@@ -33,7 +33,7 @@ public class UserInformationControllerIntegrationTest {
 
     @Test
     @WithMockUser("nam")
-    public void givenJsonObject_whenSearchUser_theReturnStatus200AndResponseHelper() throws Exception{
+    public void givenJsonObject_whenSearchUser_theReturnStatus200() throws Exception{
         mvc.perform(get("/api/v1/users")
             .param("pageCurrent", "1")
             .param("itemPerPage", "10")
@@ -48,7 +48,7 @@ public class UserInformationControllerIntegrationTest {
 
     @Test
     @WithMockUser("nam")
-    public void givenJsonObject_whenGetMyProfile_theReturnStatus200AndResponseHelper() throws Exception{
+    public void givenJsonObject_whenGetMyProfile_theReturnStatus200() throws Exception{
         mvc.perform(get("/api/v1/users/me"))
             .andDo(print())
             .andExpect(status().isOk());
