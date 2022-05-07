@@ -13,7 +13,7 @@ import { CoursesModule } from './components/course/courses.module';
 import { RolesModule } from './components/roles/roles.module';
 import { MediaModule } from './components/media/media.module';
 import { GroupModule } from './components/group/group.module';
-import { VendorsModule } from './components/vendors/vendors.module';
+import { LessonsModule } from './components/lesson/lessons.module';
 import { UsersModule } from './components/users/users.module';
 import { LocalizationModule } from './components/localization/localization.module';
 import { InvoiceModule } from './components/invoice/invoice.module';
@@ -26,10 +26,13 @@ import { TokenInterceptor } from './shared/service/interceptor/token.interceptor
 import { ExceptionInterceptor } from './shared/service/interceptor/exception.interceptor';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ToastrModule } from 'ngx-toastr';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { CourseDetailsComponent } from './components/course-details/course-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    CourseDetailsComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -47,15 +50,17 @@ import { ToastrModule } from 'ngx-toastr';
     LocalizationModule,
     ProductsModule,
     SalesModule,
-    VendorsModule,
+    LessonsModule,
     CoursesModule,
     RolesModule,
     MediaModule,
     GroupModule,
     UsersModule,
     Ng2SmartTableModule,
+    AngularEditorModule,
     ToastrModule.forRoot()
   ],
+  
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -68,6 +73,8 @@ import { ToastrModule } from 'ngx-toastr';
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
 })
+
 export class AppModule { }

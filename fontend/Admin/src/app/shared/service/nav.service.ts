@@ -119,6 +119,30 @@ export class NavService {
 		// 	title: 'Invoice', path: '/invoice', icon: 'archive', type: 'link', active: false
 		// },
 		{
+			title: 'Lessons', icon: 'users', type: 'sub', active: false, children: [
+				{ path: '/lessons/list-lesson', title: 'Lesson List', type: 'link' },
+				{ path: '/lessons/create-lesson', title: 'Create Lesson', type: 'link' },
+			]
+		},
+		{
+			title: 'Localization', icon: 'chrome', type: 'sub', children: [
+				{ path: '/localization/translations', title: 'Translations', type: 'link' },
+				{ path: '/localization/currency-rates', title: 'Currency Rates', type: 'link' },
+				{ path: '/localization/taxes', title: 'Taxes', type: 'link' },
+			]
+		},
+		{
+			title: 'Reports', path: '/reports', icon: 'bar-chart', type: 'link', active: false
+		},
+		{
+			title: 'Settings', icon: 'settings', type: 'sub', children: [
+				{ path: '/settings/profile', title: 'Profile', type: 'link' },
+			]
+		},
+		{
+			title: 'Invoice', path: '/invoice', icon: 'archive', type: 'link', active: false
+		},
+		{
 			title: 'Login',path: '/auth/login', icon: 'log-in', type: 'link', active: false
 		}
 	]

@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CourseUpdateDTO {
+public class LessonUpdateDTO {
 	
-		private String courseName;
-		
-		private int courseTime;
+	private String name;
 	
-		private String description;
+	private String content;
+	
+	private String description;
 }

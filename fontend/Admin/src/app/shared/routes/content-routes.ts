@@ -52,10 +52,10 @@ export const content: Routes = [
     }
   },
   {
-    path: 'vendors',
-    loadChildren: () => import('../../components/vendors/vendors.module').then(m => m.VendorsModule),
+    path: 'lessons',
+    loadChildren: () => import('../../components/lesson/lessons.module').then(m => m.LessonsModule),
     data: {
-      breadcrumb: "Vendors"
+      breadcrumb: "Lessons"
     }
   },
   {
