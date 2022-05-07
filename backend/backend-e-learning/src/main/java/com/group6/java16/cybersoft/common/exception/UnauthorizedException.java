@@ -6,4 +6,7 @@ public class UnauthorizedException extends RuntimeException {
 		super(message);
 	}
 
+	public UnauthorizedException() {
+		super("No message");
+	}
 }

@@ -1,3 +1,5 @@
+import { BaseGroup, GroupResponse } from "./group.model";
+
 export class UserCreate {
 
     username: string;
@@ -24,6 +26,7 @@ export class UserCreate {
 }
 
 export class UserRp{
+    
     id: string;
     username: string;
     displayName: string;
@@ -38,6 +41,7 @@ export class UserRp{
     status: string;
     gender: string;
     phone: string;
+    groups: GroupResponse[];
 
     constructor(){
        this.id = "";
@@ -54,6 +58,7 @@ export class UserRp{
        this.gender = "";
        this.phone = "";
        this.email = "";
+       this.groups=[];
 
     }
 }
@@ -72,7 +77,6 @@ export class LoginRequest{
 export class UpdateMyProfileRq{
     
     displayName: string;
-    email: string;
     firstName: string;
     lastName: string;
     hobbies: string;
@@ -80,9 +84,8 @@ export class UpdateMyProfileRq{
     gender: string;
     phone: string;
 
-    constructor(displayName: string, email: string, firstName: string, lastName: string, hobbies: string, facebook: string, gender: string, phone: string){
+    constructor(displayName: string, firstName: string, lastName: string, hobbies: string, facebook: string, gender: string, phone: string){
         this.displayName = displayName;
-        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.hobbies = hobbies;
@@ -103,5 +106,17 @@ export class UpdateUserRq{
         this.status = status;
         this.major = major;
         this.department = department;
+    }
+}
+
+export class UpdatePasswordRq{
+    username: string;
+    password: string;
+    token: string;
+
+    constructor(username: string, password: string, token: string) {
+        this.username = username;
+        this.password = password;
+        this.token = token;
     }
 }

@@ -5,11 +5,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class UpdateMyProfileDTO {
 
 	private String displayName;
-	
-	private String email;
 
     private String firstName;
  	

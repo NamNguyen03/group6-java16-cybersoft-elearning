@@ -36,7 +36,8 @@ public class UserInformationServiceImpl implements UserInformationService{
 
         if (null != fieldNameSort && fieldNameSort.matches("username|displayName|email|firstName|lastName|major|department|status")) {
             pageable = PageRequest.of(page, size, isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
-
+        }else{
+            pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
         }
 
         //username
@@ -66,7 +67,6 @@ public class UserInformationServiceImpl implements UserInformationService{
 
         //if firstName not existed then search all
         if(rp == null ){
-            pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
             rp = repository.findAll(pageable);
         }
 

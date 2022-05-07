@@ -1,5 +1,6 @@
 package com.group6.java16.cybersoft.role.controller;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.role.dto.GroupDTO;
 import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
+import com.group6.java16.cybersoft.role.dto.GroupUpdateDTO;
 import com.group6.java16.cybersoft.role.service.GroupService;
 
 
@@ -67,12 +69,11 @@ public class GroupManagementController {
 		}
 	    
 	    @PutMapping("{id}")
-	    public Object updateGroup(@PathVariable("id") String id,@RequestBody @Valid GroupDTO dto,BindingResult bindingResult ){
-	        if(bindingResult.hasErrors()){
-	            return ResponseHelper.getResponse(bindingResult,HttpStatus.BAD_REQUEST, true);
-	        }
-	        
-			GroupResponseDTO response = service.update(id,dto);
+	    public Object updateGroup(@PathVariable("id") String id,@RequestBody GroupUpdateDTO dto){
+	       	GroupResponseDTO response = service.update(id,dto);
+	       	if(response ==null) {
+				return ResponseHelper.getResponse("name invalid", HttpStatus.BAD_REQUEST, true);
+			}
 	        
 	        return ResponseHelper.getResponse(response, HttpStatus.OK,false);
 	    }
@@ -91,6 +92,7 @@ public class GroupManagementController {
 	    	return ResponseHelper.getResponse(response, HttpStatus.OK,false);
 	    	
 	    }
+	   
 
 	}
 
