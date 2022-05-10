@@ -60,7 +60,7 @@ public class UserManagerServiceIntegrationTest {
             .facebook("facebook.com")
             .gender("male")
             .phone("11111222222")
-            .build();
+            .build();	
         
         Authentication authentication = Mockito.mock(Authentication.class);
         SecurityContext securityContext = Mockito.mock(SecurityContext.class);

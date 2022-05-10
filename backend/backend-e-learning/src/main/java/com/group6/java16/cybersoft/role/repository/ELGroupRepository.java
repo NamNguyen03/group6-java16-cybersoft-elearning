@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ELGroupRepository extends JpaRepository<ELGroup, UUID> {
-    @Query(value = "Select r from ELGroup r where r.name like %:name% ")
+	@Query( value =  "Select u from ELGroup u where lower(u.name) like lower(concat('%', :name,'%'))")
     Page<ELGroup> searchByName(@Param("name") String name, Pageable pageable);
 
     boolean existsByName(String name);

@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
-import com.group6.java16.cybersoft.role.dto.RoleResponseDTO;
 import com.group6.java16.cybersoft.user.model.UserStatus;
 
 import lombok.*;

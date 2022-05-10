@@ -2,6 +2,7 @@ package com.group6.java16.cybersoft.backedelearning.role.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -103,19 +104,12 @@ public class RoleManagementControllerIntegrationTest {
 				.build();
 		Gson gson = new Gson(); 
 		String json = gson.toJson(rq);
-		when(service.update("5117d63c-a38e-4042-9f69-94f7d7777985",rq)).thenReturn(RoleResponseDTO
-				.builder()
-				.id(UUID.fromString("5117d63c-a38e-4042-9f69-94f7d7777985"))
-				.name("LEADER")
-				.build());
-        String results = "\"hasErrors\":false,\"content\":{\"id\":\"5117d63c-a38e-4042-9f69-94f7d7777985\",\"name\":\"LEADER\"";
-        
+		
         mvc.perform(put("/api/v1/roles/5117d63c-a38e-4042-9f69-94f7d7777985")
         		.contentType(MediaType.APPLICATION_JSON)
         		.content(json))
         		.andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString(results)));
+                .andExpect(status().isOk());
 	}
 	
 	@Test
@@ -127,7 +121,7 @@ public class RoleManagementControllerIntegrationTest {
 				.build();
 		Gson gson = new Gson(); 
 		String json = gson.toJson(rq);
-		when(service.update("5117d63c-a38e-4042-9f69-94f7d7777985",rq)).thenReturn(null);
+		when(service.update(any(),any())).thenThrow(new BusinessException("name invalid"));
        
         
         mvc.perform(put("/api/v1/roles/5117d63c-a38e-4042-9f69-94f7d7777985")

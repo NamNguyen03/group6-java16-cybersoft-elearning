@@ -41,10 +41,10 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 	@Value("${entity.id.invalid}")
 	private String errorsIdInvalid;
 
-	@Value("${group.id.not-found}")
+	@Value("${group.not-found}")
 	private String messagesGroupIdNotFound;
 
-	@Value("${role.id.not-found}")
+	@Value("${role.not-found}")
 	private String messagesRoleIdNotFound;
 
 	@Value("${group.name.existed}")
@@ -156,5 +156,16 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 	@Override
 	protected String getErrorNotFound() {
 		return messagesGroupIdNotFound;
+	}
+
+	@Override
+	public GroupResponseDTO deleteRole(String groupId, String roleId) {
+		ELGroup group = getById(groupId);
+		ELRole role = getRoleById(roleId);
+
+		group.removeRole(role);
+		ELGroup modifiedGroup = groupRepository.save(group);
+
+		return GroupMapper.INSTANCE.toGroupResponseDTO(modifiedGroup);
 	}
 }

@@ -2,6 +2,7 @@ package com.group6.java16.cybersoft.backedelearning.role.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -24,6 +25,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.google.gson.Gson;
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.role.dto.GroupDTO;
@@ -123,8 +125,8 @@ public class GroupManagementControllerIntegrationTest {
 				.build();
 		Gson gson = new Gson(); 
 		String json = gson.toJson(rq);
-		when(service.update("5117d63c-a38e-4042-9f69-94f7d7777985",rq)).thenReturn(null);
-       
+		
+		when(service.update(any(),any())).thenThrow(new BusinessException("name invalid"));
         
         mvc.perform(put("/api/v1/groups/5117d63c-a38e-4042-9f69-94f7d7777985")
         		.contentType(MediaType.APPLICATION_JSON)
@@ -150,8 +152,7 @@ public class GroupManagementControllerIntegrationTest {
 	@Test
 	@WithMockUser("hau")
 	public void givenGroupIdAndRoleId_whenAddRole_thenReturnStatus200AndResponseHelper() throws Exception {
-		assertDoesNotThrow(()-> service.addRole("5117d63c-a38e-4042-9f69-94f7d7777985", "5117d63c-a38e-4042-9f69-94f7d7777955"));
-		mvc.perform(post("/api/v1/groups/add-group/5117d63c-a38e-4042-9f69-94f7d7777985/5117d63c-a38e-4042-9f69-94f7d7777955")
+		mvc.perform(post("/api/v1/groups/5117d63c-a38e-4042-9f69-94f7d7777985/5117d63c-a38e-4042-9f69-94f7d7777955")
         		.contentType(MediaType.APPLICATION_JSON))
         		.andDo(print())
                 .andExpect(status().isOk());

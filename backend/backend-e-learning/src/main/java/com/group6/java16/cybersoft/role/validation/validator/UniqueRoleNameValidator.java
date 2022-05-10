@@ -5,14 +5,14 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.group6.java16.cybersoft.role.repository.ELGroupRepository;
+import com.group6.java16.cybersoft.role.repository.ELRoleRepository;
 import com.group6.java16.cybersoft.role.validation.annotation.UniqueRoleName;
 
 public class UniqueRoleNameValidator implements ConstraintValidator<UniqueRoleName, String> {
 	
 	private String message;
 	@Autowired
-	private ELGroupRepository repository;
+	private ELRoleRepository repository;
 
 	@Override
 	public void initialize(UniqueRoleName uniqueRoleName) {

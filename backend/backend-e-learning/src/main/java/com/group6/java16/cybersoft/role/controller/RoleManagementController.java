@@ -64,9 +64,6 @@ public class RoleManagementController {
 		
 		RoleResponseDTO response = service.update(id,dto);
 		
-		if(response ==null) {
-			return ResponseHelper.getResponse("name invalid", HttpStatus.BAD_REQUEST, true);
-		}
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
 	
@@ -75,5 +72,17 @@ public class RoleManagementController {
 		service.deleteById(id);
     	return ResponseHelper.getResponse("Delete successfully", HttpStatus.OK, false);
 	}
-
+	@PostMapping("{role-id}/{program-id}")
+	public Object addProgramIntoRole(@PathVariable("role-id") String roleId,@PathVariable("program-id") String programId) {
+		RoleResponseDTO response = service.addProgram(roleId,programId);
+		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
+		
+	}
+	
+	@DeleteMapping("{role-id}/{program-id}")
+	public Object deleteProgramIntoRole(@PathVariable("role-id") String roleId,@PathVariable("program-id") String programId) {
+		RoleResponseDTO response = service.deleteProgram(roleId,programId);
+		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
+	
+	}
 }
