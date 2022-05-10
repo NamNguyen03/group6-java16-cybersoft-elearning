@@ -19,27 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
-import com.group6.java16.cybersoft.role.dto.RoleDTO;
-import com.group6.java16.cybersoft.role.dto.RoleResponseDTO;
-import com.group6.java16.cybersoft.role.dto.RoleUpdateDTO;
-import com.group6.java16.cybersoft.role.service.RoleService;
+import com.group6.java16.cybersoft.role.dto.ProgramDTO;
+import com.group6.java16.cybersoft.role.dto.ProgramResponseDTO;
+import com.group6.java16.cybersoft.role.dto.ProgramUpdateDTO;
+import com.group6.java16.cybersoft.role.service.ProgramService;
 
 @RestController
-@RequestMapping("api/v1/roles")
+@RequestMapping("api/v1/programs")
 @CrossOrigin(origins = "*")
-public class RoleManagementController {
+public class ProgramManagementController {
 
 	@Autowired
-	private RoleService service;
-
-	@PostMapping
-	public Object createRole(@Valid @RequestBody RoleDTO dto, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return ResponseHelper.getResponse(bindingResult, HttpStatus.BAD_REQUEST, true);
-		}
-		RoleResponseDTO response = service.createRole(dto);
-		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
-	}
+	private ProgramService service;
 
 	@GetMapping
 	public Object search(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
@@ -47,43 +38,42 @@ public class RoleManagementController {
 			@RequestParam(value = "fieldNameSort", required = false) String fieldNameSort,
 			@RequestParam(value = "isIncrementSort", defaultValue = "true") boolean isIncrementSort,
 			@RequestParam(value = "fieldNameSearch", required = false) String fieldNameSearch,
-			@RequestParam(value = "valueFieldNameSearch", required = false) String valueFieldNameSearch) {
-		PageResponseModel<RoleResponseDTO> response = service.search(new PageRequestModel(
+			@RequestParam(value = "valueFieldNameSearch", required = false) String valueFieldNameSearch
+			){
+
+		PageResponseModel<ProgramResponseDTO> rp = service.search(new PageRequestModel(
 				pageCurrent,
 				itemPerPage,
 				fieldNameSort,
 				isIncrementSort,
 				fieldNameSearch,
-				valueFieldNameSearch));
+				valueFieldNameSearch
+				));
+
+		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	}
+	@PostMapping
+	public Object addProgram(@Valid @RequestBody ProgramDTO program, BindingResult result){
+		if(result.hasErrors()) {
+			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
+		}
+
+		ProgramResponseDTO response  = service.save(program);
+
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
 
-	@PutMapping("{id}")
-	public Object updateRole(@PathVariable("id") String id, @RequestBody RoleUpdateDTO dto) {
-
-		RoleResponseDTO response = service.update(id, dto);
-		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
-	}
 
 	@DeleteMapping("{id}")
-	public Object deleteRole(@PathVariable("id") String id) {
+	public Object deleteProgram(@PathVariable("id") String id) {
 		service.deleteById(id);
 		return ResponseHelper.getResponse("Delete successfully", HttpStatus.OK, false);
 	}
 
-	@PostMapping("{role-id}/{program-id}")
-	public Object addProgramIntoRole(@PathVariable("role-id") String roleId,
-			@PathVariable("program-id") String programId) {
-		RoleResponseDTO response = service.addProgram(roleId, programId);
-		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
-
+	@PutMapping("{id}")
+	public Object updateProgram(@PathVariable("id") String id,@RequestBody ProgramUpdateDTO dto) {
+		ProgramResponseDTO response = service.update(id,dto);
+		return ResponseHelper.getResponse(response,HttpStatus.OK,false);
 	}
 
-	@DeleteMapping("{role-id}/{program-id}")
-	public Object deleteProgramIntoRole(@PathVariable("role-id") String roleId,
-			@PathVariable("program-id") String programId) {
-		RoleResponseDTO response = service.deleteProgram(roleId, programId);
-		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
-
-	}
 }

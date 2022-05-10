@@ -18,4 +18,8 @@ public interface RoleService {
 
 	void deleteById(String id);
 
+	RoleResponseDTO addProgram(String roleId, String programId);
+
+	RoleResponseDTO deleteProgram(String roleId, String programId);
+
 }

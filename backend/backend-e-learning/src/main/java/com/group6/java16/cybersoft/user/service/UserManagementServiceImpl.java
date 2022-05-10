@@ -55,8 +55,8 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
     @Value("${user.email.existed}")
     private String errorsEmailExisted;
     
-    @Value("${group.id.not-found}")
-    private String errorsGroupIdNotFound;
+    @Value("${group.not-found}")
+    private String errorsGroupNotFound;
 
     @Value("${entity.id.invalid}")
     private String errorsIdInvalid;
@@ -207,7 +207,7 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
         Optional<ELGroup> entityOpt = groupRepository.findById(uuid);
         
         if(entityOpt.isEmpty()){
-            throw new BusinessException(errorsGroupIdNotFound);
+            throw new BusinessException(errorsGroupNotFound);
         }
         return entityOpt.get();
     }

@@ -19,24 +19,28 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @NoArgsConstructor
-@SuperBuilder
+@AllArgsConstructor
 @Entity
+@SuperBuilder
 @Table(name = "el_program")
 public class ELProgram extends BaseEntity {
 
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private ELModule module;
+    private ProgramModule module;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "program_type")
-    private ELProgramType type;
+    private ProgramType type;
 
     private String description;
 
+    @Builder.Default
     @JsonIgnore
     @ManyToMany(mappedBy = "programs")
-    @Builder.Default
     private Set<ELRole> roles = new LinkedHashSet();
+
 }
+    
+	

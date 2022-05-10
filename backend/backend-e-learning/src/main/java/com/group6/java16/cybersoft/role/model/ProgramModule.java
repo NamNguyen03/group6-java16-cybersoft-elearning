@@ -1,6 +1,6 @@
 package com.group6.java16.cybersoft.role.model;
 
-public enum ELModule {
+public enum ProgramModule {
     ROLE,
     USER,
     PROJECT,

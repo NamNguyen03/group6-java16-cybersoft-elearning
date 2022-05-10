@@ -3,6 +3,7 @@ package com.group6.java16.cybersoft.user.controller;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
+import com.group6.java16.cybersoft.security.authorization.ELPermission;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.service.UserInformationService;
 
@@ -22,6 +23,7 @@ public class UserInformationController {
     @Autowired 
     private UserInformationService service;
 
+    @ELPermission("searchUser")
     @GetMapping
     public Object searchUser(
         @RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,

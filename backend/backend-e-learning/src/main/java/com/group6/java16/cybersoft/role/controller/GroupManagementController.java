@@ -71,27 +71,30 @@ public class GroupManagementController {
 	    @PutMapping("{id}")
 	    public Object updateGroup(@PathVariable("id") String id,@RequestBody GroupUpdateDTO dto){
 	       	GroupResponseDTO response = service.update(id,dto);
-	       	if(response ==null) {
-				return ResponseHelper.getResponse("name invalid", HttpStatus.BAD_REQUEST, true);
-			}
 	        
 	        return ResponseHelper.getResponse(response, HttpStatus.OK,false);
 	    }
 	    
 	    @DeleteMapping("{id}")
-	    public Object deleteUser(@PathVariable("id") String id) {
+	    public Object deleteGroup(@PathVariable("id") String id) {
 	    	
 	    	service.deleteById(id);
 	    	return ResponseHelper.getResponse("Delete successfully", HttpStatus.OK, false);
 	    }
 	    
-	    @PostMapping("add-group/{group-id}/{role-id}")
-	    public Object addRole(@PathVariable(value="group-id")String groupId,@PathVariable(value="role-id")String roleId) {
+	    @PostMapping("{group-id}/{role-id}")
+	    public Object addRoleIntoGroup(@PathVariable(value="group-id")String groupId,@PathVariable(value="role-id")String roleId) {
 	    	GroupResponseDTO response = service.addRole(groupId,roleId);
 	    	
 	    	return ResponseHelper.getResponse(response, HttpStatus.OK,false);
 	    	
 	    }
+	    @DeleteMapping("{group-id}/{role-id}")
+		public Object deleteRoleIntoGroup(@PathVariable("group-id") String groupId,@PathVariable("role-id") String roleId) {
+			GroupResponseDTO response = service.deleteRole(groupId,roleId);
+			return ResponseHelper.getResponse(response, HttpStatus.OK, false);
+		
+		}
 	   
 
 	}

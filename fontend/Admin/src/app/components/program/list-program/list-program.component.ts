@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { GroupClient } from 'src/app/api-clients/group.client';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
-import { BaseGroup } from 'src/app/api-clients/model/group.model';
+import { BaseProgram } from 'src/app/api-clients/model/program.model';
+import { ProgramClient } from 'src/app/api-clients/program.client';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-list-group',
-  templateUrl: './list-group.component.html',
-  styleUrls: ['./list-group.component.scss'],
+  selector: 'app-list-program',
+  templateUrl: './list-program.component.html',
+  styleUrls: ['./list-program.component.scss']
 })
-export class ListGroupComponent implements OnInit {
-  public list_group: BaseGroup[] = [];
+export class ListProgramComponent implements OnInit {
+  public list_program: BaseProgram[] = [];
   public searchForm: FormGroup;
   public isSearch = false;
 
@@ -24,20 +24,20 @@ export class ListGroupComponent implements OnInit {
     null,
     null);
 
-  constructor(private groupClient: GroupClient,
-              private form: FormBuilder,
+  constructor( private form: FormBuilder,
               private toastr: ToastrService,
               private _router: Router,
-              private route: ActivatedRoute) {
-    this.searchForm = this.form.group({
-      fieldNameSort:[''],
-      isIncrementSort:[''],
-      fieldNameSearch:[''],
-      valueFieldNameSearch: [''],
-    });
-  }
+              private route: ActivatedRoute,
+              private programClient: ProgramClient) {
+      this.searchForm = this.form.group({
+        fieldNameSort:[''],
+        isIncrementSort:[''],
+        fieldNameSearch:[''],
+        valueFieldNameSearch: ['']
+      })
+     }
+
   ngOnInit(): void {
-    
     this.loadData();
   }
 
@@ -68,12 +68,19 @@ export class ListGroupComponent implements OnInit {
       description: {
         title: 'Description',
         editable: true,
+      },
+      type: {
+        title: 'Type',
+        editable: true,
+      },
+      module: {
+        title: 'Module',
+        editable: true,
       }
       
     }
   
   }
-
   loadData() {
     this.route.queryParams.subscribe(params =>{
       let fieldNameSort = params['fieldNameSort'] == undefined ? null: params['fieldNameSort'];
@@ -82,15 +89,16 @@ export class ListGroupComponent implements OnInit {
       let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
 
       this.pageRequest = new PageRequest(1,10,fieldNameSort,isIncrementSort,fieldNameSearch,valueFieldNameSearch)
-      this.groupClient.search(this.pageRequest).subscribe(
+      this.programClient.search(this.pageRequest).subscribe(
         response =>
         {
-          this.list_group= response.content.items
+          this.list_program= response.content.items
         });
     }) 
 
 
   }
+
   onDeleteConfirm(event) {
     Swal.fire({
       title: 'Are you sure?',
@@ -104,12 +112,12 @@ export class ListGroupComponent implements OnInit {
         if (result.isConfirmed) {
           let isLoadData = false;
           
-          this.groupClient.deleteById(event.data.id).subscribe(
+          this.programClient.deleteById(event.data.id).subscribe(
             response => 
             { 
               isLoadData=true;
 
-              this.toastr.success('Success','Delete group success')
+              this.toastr.success('Success','Delete program success')
               this.loadData();
             });
             if(!isLoadData){
@@ -121,8 +129,6 @@ export class ListGroupComponent implements OnInit {
     });
     
   }
-
-
   onSaveConfirm(event) {
     Swal.fire({
       title: 'Are you sure?',
@@ -136,12 +142,12 @@ export class ListGroupComponent implements OnInit {
       if (result.isConfirmed) {
         let isLoadData = false;
         console.log(event.newdata)
-          let groupUpdate = new BaseGroup(event.newData.name,event.newData.description)
-         this.groupClient.updateById(event.data.id,groupUpdate).subscribe(
+          let groupUpdate = new BaseProgram(event.newData.name,event.newData.description,event.newData.type,event.newData.module)
+         this.programClient.updateById(event.data.id,groupUpdate).subscribe(
           () => 
             { 
               isLoadData=true;
-              this.toastr.success('Success','Update group success')
+              this.toastr.success('Success','Update program success')
               this.loadData();
             });
             if(!isLoadData){
@@ -152,13 +158,12 @@ export class ListGroupComponent implements OnInit {
            }
           });
   }
-
   search(){
     let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
     let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
     let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
     let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
-    this._router.navigate(['/groups/list-group'],{
+    this._router.navigate(['/program/list-program'],{
       queryParams: {'fieldNameSort':fieldNameSort,'isIncrementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
 
     })
@@ -166,6 +171,4 @@ export class ListGroupComponent implements OnInit {
     
     
   }
-  
-
 }
