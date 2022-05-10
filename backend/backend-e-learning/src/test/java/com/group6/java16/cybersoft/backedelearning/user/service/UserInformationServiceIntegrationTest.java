@@ -200,26 +200,25 @@ public class UserInformationServiceIntegrationTest {
             .hobbies("swimming")
             .facebook("facebook.com")
             .phone("11111222222")
+            .groups(null)
             .build();
 
         when(userRepository.findByUsername("nam")).thenReturn(Optional.of(user));
 
     
-        UserResponseDTO expected = UserResponseDTO.builder()
-            .email("nam@gmail.com")
-            .username("nam")
-            .displayName("Nam")
-            .firstName("Nguyen")
-            .lastName("Nam")
-            .hobbies("swimming")
-            .facebook("facebook.com")
-            .phone("11111222222")
-            .groups(new LinkedHashSet<>())
-            .build();
+        UserResponseDTO expected = new UserResponseDTO();
+        expected.setEmail("nam@gmail.com");	
+        expected.setUsername("nam");
+        expected.setDisplayName("Nam");
+        expected.setLastName("Nam");
+        expected.setHobbies("swimming");
+        expected.setFacebook("facebook.com");
+        expected.setPhone("11111222222");
+        expected.setFirstName("Nguyen");
+        expected.setGroups(null);
 
+        UserResponseDTO actual =  service.getMyProfile();
 
-        when(mapper.toUserResponseDTO(user)).thenReturn(expected);
-
-        assertEquals(expected, service.getMyProfile());
+        assertEquals(expected,actual);
     }
 }

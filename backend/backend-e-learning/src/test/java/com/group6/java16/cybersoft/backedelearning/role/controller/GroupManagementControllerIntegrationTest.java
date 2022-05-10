@@ -38,124 +38,122 @@ import com.group6.java16.cybersoft.role.service.GroupService;
 public class GroupManagementControllerIntegrationTest {
 	@MockBean
 	private GroupService service;
-	
+
 	@Autowired
-    private MockMvc mvc;
-	
-	 @Test
-	 @WithMockUser("hau")
-	 public void givenJsonObject_whenSearchGroup_thenReturnStatus200AndResponseHelper() throws Exception{
+	private MockMvc mvc;
 
-	        String results = "{\"hasErrors\":false,\"content\":{\"pageCurrent\":1,\"totalPage\":10,\"items\":[]}";
+	@Test
+	@WithMockUser("hau")
+	public void givenJsonObject_whenSearchGroup_thenReturnStatus200AndResponseHelper() throws Exception {
 
-	        when(service.search(new PageRequestModel(
+		String results = "{\"hasErrors\":false,\"content\":{\"pageCurrent\":1,\"totalPage\":10,\"items\":[]}";
+
+		when(service.search(new PageRequestModel(
 				1,
 				10,
 				null,
 				true,
 				null,
-				null
-			) )).thenReturn(new PageResponseModel<GroupResponseDTO>(1,10, new ArrayList<GroupResponseDTO>()));
+				null))).thenReturn(new PageResponseModel<GroupResponseDTO>(1, 10, new ArrayList<GroupResponseDTO>()));
 
-	        mvc.perform(get("/api/v1/groups"))
-	            .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(content().string(containsString(results)));
-	    }
-	
-	 @Test
-	 @WithMockUser("hau")
-	 public void givenJsonObject_whenCreateGroup_thenReturnStatus200() throws Exception{
-		 GroupDTO rq = new GroupDTO("name","description");
-		 Gson gson = new Gson();
-		 String json = gson.toJson(rq);
-		 when(service.save(rq)).thenReturn(new GroupResponseDTO());
-		 mvc.perform(post("/api/v1/groups")
-				 .contentType(MediaType.APPLICATION_JSON)
-				 .content(json))
-				 .andDo(print())
-				 .andExpect(status().isOk());
-	 }
-	
-	 
-	 @Test
-	 @WithMockUser("hau")
-	 public void givenJsonObject_whenCreateGroup_thenReturnStatus400() throws Exception{
-		 GroupDTO rq = new GroupDTO(null,"description");
-		 Gson gson = new Gson();
-		 String json = gson.toJson(rq);
-		
-		 mvc.perform(post("/api/v1/groups")
-				 .contentType(MediaType.APPLICATION_JSON)
-				 .content(json))
-				 .andDo(print())
-				 .andExpect(status().isBadRequest());
-	 }
+		mvc.perform(get("/api/v1/groups"))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString(results)));
+	}
+
 	@Test
 	@WithMockUser("hau")
-	public void givenJsonObject_whenUpdateGroup_thenReturnStatus200AndResponseHelper() throws Exception{
+	public void givenJsonObject_whenCreateGroup_thenReturnStatus200() throws Exception {
+		GroupDTO rq = new GroupDTO("name", "description");
+		Gson gson = new Gson();
+		String json = gson.toJson(rq);
+		when(service.save(rq)).thenReturn(new GroupResponseDTO());
+		mvc.perform(post("/api/v1/groups")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andDo(print())
+				.andExpect(status().isOk());
+	}
+
+	@Test
+	@WithMockUser("hau")
+	public void givenJsonObject_whenCreateGroup_thenReturnStatus400() throws Exception {
+		GroupDTO rq = new GroupDTO(null, "description");
+		Gson gson = new Gson();
+		String json = gson.toJson(rq);
+
+		mvc.perform(post("/api/v1/groups")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andDo(print())
+				.andExpect(status().isBadRequest());
+	}
+
+	@Test
+	@WithMockUser("hau")
+	public void givenJsonObject_whenUpdateGroup_thenReturnStatus200AndResponseHelper() throws Exception {
 		GroupUpdateDTO rq = GroupUpdateDTO
 				.builder()
 				.name("LEADER")
 				.description("test")
 				.build();
-		Gson gson = new Gson(); 
+		Gson gson = new Gson();
 		String json = gson.toJson(rq);
-		when(service.update("5117d63c-a38e-4042-9f69-94f7d7777985",rq)).thenReturn(GroupResponseDTO
+		when(service.update("5117d63c-a38e-4042-9f69-94f7d7777985", rq)).thenReturn(GroupResponseDTO
 				.builder()
 				.id(UUID.fromString("5117d63c-a38e-4042-9f69-94f7d7777985"))
 				.name("LEADER")
 				.build());
-        String results = "\"hasErrors\":false,\"content\":{\"id\":\"5117d63c-a38e-4042-9f69-94f7d7777985\",\"name\":\"LEADER\"";
-        
-        mvc.perform(put("/api/v1/groups/5117d63c-a38e-4042-9f69-94f7d7777985")
-        		.contentType(MediaType.APPLICATION_JSON)
-        		.content(json))
-        		.andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString(results)));
+		String results = "\"hasErrors\":false,\"content\":{\"id\":\"5117d63c-a38e-4042-9f69-94f7d7777985\",\"name\":\"LEADER\"";
+
+		mvc.perform(put("/api/v1/groups/5117d63c-a38e-4042-9f69-94f7d7777985")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString(results)));
 	}
-	
+
 	@Test
 	@WithMockUser("hau")
-	public void givenJsonObject_whenUpdateGroup_thenReturnStatus400AndResponseNull() throws Exception{
+	public void givenJsonObject_whenUpdateGroup_thenReturnStatus400() throws Exception {
 		GroupUpdateDTO rq = GroupUpdateDTO
 				.builder()
 				.name("LEADER")
 				.build();
-		Gson gson = new Gson(); 
+		Gson gson = new Gson();
 		String json = gson.toJson(rq);
-		
-		when(service.update(any(),any())).thenThrow(new BusinessException("name invalid"));
-        
-        mvc.perform(put("/api/v1/groups/5117d63c-a38e-4042-9f69-94f7d7777985")
-        		.contentType(MediaType.APPLICATION_JSON)
-        		.content(json))
-        		.andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string(containsString("name invalid")));
+
+		when(service.update(any(), any())).thenThrow(new BusinessException("name invalid"));
+
+		mvc.perform(put("/api/v1/groups/5117d63c-a38e-4042-9f69-94f7d7777985")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andDo(print())
+				.andExpect(status().isBadRequest());
 	}
-	
+
 	@Test
 	@WithMockUser("hau")
-	public void givenGroupId_whenDeleteGroup_thenReturnStatus200AndResponseHelper() throws Exception{
-		
+	public void givenGroupId_whenDeleteGroup_thenReturnStatus200AndResponseHelper() throws Exception {
+
 		assertDoesNotThrow(() -> service.deleteById("5117d63c-a38e-4042-9f69-94f7d7777985"));
-       
-        
-        mvc.perform(delete("/api/v1/groups/5117d63c-a38e-4042-9f69-94f7d7777985")
-        		.contentType(MediaType.APPLICATION_JSON))
-        		.andDo(print())
-                .andExpect(status().isOk());
-                
+
+		mvc.perform(delete("/api/v1/groups/5117d63c-a38e-4042-9f69-94f7d7777985")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk());
+
 	}
+
 	@Test
 	@WithMockUser("hau")
 	public void givenGroupIdAndRoleId_whenAddRole_thenReturnStatus200AndResponseHelper() throws Exception {
 		mvc.perform(post("/api/v1/groups/5117d63c-a38e-4042-9f69-94f7d7777985/5117d63c-a38e-4042-9f69-94f7d7777955")
-        		.contentType(MediaType.APPLICATION_JSON))
-        		.andDo(print())
-                .andExpect(status().isOk());
+				.contentType(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk());
 	}
 
 }
