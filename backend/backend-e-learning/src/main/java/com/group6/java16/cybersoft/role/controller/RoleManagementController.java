@@ -86,4 +86,13 @@ public class RoleManagementController {
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 
 	}
+
+	@GetMapping("{id}")
+	public Object getRoleDetail(@PathVariable("id") String id) {
+
+		RoleResponseDTO rp = service.getRoleDetail(id);
+
+		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	}
+
 }
