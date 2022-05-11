@@ -1,13 +1,9 @@
 package com.group6.java16.cybersoft.backedelearning.user.service;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
-import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -54,8 +50,7 @@ public class UserManagerServiceIntegrationTest {
 
     @Test
     public void whenUpdateMyProfileSuccess_theReturnUserResponse() {
-        UpdateMyProfileDTO rq = new UpdateMyProfileDTO("displayName", "", "lastName", "hobbies", "facebook", "gender",
-                "phone");
+        UpdateMyProfileDTO rq = new UpdateMyProfileDTO("displayName", "FirstName", "lastName", "hobbies", "facebook", "gender", "phone2");
 
         Authentication authentication = Mockito.mock(Authentication.class);
         SecurityContext securityContext = Mockito.mock(SecurityContext.class);
@@ -98,6 +93,12 @@ public class UserManagerServiceIntegrationTest {
         UserResponseDTO actual = service.updateMyProfile(rq);
 
         assertEquals(expected, actual);
+
+        UpdateMyProfileDTO rq2 = new UpdateMyProfileDTO("displayName", "FirstName", "lastName", "hobbies", "facebook", "gender","");
+        UserResponseDTO actual2 = service.updateMyProfile(rq2);
+        expected.setPhone("phone");
+        assertEquals(expected, actual2);
+        
     }
 
     @Test
@@ -123,6 +124,7 @@ public class UserManagerServiceIntegrationTest {
         when(userRepository.existsByEmail(user.getEmail())).thenReturn(true);
 
         assertThrows(BusinessException.class, () -> service.update(id.toString(), user));
+
     }
 
     @Test

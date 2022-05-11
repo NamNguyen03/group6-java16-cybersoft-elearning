@@ -31,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements UserManagementService {
+public class UserManagementServiceImpl implements UserManagementService {
 
     @Autowired
     private ELUserRepository userRepository;
@@ -42,9 +42,6 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
     @Autowired
     private PasswordEncoder encoder;
     
-    
-
-
     @Autowired
     @Qualifier("emailSenderCreateSuccessfully")
     private EmailSender<UserCreateModel> serviceSendEmailCreateUserSuccess;
@@ -154,8 +151,7 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
         return UserMapper.INSTANCE.toUserResponseDTO(newUser);
     }
 
-	
-	@Override
+    @Override
 	public UserResponseDTO addGroup(String userId, String groupId) {
 		ELUser user = getById(userId);
 		ELGroup group = getGroupById(groupId);
@@ -166,13 +162,7 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
 
 	}
 
-	@Override
-	public UserResponseDTO getProfile(String id) {
-		ELUser user = getById(id);
-		return UserMapper.INSTANCE.toUserResponseDTO(user);
-	}
-
-	@Override
+    @Override
 	public UserResponseDTO deleteGroup(String userId, String groupId) {
 		ELUser user = getById(userId);
 		ELGroup group = getGroupById(groupId);
@@ -181,27 +171,13 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
 		return  UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
 	}
 
-    @Override
-    protected String getMessageIdInvalid() {
-        return errorsIdInvalid;
-    }
-
-    @Override
-    protected JpaRepository<ELUser, UUID> getRepository() {
-        return userRepository;
-    }
-
-    @Override
-    protected String getErrorNotFound() {
-        return errorsUserNotFound;
-    }
     
     private ELGroup getGroupById(String id) {
         UUID uuid;
         try{
             uuid = UUID.fromString(id);
         }catch(Exception e){
-            throw new BusinessException(getMessageIdInvalid());
+            throw new BusinessException(errorsIdInvalid);
         }
         
         Optional<ELGroup> entityOpt = groupRepository.findById(uuid);
@@ -212,4 +188,15 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
         return entityOpt.get();
     }
 
+
+	private ELUser getById(String id) {
+        return userRepository.findById(UUID.fromString(id)).orElseThrow(() -> new BusinessException(errorsUserNotFound));
+    }
+
+	private boolean isValidString(String s) {
+        if(s == null || s.length() == 0) {
+            return false;
+        }
+        return true;
+    }
 }

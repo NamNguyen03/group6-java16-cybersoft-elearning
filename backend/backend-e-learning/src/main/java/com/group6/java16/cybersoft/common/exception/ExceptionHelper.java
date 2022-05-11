@@ -18,5 +18,10 @@ public class ExceptionHelper {
 	public Object handlerBusinessException (BusinessException ex) {
 		return ResponseHelper.getResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, true);
 	}
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public Object handlerIllegalArgumentExceptio(IllegalArgumentException ex) {
+		return ResponseHelper.getResponse("Data type invalid", HttpStatus.BAD_REQUEST, true);
+	}
 
 }

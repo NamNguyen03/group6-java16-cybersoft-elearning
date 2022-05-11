@@ -1,9 +1,12 @@
 package com.group6.java16.cybersoft.user.service;
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
+import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.mapper.UserMapper;
@@ -11,17 +14,25 @@ import com.group6.java16.cybersoft.user.model.ELUser;
 import com.group6.java16.cybersoft.user.repository.ELUserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserInformationServiceImpl implements UserInformationService{
+public class UserInformationServiceImpl  implements UserInformationService{
 
     @Autowired
     private ELUserRepository repository;
+
+    @Value("${entity.id.invalid}")
+    private String errorsIdInvalid;
+
+    @Value("${user.not-found}")
+    private String errorsUserNotFound;
 
     @Override
     public PageResponseModel<UserResponseDTO> search(PageRequestModel pageRequestModel) {
@@ -80,4 +91,11 @@ public class UserInformationServiceImpl implements UserInformationService{
 
         return UserMapper.INSTANCE.toUserResponseDTO( repository.findByUsername(usernameCurrent).get());
     }
+
+    
+	@Override
+	public UserResponseDTO getProfile(String id) {
+		ELUser user = repository.findById(UUID.fromString(id)).orElseThrow(() -> new BusinessException(errorsUserNotFound));
+		return UserMapper.INSTANCE.toUserResponseDTO(user);
+	}
 }

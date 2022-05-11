@@ -69,7 +69,7 @@ export class UserClient {
         let formData = new FormData();
         formData.append('file', file);
     
-        return this.httpClient.put<Response<UserRp>>(this._apiUpdateAvatar, formData);
+        return this.httpClient.post<Response<UserRp>>(this._apiUpdateAvatar, formData);
     }
 
     generateTokenUpdatePassword(): Observable<Response<string>>{

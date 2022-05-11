@@ -6,7 +6,6 @@ import javax.validation.constraints.Size;
 import com.group6.java16.cybersoft.user.validation.annotation.NotFoundUsername;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

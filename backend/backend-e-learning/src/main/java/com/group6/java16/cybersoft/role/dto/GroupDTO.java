@@ -8,9 +8,7 @@ import com.group6.java16.cybersoft.role.validation.annotation.UniqueGroupName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @AllArgsConstructor

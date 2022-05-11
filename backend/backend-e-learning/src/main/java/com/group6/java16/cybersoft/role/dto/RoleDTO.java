@@ -4,8 +4,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.group6.java16.cybersoft.role.validation.annotation.UniqueRoleName;
-import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
-import com.group6.java16.cybersoft.user.model.UserStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

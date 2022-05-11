@@ -11,10 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +40,6 @@ public class UserInformationControllerIntegrationTest {
     @Test
     @WithMockUser("nam")
     public void givenJsonObject_whenSearchUser_theReturnStatus200AndResponseHelper() throws Exception {
-
-        String results = "{\"hasErrors\":false,\"content\":{\"pageCurrent\":1,\"totalPage\":10,\"items\":[]}";
 
         when(service.search(new PageRequestModel(
                 1,
@@ -79,4 +76,14 @@ public class UserInformationControllerIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+
+    @Test
+    @WithMockUser("nam")
+    public void givenJsonObject_whenProfile_theReturnStatus200AndResponseHelper() throws Exception{
+
+        mvc.perform(get("/api/v1/users/" + UUID.randomUUID().toString()))
+            .andDo(print())
+            .andExpect(status().isOk());
+    }
+
 }
