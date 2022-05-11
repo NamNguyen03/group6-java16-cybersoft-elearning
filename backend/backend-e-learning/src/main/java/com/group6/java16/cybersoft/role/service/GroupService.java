@@ -23,5 +23,7 @@ public interface GroupService {
 
 	GroupResponseDTO deleteRole(String groupId, String roleId);
 
+	GroupResponseDTO getGroupDetail(String id);
+
 
 }

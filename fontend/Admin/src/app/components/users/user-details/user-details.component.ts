@@ -149,6 +149,13 @@ import { BaseGroup } from 'src/app/api-clients/model/group.model';
         groups:[],
       })
     }
+    onGroupRowSelected(event) {
+      let groupId = event.data.id;
+     
+     this._router.navigate(['/groups/group-details'],{
+       queryParams: {'groupId':groupId}})
+ 
+   }
 
 
   }

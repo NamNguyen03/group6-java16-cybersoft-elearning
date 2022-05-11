@@ -24,6 +24,7 @@ import com.group6.java16.cybersoft.role.dto.GroupDTO;
 import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
 import com.group6.java16.cybersoft.role.dto.GroupUpdateDTO;
 import com.group6.java16.cybersoft.role.service.GroupService;
+import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 
 
 
@@ -95,6 +96,13 @@ public class GroupManagementController {
 			return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 		
 		}
+	    @GetMapping("{id}")
+	    public Object getGroupDetail(@PathVariable("id")String id){
+
+	        GroupResponseDTO rp = service.getGroupDetail(id);
+
+	        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	    }
 	   
 
 	}

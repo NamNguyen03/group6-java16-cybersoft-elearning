@@ -39,4 +39,15 @@ export class GroupClient {
         return this.httpClient.put<Response<GroupResponse>>(this.apiEndpoint+"/"+id,rq);
 
     }
+    deleteRoleIntoGroup(groupId, roleId: string): Observable<Response<GroupResponse>>{
+        return this.httpClient.delete<Response<GroupResponse>>(this.apiEndpoint + "/" + groupId + "/" + roleId)
+    }
+    getGroupDetails(id: string): Observable<Response<GroupResponse>>{
+        return this.httpClient.get<Response<GroupResponse>>(this.apiEndpoint+ "/" + id);
+    }
+    addRoleIntoGroup(groupId, roleId: string): Observable<Response<GroupResponse>>{
+        return this.httpClient.post<Response<GroupResponse>>(this.apiEndpoint + "/" + groupId + "/" + roleId,'')
+    }
+    
+
 }
