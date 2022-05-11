@@ -1,6 +1,7 @@
 package com.group6.java16.cybersoft.role.service;
 
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,9 @@ import com.group6.java16.cybersoft.role.dto.RoleDTO;
 import com.group6.java16.cybersoft.role.dto.RoleResponseDTO;
 import com.group6.java16.cybersoft.role.dto.RoleUpdateDTO;
 import com.group6.java16.cybersoft.role.mapper.RoleMapper;
+import com.group6.java16.cybersoft.role.model.ELProgram;
 import com.group6.java16.cybersoft.role.model.ELRole;
+import com.group6.java16.cybersoft.role.repository.ELProgramRepository;
 import com.group6.java16.cybersoft.role.repository.ELRoleRepository;
 
 
@@ -38,11 +41,14 @@ public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleServic
 	@Autowired
 	private ELRoleRepository roleRepository;
 
-	@Value("${entity.id.invalid}")
-    private String errorsIdInvalid;
+	@Autowired
+	private ELProgramRepository programRepository;
 
-	@Value("${role.id.not-found}")
-	private String messagesRoleIdNotFound;
+	@Value("${entity.id.invalid}")
+	private String errorsIdInvalid;
+
+	@Value("${role.not-found}")
+	private String errorsRoleNotFound;
 
 	@Value("${role.name.existed}")
 	private String messagesRoleNameExisted;
@@ -69,8 +75,8 @@ public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleServic
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
 		}else{
-            pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
-        }
+			pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
+		}
 
 		if("name".equals(fieldNameSearch)){
 			rp =  roleRepository.searchByName(valueSearch, pageable);
@@ -92,7 +98,7 @@ public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleServic
 		ELRole role = getById(id);
 
 		if(isValidString(dto.getName()) && !role.getName().equals(dto.getName())){
-	
+
 			if(roleRepository.existsByName(dto.getName())){
 				throw new BusinessException(messagesRoleNameExisted);
 			}
@@ -105,7 +111,7 @@ public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleServic
 		}
 
 		return RoleMapper.INSTANCE.toResponseDTO(roleRepository.save(role));
-		
+
 	}
 
 
@@ -113,7 +119,6 @@ public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleServic
 	public void deleteById(String id) {
 		ELRole role = getById(id);
 		roleRepository.delete(role);
-
 	}
 
 
@@ -131,7 +136,46 @@ public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleServic
 
 	@Override
 	protected String getErrorNotFound() {
-		return messagesRoleIdNotFound;
+		return errorsRoleNotFound;
 	}
+
+
+	@Override
+	public RoleResponseDTO addProgram(String roleId, String programId) {
+		ELRole role = getById(roleId);
+		ELProgram program = getProgramById(programId);
+		
+		role.addProgram(program);
+		return  RoleMapper.INSTANCE.toResponseDTO(roleRepository.save(role));
+
+	}
+
+
+	@Override
+	public RoleResponseDTO deleteProgram(String roleId, String programId) {
+		ELRole role = getById(roleId);
+		ELProgram program = getProgramById(programId);
+
+		role.removeProgram(program);
+		return  RoleMapper.INSTANCE.toResponseDTO(roleRepository.save(role));
+	}
+	
+	private ELProgram getProgramById(String id) {
+		UUID uuid;
+		try{
+			uuid = UUID.fromString(id);
+		}catch(Exception e){
+			throw new BusinessException(getMessageIdInvalid());
+		}
+
+		Optional<ELProgram> entityOpt = programRepository.findById(uuid);
+
+		if(entityOpt.isEmpty()){
+			throw new BusinessException(errorsRoleNotFound);
+		}
+		return entityOpt.get();
+	}
+
+
 
 }

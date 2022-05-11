@@ -26,6 +26,7 @@ import { TokenInterceptor } from './shared/service/interceptor/token.interceptor
 import { ExceptionInterceptor } from './shared/service/interceptor/exception.interceptor';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ToastrModule } from 'ngx-toastr';
+import { ProgramModule } from './components/program/program.module';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { ToastrModule } from 'ngx-toastr';
     MediaModule,
     GroupModule,
     UsersModule,
+    ProgramModule,
     Ng2SmartTableModule,
     ToastrModule.forRoot()
   ],

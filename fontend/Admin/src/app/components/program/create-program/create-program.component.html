@@ -1,0 +1,58 @@
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card tab2-card">
+                <div class="card-header">
+                    <h5>Create Program</h5>
+                </div>
+                <div class="card-body tab2-card">
+                    <ngb-tabset class="tab-coupon">
+                        <ngb-tab title="General">
+                            <ng-template ngbTabContent>
+                                <form [formGroup]="generalForm"  class="needs-validation" novalidate="">
+                                        <h4>Program Details</h4>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Name </label>
+                                            <input class="form-control col-xl-8 col-md-7"
+                                                type="text" required="" name="name"formControlName="name">
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span>Description </label>
+                                            <input class="form-control col-xl-8 col-md-7"
+                                                type="text" required=""  name="description" formControlName="description">
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="exampleFormControlSelect1" class="col-xl-3 col-sm-4 mb-0"><span>*</span>Module </label>
+                                            <select class="form-control digits col-xl-8 col-sm-7"
+                                                id="exampleFormControlSelect1" name="module" formControlName="module">
+                                                <option>ROLE</option>
+                                                <option>USER</option>
+                                                <option>PROJECT</option>
+                                                <option>TASK</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="exampleFormControlSelect1" class="col-xl-3 col-sm-4 mb-0"><span>*</span>Type </label>
+                                            <select class="form-control digits col-xl-8 col-sm-7"
+                                                id="exampleFormControlSelect1" name="type" formControlName="type">
+                                                <option>READ</option>
+                                                <option>SAVE</option>
+                                                <option>UPDATE</option>
+                                                <option>DELETE</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                             </ng-template>
+                        </ngb-tab>
+                            
+                    </ngb-tabset>
+                    
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary mr-1" (click)="createProgram()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

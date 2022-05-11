@@ -24,7 +24,6 @@ import com.group6.java16.cybersoft.role.dto.RoleResponseDTO;
 import com.group6.java16.cybersoft.role.dto.RoleUpdateDTO;
 import com.group6.java16.cybersoft.role.service.RoleService;
 
-
 @RestController
 @RequestMapping("api/v1/roles")
 @CrossOrigin(origins = "*")
@@ -58,19 +57,33 @@ public class RoleManagementController {
 				valueFieldNameSearch));
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
-	
+
 	@PutMapping("{id}")
 	public Object updateRole(@PathVariable("id") String id, @RequestBody RoleUpdateDTO dto) {
-		
-		RoleResponseDTO response = service.update(id,dto);
 
+		RoleResponseDTO response = service.update(id, dto);
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
-	
+
 	@DeleteMapping("{id}")
 	public Object deleteRole(@PathVariable("id") String id) {
 		service.deleteById(id);
-    	return ResponseHelper.getResponse("Delete successfully", HttpStatus.OK, false);
+		return ResponseHelper.getResponse("Delete successfully", HttpStatus.OK, false);
 	}
 
+	@PostMapping("{role-id}/{program-id}")
+	public Object addProgramIntoRole(@PathVariable("role-id") String roleId,
+			@PathVariable("program-id") String programId) {
+		RoleResponseDTO response = service.addProgram(roleId, programId);
+		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
+
+	}
+
+	@DeleteMapping("{role-id}/{program-id}")
+	public Object deleteProgramIntoRole(@PathVariable("role-id") String roleId,
+			@PathVariable("program-id") String programId) {
+		RoleResponseDTO response = service.deleteProgram(roleId, programId);
+		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
+
+	}
 }
