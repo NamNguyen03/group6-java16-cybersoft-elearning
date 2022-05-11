@@ -11,7 +11,6 @@ import lombok.Data;
 public class PageResponseModel<T> {
 	private int pageCurrent;
 	private int totalPage;
-
-	private List<T> items = new ArrayList<T>();
+	private List<T> items = new ArrayList<>();
 
 }

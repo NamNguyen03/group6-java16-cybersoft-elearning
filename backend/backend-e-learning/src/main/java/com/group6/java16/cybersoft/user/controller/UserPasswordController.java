@@ -8,6 +8,7 @@ import com.group6.java16.cybersoft.user.service.UserPasswordService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,18 +20,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/users/password")
 @CrossOrigin(origins = "*")
 public class UserPasswordController {
-    @Autowired
-    private UserPasswordService service;
+	@Autowired
+	private UserPasswordService service;
 
-    @PostMapping("token/me")
-    public Object generateToken() {
-        service.generateToken();
-        return ResponseHelper.getResponse("Generate token reset password success", HttpStatus.OK, false);
-    }
+	@PostMapping("token/me")
+	public Object generateToken() {
+		service.generateToken();
+		return ResponseHelper.getResponse("Generate token reset password success", HttpStatus.OK, false);
+	}
 
-    @PutMapping()
-    public Object updatePassword(@Valid @RequestBody UpdatePasswordDTO rq) {
-        service.updatePassword(rq);
-        return ResponseHelper.getResponse("Update password success", HttpStatus.OK, false);
-    }
+	@PutMapping()
+	public Object updatePassword(@Valid @RequestBody UpdatePasswordDTO rq, BindingResult result) {
+
+		if (result.hasErrors()) {
+			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
+		}
+
+		service.updatePassword(rq);
+		return ResponseHelper.getResponse("Update password success", HttpStatus.OK, false);
+	}
 }

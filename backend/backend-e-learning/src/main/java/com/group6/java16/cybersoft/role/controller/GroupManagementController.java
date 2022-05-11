@@ -71,9 +71,6 @@ public class GroupManagementController {
 	    @PutMapping("{id}")
 	    public Object updateGroup(@PathVariable("id") String id,@RequestBody GroupUpdateDTO dto){
 	       	GroupResponseDTO response = service.update(id,dto);
-	       	if(response ==null) {
-				return ResponseHelper.getResponse("name invalid", HttpStatus.BAD_REQUEST, true);
-			}
 	        
 	        return ResponseHelper.getResponse(response, HttpStatus.OK,false);
 	    }

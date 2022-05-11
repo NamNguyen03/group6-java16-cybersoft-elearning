@@ -1,13 +1,9 @@
 package com.group6.java16.cybersoft.backedelearning.user.service;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
-import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.UUID;
 

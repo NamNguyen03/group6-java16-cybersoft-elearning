@@ -1,19 +1,13 @@
 package com.group6.java16.cybersoft.backedelearning.user.controller;
 
-import com.group6.java16.cybersoft.common.model.PageRequestModel;
-import com.group6.java16.cybersoft.common.model.PageResponseModel;
-import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.service.UserInformationService;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -53,4 +47,14 @@ public class UserInformationControllerIntegrationTest {
             .andDo(print())
             .andExpect(status().isOk());
     }
+
+    @Test
+    @WithMockUser("nam")
+    public void givenJsonObject_whenProfile_theReturnStatus200AndResponseHelper() throws Exception{
+
+        mvc.perform(get("/api/v1/users/" + UUID.randomUUID().toString()))
+            .andDo(print())
+            .andExpect(status().isOk());
+    }
+
 }

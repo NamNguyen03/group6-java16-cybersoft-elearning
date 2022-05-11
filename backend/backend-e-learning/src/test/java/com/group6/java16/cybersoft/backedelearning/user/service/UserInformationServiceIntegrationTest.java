@@ -1,12 +1,14 @@
 package com.group6.java16.cybersoft.backedelearning.user.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.Optional;
+import java.util.UUID;
 
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
@@ -218,6 +220,48 @@ public class UserInformationServiceIntegrationTest {
         expected.setGroups(null);
 
         UserResponseDTO actual =  service.getMyProfile();
+
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void whenIdNotExistsIsUsedToGetProfile_thenThrowBusinessException() throws Exception {
+        UUID id = UUID.randomUUID();
+
+        when(userRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(BusinessException.class, ()-> service.getProfile(id.toString()));
+    }
+
+    @Test
+    public void whenIdExistsIsUsedToGetProfile_thenReturnUser() throws Exception {
+        UUID id = UUID.randomUUID();
+        ELUser user =  ELUser.builder()
+            .email("nam@gmail.com")
+            .username("nam")
+            .displayName("Nam")
+            .firstName("Nguyen")
+            .lastName("Nam")
+            .hobbies("swimming")
+            .facebook("facebook.com")
+            .phone("11111222222")
+            .groups(null)
+            .build();
+
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+
+        UserResponseDTO expected = new UserResponseDTO();
+        expected.setEmail("nam@gmail.com");	
+        expected.setUsername("nam");
+        expected.setDisplayName("Nam");
+        expected.setLastName("Nam");
+        expected.setHobbies("swimming");
+        expected.setFacebook("facebook.com");
+        expected.setPhone("11111222222");
+        expected.setFirstName("Nguyen");
+        expected.setGroups(null);
+
+        UserResponseDTO actual =  service.getProfile(id.toString());
 
         assertEquals(expected,actual);
     }

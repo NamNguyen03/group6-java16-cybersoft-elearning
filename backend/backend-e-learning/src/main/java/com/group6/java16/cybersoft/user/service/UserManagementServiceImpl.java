@@ -42,9 +42,6 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
     @Autowired
     private PasswordEncoder encoder;
     
-    
-
-
     @Autowired
     @Qualifier("emailSenderCreateSuccessfully")
     private EmailSender<UserCreateModel> serviceSendEmailCreateUserSuccess;
@@ -164,12 +161,6 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
 		
         return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
 
-	}
-
-	@Override
-	public UserResponseDTO getProfile(String id) {
-		ELUser user = getById(id);
-		return UserMapper.INSTANCE.toUserResponseDTO(user);
 	}
 
 	@Override

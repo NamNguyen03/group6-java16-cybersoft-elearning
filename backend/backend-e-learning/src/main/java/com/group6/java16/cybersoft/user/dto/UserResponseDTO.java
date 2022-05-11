@@ -1,6 +1,5 @@
 package com.group6.java16.cybersoft.user.dto;
 
-import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -11,8 +10,9 @@ import com.group6.java16.cybersoft.user.model.UserStatus;
 import lombok.*;
 
 
+@AllArgsConstructor
 @NoArgsConstructor
-
+@Getter
 @Setter
 public class UserResponseDTO {
     private UUID id;
@@ -43,7 +43,7 @@ public class UserResponseDTO {
 
     private UserStatus status;
     
-    private Set<GroupResponseDTO> groups = new LinkedHashSet<>();
+    private Set<GroupResponseDTO> groups;
 
 	public static UserResponseDTO builder(){
 		return new UserResponseDTO();

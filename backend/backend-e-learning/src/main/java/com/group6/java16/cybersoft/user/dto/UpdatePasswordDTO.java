@@ -9,7 +9,6 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Getter
 @Setter
 public class UpdatePasswordDTO {
