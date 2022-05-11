@@ -153,5 +153,12 @@ export class ListRoleComponent implements OnInit {
     this._router.navigate(['/roles/list-role'],{
       queryParams: {'fieldNameSort':fieldNameSort,'isIncrementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
     })}
+    onRoleRowSelected(event) {
+      let roleId = event.data.id;
+     
+     this._router.navigate(['/roles/role-details'],{
+       queryParams: {'roleId':roleId}})
+  
+   }
   
 }
