@@ -168,4 +168,10 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 
 		return GroupMapper.INSTANCE.toGroupResponseDTO(modifiedGroup);
 	}
+
+	@Override
+	public GroupResponseDTO getGroupDetail(String id) {
+		
+		return GroupMapper.INSTANCE.toGroupResponseDTO(getById(id));
+	}
 }

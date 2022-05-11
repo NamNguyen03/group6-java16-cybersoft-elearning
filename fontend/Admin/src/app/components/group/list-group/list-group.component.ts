@@ -162,10 +162,15 @@ export class ListGroupComponent implements OnInit {
       queryParams: {'fieldNameSort':fieldNameSort,'isIncrementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
 
     })
-    
-    
-    
   }
+  onGroupRowSelected(event) {
+    let groupId = event.data.id;
+    console.log(groupId)
+   
+   this._router.navigate(['/groups/group-details'],{
+     queryParams: {'groupId':groupId}})
+
+ }
   
 
 }
