@@ -1,27 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { GroupClient } from 'src/app/api-clients/group.client';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
-import { BaseGroup, GroupResponse } from 'src/app/api-clients/model/group.model';
+import { ProgramResponse } from 'src/app/api-clients/model/program.model';
 import { RoleResponse } from 'src/app/api-clients/model/role.model';
+import { ProgramClient } from 'src/app/api-clients/program.client';
 import { RoleClient } from 'src/app/api-clients/role.client';
-import { PageService } from 'src/app/shared/service/page/page.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-group-details',
-  templateUrl: './group-details.component.html',
-  styleUrls: ['./group-details.component.scss'],
+  selector: 'app-role-details',
+  templateUrl: './role-details.component.html',
+  styleUrls: ['./role-details.component.scss'],
 })
-export class GroupDetailsComponent implements OnInit {
-  public groupDetail: GroupResponse = new GroupResponse();
-  public groupForm: FormGroup;
-  public isAddRole = false;
+export class RoleDetailsComponent implements OnInit {
+  public roleDetail: RoleResponse = new RoleResponse();
+  public roleForm: FormGroup;
+  public isAddProgram = false;
   public inputSearch = '';
-  public roleCurrent : RoleResponse;
-  public list_role: RoleResponse[];
+  public programCurrent : ProgramResponse;
+  public list_program: ProgramResponse[];
   public isDisableSubmit = false;
 
   public searchForm: FormGroup;
@@ -30,14 +29,11 @@ export class GroupDetailsComponent implements OnInit {
   public pageCurrent = 1;
   public isSearch =false;
 
-  constructor(private _groupClient: GroupClient,
-    private _RoleClient: RoleClient, 
-    private _router: Router,
+  constructor(private _roleClient: RoleClient,
+    private _programClient: ProgramClient, 
     private form: FormBuilder,
-    private _pageService: PageService,
     private _toastr: ToastrService, 
     private route: ActivatedRoute,
-    private _GroupClient: GroupClient,
     ) {
     
   }
@@ -56,14 +52,24 @@ export class GroupDetailsComponent implements OnInit {
     },
     columns: {
         name: {
-            title: 'Role name',
+            title: 'Program name',
             editable: false,
         },
         
         description: {
           title: 'Description',
           editable: false,
-        },   
+        },
+        type: {
+          title: 'Type',
+          editable: false,
+        },
+        module: {
+          title: 'Module',
+          editable: false,
+        },
+     
+        
     },
   }
 
@@ -83,11 +89,10 @@ export class GroupDetailsComponent implements OnInit {
         confirmButtonText: 'Yes, delete it!',
       }).then((result) => {
           if (result.isConfirmed) {
-            let isLoadData = false;
-            this._groupClient.deleteRoleIntoGroup(this.groupDetail.id,event.data.id).subscribe(() => {
+            this._roleClient.deleteProgramIntoRole(this.roleDetail.id,event.data.id).subscribe(() => {
               this.getData();
               
-              this._toastr.success('Success', 'Delete Role Into Group success!');
+              this._toastr.success('Success', 'Delete Program Into Role success!');
             })
             
           }
@@ -95,16 +100,16 @@ export class GroupDetailsComponent implements OnInit {
   
     }
   
-  goToAddRole(){
-    this.isAddRole = !this.isAddRole;
+  goToAddProgram(){
+    this.isAddProgram = !this.isAddProgram;
   }
  
   getData(): void{
       this.route.queryParams.subscribe(params =>{
-      let id  =  params['groupId'] ; 
-      this._groupClient.getGroupDetails(id).subscribe(
+      let id  =  params['roleId'] ; 
+      this._roleClient.getRoleDetails(id).subscribe(
       response =>{
-        this.groupDetail = response.content
+        this.roleDetail = response.content
         this.createProfileForm();
         this.setDefaultValueForm();
       } 
@@ -114,51 +119,47 @@ export class GroupDetailsComponent implements OnInit {
 
   setDefaultValueForm(){
      
-    this.groupForm.patchValue({
-      name: this.groupDetail.name,
-      description: this.groupDetail.description,
-      roles: this.groupDetail.roles 
+    this.roleForm.patchValue({
+      name: this.roleDetail.name,
+      description: this.roleDetail.description,
+      programs: this.roleDetail.programs
     })
   }
   createProfileForm() {
-    this.groupForm = this.form.group({
+    this.roleForm = this.form.group({
       name: [''],
       description: [''],
-      roles:[],
+      programs:[],
     })
   }
-  onRoleRowSelected(event) {
-    let roleId = event.data.id;
-   
-   this._router.navigate(['/roles/role-details'],{
-     queryParams: {'roleId':roleId}})
 
-  }
   changeInputSearch(event:any){
     this._pageRequest = new PageRequest(1, 5, null, true, "name", this.inputSearch);
-    this._RoleClient.search(this._pageRequest).subscribe(
+    this._programClient.search(this._pageRequest).subscribe(
       response =>{
-         this.list_role = response.content.items;
+         this.list_program = response.content.items;
         
       }
     );
+
   }
   selectRole(role){
     this.inputSearch = role.name;
-    this.roleCurrent =role;
-    this.list_role = [];
+    this.programCurrent =role;
+    this.list_program = [];
     this.isDisableSubmit =true;
 
   }
   addRole(){
     if(this.isDisableSubmit){
-      this._GroupClient.addRoleIntoGroup(this.groupDetail.id,this.roleCurrent.id).subscribe(
+      this._roleClient.addProgramIntoRole(this.roleDetail.id,this.programCurrent.id).subscribe(
         () =>{
-          this._toastr.success("Add Role Into Group successfully","Success")
+          this._toastr.success("Add Program Into Role successfully","Success")
           this.getData();
         }
       )
     }
+
   }
 
 

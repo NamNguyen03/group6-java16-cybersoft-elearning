@@ -137,5 +137,35 @@ public class RoleManagementControllerIntegrationTest {
 				.andExpect(status().isOk());
 
 	}
+	@Test
+	@WithMockUser("hau")
+	public void givenRoleId_whenGetRoleDetails_thenReturnStatus200AndResponseHelper() throws Exception {
+
+		mvc.perform(get("/api/v1/roles/5117d63c-a38e-4042-9f69-94f7d7777985")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk());
+
+	}
+	@Test
+	@WithMockUser("hau")
+	public void givenProgramId_whenAddProgramIntoRole_thenReturnStatus200AndResponseHelper() throws Exception {
+
+		mvc.perform(post("/api/v1/roles/5117d63c-a38e-4042-9f69-94f7d7777985/5117d63c-a38e-4042-9f69-94f7d7777986")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk());
+
+	}
+	@Test
+	@WithMockUser("hau")
+	public void givenProgramId_whenDeleteProgramIntoRole_thenReturnStatus200AndResponseHelper() throws Exception {
+
+		mvc.perform(delete("/api/v1/roles/5117d63c-a38e-4042-9f69-94f7d7777985/5117d63c-a38e-4042-9f69-94f7d7777986")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk());
+
+	}
 
 }
