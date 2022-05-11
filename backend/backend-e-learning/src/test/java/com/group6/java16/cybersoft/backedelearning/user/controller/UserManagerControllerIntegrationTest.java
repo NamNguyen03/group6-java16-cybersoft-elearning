@@ -18,6 +18,7 @@ import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.model.UserStatus;
+import com.group6.java16.cybersoft.user.repository.ELUserRepository;
 import com.group6.java16.cybersoft.user.service.UserManagementService;
 
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,9 @@ public class UserManagerControllerIntegrationTest {
     
     @MockBean
     private UserManagementService service;
+
+    @MockBean
+    private ELUserRepository repository;
 
     @Autowired
     private MockMvc mvc;
@@ -82,7 +86,6 @@ public class UserManagerControllerIntegrationTest {
             .andDo(print())
             .andExpect(status().isBadRequest());
     }
-    
 
     @Test
     @WithMockUser("nam")
@@ -104,11 +107,29 @@ public class UserManagerControllerIntegrationTest {
 
     @Test
     @WithMockUser("nam")
-    public void givenJsonObject_whenCreateUser_theReturnStatus400() throws Exception{
-        UserCreateDTO rq = new UserCreateDTO(null, "password", "displayName", "email@gmail.com", 
+    public void givenJsonObject_whenUsernameExistsIsUsedToCreateUser_theReturnStatus400() throws Exception{
+        UserCreateDTO rq = new UserCreateDTO("nam12234", "password", "displayName", "email@gmail.com", 
             UserStatus.ACTIVE, "firstName", "lastName", "department", "major");
         Gson gson = new Gson();
         String json = gson.toJson(rq);
+        when(repository.existsByUsername("nam12234")).thenReturn(true);
+
+        mvc.perform(post("/api/v1/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andDo(print())
+            .andExpect(status().isBadRequest());
+            
+    }
+
+    @Test
+    @WithMockUser("nam")
+    public void givenJsonObject_whenEmailExistsIsUsedToCreateUser_theReturnStatus400() throws Exception{
+        UserCreateDTO rq = new UserCreateDTO("nam12234", "password", "displayName", "email@gmail.com", 
+            UserStatus.ACTIVE, "firstName", "lastName", "department", "major");
+        Gson gson = new Gson();
+        String json = gson.toJson(rq);
+        when(repository.existsByEmail("email@gmail.com")).thenReturn(true);
 
         mvc.perform(post("/api/v1/users")
             .contentType(MediaType.APPLICATION_JSON)

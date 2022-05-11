@@ -1,6 +1,5 @@
 package com.group6.java16.cybersoft.common.util;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
@@ -23,12 +22,7 @@ public abstract class ServiceHelper<T extends BaseEntity> {
             throw new BusinessException(getMessageIdInvalid());
         }
         
-        Optional<T> entityOpt = getRepository().findById(uuid);
-        
-        if(entityOpt.isEmpty()){
-            throw new BusinessException(getErrorNotFound());
-        }
-        return entityOpt.get();
+        return getRepository().findById(uuid).orElseThrow(() -> new BusinessException(getErrorNotFound()));
     }
 
     protected boolean isValidString(String s) {

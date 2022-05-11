@@ -8,8 +8,10 @@ import com.group6.java16.cybersoft.user.service.UserInformationService;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import org.junit.jupiter.api.Test;
@@ -38,8 +40,6 @@ public class UserInformationControllerIntegrationTest {
     @Test
     @WithMockUser("nam")
     public void givenJsonObject_whenSearchUser_theReturnStatus200AndResponseHelper() throws Exception {
-
-        String results = "{\"hasErrors\":false,\"content\":{\"pageCurrent\":1,\"totalPage\":10,\"items\":[]}";
 
         when(service.search(new PageRequestModel(
                 1,

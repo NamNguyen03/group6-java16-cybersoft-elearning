@@ -42,6 +42,9 @@ public class UserPasswordServiceImpl implements UserPasswordService{
 
     @Value("${token.not-found}")
     private String messageErrorTokenNotFound;
+    
+    @Value("${user.not-found}")
+    private String messageErrorUserNotFound;
 
     @Value("${token.expires}")
     private String messageErrorTokenExpires;
@@ -79,6 +82,7 @@ public class UserPasswordServiceImpl implements UserPasswordService{
         if(tokens.isEmpty()) {
             throw new BusinessException(messageErrorTokenNotFound);
         }
+        
         ELUserToken token   = tokens.stream().filter(
             t -> rq.getToken().equals(t.getValue())
             ).findAny().orElseThrow(() -> new BusinessException(messageErrorTokenNotFound));
@@ -86,10 +90,8 @@ public class UserPasswordServiceImpl implements UserPasswordService{
         if(token.getCreatedAt().plusMinutes(exp).isBefore(LocalDateTime.now())){
             throw new BusinessException(messageErrorTokenExpires);
         }
-
-    
         
-        ELUser user = userRepository.findByUsername(rq.getUsername()).get();
+        ELUser user = userRepository.findByUsername(rq.getUsername()).orElseThrow(() -> new BusinessException(messageErrorTokenNotFound));
         user.setPassword(encoder.encode(rq.getPassword()));
 
         tokens.stream().forEach(userTokenRepository::delete);

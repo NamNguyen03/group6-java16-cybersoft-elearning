@@ -44,6 +44,27 @@ public class UserInformationServiceIntegrationTest {
 
 
     @Test
+    public void whenExistsUserIsUsedToSortFieldNotExists_thenReturnPageResponseUser(){
+        PageRequestModel rq =  new PageRequestModel(1,10, "anyField", true, null, null);
+
+       
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
+
+        Page<ELUser> page = new PageImpl<ELUser>(new ArrayList<ELUser>(), pageable, 10l);
+
+        when(userRepository.findAll(pageable)).thenReturn(page);
+
+        PageResponseModel<UserResponseDTO> expected = new PageResponseModel<UserResponseDTO>(1,1, new ArrayList<UserResponseDTO>());
+
+        PageResponseModel<UserResponseDTO> rp = service.search(rq);
+    
+        //search all
+        assertEquals(expected.getItems(), rp.getItems());
+        assertEquals(expected.getTotalPage(), rp.getTotalPage());
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent());
+    }
+
+    @Test
     public void whenExistsUserIsUsedToSearchAll_thenReturnPageResponseUser(){
         PageRequestModel rq = new PageRequestModel(1,10, null, true, null, null);
 
@@ -146,10 +167,10 @@ public class UserInformationServiceIntegrationTest {
     }
 
     @Test
-    public void whenExistsUserIsUsedToSearchByLastName_thenReturnPageResponseUser(){
-        PageRequestModel rq =  new PageRequestModel(1,10, null, true, "lastName", "value");
+    public void whenExistsUserIsUsedToSearchByLastNameAndSort_thenReturnPageResponseUser(){
+        PageRequestModel rq =  new PageRequestModel(1,10, "major", false, "lastName", "value");
 
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("major").descending());
 
         Page<ELUser> page = new PageImpl<ELUser>(new ArrayList<ELUser>(), pageable, 10l);
 

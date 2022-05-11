@@ -3,6 +3,7 @@ package com.group6.java16.cybersoft.user.service;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
@@ -22,7 +23,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserInformationServiceImpl  extends ServiceHelper<ELUser> implements UserInformationService{
+public class UserInformationServiceImpl  implements UserInformationService{
 
     @Autowired
     private ELUserRepository repository;
@@ -32,22 +33,6 @@ public class UserInformationServiceImpl  extends ServiceHelper<ELUser> implement
 
     @Value("${user.not-found}")
     private String errorsUserNotFound;
-
-    @Override
-    protected String getMessageIdInvalid() {
-        return errorsIdInvalid;
-    }
-
-    @Override
-    protected JpaRepository<ELUser, UUID> getRepository() {
-        return repository;
-    }
-
-    @Override
-    protected String getErrorNotFound() {
-        return errorsUserNotFound;
-    }
-    
 
     @Override
     public PageResponseModel<UserResponseDTO> search(PageRequestModel pageRequestModel) {
@@ -110,7 +95,7 @@ public class UserInformationServiceImpl  extends ServiceHelper<ELUser> implement
     
 	@Override
 	public UserResponseDTO getProfile(String id) {
-		ELUser user = getById(id);
+		ELUser user = repository.findById(UUID.fromString(id)).orElseThrow(() -> new BusinessException(errorsUserNotFound));
 		return UserMapper.INSTANCE.toUserResponseDTO(user);
 	}
 }
