@@ -87,6 +87,48 @@ public class ProgramServiceIntegrationTest {
 	}
 
 	@Test
+	public void whenExistsProgramIsUsedToSearchByType_thenReturnPageResponse() {
+		PageRequestModel request = new PageRequestModel(1, 10, null, true, "type", "READ");
+
+		Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
+
+		Page<ELProgram> page = new PageImpl<ELProgram>(new ArrayList<ELProgram>(), pageable, 10l);
+
+		when(repository.searchByType("READ", pageable)).thenReturn(page);
+
+		PageResponseModel<ProgramResponseDTO> expected = new PageResponseModel<ProgramResponseDTO>(1, 1,
+				new ArrayList<ProgramResponseDTO>());
+
+		PageResponseModel<ProgramResponseDTO> response = service.search(request);
+
+		assertEquals(expected.getItems(), response.getItems());
+		assertEquals(expected.getTotalPage(), response.getTotalPage());
+		assertEquals(expected.getPageCurrent(), response.getPageCurrent());
+
+	}
+
+	@Test
+	public void whenExistsProgramIsUsedToSearchByModule_thenReturnPageResponse() {
+		PageRequestModel request = new PageRequestModel(1, 10, null, true, "module", "ROLE");
+
+		Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
+
+		Page<ELProgram> page = new PageImpl<ELProgram>(new ArrayList<ELProgram>(), pageable, 10l);
+
+		when(repository.searchByModule("ROLE", pageable)).thenReturn(page);
+
+		PageResponseModel<ProgramResponseDTO> expected = new PageResponseModel<ProgramResponseDTO>(1, 1,
+				new ArrayList<ProgramResponseDTO>());
+
+		PageResponseModel<ProgramResponseDTO> response = service.search(request);
+
+		assertEquals(expected.getItems(), response.getItems());
+		assertEquals(expected.getTotalPage(), response.getTotalPage());
+		assertEquals(expected.getPageCurrent(), response.getPageCurrent());
+
+	}
+
+	@Test
 	public void whenExistsGroupIsUsedToSearchAllAndSearch_thenReturnPageResponseGroup() {
 		PageRequestModel request = new PageRequestModel(1, 10, "name", true, null, null);
 
@@ -124,6 +166,8 @@ public class ProgramServiceIntegrationTest {
 		ProgramUpdateDTO request = new ProgramUpdateDTO();
 		request.setName("LEADER");
 		request.setDescription("hau test");
+		request.setType(ProgramType.READ);
+		request.setModule(ProgramModule.ROLE);
 
 		when(repository.save(program)).thenReturn(program);
 
@@ -177,5 +221,27 @@ public class ProgramServiceIntegrationTest {
 		when(repository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(program));
 
 		assertDoesNotThrow(() -> service.deleteById(id.toString()));
+	}
+
+	@Test
+	public void whenUpdateProgramIsValidError_thenThrowBusinessException() {
+		UUID id = UUID.randomUUID();
+		ELProgram program = ELProgram.builder()
+				.id(id)
+				.name("LEADER")
+				.description("hau test")
+				.build();
+		ProgramUpdateDTO request = new ProgramUpdateDTO();
+		request.setName("");
+		when(repository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(ELProgram.builder()
+				.id(id)
+				.name("ADMIN")
+				.description("hau test")
+				.module(ProgramModule.ROLE)
+				.type(ProgramType.READ)
+				.build()));
+
+		when(service.update(id.toString(), request))
+				.thenReturn(new ProgramResponseDTO(id, "ADMIN", ProgramModule.ROLE, ProgramType.READ, "hau test"));
 	}
 }
