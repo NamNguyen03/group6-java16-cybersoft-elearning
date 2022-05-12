@@ -3,8 +3,6 @@ package com.group6.java16.cybersoft.role.service;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
