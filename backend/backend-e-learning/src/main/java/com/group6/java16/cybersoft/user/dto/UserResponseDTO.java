@@ -10,7 +10,6 @@ import com.group6.java16.cybersoft.user.model.UserStatus;
 
 import lombok.*;
 
-
 @NoArgsConstructor
 @Getter
 @Setter
@@ -42,7 +41,7 @@ public class UserResponseDTO {
 
 	private String facebook;
 
-    private UserStatus status;
+	private UserStatus status;
 
 	private Set<GroupResponseDTO> groups = new LinkedHashSet<GroupResponseDTO>();
 
