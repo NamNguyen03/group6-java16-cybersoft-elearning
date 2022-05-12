@@ -9,7 +9,7 @@ import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
     providedIn: 'root',
 })
 export class UserClient {
-    private _apiEndpoint = `${environment.api}users`
+    private _apiEndpoint = `${environment.api}users`;
     private _apiLogin = `${environment.api}auth/login`;
     private _apiMyProfile = `${this._apiEndpoint}/me`;
     private _apiUpdateAvatar = `${this._apiMyProfile}/avatar`;
