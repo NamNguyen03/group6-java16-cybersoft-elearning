@@ -19,5 +19,9 @@ public class ProgramUpdateDTO {
 	private ProgramType type;
 
 	private String description;
+	
+	public static ProgramUpdateDTO builder() {
+		return new ProgramUpdateDTO();
+	}
 
 }
