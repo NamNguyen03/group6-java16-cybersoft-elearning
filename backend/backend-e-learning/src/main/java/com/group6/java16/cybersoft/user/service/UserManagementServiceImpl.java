@@ -1,13 +1,11 @@
 package com.group6.java16.cybersoft.user.service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.notification.UserCreateModel;
 import com.group6.java16.cybersoft.common.service.notification.EmailSender;
 import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
-import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.role.model.ELGroup;
 import com.group6.java16.cybersoft.role.repository.ELGroupRepository;
@@ -24,7 +22,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,7 +54,6 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Value("${entity.id.invalid}")
     private String errorsIdInvalid;
-
 
     @Autowired
     private MyFirebaseService firebaseFileService;
@@ -173,19 +169,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     
     private ELGroup getGroupById(String id) {
-        UUID uuid;
-        try{
-            uuid = UUID.fromString(id);
-        }catch(Exception e){
-            throw new BusinessException(errorsIdInvalid);
-        }
-        
-        Optional<ELGroup> entityOpt = groupRepository.findById(uuid);
-        
-        if(entityOpt.isEmpty()){
-            throw new BusinessException(errorsGroupNotFound);
-        }
-        return entityOpt.get();
+        return groupRepository.findById(UUID.fromString(id)).orElseThrow(() -> new BusinessException(errorsGroupNotFound));
     }
 
 

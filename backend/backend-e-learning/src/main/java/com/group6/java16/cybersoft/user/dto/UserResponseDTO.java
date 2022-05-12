@@ -61,11 +61,26 @@ public class UserResponseDTO {
 		return Objects.equals(avatar, other.avatar) && Objects.equals(department, other.department)
 				&& Objects.equals(displayName, other.displayName) && Objects.equals(email, other.email)
 				&& Objects.equals(facebook, other.facebook) && Objects.equals(firstName, other.firstName)
-				&& Objects.equals(gender, other.gender) && Objects.equals(groups, other.groups)
+				&& Objects.equals(gender, other.gender) && equalsGroup(other.groups)
 				&& Objects.equals(hobbies, other.hobbies) && Objects.equals(id, other.id)
 				&& Objects.equals(lastName, other.lastName) && Objects.equals(major, other.major)
 				&& Objects.equals(phone, other.phone) && status == other.status
 				&& Objects.equals(username, other.username);
+	}
+
+	private boolean equalsGroup(Set<GroupResponseDTO> other) {
+		if(other == null && groups == null) {
+			return true;
+		}
+		if(other.size() != groups.size()){
+			return false;
+		}
+		for(int i = 0; i < other.size(); i++){
+			if(!groups.toArray()[i].equals(other.toArray()[i])){
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
