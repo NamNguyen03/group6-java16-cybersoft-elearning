@@ -87,8 +87,8 @@ public class ProgramServiceImpl implements ProgramService {
 	public ProgramResponseDTO update(String id, ProgramUpdateDTO dto) {
 		ELProgram program = getById(id);
 
-		if (isValidString(dto.getName())) {
-			if (!program.getName().equals(dto.getName()) || programRepository.existsByName(dto.getName())) {
+		if (isValidString(dto.getName()) && !program.getName().equals(dto.getName())) {
+			if (programRepository.existsByName(dto.getName())) {
 				throw new BusinessException(messagesProgramNameExisted);
 			}
 			program.setName(dto.getName());

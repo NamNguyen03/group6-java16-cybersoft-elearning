@@ -148,7 +148,11 @@ public class ProgramServiceIntegrationTest {
 				.build();
 		ProgramUpdateDTO request = new ProgramUpdateDTO();
 		request.setName("LEADER");
-		when(repository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(program));
+		when(repository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(ELProgram.builder()
+				.id(id)
+				.name("ADMIN")
+				.description("hau test")
+				.build()));
 		when(repository.existsByName(request.getName())).thenReturn(true);
 
 		assertThrows(BusinessException.class, () -> service.update(id.toString(), request));
