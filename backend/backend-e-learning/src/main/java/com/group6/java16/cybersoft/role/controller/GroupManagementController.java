@@ -1,5 +1,6 @@
 package com.group6.java16.cybersoft.role.controller;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,9 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.role.dto.GroupDTO;
 import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
+import com.group6.java16.cybersoft.role.dto.GroupUpdateDTO;
 import com.group6.java16.cybersoft.role.service.GroupService;
+import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 
 
 
@@ -67,30 +70,40 @@ public class GroupManagementController {
 		}
 	    
 	    @PutMapping("{id}")
-	    public Object updateGroup(@PathVariable("id") String id,@RequestBody @Valid GroupDTO dto,BindingResult bindingResult ){
-	        if(bindingResult.hasErrors()){
-	            return ResponseHelper.getResponse(bindingResult,HttpStatus.BAD_REQUEST, true);
-	        }
-	        
-			GroupResponseDTO response = service.update(id,dto);
+	    public Object updateGroup(@PathVariable("id") String id,@RequestBody GroupUpdateDTO dto){
+	       	GroupResponseDTO response = service.update(id,dto);
 	        
 	        return ResponseHelper.getResponse(response, HttpStatus.OK,false);
 	    }
 	    
 	    @DeleteMapping("{id}")
-	    public Object deleteUser(@PathVariable("id") String id) {
+	    public Object deleteGroup(@PathVariable("id") String id) {
 	    	
 	    	service.deleteById(id);
 	    	return ResponseHelper.getResponse("Delete successfully", HttpStatus.OK, false);
 	    }
 	    
-	    @PostMapping("add-group/{group-id}/{role-id}")
-	    public Object addRole(@PathVariable(value="group-id")String groupId,@PathVariable(value="role-id")String roleId) {
+	    @PostMapping("{group-id}/{role-id}")
+	    public Object addRoleIntoGroup(@PathVariable(value="group-id")String groupId,@PathVariable(value="role-id")String roleId) {
 	    	GroupResponseDTO response = service.addRole(groupId,roleId);
 	    	
 	    	return ResponseHelper.getResponse(response, HttpStatus.OK,false);
 	    	
 	    }
+	    @DeleteMapping("{group-id}/{role-id}")
+		public Object deleteRoleIntoGroup(@PathVariable("group-id") String groupId,@PathVariable("role-id") String roleId) {
+			GroupResponseDTO response = service.deleteRole(groupId,roleId);
+			return ResponseHelper.getResponse(response, HttpStatus.OK, false);
+		
+		}
+	    @GetMapping("{id}")
+	    public Object getGroupDetail(@PathVariable("id")String id){
+
+	        GroupResponseDTO rp = service.getGroupDetail(id);
+
+	        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	    }
+	   
 
 	}
 

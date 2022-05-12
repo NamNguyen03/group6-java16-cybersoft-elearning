@@ -19,5 +19,9 @@ public interface UserManagementService {
 
     UserResponseDTO update(String id, UpdateUserDTO user);
 
+	UserResponseDTO addGroup(String userId, String groupId);
+
+	UserResponseDTO deleteGroup(String userId, String groupId);
+
     
 }

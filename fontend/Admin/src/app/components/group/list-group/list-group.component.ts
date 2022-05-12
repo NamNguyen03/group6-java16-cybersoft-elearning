@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 export class ListGroupComponent implements OnInit {
   public list_group: BaseGroup[] = [];
   public searchForm: FormGroup;
+  public isSearch = false;
 
   pageRequest: PageRequest = new PageRequest(1,
     10,
@@ -32,19 +33,17 @@ export class ListGroupComponent implements OnInit {
       fieldNameSort:[''],
       isIncrementSort:[''],
       fieldNameSearch:[''],
-      valueFieldNameSearch: ['']
-    })
-
-
-
-   
+      valueFieldNameSearch: [''],
+    });
   }
   ngOnInit(): void {
     
     this.loadData();
   }
 
-
+  toggleSearch(){
+    this.isSearch=!this.isSearch;
+  }
   public settings = {
     pager: {
         display: true,
@@ -69,11 +68,8 @@ export class ListGroupComponent implements OnInit {
       description: {
         title: 'Description',
         editable: true,
-      },
-      roles: {
-        title: 'Role',
-       
       }
+      
     }
   
   }
@@ -113,7 +109,7 @@ export class ListGroupComponent implements OnInit {
             { 
               isLoadData=true;
 
-              this.toastr.success('Success','Delete role success')
+              this.toastr.success('Success','Delete group success')
               this.loadData();
             });
             if(!isLoadData){
@@ -145,7 +141,7 @@ export class ListGroupComponent implements OnInit {
           () => 
             { 
               isLoadData=true;
-              this.toastr.success('Success','Update role success')
+              this.toastr.success('Success','Update group success')
               this.loadData();
             });
             if(!isLoadData){
@@ -162,14 +158,19 @@ export class ListGroupComponent implements OnInit {
     let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
     let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
     let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
-    this._router.navigate(['/roles/list-role'],{
+    this._router.navigate(['/groups/list-group'],{
       queryParams: {'fieldNameSort':fieldNameSort,'isIncrementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
 
     })
-    
-    
-    
   }
+  onGroupRowSelected(event) {
+    let groupId = event.data.id;
+    console.log(groupId)
+   
+   this._router.navigate(['/groups/group-details'],{
+     queryParams: {'groupId':groupId}})
+
+ }
   
 
 }

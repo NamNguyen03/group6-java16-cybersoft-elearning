@@ -14,8 +14,7 @@ import com.group6.java16.cybersoft.role.model.ELRole;
 @Repository
 public interface ELRoleRepository extends JpaRepository<ELRole, UUID> {
 
-	
-	@Query( value =  "Select r from ELRole r where r.name like %:name% ")
+	@Query( value =  "Select u from ELRole u where lower(u.name) like lower(concat('%', :name,'%'))")
 	Page<ELRole> searchByName(@Param("name")String name, Pageable pageable);
 
 	Optional<ELRole> findByName(String name);

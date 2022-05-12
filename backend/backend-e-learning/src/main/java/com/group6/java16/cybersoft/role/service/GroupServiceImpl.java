@@ -1,5 +1,7 @@
 package com.group6.java16.cybersoft.role.service;
 
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
@@ -18,6 +21,7 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.role.dto.GroupDTO;
 import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
+import com.group6.java16.cybersoft.role.dto.GroupUpdateDTO;
 import com.group6.java16.cybersoft.role.mapper.GroupMapper;
 import com.group6.java16.cybersoft.role.model.ELGroup;
 import com.group6.java16.cybersoft.role.model.ELRole;
@@ -26,8 +30,7 @@ import com.group6.java16.cybersoft.role.repository.ELRoleRepository;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-
-public class GroupServiceImpl implements GroupService {
+public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupService {
 
 	@Autowired
 	private ELGroupRepository groupRepository;
@@ -35,16 +38,13 @@ public class GroupServiceImpl implements GroupService {
 	@Autowired
 	private ELRoleRepository roleRepository;
 
-	@Autowired
-	private ServiceHelper<ELGroup> groupServiceHelper;
+	@Value("${entity.id.invalid}")
+	private String errorsIdInvalid;
 
-	@Autowired
-	private ServiceHelper<ELRole> roleServiceHelper;
-
-	@Value("${group.id.not-found}")
+	@Value("${group.not-found}")
 	private String messagesGroupIdNotFound;
 
-	@Value("${role.id.not-found}")
+	@Value("${role.not-found}")
 	private String messagesRoleIdNotFound;
 
 	@Value("${group.name.existed}")
@@ -66,7 +66,9 @@ public class GroupServiceImpl implements GroupService {
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
 
-		}
+		}else{
+            pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
+        }
 
 		if ("name".equals(fieldNameSearch)) {
 			response = groupRepository.searchByName(valueSearch, pageable);
@@ -83,14 +85,14 @@ public class GroupServiceImpl implements GroupService {
 
 	@Override
 	public void deleteById(String id) {
-		ELGroup group = groupServiceHelper.getEntityById(id, groupRepository, messagesGroupIdNotFound);
+		ELGroup group = getById(id);
 		groupRepository.delete(group);
 	}
 
 	@Override
 	public GroupResponseDTO addRole(String groupId, String roleId) {
-		ELGroup group = groupServiceHelper.getEntityById(groupId, groupRepository, messagesGroupIdNotFound);
-		ELRole role = roleServiceHelper.getEntityById(roleId, roleRepository, messagesRoleIdNotFound);
+		ELGroup group = getById(groupId);
+		ELRole role = getRoleById(roleId);
 
 		group.addRole(role);
 		ELGroup modifiedGroup = groupRepository.save(group);
@@ -98,30 +100,78 @@ public class GroupServiceImpl implements GroupService {
 		return GroupMapper.INSTANCE.toGroupResponseDTO(modifiedGroup);
 	}
 
+	private ELRole getRoleById(String roleId) {
+		UUID uuid;
+		try {
+			uuid = UUID.fromString(roleId);
+		} catch (Exception e) {
+			throw new BusinessException(errorsIdInvalid);
+		}
+
+		Optional<ELRole> roleOpt = roleRepository.findById(uuid);
+
+		if (roleOpt.isEmpty()) {
+			throw new BusinessException(messagesRoleIdNotFound);
+		}
+		return roleOpt.get();
+	}
+
 	@Override
 	public GroupResponseDTO save(GroupDTO dto) {
 
 		return GroupMapper.INSTANCE.toGroupResponseDTO(groupRepository.save(GroupMapper.INSTANCE.toModel(dto)));
-		
+
 	}
 
 	@Override
-	public GroupResponseDTO update(String id, GroupDTO dto) {
-		ELGroup group = groupServiceHelper.getEntityById(id, groupRepository, messagesGroupIdNotFound);
+	public GroupResponseDTO update(String id, GroupUpdateDTO dto) {
+		ELGroup group = getById(id);
 
-		if (groupServiceHelper.isValidString(dto.getName()) && !group.getName().equals(dto.getName())) {
+		if (isValidString(dto.getName()) && !group.getName().equals(dto.getName())) {
 
-			if(groupRepository.existsByName(dto.getName())){
-				throw new BusinessException(messagesGroupExistedName);	
+			if (groupRepository.existsByName(dto.getName())) {
+				throw new BusinessException(messagesGroupExistedName);
 			}
-			
+
 			group.setName(dto.getName());
 		}
-		if (groupServiceHelper.isValidString(dto.getDescription())) {
+		if (isValidString(dto.getDescription())) {
 			group.setDescription(dto.getDescription());
 		}
 
 		return GroupMapper.INSTANCE.toGroupResponseDTO(groupRepository.save(group));
+
 	}
 
+	@Override
+	protected String getMessageIdInvalid() {
+		return errorsIdInvalid;
+	}
+
+	@Override
+	protected JpaRepository<ELGroup, UUID> getRepository() {
+		return groupRepository;
+	}
+
+	@Override
+	protected String getErrorNotFound() {
+		return messagesGroupIdNotFound;
+	}
+
+	@Override
+	public GroupResponseDTO deleteRole(String groupId, String roleId) {
+		ELGroup group = getById(groupId);
+		ELRole role = getRoleById(roleId);
+
+		group.removeRole(role);
+		ELGroup modifiedGroup = groupRepository.save(group);
+
+		return GroupMapper.INSTANCE.toGroupResponseDTO(modifiedGroup);
+	}
+
+	@Override
+	public GroupResponseDTO getGroupDetail(String id) {
+		
+		return GroupMapper.INSTANCE.toGroupResponseDTO(getById(id));
+	}
 }

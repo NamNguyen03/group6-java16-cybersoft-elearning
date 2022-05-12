@@ -18,9 +18,6 @@ import org.springframework.stereotype.Service;
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
 public class AuthServiceImpl implements AuthService{
 
-    @Value("${user.username.not-existed}")
-    private String messageUserNotExisted;
-
     @Value("${user.password.not-equals}")
     private String messagePasswordNotEquals;
 
@@ -35,10 +32,6 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public String login(LoginRequestDTO loginDTO) {
-        if(!userRepository.existsByUsername(loginDTO.getUsername())){
-            throw new BusinessException(messagePasswordNotEquals);
-        }
-
 		Optional<ELUser> userOpt = userRepository.findByUsername(loginDTO.getUsername());
 		
 		String encodedPassword = userOpt.get().getPassword();

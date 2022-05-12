@@ -1,0 +1,56 @@
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-8">
+            <div class="card tab2-card">
+                <div class="card-body">
+                   
+                                
+                    <div class="table-responsive profile-table">
+                        <div *ngIf="!isAddProgram">
+                        <h4 style="font-weight: 600">Role Details</h4>
+                        <table class="table table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td>{{roleDetail.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Description:</td>
+                                    <td>{{roleDetail.description}}</td>
+                                </tr>                 
+                            </tbody>
+                        </table>
+                       
+                        <a class="btn btn-secondary mr-1 mb-3" (click)="goToAddProgram()">Add Program</a>
+                        </div>
+                        <div *ngIf="isAddProgram" class="col-xl-8">
+                            <div class="card tab2-card">
+                                <div class="card-body">
+                
+                                    <div class="dropdown">
+                                        <input (keyup)="changeInputSearch($event)" [(ngModel)]="inputSearch" value="inputSearch" class="form-control"  />                        
+                                        <div *ngFor="let program of list_program"  class="dropdown div-option">
+                                            <label class="p-2" (click)="selectRole(program)">{{program.name}}</label>
+                                        </div>
+                                    </div>    
+                                            
+                                        
+                                        <a class="btn btn-primary mr-1 mt-3" (click)="addRole()" >Submit</a>
+                                        <a class="btn btn-secondary mr-1 mt-3" (click)="goToAddProgram()">Back</a>
+                                </div>         
+                            </div>
+                        </div> 
+                        
+                        <ng2-smart-table [settings]="settings" [source]="roleDetail.programs" 
+                        (deleteConfirm)="onDeleteConfirm($event)"
+                        ></ng2-smart-table>
+                                         
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->

@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
-import com.group6.java16.cybersoft.course.dto.CourseReponseDTO;
+import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.model.ELCourse;
 
 @Mapper
@@ -13,5 +13,5 @@ public interface CourseMapper {
     
     ELCourse toModel(CourseCreateDTO user);
 
-    CourseReponseDTO toCourseResponseDTO(ELCourse course);
+    CourseResponseDTO toCourseResponseDTO(ELCourse course);
 }

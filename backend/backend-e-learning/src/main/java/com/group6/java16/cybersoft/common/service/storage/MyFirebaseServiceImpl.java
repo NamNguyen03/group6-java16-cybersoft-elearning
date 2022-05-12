@@ -49,7 +49,8 @@ public class MyFirebaseServiceImpl implements MyFirebaseService {
     @Override
     public String saveFile(MultipartFile file) {
         
-        String imageName, url ="";
+        String imageName;
+        String url;
         try {
             imageName = generateFileName(file.getOriginalFilename());
             Map<String, String> map = new HashMap<>();
