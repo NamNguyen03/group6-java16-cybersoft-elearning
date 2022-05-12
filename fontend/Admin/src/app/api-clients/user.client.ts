@@ -3,13 +3,13 @@ import { Injectable } from "@angular/core";
 import { LoginRequest, UserCreate, UserRp, UpdateMyProfileRq, UpdateUserRq } from './model/user.model';
 import { Observable } from 'rxjs';
 import { PageRequest, PageResponse, Response } from './model/common.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
 })
 export class UserClient {
-    private _apiEndpoint = `${environment.api}users`
+    private _apiEndpoint = `${environment.api}users`;
     private _apiLogin = `${environment.api}auth/login`;
     private _apiMyProfile = `${this._apiEndpoint}/me`;
 

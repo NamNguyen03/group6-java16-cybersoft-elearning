@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HostListener } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginRequest } from 'src/app/api-clients/model/user.model';
+import { UserClient } from 'src/app/api-clients/user.client';
+import { UserService } from 'src/app/share/user/user.service';
 
 @Component({
   selector: 'app-headertwo',
@@ -8,10 +12,11 @@ import { HostListener } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class HeadertwoComponent implements OnInit {
-//cart sidebar activation start
+  public loginForm!: FormGroup;
+
 sidebarCartActive:boolean=false;
 cartclick(){
-  if(this.sidebarCartActive==false){
+  if(!this.sidebarCartActive){
     this.sidebarCartActive=true;
     this.signInActive=false;
     this.signUpActive=false;
@@ -26,7 +31,7 @@ cartclick(){
 //sign in popup activation start
 signInActive:boolean=false;
 signinclick(){
-  if(this.signInActive==false){
+  if(!this.signInActive){
     this.sidebarCartActive=false;
     this.signInActive=true;
     this.signUpActive=false;
@@ -41,7 +46,7 @@ signinclick(){
   //sign in popup activation start
   signUpActive:boolean=false;
   signupclick(){
-    if(this.signUpActive==false){
+    if(!this.signUpActive){
       this.sidebarCartActive=false;
       this.signUpActive=true;
       this.signInActive=false;
@@ -56,7 +61,7 @@ signinclick(){
   //sidebar info click activation start
   sidebarInfoActive:boolean=false;
   infoclick(){
-    if(this.sidebarInfoActive==false){
+    if(!this.sidebarInfoActive){
       this.sidebarCartActive=false;
       this.signUpActive=false;
       this.signInActive=false;
@@ -91,8 +96,34 @@ signinclick(){
       this.isSticky = window.pageYOffset >= 40;
     }
     //sticky header activation
-    constructor() { }
+    constructor(
+      private userService: UserService,
+      private formBuilder: FormBuilder,
+      private userClient: UserClient
+    ) { }
 
-    ngOnInit(): void {}
+    createLoginForm() {
+      this.loginForm = this.formBuilder.group({
+        userName: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(6)]]
+      })
+    }
 
+    ngOnInit(): void {
+      this.createLoginForm();    
+    }
+
+    login(): void {
+      let username = this.loginForm.controls['userName'].value;
+      let password = this.loginForm.controls['password'].value;
+     
+      if(this.loginForm.valid){
+        this.userClient.login(new LoginRequest(username, password))
+          .subscribe(response => {
+            this.userService.setJWT(response.content);
+            this.signInActive=false;
+          });
+      }
+    }
+  
 }

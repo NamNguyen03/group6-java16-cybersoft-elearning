@@ -10,9 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class LoginRequestDTO {
-
-    @NotBlank(message = "user.username.not-blank")
+    @NotFoundUsername(message ="{user.username.not-existed}")
+    @NotBlank(message = "{user.username.not-blank}")
     private String username;
-    @Size(min = 6, max = 64 , message ="user.password.size")
+    @Size(min = 6, max = 64 , message ="{user.password.size}")
+    @NotBlank(message = "{user.password.not-blank}")
     private String password;
 }
