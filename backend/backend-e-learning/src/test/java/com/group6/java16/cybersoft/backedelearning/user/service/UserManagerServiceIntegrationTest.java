@@ -1,15 +1,23 @@
 package com.group6.java16.cybersoft.backedelearning.user.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import java.util.Optional;
-import java.util.UUID;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.notification.UserCreateModel;
 import com.group6.java16.cybersoft.common.service.notification.EmailSender;
+import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
+import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
+import com.group6.java16.cybersoft.role.model.ELGroup;
+import com.group6.java16.cybersoft.role.repository.ELGroupRepository;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
@@ -26,6 +34,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,6 +45,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserManagerServiceIntegrationTest {
     @Mock
     private ELUserRepository userRepository;
+
+    @Mock
+    private ELGroupRepository groupRepository;
 
     @Mock
     private UserMapper mapper;
@@ -47,6 +60,9 @@ public class UserManagerServiceIntegrationTest {
 
     @Mock
     private EmailSender<UserCreateModel> serviceSendEmailCreateUserSuccess;
+
+    @Mock
+    private MyFirebaseService firebaseFileService;
 
     @Test
     public void whenUpdateMyProfileSuccess_theReturnUserResponse() {
@@ -206,4 +222,135 @@ public class UserManagerServiceIntegrationTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    public void whenUserExistedIsUsedToDeleteUser_thenDeleteSuccessfully(){
+
+        UUID id = UUID.randomUUID();
+
+        ELUser user =  ELUser.builder()
+            .email("nam@gmail.com")
+            .username("nam")
+            .displayName("Nam")
+            .firstName("Nguyen")
+            .lastName("Nam")
+            .hobbies("swimming")
+            .facebook("facebook.com")
+            .phone("11111222222")
+            .groups(null)
+            .build();
+
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+
+
+        assertDoesNotThrow( () ->service.deleteUser(id.toString()));
+    }
+
+    @Test
+    public void whenUpdateAvatar_thenUpdateSuccessfully(){
+        String imageName = "filename";
+        MockMultipartFile file = 
+            new MockMultipartFile(
+                imageName, 
+                imageName + ".txt", 
+                MediaType.TEXT_PLAIN_VALUE, 
+                "Hello, World!".getBytes()
+            );
+        
+        String url = "https://firebasestorage.googleapis.com/v0/b/e-learning-5efea.appspot.com/o/" +
+        imageName + "?alt=media&token=" + imageName;
+       
+        when(firebaseFileService.saveFile(file)).thenReturn(url);
+
+        ELUser user = ELUser.builder()
+            .username("username")
+            .password("password")
+            .displayName("displayName")
+            .email("email@gmail.com")
+            .status(UserStatus.ACTIVE)
+            .firstName("firstName")
+            .lastName("lastName")
+            .department("department")
+            .major("major")
+            .groups(null)
+            .build();        
+        
+        UserResponseDTO expected = new UserResponseDTO();
+            expected.setAvatar(url);
+            expected.setUsername("username");
+            expected.setDisplayName("displayName");
+            expected.setEmail("email@gmail.com");
+            expected.setFirstName("firstName");
+            expected.setLastName("lastName");
+            expected.setStatus(UserStatus.ACTIVE);
+            expected.setDepartment("department");
+            expected.setMajor("major");
+            expected.setGroups(null);
+
+        Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("nam");
+
+        when(userRepository.findByUsername("nam")).thenReturn(Optional.of(user));
+        user.setAvatar(url);
+        when(userRepository.save(user)).thenReturn(user);
+
+        UserResponseDTO actual =  service.updateMyAvatar(file);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void whenGroupAndUserExistsIsUsedAddGroupIntoUser_thenReturnUserDTO(){
+        UUID idUser = UUID.randomUUID();
+        UUID idGroup = UUID.randomUUID();
+        ELUser user = ELUser.builder().id(idUser).build();
+        ELGroup group = ELGroup.builder().id(idGroup).build();
+        group.setRoles(null);
+        when(userRepository.findById(idUser)).thenReturn(Optional.of(user));
+        when(groupRepository.findById(idGroup)).thenReturn(Optional.of(group));
+        
+        ELUser userSave = ELUser.builder().id(idUser).build();
+        userSave.addGroup(group);
+        when(userRepository.save(any())).thenReturn(userSave);
+        UserResponseDTO expected = new UserResponseDTO();
+        GroupResponseDTO groupResponse = new GroupResponseDTO();
+        groupResponse.setRoles(null);
+        Set<GroupResponseDTO> groups = new LinkedHashSet<>();
+        groups.add(groupResponse);
+        groupResponse.setId(idGroup);
+        expected.setId(idUser);
+        expected.setGroups(groups);
+
+        UserResponseDTO actual =  service.addGroup(idUser.toString(), idGroup.toString());
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void whenGroupAndUserExistsIsUsedRemoveGroupIntoUser_thenReturnUserDTO(){
+        UUID idUser = UUID.randomUUID();
+        UUID idGroup = UUID.randomUUID();
+        ELUser user = ELUser.builder().id(idUser).build();
+        ELGroup group = ELGroup.builder().id(idGroup).build();
+        group.setRoles(null);
+        user.addGroup(group);
+        when(userRepository.findById(idUser)).thenReturn(Optional.of(user));
+        when(groupRepository.findById(idGroup)).thenReturn(Optional.of(group));
+
+        ELUser userSave = ELUser.builder().id(idUser).build();
+        userSave.setGroups(null);
+
+        when(userRepository.save(any())).thenReturn(userSave);
+
+        UserResponseDTO expected = new UserResponseDTO();
+        expected.setId(idUser);
+        expected.setGroups(null);
+
+        UserResponseDTO actual =  service.deleteGroup(idUser.toString(), idGroup.toString());
+
+        assertEquals(expected, actual);
+    }
 }
