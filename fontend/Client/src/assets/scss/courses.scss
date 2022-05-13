@@ -1586,3 +1586,10 @@ button, input, optgroup, select, textarea {
 .mat-tab-header-pagination {
 	min-width: 20px !important;
 }
+.course-list{
+	display: flex;
+	flex-wrap: wrap ;
+	justify-content: space-around;
+	align-content: flex-start;
+
+}
