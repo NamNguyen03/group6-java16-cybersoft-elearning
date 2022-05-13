@@ -8,7 +8,7 @@ ALTER TABLE el_course
 ADD COLUMN category VARCHAR(100);
 
 ALTER TABLE el_course
-ADD COLUMN star_avg NUMERIC(1);
+ADD COLUMN star_avg FLOAT;
 
 ALTER TABLE el_course
 ADD COLUMN total_star INT;
