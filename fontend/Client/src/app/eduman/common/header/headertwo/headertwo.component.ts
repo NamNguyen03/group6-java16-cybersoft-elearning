@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginRequest } from 'src/app/api-clients/model/user.model';
+import { LoginRequest, UserRp } from 'src/app/api-clients/model/user.model';
 import { UserClient } from 'src/app/api-clients/user.client';
 import { UserService } from 'src/app/share/user/user.service';
 
@@ -12,8 +12,10 @@ import { UserService } from 'src/app/share/user/user.service';
   encapsulation: ViewEncapsulation.None
 })
 export class HeadertwoComponent implements OnInit {
-  public loginForm!: FormGroup;
-
+public loginForm!: FormGroup;
+public profile: UserRp = new UserRp();
+public isLogin: boolean = false;
+ 
 sidebarCartActive:boolean=false;
 cartclick(){
   if(!this.sidebarCartActive){
@@ -100,7 +102,14 @@ signinclick(){
       private userService: UserService,
       private formBuilder: FormBuilder,
       private userClient: UserClient
-    ) { }
+    ) {
+      userService.$userCurrent.subscribe(user => {
+        this.profile = user
+        this.isLogin = user.username != undefined && user.username != null && user.username != "" ;
+        console.log(this.isLogin)
+      });  
+      userClient.getMyProfile().subscribe(rp => userService.setUserCurrent(rp.content));
+     }
 
     createLoginForm() {
       this.loginForm = this.formBuilder.group({
@@ -121,9 +130,17 @@ signinclick(){
         this.userClient.login(new LoginRequest(username, password))
           .subscribe(response => {
             this.userService.setJWT(response.content);
+            this.userClient.getMyProfile().subscribe(rp => this.userService.setUserCurrent(rp.content));
             this.signInActive=false;
           });
       }
     }
   
+    logoutClick(): void {
+      this.userService.logout();
+      this.sidebarCartActive=false;
+      this.signUpActive=false;
+      this.signInActive=false;
+      this.sidebarInfoActive=false;
+    }
 }

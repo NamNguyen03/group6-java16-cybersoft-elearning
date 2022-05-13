@@ -2,7 +2,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
-import { Router } from '@angular/router';
 import { UserRp } from 'src/app/api-clients/model/user.model';
 
 @Injectable({
@@ -11,10 +10,6 @@ import { UserRp } from 'src/app/api-clients/model/user.model';
 export class UserService {
   private _$userCurrent: BehaviorSubject<UserRp> = new BehaviorSubject(new UserRp());
   public readonly $userCurrent: Observable<UserRp> = this._$userCurrent.asObservable();
-
-  constructor(private _router: Router) { 
-   
-  }
 
   public setJWT(jwt: string): void{
     localStorage.setItem('jwt', jwt);

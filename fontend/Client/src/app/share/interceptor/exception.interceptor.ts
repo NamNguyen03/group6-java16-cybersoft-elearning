@@ -33,15 +33,6 @@ export class ExceptionInterceptor implements HttpInterceptor {
                         text: error.error.errors
                       })
                 }
-
-                if (error.status === 401 || error.status === 403) {
-                    this.userService.logout();
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'unauthorized access error'
-                      })
-                }
                 return throwError("");
             })
         );
