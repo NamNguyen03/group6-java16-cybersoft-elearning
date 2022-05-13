@@ -101,7 +101,7 @@
 
             <app-mobilemenu></app-mobilemenu>
 
-            <div class="offset-widget offset_searchbar mb-30">
+            <!-- <div class="offset-widget offset_searchbar mb-30">
                 <div class="menu-search position-relative ">
                     <form action="#" class="filter-search-input">
                         <input type="text" placeholder="Search keyword">
@@ -115,10 +115,13 @@
                     <a href="#"><i class="fal fa-envelope"></i>info@example.com</a>
                     <i class="fal fa-map-marker-alt"></i><span>3rd Avenue, San Francisco</span>
                 </div>
-            </div>
-            <div class="offset-widget button mb-20 d-block d-xl-none">
+            </div> -->
+            <div class="offset-widget button mb-20 d-block" *ngIf="!isLogin" >
                 <a class="edu-four-btn" href="javascript:void(0)" (click)="signinclick()">Login</a>
             </div>
+            <div class="offset-widget button mb-20 d-block" *ngIf="isLogin" >
+               <a class="edu-four-btn" href="javascript:void(0)"  (click)="logoutClick()">Logout</a>
+           </div>
         </div>
     </div>
 </div>
@@ -174,12 +177,7 @@
                             <div class="main-menu mr-30 main-menu-lg-block">
                                 <nav id="mobile-menu">
                                     <ul>
-                                        <li class="menu-item-has-children"><a [routerLink]="['/']">Home</a>
-                                            <ul class="sub-menu">
-                                                <li><a [routerLink]="['/']">Home 1</a></li>
-                                                <li><a [routerLink]="['/home-2']">Home 2</a></li>
-                                                <li><a [routerLink]="['/home-3']">Home 3</a></li>
-                                            </ul>
+                                        <li><a [routerLink]="['/']">Home</a>
                                         </li>
                                         <li class="menu-item-has-children"><a [routerLink]="['/course']">Course</a>
                                             <ul class="sub-menu">
@@ -248,7 +246,7 @@
                                 </nav>
                             </div>
                             <div class="header-btn">
-                                <div class="cart-wrapper mr-45">
+                                <!-- <div class="cart-wrapper mr-45">
                                     <a href="javascript:void(0);" class="cart-toggle-btn" (click)="cartclick()">
                                         <div class="header__cart-icon p-relative">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="19.988" height="19.988"
@@ -268,8 +266,11 @@
                                             <span class="item-number">3</span>
                                         </div>
                                     </a>
+                                </div> -->
+                                <a *ngIf="!isLogin" class="edu-four-btn d-none d-lg-block" href="javascript:void(0)" (click)="signinclick()">Login</a>
+                                <div *ngIf="isLogin" style="border-radius: 25px; width: 50px; height: 50px; cursor: pointer;">
+                                   <img height="50px"  [src]="getUrlAvatar()"/> 
                                 </div>
-                                <a class="edu-four-btn d-none d-lg-block" href="javascript:void(0)" (click)="signinclick()">Login</a>
                                 <div class="menu-bar ml-20">
                                     <a class="side-toggle header-2" href="javascript:void(0)" (click)="infoclick()">
                                         <div class="bar-icon">
@@ -321,7 +322,7 @@
           </div>
           <div class="registered wrapper">
              <div class="not-register">
-                <span>Not registered?</span><span><a href="javascript:void(0)" (click)="signupclick()">Sign up</a></span>
+                <span>Not registered?</span><span><a href="javascript:void(0)" (click)="signupclick()">Register</a></span>
              </div>
              <div class="forget-password">
                 <a href="javascript:void(0)">Forgot password?</a>
@@ -386,13 +387,16 @@
              <input type="text" placeholder="First Name">
           </div>
           <div class="signup-wrapper">
-             <input type="text" placeholder="Email">
+            <input type="text" placeholder="Display Name">
+         </div>
+          <div class="signup-wrapper">
+             <input type="email" placeholder="Email">
           </div>
           <div class="signup-wrapper">
              <input type="text" placeholder="Username">
           </div>
           <div class="signup-wrapper">
-             <input type="text" placeholder="Password">
+             <input type="password" placeholder="Password">
           </div>
           <div class="signup-action">
              <div class="course-sidebar-list">
