@@ -5,7 +5,7 @@ ALTER TABLE el_course
 ADD COLUMN level VARCHAR(50);
 
 ALTER TABLE el_course
-ADD COLUMN category VARCHAR(100) default "NONE";
+ADD COLUMN category VARCHAR(100);
 
 ALTER TABLE el_course
 ADD COLUMN star_avg NUMERIC(1);
