@@ -143,4 +143,8 @@ signinclick(){
       this.signInActive=false;
       this.sidebarInfoActive=false;
     }
+
+    public getUrlAvatar(): string {
+      return this.profile.avatar || 'assets/img/header/user-avatar.png'; 
+    }
 }
