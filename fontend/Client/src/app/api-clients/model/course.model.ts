@@ -1,35 +1,37 @@
 export class CourseCreate{
 
-    name: string;
+    courseName: string;
+    courseTime: number;
     description: string;
-    // img : string;
+
+    constructor(coursename: string, coursetime: number, description: string){
+        this.courseName = coursename;
+        this.courseTime = coursetime;
+        this.description = description;
+    }
     // starAVG: number;
-     totalTime : number
+    // img : string;
     // level : string;
     // skills: string []=[];
     // category: string;
 
-    constructor(coursename: string, coursetime: number, description: string){
-        this.name = coursename;
-        this.totalTime = coursetime;
-        this.description = description;
-    }
+
 }
 export class CourseRp{
     id!: string;
-    name!: string;
-    totalTime!: number;
+    courseName!: string;
+    courseTime!: number;
     description!: string;
 }
 
 export class CourseUpdateInformation {
-    name!: string;
-    totalTime!: number;
+    courseName!: string;
+    courseTime!: number;
     description!: string;
 
     constructor(coursename: string, coursetime: number, description: string){
-        this.name = coursename;
-        this.totalTime = coursetime;
+        this.courseName = coursename;
+        this.courseTime = coursetime;
         this.description = description;
 }
 }
