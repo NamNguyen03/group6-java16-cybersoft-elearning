@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 export class ListRoleComponent implements OnInit {
   public list_role: BaseRole[] = [];
   public searchForm: FormGroup;
+  public isSearch = false;
 
   pageRequest: PageRequest = new PageRequest(1,
     10,
@@ -42,6 +43,9 @@ export class ListRoleComponent implements OnInit {
     this.loadData();
   }
 
+  toggleSearch(){
+    this.isSearch=!this.isSearch;
+  }
 
   public settings = {
     pager: {
@@ -149,5 +153,12 @@ export class ListRoleComponent implements OnInit {
     this._router.navigate(['/roles/list-role'],{
       queryParams: {'fieldNameSort':fieldNameSort,'isIncrementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
     })}
+    onRoleRowSelected(event) {
+      let roleId = event.data.id;
+     
+     this._router.navigate(['/roles/role-details'],{
+       queryParams: {'roleId':roleId}})
+  
+   }
   
 }

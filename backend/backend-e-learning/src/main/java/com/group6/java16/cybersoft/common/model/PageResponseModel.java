@@ -5,11 +5,12 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
-@NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class PageResponseModel<T> {
 	private int pageCurrent;
 	private int totalPage;

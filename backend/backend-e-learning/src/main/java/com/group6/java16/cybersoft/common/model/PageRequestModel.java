@@ -1,17 +1,15 @@
 package com.group6.java16.cybersoft.common.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Data
 public class PageRequestModel {
-    private int pageCurrent;
-	private int itemPerPage;
-	private String fieldNameSort;
-	private boolean isIncrementSort = true;
-	private String fieldNameSearch;
-	private String valueSearch;
+    private int pageCurrent = 1;
+    private int itemPerPage = 10;
+    private String fieldNameSort = null;
+    private boolean isIncrementSort = true;
+	private String fieldNameSearch = null;
+	private String valueSearch = null;
 
 	public PageRequestModel(int pageCurrent, int itemPerPage, String fieldNameSort, boolean isIncrementSort, String fieldNameSearch, String valueSearch){
 		this.pageCurrent = pageCurrent <=0 ? 1 : pageCurrent;

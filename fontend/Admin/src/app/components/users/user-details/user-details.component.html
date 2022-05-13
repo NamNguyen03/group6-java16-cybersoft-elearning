@@ -1,0 +1,129 @@
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="profile-details text-center">
+                        <img src="assets/images/dashboard/designer.jpg" alt=""
+                            class="img-fluid img-90 rounded-circle blur-up lazyloaded">
+                        <h5 class="f-w-600 mb-0">{{profile.displayName}}</h5>
+                        <span>{{profile.email}}</span>
+                        <!-- <div class="social">
+                            <div class="form-group btn-showcase">
+                                <button class="btn social-btn btn-fb d-inline-block">
+                                    <i class="fa fa-facebook"></i></button>
+                                <button class="btn social-btn btn-twitter d-inline-block"><i
+                                        class="fa fa-google"></i></button>
+                                <button class="btn social-btn btn-google d-inline-block mr-0"><i
+                                        class="fa fa-twitter"></i></button>
+                            </div>
+                        </div> -->
+                    </div>
+                    <hr>
+                    <div class="project-status">
+                        <h5 class="f-w-600">Employee Status</h5>
+                        <div class="media">
+                            <div class="media-body">
+                                <h6>Performance<span class="pull-right">80%</span></h6>
+                                <div class="progress sm-progress-bar">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 90%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-body">
+                                <h6>Overtime <span class="pull-right">60%</span></h6>
+                                <div class="progress sm-progress-bar">
+                                    <div class="progress-bar bg-secondary" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-body">
+                                <h6>Leaves taken<span class="pull-right">70%</span></h6>
+                                <div class="progress sm-progress-bar">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 70%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8">
+            <div class="card tab2-card">
+                <div class="card-body">
+                   
+                                
+                    <div class="table-responsive profile-table">
+                        <h4 style="font-weight: 600">User Profile</h4>
+                        <table class="table table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td>First Name:</td>
+                                    <td>{{profile.firstName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name:</td>
+                                    <td>{{profile.lastName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Username:</td>
+                                    <td>{{profile.username}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Hobbies:</td>
+                                    <td>{{profile.hobbies}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Facebook:</td>
+                                    <td>{{profile.facebook}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Display Name:</td>
+                                    <td>{{profile.displayName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Gender:</td>
+                                    <td>{{profile.gender}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Phone:</td>
+                                    <td>{{profile.phone}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td>{{profile.email}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Department:</td>
+                                    <td>{{profile.department}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Major:</td>
+                                    <td>{{profile.major}}</td>
+                                </tr>
+                                              
+                            </tbody>
+                        </table>
+                       
+                        <a class="btn btn-secondary mr-1 mb-3" (click)="addGroup($event)">Add Group</a>
+                        
+                        <ng2-smart-table [settings]="settings" [source]="profile.groups" 
+                        (deleteConfirm)="onDeleteConfirm($event)"
+                        (userRowSelect)="onGroupRowSelected($event)"
+                        ></ng2-smart-table>
+                        
+                                        
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->
