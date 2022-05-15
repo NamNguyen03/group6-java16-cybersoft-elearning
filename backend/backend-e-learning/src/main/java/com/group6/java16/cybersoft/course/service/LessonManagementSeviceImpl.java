@@ -20,6 +20,7 @@ import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonReponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
+import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.mapper.LessonMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.model.ELLesson;
@@ -142,6 +143,12 @@ public class LessonManagementSeviceImpl extends ServiceHelper<ELLesson> implemen
 	@Override
 	protected String getErrorNotFound() {
 		return errorslessonNotFound;
+	}
+
+	@Override
+	public LessonReponseDTO getInfoLesson(String id) {
+		ELLesson lesson = getById(id);
+		return LessonMapper.INSTANCE.toLessonResponseDTO(lesson);
 	}
 
 }

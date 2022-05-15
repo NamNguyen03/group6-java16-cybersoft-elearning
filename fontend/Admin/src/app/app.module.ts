@@ -28,11 +28,13 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ToastrModule } from 'ngx-toastr';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CourseDetailsComponent } from './components/course-details/course-details.component';
+import { LessonInfoComponent } from './components/lesson-info/lesson-info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CourseDetailsComponent,
+    LessonInfoComponent,
   ],
   imports: [
     BrowserAnimationsModule,

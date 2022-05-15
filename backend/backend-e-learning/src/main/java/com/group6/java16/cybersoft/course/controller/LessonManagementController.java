@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
+import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonReponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
@@ -84,4 +85,12 @@ public class LessonManagementController {
 
         return ResponseHelper.getResponse("", HttpStatus.OK, false);
     }
+	
+	@GetMapping("{id}")
+	public Object getInfoLesson(@PathVariable("id")String id){
+
+		LessonReponseDTO rp = service.getInfoLesson(id);
+
+		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	}
 }
