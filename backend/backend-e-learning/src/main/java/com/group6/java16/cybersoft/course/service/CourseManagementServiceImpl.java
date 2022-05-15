@@ -50,6 +50,9 @@ public class CourseManagementServiceImpl extends ServiceHelper<ELCourse> impleme
 
 	@Value("${lesson.id.not-found}")
 	private String errorsLessonIdNotFound;
+	
+	@Value("${course.name.existed}")
+	private String messageNameCouseExists;
 
 	@Override
 	public CourseResponseDTO createCourse(CourseCreateDTO dto) {
@@ -76,6 +79,9 @@ public class CourseManagementServiceImpl extends ServiceHelper<ELCourse> impleme
 
 	private ELCourse setUpdateCourse(ELCourse courseCurrent, CourseUpdateDTO rq) {
 		if (checkString(rq.getCourseName())) {
+			if (!courseCurrent.getCourseName().equals(rq.getCourseName()) && courseRepository.existsByCourseName(rq.getCourseName())) {
+				throw new BusinessException(messageNameCouseExists);
+			}
 			courseCurrent.setCourseName(rq.getCourseName());
 		}
 
@@ -160,7 +166,6 @@ public class CourseManagementServiceImpl extends ServiceHelper<ELCourse> impleme
 		ELCourse course = getById(id);
 		return CourseMapper.INSTANCE.toCourseResponseDTO(course);
 	}
-
 
 	private ELLesson getLessonById(String id) {
 		UUID uuid;
