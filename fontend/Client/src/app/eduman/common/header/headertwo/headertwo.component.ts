@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginRequest, UserRp } from 'src/app/api-clients/model/user.model';
+import { ToastrService } from 'ngx-toastr';
+import { LoginRequest, RegisterRequest, UserRp } from 'src/app/api-clients/model/user.model';
 import { UserClient } from 'src/app/api-clients/user.client';
 import { UserService } from 'src/app/share/user/user.service';
 
@@ -15,6 +16,7 @@ export class HeadertwoComponent implements OnInit {
 public loginForm!: FormGroup;
 public profile: UserRp = new UserRp();
 public isLogin: boolean = false;
+public registerForm!: FormGroup;
  
 sidebarCartActive:boolean=false;
 cartclick(){
@@ -101,7 +103,8 @@ signinclick(){
     constructor(
       private userService: UserService,
       private formBuilder: FormBuilder,
-      private userClient: UserClient
+      private userClient: UserClient,
+      private toastr: ToastrService
     ) {
       userService.$userCurrent.subscribe(user => {
         this.profile = user
@@ -118,8 +121,20 @@ signinclick(){
       })
     }
 
+    createRegisterForm() {
+      this.registerForm = this.formBuilder.group({
+        username: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        displayName: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]]
+      })
+    }
+
     ngOnInit(): void {
       this.createLoginForm();    
+      this.createRegisterForm();
     }
 
     login(): void {
@@ -136,6 +151,22 @@ signinclick(){
       }
     }
   
+    register(): void {
+      let username = this.registerForm.controls['username'].value;
+      let firstName = this.registerForm.controls['firstName'].value;
+      let lastName = this.registerForm.controls['lastName'].value;
+      let email = this.registerForm.controls['email'].value;
+      let password = this.registerForm.controls['password'].value;
+      let displayName = this.registerForm.controls['displayName'].value;
+      if(this.registerForm.valid){
+        this.userClient.register(new RegisterRequest(displayName, email, firstName, lastName, username, password))
+          .subscribe(() => {
+            this.toastr.success('register successfully');
+            this.signinclick();
+          });
+      }
+    }
+
     logoutClick(): void {
       this.userService.logout();
       this.sidebarCartActive=false;
