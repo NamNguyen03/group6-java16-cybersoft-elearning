@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class CourseUpdateDTO {
 	
-		private String courseName;
+	private String courseName;
 		
-		private int courseTime;
+	private int courseTime;
 	
-		private String description;
+	private String description;
 }

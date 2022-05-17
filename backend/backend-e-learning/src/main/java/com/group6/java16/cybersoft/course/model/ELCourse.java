@@ -11,11 +11,14 @@ import javax.persistence.Table;
 
 import com.group6.java16.cybersoft.common.model.BaseEntity;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @SuperBuilder
 @Entity
@@ -32,6 +35,7 @@ public class ELCourse extends BaseEntity {
 	private String description;
 
 	@OneToMany(mappedBy = "course")
+	@Builder.Default
 	private Set<ELLesson> lessons = new LinkedHashSet<ELLesson>();
 
 	private String img;
