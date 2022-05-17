@@ -1,11 +1,11 @@
 package com.group6.java16.cybersoft.user.service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
+import com.group6.java16.cybersoft.common.model.notification.UserCreateModel;
+import com.group6.java16.cybersoft.common.service.notification.EmailSender;
 import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
-import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.role.model.ELGroup;
 import com.group6.java16.cybersoft.role.repository.ELGroupRepository;
@@ -18,17 +18,17 @@ import com.group6.java16.cybersoft.user.model.ELUser;
 import com.group6.java16.cybersoft.user.repository.ELUserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements UserManagementService {
+public class UserManagementServiceImpl implements UserManagementService {
 
     @Autowired
     private ELUserRepository userRepository;
@@ -39,8 +39,9 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
     @Autowired
     private PasswordEncoder encoder;
     
-    
-
+    @Autowired
+    @Qualifier("emailSenderCreateSuccessfully")
+    private EmailSender<UserCreateModel> serviceSendEmailCreateUserSuccess;
 
     @Value("${user.not-found}")
     private String errorsUserNotFound;
@@ -48,8 +49,8 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
     @Value("${user.email.existed}")
     private String errorsEmailExisted;
     
-    @Value("${group.id.not-found}")
-    private String errorsGroupIdNotFound;
+    @Value("${group.not-found}")
+    private String errorsGroupNotFound;
 
     @Value("${entity.id.invalid}")
     private String errorsIdInvalid;
@@ -59,8 +60,11 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
 
     @Override
     public UserResponseDTO createUser(UserCreateDTO user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(UserMapper.INSTANCE.toModel(user)));
+        String password = user.getPassword();
+        user.setPassword(encoder.encode(password));
+        ELUser rp = userRepository.save(UserMapper.INSTANCE.toModel(user));
+        serviceSendEmailCreateUserSuccess.send("User Service", user.getEmail(), "Create Account Success", new UserCreateModel(user.getUsername(), password));
+        return UserMapper.INSTANCE.toUserResponseDTO(rp);
     }
 
     @Override
@@ -73,12 +77,6 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
     public UserResponseDTO updateMyProfile(UpdateMyProfileDTO rq) {
         String username = UserPrincipal.getUsernameCurrent();
         ELUser user = userRepository.findByUsername(username).get();
-        if (isValidString(rq.getEmail())) {
-            if (!rq.getEmail().equals(user.getEmail()) && userRepository.existsByEmail(rq.getEmail())) {
-                throw new BusinessException(errorsEmailExisted);
-            }
-            user.setEmail(rq.getEmail());
-        }
         
         if (isValidString(rq.getDisplayName())) {
             user.setDisplayName(rq.getDisplayName());
@@ -108,7 +106,9 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
             user.setPhone(rq.getPhone());
         }
 
-        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
+        ELUser newUser = userRepository.save(user);
+
+        return UserMapper.INSTANCE.toUserResponseDTO(newUser);
     }
 
     @Override
@@ -142,11 +142,12 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
         }
         u.setStatus(user.getStatus());
 
-        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(u));
+        ELUser newUser = userRepository.save(u);
+
+        return UserMapper.INSTANCE.toUserResponseDTO(newUser);
     }
 
-	
-	@Override
+    @Override
 	public UserResponseDTO addGroup(String userId, String groupId) {
 		ELUser user = getById(userId);
 		ELGroup group = getGroupById(groupId);
@@ -157,13 +158,7 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
 
 	}
 
-	@Override
-	public UserResponseDTO getProfile(String id) {
-		ELUser user = getById(id);
-		return UserMapper.INSTANCE.toUserResponseDTO(user);
-	}
-
-	@Override
+    @Override
 	public UserResponseDTO deleteGroup(String userId, String groupId) {
 		ELUser user = getById(userId);
 		ELGroup group = getGroupById(groupId);
@@ -172,35 +167,20 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
 		return  UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
 	}
 
-    @Override
-    protected String getMessageIdInvalid() {
-        return errorsIdInvalid;
-    }
-
-    @Override
-    protected JpaRepository<ELUser, UUID> getRepository() {
-        return userRepository;
-    }
-
-    @Override
-    protected String getErrorNotFound() {
-        return errorsUserNotFound;
-    }
     
     private ELGroup getGroupById(String id) {
-        UUID uuid;
-        try{
-            uuid = UUID.fromString(id);
-        }catch(Exception e){
-            throw new BusinessException(getMessageIdInvalid());
-        }
-        
-        Optional<ELGroup> entityOpt = groupRepository.findById(uuid);
-        
-        if(entityOpt.isEmpty()){
-            throw new BusinessException(errorsGroupIdNotFound);
-        }
-        return entityOpt.get();
+        return groupRepository.findById(UUID.fromString(id)).orElseThrow(() -> new BusinessException(errorsGroupNotFound));
     }
 
+
+	private ELUser getById(String id) {
+        return userRepository.findById(UUID.fromString(id)).orElseThrow(() -> new BusinessException(errorsUserNotFound));
+    }
+
+	private boolean isValidString(String s) {
+        if(s == null || s.length() == 0) {
+            return false;
+        }
+        return true;
+    }
 }

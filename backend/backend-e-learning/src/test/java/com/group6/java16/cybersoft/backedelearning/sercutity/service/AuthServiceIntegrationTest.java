@@ -37,16 +37,6 @@ public class AuthServiceIntegrationTest {
     private AuthService service = new AuthServiceImpl();
 
     @Test
-    public void whenUsernameNotExistsIsUsedLogin_thenThrowsBusinessException(){
-        
-        LoginRequestDTO loginDTO = new LoginRequestDTO("nam","12345665");
-
-        when(userRepository.existsByUsername("nam")).thenReturn(false);
-
-        assertThrows(BusinessException.class, () -> service.login(loginDTO));
-    }
-
-    @Test
     public void whenPasswordNotEqualsIsUsedLogin_thenThrowsBusinessException(){
         
         LoginRequestDTO loginDTO = new LoginRequestDTO("nam","12345665");

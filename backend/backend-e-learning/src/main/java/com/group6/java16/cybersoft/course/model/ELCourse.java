@@ -2,24 +2,20 @@ package com.group6.java16.cybersoft.course.model;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 import com.group6.java16.cybersoft.common.model.BaseEntity;
-import com.group6.java16.cybersoft.role.model.ELGroup;
-import com.group6.java16.cybersoft.role.model.ELRole;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @SuperBuilder
 @Entity
@@ -38,5 +34,27 @@ public class ELCourse extends BaseEntity {
 	@OneToMany(mappedBy = "course")
 	private Set<ELLesson> lessons = new LinkedHashSet<ELLesson>();
 
+	private String img;
+
+	private String level;
+
+	private float starAvg;
+
+	private int totalStar;
+
+	private int totalRating;
+
+	private String skill1;
+
+	private String skill2;
+
+	private String skill3;
+
+	private String skill4;
+
+	private String skill5;
+
+	@Enumerated(EnumType.STRING)
+	private CategoryEnum category;
 
 }

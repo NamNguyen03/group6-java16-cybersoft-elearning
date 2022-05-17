@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -59,34 +58,28 @@ public class UserManagementController {
     @PutMapping("{id}")
     public Object updateUser(@RequestBody UpdateUserDTO rq, @PathVariable("id") String id) {
         UserResponseDTO rp = service.update(id, rq);
-
+        
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
 
-    @PutMapping("me/avatar")
+    @PostMapping("me/avatar")
     public Object updateAvatar(@RequestParam(name = "file") MultipartFile file) {
-
         UserResponseDTO rp = service.updateMyAvatar(file);
-
+        
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
     
     @PostMapping("{user-id}/{group-id}")
     public Object addGroupIntoUser(@PathVariable("user-id") String userId,@PathVariable("group-id")String groupId) {
     	UserResponseDTO rp = service.addGroup(userId,groupId) ;   	
+    	
     	return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
-    
-    @GetMapping("{id}")
-    public Object getProfile(@PathVariable("id")String id){
 
-        UserResponseDTO rp = service.getProfile(id);
-
-        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
-    }
     @DeleteMapping("{user-id}/{group-id}")
     public Object deleteGroupIntoUser(@PathVariable("user-id") String userId,@PathVariable("group-id")String groupId) {
     	UserResponseDTO rp = service.deleteGroup(userId,groupId) ;   	
+    	
     	return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
     

@@ -56,7 +56,7 @@
             <div *ngIf="isActions" class="card mt-5">
                 <div class="card-body" style="text-align:center">
                     <div *ngIf="!isUpdateAvatar">
-                        <button class="btn btn-secondary mr-1 mb-2">Reset password</button>
+                        <button class="btn btn-secondary mr-1 mb-2" (click)="resetPassword()">Reset password</button>
                         <button class="btn btn-secondary mr-1 mb-2" (click)="goToUpdateAvatar()">Change avatar</button>
                     </div>
                     <div *ngIf="isUpdateAvatar">
@@ -144,12 +144,6 @@
                                     Name</label>
                                 <input class="form-control col-xl-8 col-md-7"
                                     type="text" name="lastName" formControlName="lastName">
-                            </div>
-                            <div class="form-group row">
-                                <label for="validationCustom2" class="col-xl-3 col-md-4">
-                                    Email</label>
-                                <input class="form-control col-xl-8 col-md-7" id="validationCustom2"
-                                    type="email" name="email" formControlName="email">
                             </div>
                             <div class="form-group row">
                                 <label for="validationCustom2" class="col-xl-3 col-md-4">

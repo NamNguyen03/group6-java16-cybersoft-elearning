@@ -1,12 +1,14 @@
 package com.group6.java16.cybersoft.backedelearning.user.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.Optional;
+import java.util.UUID;
 
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
@@ -40,6 +42,27 @@ public class UserInformationServiceIntegrationTest {
     @InjectMocks
     private UserInformationService service = new UserInformationServiceImpl();
 
+
+    @Test
+    public void whenExistsUserIsUsedToSortFieldNotExists_thenReturnPageResponseUser(){
+        PageRequestModel rq =  new PageRequestModel(1,10, "anyField", true, null, null);
+
+       
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
+
+        Page<ELUser> page = new PageImpl<ELUser>(new ArrayList<ELUser>(), pageable, 10l);
+
+        when(userRepository.findAll(pageable)).thenReturn(page);
+
+        PageResponseModel<UserResponseDTO> expected = new PageResponseModel<UserResponseDTO>(1,1, new ArrayList<UserResponseDTO>());
+
+        PageResponseModel<UserResponseDTO> rp = service.search(rq);
+    
+        //search all
+        assertEquals(expected.getItems(), rp.getItems());
+        assertEquals(expected.getTotalPage(), rp.getTotalPage());
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent());
+    }
 
     @Test
     public void whenExistsUserIsUsedToSearchAll_thenReturnPageResponseUser(){
@@ -144,10 +167,10 @@ public class UserInformationServiceIntegrationTest {
     }
 
     @Test
-    public void whenExistsUserIsUsedToSearchByLastName_thenReturnPageResponseUser(){
-        PageRequestModel rq =  new PageRequestModel(1,10, null, true, "lastName", "value");
+    public void whenExistsUserIsUsedToSearchByLastNameAndSort_thenReturnPageResponseUser(){
+        PageRequestModel rq =  new PageRequestModel(1,10, "major", false, "lastName", "value");
 
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("major").descending());
 
         Page<ELUser> page = new PageImpl<ELUser>(new ArrayList<ELUser>(), pageable, 10l);
 
@@ -200,12 +223,41 @@ public class UserInformationServiceIntegrationTest {
             .hobbies("swimming")
             .facebook("facebook.com")
             .phone("11111222222")
+            .groups(null)
             .build();
 
         when(userRepository.findByUsername("nam")).thenReturn(Optional.of(user));
 
     
-        UserResponseDTO expected = UserResponseDTO.builder()
+        UserResponseDTO expected = new UserResponseDTO();
+        expected.setEmail("nam@gmail.com");	
+        expected.setUsername("nam");
+        expected.setDisplayName("Nam");
+        expected.setLastName("Nam");
+        expected.setHobbies("swimming");
+        expected.setFacebook("facebook.com");
+        expected.setPhone("11111222222");
+        expected.setFirstName("Nguyen");
+        expected.setGroups(null);
+
+        UserResponseDTO actual =  service.getMyProfile();
+
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void whenIdNotExistsIsUsedToGetProfile_thenThrowBusinessException() throws Exception {
+        UUID id = UUID.randomUUID();
+
+        when(userRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(BusinessException.class, ()-> service.getProfile(id.toString()));
+    }
+
+    @Test
+    public void whenIdExistsIsUsedToGetProfile_thenReturnUser() throws Exception {
+        UUID id = UUID.randomUUID();
+        ELUser user =  ELUser.builder()
             .email("nam@gmail.com")
             .username("nam")
             .displayName("Nam")
@@ -214,12 +266,24 @@ public class UserInformationServiceIntegrationTest {
             .hobbies("swimming")
             .facebook("facebook.com")
             .phone("11111222222")
-            .groups(new LinkedHashSet<>())
+            .groups(null)
             .build();
 
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
 
-        when(mapper.toUserResponseDTO(user)).thenReturn(expected);
+        UserResponseDTO expected = new UserResponseDTO();
+        expected.setEmail("nam@gmail.com");	
+        expected.setUsername("nam");
+        expected.setDisplayName("Nam");
+        expected.setLastName("Nam");
+        expected.setHobbies("swimming");
+        expected.setFacebook("facebook.com");
+        expected.setPhone("11111222222");
+        expected.setFirstName("Nguyen");
+        expected.setGroups(null);
 
-        assertEquals(expected, service.getMyProfile());
+        UserResponseDTO actual =  service.getProfile(id.toString());
+
+        assertEquals(expected,actual);
     }
 }

@@ -11,9 +11,10 @@ import { PagesRoutingModule } from './roles-routing.module';
 import { ListRoleComponent } from './list-role/list-role.component';
 import { CreatePageComponent } from './create-role/create-role.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { RoleDetailsComponent } from './role-details/role-details.component';
 
 @NgModule({
-  declarations: [ListRoleComponent, CreatePageComponent],
+  declarations: [ListRoleComponent, CreatePageComponent,RoleDetailsComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,

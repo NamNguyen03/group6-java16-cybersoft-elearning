@@ -41,10 +41,10 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 	@Value("${entity.id.invalid}")
 	private String errorsIdInvalid;
 
-	@Value("${group.id.not-found}")
+	@Value("${group.not-found}")
 	private String messagesGroupIdNotFound;
 
-	@Value("${role.id.not-found}")
+	@Value("${role.not-found}")
 	private String messagesRoleIdNotFound;
 
 	@Value("${group.name.existed}")
@@ -66,7 +66,9 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
 
-		}
+		}else{
+            pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
+        }
 
 		if ("name".equals(fieldNameSearch)) {
 			response = groupRepository.searchByName(valueSearch, pageable);
@@ -154,5 +156,22 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 	@Override
 	protected String getErrorNotFound() {
 		return messagesGroupIdNotFound;
+	}
+
+	@Override
+	public GroupResponseDTO deleteRole(String groupId, String roleId) {
+		ELGroup group = getById(groupId);
+		ELRole role = getRoleById(roleId);
+
+		group.removeRole(role);
+		ELGroup modifiedGroup = groupRepository.save(group);
+
+		return GroupMapper.INSTANCE.toGroupResponseDTO(modifiedGroup);
+	}
+
+	@Override
+	public GroupResponseDTO getGroupDetail(String id) {
+		
+		return GroupMapper.INSTANCE.toGroupResponseDTO(getById(id));
 	}
 }

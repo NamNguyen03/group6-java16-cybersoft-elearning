@@ -3,7 +3,6 @@ package com.group6.java16.cybersoft.user.repository;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.group6.java16.cybersoft.role.model.ELRole;
 import com.group6.java16.cybersoft.user.model.ELUser;
 
 import org.springframework.data.domain.Page;
@@ -22,19 +21,19 @@ public interface ELUserRepository extends JpaRepository<ELUser, UUID>  {
 
     boolean existsByEmail(String email);
 
-    @Query( value =  "Select u from ELUser u where u.username like %:username% ")
+    @Query( value =  "Select u from ELUser u where lower(u.username) like lower(concat('%', :username,'%'))")
     Page<ELUser> searchByUsername(@Param("username") String username, Pageable pageable);
 
-    @Query( value =  "Select u from ELUser u where u.displayName like %:displayName% ")
+    @Query( value =  "Select u from ELUser u where lower(u.displayName) like lower(concat('%', :displayName,'%')) ")
     Page<ELUser> searchByDisplayName(@Param("displayName") String displayName, Pageable pageable);
 
-    @Query( value =  "Select u from ELUser u where u.email like %:email% ")
+    @Query( value =  "Select u from ELUser u where lower(u.email) like lower(concat('%', :email,'%')) ")
     Page<ELUser> searchByEmail(@Param("email") String email, Pageable pageable);
 
-    @Query( value =  "Select u from ELUser u where u.firstName like %:firstName% ")
+    @Query( value =  "Select u from ELUser u where lower(u.firstName) like lower(concat('%', :firstName,'%')) ")
     Page<ELUser> searchByFirstName(@Param("firstName") String firstName, Pageable pageable);
 
-    @Query( value =  "Select u from ELUser u where u.lastName like %:lastName% ")
+    @Query( value =  "Select u from ELUser u where lower(u.lastName) like lower(concat('%', :lastName,'%')) ")
     Page<ELUser> searchByLastName(@Param("lastName") String lastName, Pageable pageable);
 
 

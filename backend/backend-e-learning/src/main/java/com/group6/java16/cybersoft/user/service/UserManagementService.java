@@ -21,8 +21,6 @@ public interface UserManagementService {
 
 	UserResponseDTO addGroup(String userId, String groupId);
 
-	UserResponseDTO getProfile(String id);
-
 	UserResponseDTO deleteGroup(String userId, String groupId);
 
     

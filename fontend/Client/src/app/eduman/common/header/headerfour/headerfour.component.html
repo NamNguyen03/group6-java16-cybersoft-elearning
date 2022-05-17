@@ -257,12 +257,7 @@
                       <div class="main-menu d-none d-xl-block">
                          <nav id="mobile-menu">
                             <ul>
-                               <li class="menu-item-has-children"><a [routerLink]="['/']">Home</a>
-                                  <ul class="sub-menu">
-                                     <li><a [routerLink]="['/']">Home 1</a></li>
-                                     <li><a [routerLink]="['/home-2']">Home 2</a></li>
-                                     <li><a [routerLink]="['/home-3']">Home 3</a></li>
-                                  </ul>
+                               <li><a [routerLink]="['/']">Home</a>
                                </li>
                                <li class="menu-item-has-children"><a [routerLink]="['/course']">Course</a>
                                   <ul class="sub-menu">
@@ -360,12 +355,12 @@
                       <div class="user-btn-inner p-relative d-none d-md-block">
                          <div class="user-btn-wrapper">
                             <div class="user-btn-content ">
-                               <a class="user-btn-sign-in" href="javascript:void(0)" (click)="signinclick()">Sign In</a>
+                               <a class="user-btn-sign-in" href="javascript:void(0)" (click)="signinclick()">Login</a>
                             </div>
                          </div>
                       </div>
                       <div class="d-none d-md-block">
-                         <a class="user-btn-sign-up edu-btn" href="javascript:void(0)" (click)="signupclick()">Sign Up</a>
+                         <a class="user-btn-sign-up edu-btn" href="javascript:void(0)" (click)="signupclick()">Register</a>
                       </div>
                       <div class="menu-bar d-xl-none ml-20">
                          <a class="side-toggle" href="javascript:void(0)" (click)="infoclick()">

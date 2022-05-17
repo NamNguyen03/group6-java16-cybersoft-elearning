@@ -32,10 +32,10 @@ import { ZoomclassmainComponent } from './eduman/zoom/zoomclassmain/zoomclassmai
 
 
 const routes: Routes = [ 
-  { path: '', component: HomeonemainComponent, pathMatch: 'full' },
+  { path: '', component:  HometwomainComponent, pathMatch: 'full' },
   {
     path: 'home-2',
-    component: HometwomainComponent
+    component: HomeonemainComponent
   },
   {
     path: 'home-3',

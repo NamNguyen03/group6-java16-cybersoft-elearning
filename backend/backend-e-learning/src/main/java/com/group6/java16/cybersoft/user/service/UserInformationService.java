@@ -9,4 +9,6 @@ public interface UserInformationService {
     PageResponseModel<UserResponseDTO> search(PageRequestModel pageRequestModel);
 
     UserResponseDTO getMyProfile();
+
+    UserResponseDTO getProfile(String id);
 }

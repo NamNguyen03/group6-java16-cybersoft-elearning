@@ -29,6 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CourseDetailsComponent } from './components/course-details/course-details.component';
 import { LessonInfoComponent } from './components/lesson-info/lesson-info.component';
+import { ProgramModule } from './components/program/program.module';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { LessonInfoComponent } from './components/lesson-info/lesson-info.compon
     MediaModule,
     GroupModule,
     UsersModule,
+    ProgramModule,
     Ng2SmartTableModule,
     AngularEditorModule,
     ToastrModule.forRoot()

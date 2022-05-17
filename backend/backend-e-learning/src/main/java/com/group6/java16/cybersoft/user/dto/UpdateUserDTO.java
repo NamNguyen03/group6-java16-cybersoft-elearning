@@ -4,14 +4,12 @@ package com.group6.java16.cybersoft.user.dto;
 import com.group6.java16.cybersoft.user.model.UserStatus;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor
-@Data
 @AllArgsConstructor
-@Builder
+@Getter
+@Setter
 public class UpdateUserDTO {
     private String email;
     private String department;

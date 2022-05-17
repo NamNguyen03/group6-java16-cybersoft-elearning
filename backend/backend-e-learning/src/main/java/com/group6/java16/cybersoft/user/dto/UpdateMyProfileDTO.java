@@ -4,13 +4,11 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Builder
+@Getter
+@Setter
 public class UpdateMyProfileDTO {
 
 	private String displayName;
-	
-	private String email;
 
     private String firstName;
  	
@@ -23,4 +21,6 @@ public class UpdateMyProfileDTO {
 	private String gender;
 
 	private String phone;
+	
+	
 }

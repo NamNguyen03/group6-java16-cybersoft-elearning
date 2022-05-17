@@ -56,16 +56,14 @@
                                     </div>
                                 </div>
                             </div>  
-                        </div>
-                        
-                           
-                        
+                        </div> 
                         <div class="table-responsive">
                                 <ng2-smart-table
                                     [settings]="settings"
                                     [source]="list_role"
                                     (deleteConfirm)="onDeleteConfirm($event)"
                                     (editConfirm)="onSaveConfirm($event)"
+                                    (userRowSelect)="onRoleRowSelected($event)"
                                 ></ng2-smart-table>
                        
                      </div>

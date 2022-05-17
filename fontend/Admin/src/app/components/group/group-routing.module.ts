@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListGroupComponent } from './list-group/list-group.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
+import { GroupDetailsComponent } from './group-details/group-details.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,14 @@ const routes: Routes = [
         data: {
           title: "Create Group",
           breadcrumb: "Create Group"
+        }
+      },
+      {
+        path: 'group-details',
+        component: GroupDetailsComponent,
+        data: {
+          title: "Group Details",
+          breadcrumb: "Group Details"
         }
       }
     ]

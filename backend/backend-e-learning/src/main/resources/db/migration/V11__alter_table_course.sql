@@ -1,0 +1,35 @@
+ALTER TABLE el_course
+ADD COLUMN img VARCHAR(255);
+
+ALTER TABLE el_course
+ADD COLUMN level VARCHAR(50);
+
+ALTER TABLE el_course
+ADD COLUMN category VARCHAR(100);
+
+ALTER TABLE el_course
+ADD COLUMN star_avg FLOAT;
+
+ALTER TABLE el_course
+ADD COLUMN total_star INT;
+
+ALTER TABLE el_course
+ADD COLUMN total_rating INT;
+
+ALTER TABLE el_course
+ADD COLUMN skill_1 VARCHAR(50);
+
+ALTER TABLE el_course
+ADD COLUMN skill_2 VARCHAR(50);
+
+ALTER TABLE el_course
+ADD COLUMN skill_3 VARCHAR(50);
+
+ALTER TABLE el_course
+ADD COLUMN skill_4 VARCHAR(50);
+
+ALTER TABLE el_course
+ADD COLUMN skill_5 VARCHAR(50);
+
+
+
