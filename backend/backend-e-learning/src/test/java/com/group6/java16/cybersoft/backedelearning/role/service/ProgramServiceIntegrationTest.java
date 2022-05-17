@@ -185,11 +185,7 @@ public class ProgramServiceIntegrationTest {
 	@Test
 	public void whenUpdateProgramExistsName_thenThrowBusinessException() {
 		UUID id = UUID.randomUUID();
-		ELProgram program = ELProgram.builder()
-				.id(id)
-				.name("LEADER")
-				.description("hau test")
-				.build();
+
 		ProgramUpdateDTO request = new ProgramUpdateDTO();
 		request.setName("LEADER");
 		when(repository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(ELProgram.builder()
@@ -226,11 +222,7 @@ public class ProgramServiceIntegrationTest {
 	@Test
 	public void whenUpdateProgramIsValidError_thenThrowBusinessException() {
 		UUID id = UUID.randomUUID();
-		ELProgram program = ELProgram.builder()
-				.id(id)
-				.name("LEADER")
-				.description("hau test")
-				.build();
+
 		ProgramUpdateDTO request = new ProgramUpdateDTO();
 		request.setName("");
 		when(repository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(ELProgram.builder()

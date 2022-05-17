@@ -32,13 +32,13 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Autowired
     private ELUserRepository userRepository;
-    
+
     @Autowired
     private ELGroupRepository groupRepository;
 
     @Autowired
     private PasswordEncoder encoder;
-    
+
     @Autowired
     @Qualifier("emailSenderCreateSuccessfully")
     private EmailSender<UserCreateModel> serviceSendEmailCreateUserSuccess;
@@ -48,7 +48,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Value("${user.email.existed}")
     private String errorsEmailExisted;
-    
+
     @Value("${group.not-found}")
     private String errorsGroupNotFound;
 
@@ -63,7 +63,8 @@ public class UserManagementServiceImpl implements UserManagementService {
         String password = user.getPassword();
         user.setPassword(encoder.encode(password));
         ELUser rp = userRepository.save(UserMapper.INSTANCE.toModel(user));
-        serviceSendEmailCreateUserSuccess.send("User Service", user.getEmail(), "Create Account Success", new UserCreateModel(user.getUsername(), password));
+        serviceSendEmailCreateUserSuccess.send("User Service", user.getEmail(), "Create Account Success",
+                new UserCreateModel(user.getUsername(), password));
         return UserMapper.INSTANCE.toUserResponseDTO(rp);
     }
 
@@ -77,7 +78,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     public UserResponseDTO updateMyProfile(UpdateMyProfileDTO rq) {
         String username = UserPrincipal.getUsernameCurrent();
         ELUser user = userRepository.findByUsername(username).get();
-        
+
         if (isValidString(rq.getDisplayName())) {
             user.setDisplayName(rq.getDisplayName());
         }
@@ -140,45 +141,47 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (isValidString(user.getMajor())) {
             u.setMajor(user.getMajor());
         }
-        u.setStatus(user.getStatus());
 
+        if (user.getStatus() != null) {
+            u.setStatus(user.getStatus());
+        }
         ELUser newUser = userRepository.save(u);
 
         return UserMapper.INSTANCE.toUserResponseDTO(newUser);
     }
 
     @Override
-	public UserResponseDTO addGroup(String userId, String groupId) {
-		ELUser user = getById(userId);
-		ELGroup group = getGroupById(groupId);
-		
-		user.addGroup(group);
-		
+    public UserResponseDTO addGroup(String userId, String groupId) {
+        ELUser user = getById(userId);
+        ELGroup group = getGroupById(groupId);
+
+        user.addGroup(group);
+
         return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
 
-	}
+    }
 
     @Override
-	public UserResponseDTO deleteGroup(String userId, String groupId) {
-		ELUser user = getById(userId);
-		ELGroup group = getGroupById(groupId);
-		
-		user.removeGroup(group);
-		return  UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
-	}
+    public UserResponseDTO deleteGroup(String userId, String groupId) {
+        ELUser user = getById(userId);
+        ELGroup group = getGroupById(groupId);
 
-    
+        user.removeGroup(group);
+        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
+    }
+
     private ELGroup getGroupById(String id) {
-        return groupRepository.findById(UUID.fromString(id)).orElseThrow(() -> new BusinessException(errorsGroupNotFound));
+        return groupRepository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new BusinessException(errorsGroupNotFound));
     }
 
-
-	private ELUser getById(String id) {
-        return userRepository.findById(UUID.fromString(id)).orElseThrow(() -> new BusinessException(errorsUserNotFound));
+    private ELUser getById(String id) {
+        return userRepository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new BusinessException(errorsUserNotFound));
     }
 
-	private boolean isValidString(String s) {
-        if(s == null || s.length() == 0) {
+    private boolean isValidString(String s) {
+        if (s == null || s.length() == 0) {
             return false;
         }
         return true;
