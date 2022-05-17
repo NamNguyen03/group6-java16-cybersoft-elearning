@@ -25,26 +25,26 @@ public class ELCourse extends BaseEntity {
 	private int courseTime;
 
 	private String description;
-	
+
 	private String img;
-	
+
 	private String level;
-	
-	private float star_avg;
-	
-	private int total_star;
-	
-	private int total_rating;
-	
-	private String skill_1;
-	
-	private String skill_2;
-	
-	private String skill_3;
-	
-	private String skill_4;
-	
-	private String skill_5;
+
+	private float starAvg;
+
+	private int totalStar;
+
+	private int totalRating;
+
+	private String skill1;
+
+	private String skill2;
+
+	private String skill3;
+
+	private String skill4;
+
+	private String skill5;
 
 	@Enumerated(EnumType.STRING)
 	private CategoryEnum category;
