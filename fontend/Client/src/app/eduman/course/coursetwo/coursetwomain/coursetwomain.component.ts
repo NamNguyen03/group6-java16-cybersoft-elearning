@@ -32,42 +32,22 @@ export class CoursetwomainComponent implements OnInit {
       valueFieldNameSearch: ['']
    })
   }
-
-  course1 = { "img" : "https://firebasestorage.googleapis.com/v0/b/e-learning-5efea.appspot.com/o/730e7bc5-ffc1-48ec-84a1-e2765aafc1e1.jpeg?alt=media&token=730e7bc5-ffc1-48ec-84a1-e2765aafc1e1.jpeg",
-              "name" : "Name course Cat",
-              "starAVG" : 4,
-              "totalTime" : 5,
-              "level" : "master",
-              "description" : "Description for the course",
-              "skills": ["html" , "js" , "css"],
-              "category" : "development"};
-
-  course2 = { "img" : "https://firebasestorage.googleapis.com/v0/b/e-learning-5efea.appspot.com/o/730e7bc5-ffc1-48ec-84a1-e2765aafc1e1.jpeg?alt=media&token=730e7bc5-ffc1-48ec-84a1-e2765aafc1e1.jpeg",
-              "name" : "Name course Cat 2" ,
-              "starAVG" : 3,
-              "totalTime" : 5,
-              "level" : "master",
-              "description" : "Description for the course",
-              "skills": ["html" , "js" , "css"],
-              "category" : "development"};
-   public courses = [this.course1 , this.course1, this.course2 , this.course2,
-     this.course1 , this.course1, this.course2 , this.course2];
-
  
   ngOnInit(): void {
     this.loadData();
   }
   loadData() {
     this.route.queryParams.subscribe(params =>{
-      let fieldNameSort = params['fieldNameSort'] == undefined ? null: params['fieldNameSort'];
+      let fieldNameSort = params['fieldNameSort'] == undefined ? 'courseName': params['fieldNameSort'];
       let isIncrementSort = params['isIncrementSort'] == (undefined||null) ? true : params['isIncrementSort'];
-      let fieldNameSearch = params['fieldNameSearch'] == undefined ? '': params['fieldNameSearch'];
+      let fieldNameSearch = params['fieldNameSearch'] == undefined ? 'courseName': params['fieldNameSearch'];
       let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
 
       this.pageRequet = new PageRequest(1,10,fieldNameSort,isIncrementSort,fieldNameSearch,valueFieldNameSearch)
       console.log(this.pageRequet);
       this.courseClient.searchRequest(this.pageRequet).subscribe(
         response =>{
+          console.log(response)
           this.course_list = response.content.items||[];
       }
       
