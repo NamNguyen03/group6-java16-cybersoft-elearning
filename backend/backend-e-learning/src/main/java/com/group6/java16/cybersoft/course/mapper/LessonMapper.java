@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
-import com.group6.java16.cybersoft.course.dto.LessonReponseDTO;
+import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.model.ELLesson;
 
 @Mapper
@@ -13,5 +13,5 @@ public interface LessonMapper {
     
     ELLesson toModel(LessonCreateDTO lesson);
 
-    LessonReponseDTO toLessonResponseDTO(ELLesson lesson);
+    LessonResponseDTO toLessonResponseDTO(ELLesson lesson);
 }

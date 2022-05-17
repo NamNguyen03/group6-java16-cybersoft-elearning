@@ -18,7 +18,7 @@ import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
-import com.group6.java16.cybersoft.course.dto.LessonReponseDTO;
+import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.mapper.LessonMapper;
@@ -45,7 +45,7 @@ public class LessonManagementSeviceImpl extends ServiceHelper<ELLesson> implemen
     private String errorsIdInvalid;
 
 	@Override
-	public LessonReponseDTO updateLesson(LessonUpdateDTO rq, String id) {
+	public LessonResponseDTO updateLesson(LessonUpdateDTO rq, String id) {
 			
 		ELLesson lessonCurrent = getById(id);
 		ELLesson lesson = setUpdatelesson(lessonCurrent, rq);
@@ -76,7 +76,7 @@ public class LessonManagementSeviceImpl extends ServiceHelper<ELLesson> implemen
 	}
 
 	@Override
-	public LessonReponseDTO createLesson(LessonCreateDTO dto) {
+	public LessonResponseDTO createLesson(LessonCreateDTO dto) {
 		
 
 		// Map dto to lesson
@@ -89,13 +89,13 @@ public class LessonManagementSeviceImpl extends ServiceHelper<ELLesson> implemen
 		ELLesson lesson = lessonRepository.save(s);
 
 		// Map lesson to dto
-		LessonReponseDTO srp = LessonMapper.INSTANCE.toLessonResponseDTO(lesson);
+		LessonResponseDTO srp = LessonMapper.INSTANCE.toLessonResponseDTO(lesson);
 
 		return srp;
 	}
 
 	@Override
-	public PageResponseModel<LessonReponseDTO> search(PageRequestModel pageRequestModel) {
+	public PageResponseModel<LessonResponseDTO> search(PageRequestModel pageRequestModel) {
 		int page = pageRequestModel.getPageCurrent() - 1;
 		int size = pageRequestModel.getItemPerPage();
 		boolean isAscending = pageRequestModel.isIncrementSort();
@@ -146,7 +146,7 @@ public class LessonManagementSeviceImpl extends ServiceHelper<ELLesson> implemen
 	}
 
 	@Override
-	public LessonReponseDTO getInfoLesson(String id) {
+	public LessonResponseDTO getInfoLesson(String id) {
 		ELLesson lesson = getById(id);
 		return LessonMapper.INSTANCE.toLessonResponseDTO(lesson);
 	}

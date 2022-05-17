@@ -15,5 +15,5 @@ public class CourseResponseDTO {
 	private String courseName;
 	private int courseTime;
 	private String description;
-	private Set<LessonReponseDTO> lessons;
+	private Set<LessonResponseDTO> lessons;
 }
