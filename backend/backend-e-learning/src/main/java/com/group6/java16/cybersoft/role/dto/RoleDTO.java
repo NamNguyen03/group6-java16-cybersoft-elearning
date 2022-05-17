@@ -6,8 +6,6 @@ import javax.validation.constraints.Size;
 import com.group6.java16.cybersoft.role.validation.annotation.UniqueRoleName;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +14,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class RoleDTO {
 	
 	@Size(min = 3, max = 100, message = "{role.name.size}")
@@ -26,5 +23,9 @@ public class RoleDTO {
 	
 	@NotBlank(message = "{role.description.not-blank}")
 	private String description;
+	
+	public static RoleDTO builder() {
+		return new RoleDTO();
+	}
 
 }

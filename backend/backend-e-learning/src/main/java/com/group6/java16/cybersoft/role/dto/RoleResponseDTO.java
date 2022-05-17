@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class RoleResponseDTO {
 
 	private UUID id;
@@ -23,7 +21,10 @@ public class RoleResponseDTO {
 	private String description;
 
 	private Set<ProgramResponseDTO> programs;
-
+	
+	public static RoleResponseDTO builder() {
+		return new RoleResponseDTO();
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
