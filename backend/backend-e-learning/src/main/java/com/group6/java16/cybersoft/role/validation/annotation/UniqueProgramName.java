@@ -9,15 +9,15 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 import com.group6.java16.cybersoft.role.validation.validator.UniqueProgramNameValidator;
-import com.group6.java16.cybersoft.role.validation.validator.UniqueRoleNameValidator;
 
 @Constraint(validatedBy = UniqueProgramNameValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
+@Target({ ElementType.FIELD })
 public @interface UniqueProgramName {
-String message() default "Program Name already used.";
-	
+	String message() default "Program Name already used.";
+
 	Class<?>[] groups() default {};
+
 	Class<? extends Payload>[] payload() default {};
 
 }

@@ -12,13 +12,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
-import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.role.dto.RoleDTO;
 import com.group6.java16.cybersoft.role.dto.RoleResponseDTO;
 import com.group6.java16.cybersoft.role.dto.RoleUpdateDTO;
@@ -30,7 +28,7 @@ import com.group6.java16.cybersoft.role.repository.ELRoleRepository;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleService {
+public class RoleServiceImpl implements RoleService {
 
 	@Autowired
 	private ELRoleRepository roleRepository;
@@ -112,21 +110,6 @@ public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleServic
 	}
 
 	@Override
-	protected String getMessageIdInvalid() {
-		return errorsIdInvalid;
-	}
-
-	@Override
-	protected JpaRepository<ELRole, UUID> getRepository() {
-		return roleRepository;
-	}
-
-	@Override
-	protected String getErrorNotFound() {
-		return errorsRoleNotFound;
-	}
-
-	@Override
 	public RoleResponseDTO addProgram(String roleId, String programId) {
 		ELRole role = getById(roleId);
 		ELProgram program = getProgramById(programId);
@@ -150,7 +133,7 @@ public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleServic
 		try {
 			uuid = UUID.fromString(id);
 		} catch (Exception e) {
-			throw new BusinessException(getMessageIdInvalid());
+			throw new BusinessException(errorsIdInvalid);
 		}
 
 		Optional<ELProgram> entityOpt = programRepository.findById(uuid);
@@ -166,4 +149,15 @@ public class RoleServiceImpl extends ServiceHelper<ELRole> implements RoleServic
 		return RoleMapper.INSTANCE.toResponseDTO(getById(id));
 	}
 
+	private ELRole getById(String id) {
+		return roleRepository.findById(UUID.fromString(id))
+				.orElseThrow(() -> new BusinessException(errorsRoleNotFound));
+	}
+
+	private boolean isValidString(String s) {
+		if (s == null || s.length() == 0) {
+			return false;
+		}
+		return true;
+	}
 }

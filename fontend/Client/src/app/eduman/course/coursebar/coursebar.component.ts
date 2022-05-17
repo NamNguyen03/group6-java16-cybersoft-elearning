@@ -1,3 +1,4 @@
+import { keyframes } from '@angular/animations';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,6 +15,7 @@ import { CourseRp } from 'src/app/api-clients/model/course.model';
 export class CoursebarComponent implements OnInit {
   public searchForm: FormGroup;
   public course_list:CourseRp[] =[];
+  public valueFieldNameSearch = '';
   pageRequet: PageRequest = new PageRequest(1,10,
     'name',
     true,
@@ -52,19 +54,14 @@ export class CoursebarComponent implements OnInit {
       
     );  
     }) 
-
-
+ }
+  changeInputSearch(event:any){
+    if(event.keyCode == 13){
+      console.log(this.valueFieldNameSearch)
+      this._router.navigate(['/course-2'],{
+        queryParams: {'valueFieldNameSearch':this.valueFieldNameSearch}
+        
+      })
+    }
   }
-  search(){
-    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
-    let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
-    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
-    let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
-    this._router.navigate(['/course/coursetwomain'],{
-      queryParams: {'fieldNameSort':fieldNameSort,'isIncr ementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
-      
-    })
-    
-  }
-
 }

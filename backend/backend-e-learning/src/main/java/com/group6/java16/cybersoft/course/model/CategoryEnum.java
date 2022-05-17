@@ -13,19 +13,19 @@ public enum CategoryEnum {
 	ACADEMIC("Academic"),
 	NONE("none");
 
-	private String category;
+	private String value;
 
-	CategoryEnum(String category) {
-		this.category = category;
+	CategoryEnum(String value) {
+		this.value = value;
 	}
 
-	public String category() {
-		return category;
+	public String value() {
+		return value;
 	}
 
 	@Override
 	public String toString() {
-		return category;
+		return value;
 	}
 
 }

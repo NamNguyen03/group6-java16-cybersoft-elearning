@@ -28,9 +28,6 @@ public class ELCourse extends BaseEntity {
 	@Column(name = "course_name", unique = true, nullable = false)
 	private String courseName;
 
-	@Column(name = "course_time", nullable = false)
-	private int courseTime;
-
 	@Column(name = "description")
 	private String description;
 
@@ -40,12 +37,14 @@ public class ELCourse extends BaseEntity {
 
 	private String img;
 
-	private String level;
+	@Enumerated(EnumType.STRING)
+	private LevelEnum level;
 
 	private float starAvg;
 
+	// totalStar = sum (star.value)
 	private int totalStar;
-
+	// count rating
 	private int totalRating;
 
 	private String skill1;
