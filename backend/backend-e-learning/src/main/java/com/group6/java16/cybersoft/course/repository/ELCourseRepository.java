@@ -15,7 +15,7 @@ import com.group6.java16.cybersoft.course.model.ELCourse;
 @Repository
 public interface ELCourseRepository extends JpaRepository<ELCourse, UUID>  {
 	
-	 boolean existsByCourseName(String courseName);
+	boolean existsByCourseName(String courseName);
 	
 	Optional<ELCourse> findByCourseName(String cousrseName);
 

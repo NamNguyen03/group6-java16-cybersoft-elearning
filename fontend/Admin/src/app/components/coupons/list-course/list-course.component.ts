@@ -119,7 +119,6 @@ export class ListCourseComponent implements OnInit {
           
           if(!isLoadData) {
             this.loadData();
-            this.toastr.success('Success', 'AAAAAAAAAAAAAAAAAAA');
           }
         }
     });
@@ -140,8 +139,8 @@ export class ListCourseComponent implements OnInit {
           event.confirm.resolve(event.newData);
           let courseUpdate = new CourseUpdateInformation(event.newData.courseName,event.newData.courseTime,event.newData.description);
           this.courseClient.updateCourse(event.data.id,courseUpdate).subscribe(() => {
-            
             this.loadData();
+            isLoadData = true;
             this.toastr.success('Success', 'Update Course success!');
           })
           if(!isLoadData) {

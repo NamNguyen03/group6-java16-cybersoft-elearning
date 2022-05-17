@@ -12,4 +12,5 @@ public interface CourseManagementService {
 	CourseResponseDTO createCourse(CourseCreateDTO dto);
 	void deleteById(String id);
 	PageResponseModel<CourseResponseDTO> search(PageRequestModel pageRequestModel);
+	CourseResponseDTO getDetailCourse(String id);
 }
