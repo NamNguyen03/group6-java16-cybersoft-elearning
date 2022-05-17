@@ -24,6 +24,7 @@ import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.service.CourseManagementService;
+import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 
 @RestController
 @RequestMapping("api/v1/courses")
@@ -55,34 +56,43 @@ public class CourseManagementController {
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
-	
+
 	@GetMapping()
-    public Object search(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
-        @RequestParam(value = "itemPerPage", defaultValue = "10") int itemPerPage,
-        @RequestParam(value = "fieldNameSort", required = false) String fieldNameSort,
-        @RequestParam(value = "isIncrementSort", defaultValue = "true") boolean isIncrementSort,
-        @RequestParam(value = "fieldNameSearch", required = false) String fieldNameSearch,
-        @RequestParam(value = "valueFieldNameSearch", required = false) String valueFieldNameSearch
-        ){
-        
-        PageResponseModel<CourseResponseDTO> rp = service.search(new PageRequestModel(
-			pageCurrent,
-			itemPerPage,
-			fieldNameSort,
-			isIncrementSort,
-			fieldNameSearch,
-			valueFieldNameSearch
-		));
+	public Object search(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
+			@RequestParam(value = "itemPerPage", defaultValue = "10") int itemPerPage,
+			@RequestParam(value = "fieldNameSort", required = false) String fieldNameSort,
+			@RequestParam(value = "isIncrementSort", defaultValue = "true") boolean isIncrementSort,
+			@RequestParam(value = "fieldNameSearch", required = false) String fieldNameSearch,
+			@RequestParam(value = "valueFieldNameSearch", required = false) String valueFieldNameSearch
+			){
 
-        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
-    }
-	
+		PageResponseModel<CourseResponseDTO> rp = service.search(new PageRequestModel(
+				pageCurrent,
+				itemPerPage,
+				fieldNameSort,
+				isIncrementSort,
+				fieldNameSearch,
+				valueFieldNameSearch
+				));
+
+		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	}
+
 	@DeleteMapping("{id}")
-    public Object delete(@PathVariable("id") String id){
+	public Object delete(@PathVariable("id") String id){
 
-        service.deleteById(id);
+		service.deleteById(id);
 
-        return ResponseHelper.getResponse("", HttpStatus.OK, false);
-    }
+		return ResponseHelper.getResponse("", HttpStatus.OK, false);
+	}
+
+	@GetMapping("{id}")
+	public Object getDetailCourse(@PathVariable("id")String id){
+
+		CourseResponseDTO rp = service.getDetailCourse(id);
+
+		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	}
+
 
 }

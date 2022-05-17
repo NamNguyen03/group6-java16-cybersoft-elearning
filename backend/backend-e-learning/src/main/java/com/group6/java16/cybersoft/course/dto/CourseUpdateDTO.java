@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CourseUpdateDTO {
+	
 	private String courseName;
 		
-		private int courseTime;
+	private int courseTime;
 	
 	private String description;
 }
