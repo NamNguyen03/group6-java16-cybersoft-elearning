@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.group6.java16.cybersoft.common.model.BaseEntity;
 import com.group6.java16.cybersoft.role.model.ELGroup;
 import com.group6.java16.cybersoft.user.model.ELUser;
@@ -17,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @NoArgsConstructor
 @SuperBuilder
+@AllArgsConstructor
 @Entity
 @Table(name = "el_user")
 public class ELUser extends BaseEntity {
@@ -49,9 +49,10 @@ public class ELUser extends BaseEntity {
 
 	private String phone;
 
+	@Builder.Default
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinTable(name = "el_group_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
-	private Set<ELGroup> groups = new LinkedHashSet<ELGroup>();
+	private Set<ELGroup> groups = new LinkedHashSet();
 
 	public void addGroup(ELGroup group) {
 		groups.add(group);

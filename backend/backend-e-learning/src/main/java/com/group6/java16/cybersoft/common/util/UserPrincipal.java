@@ -1,5 +1,7 @@
 package com.group6.java16.cybersoft.common.util;
 
+import com.group6.java16.cybersoft.common.exception.UnauthorizedException;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +16,7 @@ public class UserPrincipal {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		if (auth == null) {
-			return null;
+			throw new UnauthorizedException();
 		}
         
 		if (auth.getPrincipal() instanceof String) {

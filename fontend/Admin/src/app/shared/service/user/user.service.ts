@@ -1,42 +1,36 @@
+import { UserClient } from 'src/app/api-clients/user.client';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
+import { UserRp } from 'src/app/api-clients/model/user.model';
+import * as e from 'express';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private _$displayName: BehaviorSubject<string> = new BehaviorSubject('');
-  public readonly $displayName: Observable<string> = this._$displayName.asObservable();
-  private _$isLogin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public readonly $isLogin: Observable<boolean> = this._$isLogin.asObservable();
+  private _$userCurrent: BehaviorSubject<UserRp> = new BehaviorSubject(new UserRp());
+  public readonly $userCurrent: Observable<UserRp> = this._$userCurrent.asObservable();
 
-  constructor() { 
-    this._getDisplayName();
-    this.getTokenRemainingTime();
-    this.$displayName.subscribe(displayName => {
-      this._$isLogin.next('' != displayName );
-    });
-  }
-
-  public setJWT(jwt: string, displayName: string): void{
-    localStorage.setItem('jwt', jwt);
-    localStorage.setItem('displayName', displayName);
-    this._getDisplayName();
-  }
-
-  private _getDisplayName(): void {
-    let displayName = localStorage.getItem('displayName');
-    
+  constructor(private _router: Router) { 
     if(!this.getTokenRemainingTime()){
-      localStorage.setItem('displayName', '');
-      this._$displayName.next('');
-    }
-
-    if('' != displayName && displayName != null && displayName != undefined) { 
-      this._$displayName.next(displayName);
+      this._router.navigate(['auth/login']);
     }
    
+  }
+
+  public setJWT(jwt: string): void{
+    localStorage.setItem('jwt', jwt);
+  }
+
+  public logout(): void{
+    localStorage.setItem('jwt', '');
+    this._$userCurrent.next(null);
+  }
+
+  public setUserCurrent(user: UserRp): void{
+    this._$userCurrent.next(user);
   }
 
   private _getDecodedJwt(jwt: string): {username: string, displayName: string, exp: number} | null {

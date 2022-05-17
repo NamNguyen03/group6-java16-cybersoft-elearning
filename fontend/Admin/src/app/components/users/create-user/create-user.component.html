@@ -4,7 +4,7 @@
         <div class="col-sm-12">
             <div class="card tab2-card">
                 <div class="card-header">
-                    <h5> Add User</h5>
+                    <h5>Create User</h5>
                 </div>
                 <div class="card-body tab2-card">
                     <ngb-tabset class="tab-coupon">
@@ -16,38 +16,65 @@
                                         <div class="form-group row">
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 First Name</label>
-                                            <input class="form-control col-xl-8 col-md-7" id="validationCustom0"
-                                                type="text" required="">
+                                            <input class="form-control col-xl-8 col-md-7"
+                                                type="text" required="" name="firstName" formControlName="firstName">
                                         </div>
                                         <div class="form-group row">
                                             <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span> Last
                                                 Name</label>
-                                            <input class="form-control col-xl-8 col-md-7" id="validationCustom1"
-                                                type="text" required="">
+                                            <input class="form-control col-xl-8 col-md-7"
+                                                type="text" required=""  name="lastName" formControlName="lastName">
                                         </div>
                                         <div class="form-group row">
                                             <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span>
                                                 Email</label>
                                             <input class="form-control col-xl-8 col-md-7" id="validationCustom2"
-                                                type="text" required="">
+                                                type="email" required=""  name="email" formControlName="email">
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span>
+                                                Username</label>
+                                            <input class="form-control col-xl-8 col-md-7" id="validationCustom2"
+                                                type="text" required=""  name="username" formControlName="username">
                                         </div>
                                         <div class="form-group row">
                                             <label for="validationCustom3" class="col-xl-3 col-md-4"><span>*</span>
                                                 Password</label>
                                             <input class="form-control col-xl-8 col-md-7" id="validationCustom3"
-                                                type="password" required="">
+                                                type="password" required=""  name="password" formControlName="password">
                                         </div>
                                         <div class="form-group row">
                                             <label for="validationCustom4" class="col-xl-3 col-md-4"><span>*</span>
-                                                Confirm Password</label>
+                                                Display Name</label>
                                             <input class="form-control col-xl-8 col-md-7" id="validationCustom4"
-                                                type="password" required="">
+                                                type="text" required="" name="displayName" formControlName="displayName">
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom4" class="col-xl-3 col-md-4"><span>*</span>
+                                                Department</label>
+                                            <input class="form-control col-xl-8 col-md-7" id="validationCustom4"
+                                                type="text" required="" name="department" formControlName="department">
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom4" class="col-xl-3 col-md-4"><span>*</span>
+                                                Major</label>
+                                            <input class="form-control col-xl-8 col-md-7" id="validationCustom4"
+                                                type="text" required="" name="major" formControlName="major">
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="exampleFormControlSelect1" class="col-xl-3 col-sm-4 mb-0"><span>*</span>Status</label>
+                                            <select class="form-control digits col-xl-8 col-sm-7"
+                                                id="exampleFormControlSelect1" name="status" formControlName="status">
+                                                <option>ACTIVE</option>
+                                                <option>TEMPORARY_BLOCKED</option>
+                                                <option>PERMANENT_BLOCKED</option>
+                                            </select>
                                         </div>
                                     </form>
                                 </div>
                             </ng-template>
                         </ngb-tab>
-                        <ngb-tab>
+                        <!-- <ngb-tab>
                             <ng-template ngbTabTitle>Permission
                                 <ng-template ngbTabContent>
                                     <form [formGroup]="permissionForm"
@@ -223,10 +250,10 @@
                                     </form>
                                 </ng-template>
                             </ng-template>
-                        </ngb-tab>
+                        </ngb-tab> -->
                     </ngb-tabset>
                     <div class="pull-right">
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-primary mr-1" (click)="createUser()">Save</button>
                     </div>
                 </div>
             </div>

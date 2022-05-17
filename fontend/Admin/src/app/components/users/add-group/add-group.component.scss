@@ -1,0 +1,18 @@
+.dropdown{
+    width: 250px;
+    flex-direction: column;
+    display: flex;
+}
+
+.div-option{
+    background-color: #ccc;
+    width: 250px;
+}
+
+.div-option label{
+    cursor: pointer;
+
+}
+.div-option label:hover{
+    background-color: rgb(160, 153, 153);
+}

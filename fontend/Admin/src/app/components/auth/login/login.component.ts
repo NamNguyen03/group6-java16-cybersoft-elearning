@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     private userClient: UserClient) {
     this.createLoginForm();
     this.createRegisterForm();
+    this.userService.logout();
   }
 
   owlcarousel = [
@@ -65,11 +66,11 @@ export class LoginComponent implements OnInit {
   login(): void {
     let username = this.loginForm.controls['userName'].value;
     let password = this.loginForm.controls['password'].value;
-
+   
     if(this.loginForm.valid){
       this.userClient.login(new LoginRequest(username, password))
         .subscribe(response => {
-          this.userService.setJWT(response.content.jwt ,response.content.displayName);
+          this.userService.setJWT(response.content);
           this.route.navigate(['dashboard/default']);
         });
     }

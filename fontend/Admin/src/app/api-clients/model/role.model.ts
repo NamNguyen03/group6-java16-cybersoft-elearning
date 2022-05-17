@@ -1,3 +1,5 @@
+import { ProgramResponse } from "./program.model";
+
 export class BaseRole{
     name: string;
     description: string;
@@ -12,6 +14,7 @@ export class RoleResponse {
     id: string;
     name: string;
     description: string;
+    programs: ProgramResponse[]; 
 }
 export class SearchRole{
     pageCurrent: number ;

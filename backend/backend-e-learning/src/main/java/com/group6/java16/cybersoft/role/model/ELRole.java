@@ -3,7 +3,11 @@ package com.group6.java16.cybersoft.role.model;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -31,6 +35,21 @@ public class ELRole extends BaseEntity {
 	@Builder.Default
 	@JsonIgnore
 	@ManyToMany(mappedBy = "roles")
-	private Set<ELGroup> groups = new LinkedHashSet<ELGroup>();
+	private Set<ELGroup> groups = new LinkedHashSet<>();
+
+	@Builder.Default
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	@JoinTable(name = "el_role_program", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "program_id"))
+	private Set<ELProgram> programs = new LinkedHashSet();
+
+	public void addProgram(ELProgram program) {
+		programs.add(program);
+		program.getRoles().add(this);
+
+	}
+	public void removeProgram(ELProgram program) {
+	    programs.remove(program);
+	    program.getRoles().remove(this);
+	  }
 
 }

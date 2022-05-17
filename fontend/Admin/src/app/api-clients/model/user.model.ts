@@ -1,3 +1,5 @@
+import { BaseGroup, GroupResponse } from "./group.model";
+
 export class UserCreate {
 
     username: string;
@@ -7,8 +9,10 @@ export class UserCreate {
     status: string;
     firstName: string;
     lastName: string;
+    department: string;
+    major: string;
 
-    constructor(username: string, password: string, displayName: string, email: string, status: string, firstName: string, lastName: string){
+    constructor(username: string, password: string, displayName: string, email: string, status: string, firstName: string, lastName: string, department: string, major: string){
         this.username = username;
         this.password = password;
         this.displayName = displayName;
@@ -16,22 +20,47 @@ export class UserCreate {
         this.status = status;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.department = department;
+        this.major = major;
     }
 }
 
 export class UserRp{
-    id!: string;
-    username!: string;
-    displayName!: string;
-    email!: string;
-    firstName!: string;
-    lastName!: string;
-    avatar!: string;
-    department!: string;
-    major!: string;
-    hobbies!: string;
-    facebook!: string;
-    status!: string;
+    
+    id: string;
+    username: string;
+    displayName: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    avatar: string;
+    department: string;
+    major: string;
+    hobbies: string;
+    facebook: string;
+    status: string;
+    gender: string;
+    phone: string;
+    groups: GroupResponse[];
+
+    constructor(){
+       this.id = "";
+       this.username = "";
+       this.displayName = "";
+       this.firstName = "";
+       this.lastName = "";
+       this.avatar = "";
+       this.department = "";
+       this.major = "";
+       this.hobbies = "";
+       this.facebook = "";
+       this.status = "";
+       this.gender = "";
+       this.phone = "";
+       this.email = "";
+       this.groups=[];
+
+    }
 }
 
 export class LoginRequest{
@@ -44,7 +73,50 @@ export class LoginRequest{
     }
 }
 
-export class LoginResponse{
-    jwt!: string;
-    displayName!: string;
+
+export class UpdateMyProfileRq{
+    
+    displayName: string;
+    firstName: string;
+    lastName: string;
+    hobbies: string;
+    facebook: string;
+    gender: string;
+    phone: string;
+
+    constructor(displayName: string, firstName: string, lastName: string, hobbies: string, facebook: string, gender: string, phone: string){
+        this.displayName = displayName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.hobbies = hobbies;
+        this.facebook = facebook;
+        this.gender = gender;
+        this.phone = phone;
+    }
+}
+
+export class UpdateUserRq{
+    email: string;
+    status: string;
+    major: string;
+    department: string;
+
+    constructor(email: string, status: string, major: string, department){
+        this.email = email;
+        this.status = status;
+        this.major = major;
+        this.department = department;
+    }
+}
+
+export class UpdatePasswordRq{
+    username: string;
+    password: string;
+    token: string;
+
+    constructor(username: string, password: string, token: string) {
+        this.username = username;
+        this.password = password;
+        this.token = token;
+    }
 }

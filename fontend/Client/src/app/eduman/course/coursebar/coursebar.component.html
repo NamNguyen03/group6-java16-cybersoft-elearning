@@ -10,11 +10,11 @@
                    <span>(2)</span>
                 </div>
                 <div class="corse-bar-wrapper">
-                   <div class="bar-search">
+                   <div class="search-form">
                       <form action="#">
-                         <div class="bar-secrch-icon position-relative">
-                            <input type="text" placeholder="Search keyword...">
-                            <button type="submit"><i class="far fa-search"></i></button>
+                         <div class="bar-secrch-icon position-relative" >
+                            <input type="text" name="valueFieldNameSearch" formControlName="valueFieldNameSearch" required="" placeholder="Search ...">
+                            <button type="submit" (click)="search()"><i class="far fa-search"></i></button>
                          </div>
                       </form>
                    </div>
