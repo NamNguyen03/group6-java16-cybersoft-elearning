@@ -1,0 +1,23 @@
+
+ALTER TABLE el_course
+DROP COLUMN skill_1,
+DROP COLUMN skill_2,
+DROP COLUMN skill_3,
+DROP COLUMN skill_4,
+DROP COLUMN skill_5; 
+
+
+ALTER TABLE el_course
+ADD COLUMN skill1 VARCHAR(50);
+
+ALTER TABLE el_course
+ADD COLUMN skill2 VARCHAR(50);
+
+ALTER TABLE el_course
+ADD COLUMN skill3 VARCHAR(50);
+
+ALTER TABLE el_course
+ADD COLUMN skill4 VARCHAR(50);
+
+ALTER TABLE el_course
+ADD COLUMN skill5 VARCHAR(50);
