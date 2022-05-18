@@ -56,10 +56,6 @@ export class CourseDetailsComponent implements OnInit {
       description: {
         title: 'Description',
         editable: false,
-      },
-      content: {
-        title: 'Content',
-        editable: false,
       }
     },
 
@@ -76,23 +72,24 @@ export class CourseDetailsComponent implements OnInit {
         response => {
           console.log(response)
           this.detailCourse = response.content
-          // this.createProfileForm();
-          // this.setDefaultValueForm();
+           this.createProfileForm();
+           this.setDefaultValueForm();
         }
       )
     })
   }
-  createProfileForm() {
+  setDefaultValueForm() {
     this.detailsForm.patchValue({
-      coursename: this.detailCourse.courseName,
-      coursetime: this.detailCourse.courseTime,
+      courseName: this.detailCourse.courseName,
+      courseTime: this.detailCourse.courseTime,
       description: this.detailCourse.description
     })
   }
-  setDefaultValueForm() {
+  
+  createProfileForm() {
     this.detailsForm = this.form.group({
-      coursename: [''],
-      coursetime: [''],
+      courseName: [''],
+      courseTime: [''],
       description: ['']
     })
   }
@@ -119,16 +116,15 @@ export class CourseDetailsComponent implements OnInit {
     });
   }
 
-  // onLessonRowSelected(event) {
-  //   let lessonId = event.data.id;
-
-  //   this._router.navigate(['/lessons/create-lesson'], {
-  //     queryParams: { 'lessonId': lessonId }
-  //   })
-
-  // }
   createLesson(){
-    this._router.navigate(["/lessons/create-lesson"])
+    this._router.navigate(["/lessons/create-lesson"],{ queryParams: {'courseId':this.detailCourse.id}})
+  }
+
+  onUserRowSelected(event) {
+    let lessonId = event.data.id;
+    this._router.navigate(['courses/lesson-info'], {
+      queryParams: { 'lessonId': lessonId }
+    })
   }
 
 }
