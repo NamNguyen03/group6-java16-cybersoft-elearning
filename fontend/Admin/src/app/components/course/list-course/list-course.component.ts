@@ -66,10 +66,6 @@ export class ListCourseComponent implements OnInit {
         title: 'Course Name',
         editable: true,
       },
-      courseTime: {
-        title: 'Course Time',
-        editable: true,
-      },
       description: {
         title: 'Description',
         editable: true,
@@ -140,10 +136,12 @@ export class ListCourseComponent implements OnInit {
       if (result.isConfirmed) {
         let isLoadData = false;
         event.confirm.resolve(event.newData);
-        let courseUpdate = new CourseUpdateInformation(event.newData.courseName, event.newData.courseTime, event.newData.description);
-        this.courseClient.updateCourse(event.data.id, courseUpdate).subscribe(() => {
-
+        let courseUpdate = new CourseUpdateInformation(event.newData.courseName,event.newData.description,
+          event.newDate.category,event.newDate.level,
+          event.newDate.img,event.newDate.skill1,event.newDate.skill2,event.newDate.skill3,event.newDate.skill4,event.newDate.skill5);
+        this.courseClient.updateCourse(event.data.id,courseUpdate).subscribe(() => {
           this.loadData();
+          isLoadData = true;
           this.toastr.success('Success', 'Update Course success!');
         })
         if (!isLoadData) {

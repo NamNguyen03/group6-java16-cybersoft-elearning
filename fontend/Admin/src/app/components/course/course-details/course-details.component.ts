@@ -80,17 +80,40 @@ export class CourseDetailsComponent implements OnInit {
   }
   setDefaultValueForm() {
     this.detailsForm.patchValue({
-      courseName: this.detailCourse.courseName,
-      courseTime: this.detailCourse.courseTime,
-      description: this.detailCourse.description
+      img:this.detailCourse.img,
+      courseName: this.detailCourse.courseName, 
+      description: this.detailCourse.description,
+      category:this.detailCourse.category,
+      level:this.detailCourse.level,
+      starAvg:this.detailCourse.starAvg,
+      totalStar:this.detailCourse.totalStar,
+      totalRating:this.detailCourse.totalRating,
+      skill1:this.detailCourse.skill1,
+      skill2:this.detailCourse.skill2,
+      skill3:this.detailCourse.skill3,
+      skill4:this.detailCourse.skill4,
+      skill5:this.detailCourse.skill5,
+      lessons:this.detailCourse.lessons
     })
   }
   
   createProfileForm() {
     this.detailsForm = this.form.group({
+      img:[''],
       courseName: [''],
-      courseTime: [''],
-      description: ['']
+      description: [''],
+      category:[''],
+      level:[''],
+      starAvg:[''],
+      totalStar:[''],
+      totalRating:[''],
+      skill1:[''],
+      skill2:[''],
+      skill3:[''],
+      skill4:[''],
+      skill5:[''],
+      lesson:[],
+      
     })
   }
 

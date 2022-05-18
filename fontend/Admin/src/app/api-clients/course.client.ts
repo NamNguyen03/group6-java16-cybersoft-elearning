@@ -44,5 +44,6 @@ export class CourseClient {
     getDetailCourse(id: string): Observable<Response<CourseRp>>{
         return this.httpClient.get<Response<CourseRp>>(this._apiEndpoint+ "/" + id);
     }
+    
 
 }

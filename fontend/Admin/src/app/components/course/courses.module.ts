@@ -10,9 +10,10 @@ import { ListCourseComponent } from './list-course/list-course.component';
 import { CreateCourseComponent } from './create-course/create-course.component';
 import { CKEditorModule } from 'ngx-ckeditor';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { CourseDetailsComponent } from './course-details/course-details.component';
 
 @NgModule({
-  declarations: [ListCourseComponent, CreateCourseComponent],
+  declarations: [ListCourseComponent, CreateCourseComponent,CourseDetailsComponent],
   imports: [
     CommonModule,
     CoursesRoutingModule,

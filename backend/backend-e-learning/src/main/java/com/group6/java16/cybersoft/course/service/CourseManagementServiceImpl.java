@@ -41,7 +41,6 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	@Override
 	public CourseResponseDTO createCourse(CourseCreateDTO dto) {
-
 		// Map dto to course
 		ELCourse c = CourseMapper.INSTANCE.toModel(dto);
 		c.setStarAvg(0f);
