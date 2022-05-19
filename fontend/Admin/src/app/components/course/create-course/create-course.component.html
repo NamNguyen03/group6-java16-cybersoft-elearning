@@ -11,12 +11,13 @@
                         <form [formGroup]="generalForm"  class="needs-validation" novalidate="">
                             <h4>General</h4>
                             <div class="row">
+                                    
+                                    <div class="col-sm-12" style="width: 100%; display: flex; justify-content: center; flex-direction: column;padding-left: 25%;">
+                                        <img src="{{getImgCourse()}}" alt="#" style="width: 50%;height: 200px;">
+                                        <input (change)="changeInputImg($event)" id="formFileSm" type="file"  />  
+                                    </div>    
+                                   
                                 <div class="col-sm-12">
-                                    <div class="form-group row">
-                                        <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
-                                             Image</label>
-                                            <input class="form-control form-control-sm mb-2" id="formFileSm" name="img" formControlName="img" type="file"/>
-                                    </div>
                                     <div class="form-group row">
                                         <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                             Course Name</label>
@@ -25,38 +26,33 @@
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-md-4">Description</label>
-                                            <textarea class="
-                                            form-control
-                                            digits
-                                            col-xl-8 col-sm-7
-                                        " style="max-width: 59%" name="description" formControlName="description"
+                                            <textarea class="form-control col-md-7" style="max-width: 59%" name="description" formControlName="description"
                                         rows="4" cols="50">
                                     </textarea>
                                     </div>
                                     <div class="form-group row">
                                         <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span>
                                             Category</label>
-                                            <select class="form-control digits col-xl-8 col-sm-7"
-                                            id="exampleFormControlSelect1" name="category" formControlName="category">
-                                            <option>BUSINESS</option>
-                                            <option>DEVELOPMENT</option>
-                                            <option>DATA_SCIENCE</option>
-                                            <option>DESIGN</option>
-                                            <option>FINANCE</option>
-                                            <option>MARKETING</option>
-                                            <option>MANAGEMENT</option>
-                                            <option>PHOTOGRAPHY</option>
-                                            <option>MUSIC</option>
-                                            <option>ACADEMIC</option>
-                                            <option>NONE</option>
+                                            <select class="form-control col-md-7"
+                                            id="exampleFormControlSelect1" name="category" formControlName="category" >
+                                            <option selected value="BUSINESS">Business</option>
+                                            <option value="DEVELOPMENT">Development</option>
+                                            <option value="DATA_SCIENCE">Data Science</option>
+                                            <option value="DESIGN">Design</option>
+                                            <option value="FINANCE">Finance</option>
+                                            <option value="MARKETING">Marketing</option>
+                                            <option value="MANAGEMENT">Management</option>
+                                            <option value="PHOTOGRAPHY">Photography</option>
+                                            <option value="MUSIC">Music</option>
+                                            <option value="ACADEMIC">Academic</option>
                                         </select>
                                     </div>
                                     <div class="form-group row">
                                         <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span>
                                             Level</label>
-                                            <select class="form-control digits col-xl-8 col-sm-7"
+                                            <select class="form-control col-md-7"
                                             id="exampleFormControlSelect1" name="level" formControlName="level">
-                                            <option>BEGINNER</option>
+                                            <option selected>BEGINNER</option>
                                             <option>MIDDLE</option>
                                             <option>MASTER</option>
                                         </select>

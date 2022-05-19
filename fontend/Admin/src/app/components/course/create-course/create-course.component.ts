@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbDateStruct, NgbDate, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { response } from 'express';
 import { ToastrService } from 'ngx-toastr';
 import { CourseClient } from 'src/app/api-clients/course.client';
 import { CourseCreate } from 'src/app/api-clients/model/course.model';
@@ -19,6 +20,8 @@ export class CreateCourseComponent implements OnInit {
   public model: NgbDateStruct;
   public date: { year: number, month: number };
   public modelFooter: NgbDateStruct;
+  public inputImg: File;
+  public imgCourse = '';
 
   constructor(private courseClient: CourseClient,private formBuilder: FormBuilder, private calendar: NgbCalendar,private toastr: ToastrService) {
     this.createGeneralForm();
@@ -50,7 +53,7 @@ export class CreateCourseComponent implements OnInit {
     let description = this.generalForm.controls['description'].value;
     let category = this.generalForm.controls['category'].value;
     let level = this.generalForm.controls['level'].value;
-    let img = this.generalForm.controls['img'].value;
+    let img = this.imgCourse;
     let skill1 = this.generalForm.controls['skill1'].value;
     let skill2 = this.generalForm.controls['skill2'].value;
     let skill3 = this.generalForm.controls['skill3'].value;
@@ -63,8 +66,14 @@ export class CreateCourseComponent implements OnInit {
           this.toastr.success('Success','Create course success');
         }
       )
-    
+   }
+   changeInputImg(event: any){
+     this.courseClient.updateImg(event.target.files[0]).subscribe(response => {
+      this.imgCourse = response.content
+     });
+   }
 
-  }
-
+   getImgCourse(): string {
+    return this.imgCourse ? this.imgCourse : "./assets/images/course/book.jpg";
+   }
 }
