@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class LessonReponseDTO {
+public class LessonResponseDTO {
 	
 	private UUID id;
 	

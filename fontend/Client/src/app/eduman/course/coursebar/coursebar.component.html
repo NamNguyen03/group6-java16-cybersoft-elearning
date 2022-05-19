@@ -10,11 +10,12 @@
                    <span>(2)</span>
                 </div>
                 <div class="corse-bar-wrapper">
-                   <div class="bar-search">
+                   <div class="search-form">
                       <form action="#">
-                         <div class="bar-secrch-icon position-relative">
-                            <input type="text" placeholder="Search keyword...">
-                            <button type="submit"><i class="far fa-search"></i></button>
+                         <div class="bar-secrch-icon position-relative" >
+                            <!-- <input  name="valueFieldNameSearch" formControlName="valueFieldNameSearch" required="" placeholder="Search ..."> -->
+                            <input type="text" (keyup)="changeInputSearch($event)" [(ngModel)]="valueFieldNameSearch" name="valueFieldNameSearch" placeholder="Search ..." />   
+                           
                          </div>
                       </form>
                    </div>

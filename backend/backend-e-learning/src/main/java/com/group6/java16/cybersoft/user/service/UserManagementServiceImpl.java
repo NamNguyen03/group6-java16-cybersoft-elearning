@@ -1,13 +1,11 @@
 package com.group6.java16.cybersoft.user.service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.notification.UserCreateModel;
 import com.group6.java16.cybersoft.common.service.notification.EmailSender;
 import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
-import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.role.model.ELGroup;
 import com.group6.java16.cybersoft.role.repository.ELGroupRepository;
@@ -24,26 +22,22 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements UserManagementService {
+public class UserManagementServiceImpl implements UserManagementService {
 
     @Autowired
     private ELUserRepository userRepository;
-    
+
     @Autowired
     private ELGroupRepository groupRepository;
 
     @Autowired
     private PasswordEncoder encoder;
-    
-    
-
 
     @Autowired
     @Qualifier("emailSenderCreateSuccessfully")
@@ -54,13 +48,12 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
 
     @Value("${user.email.existed}")
     private String errorsEmailExisted;
-    
-    @Value("${group.id.not-found}")
-    private String errorsGroupIdNotFound;
+
+    @Value("${group.not-found}")
+    private String errorsGroupNotFound;
 
     @Value("${entity.id.invalid}")
     private String errorsIdInvalid;
-
 
     @Autowired
     private MyFirebaseService firebaseFileService;
@@ -70,7 +63,8 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
         String password = user.getPassword();
         user.setPassword(encoder.encode(password));
         ELUser rp = userRepository.save(UserMapper.INSTANCE.toModel(user));
-        serviceSendEmailCreateUserSuccess.send("User Service", user.getEmail(), "Create Account Success", new UserCreateModel(user.getUsername(), password));
+        serviceSendEmailCreateUserSuccess.send("User Service", user.getEmail(), "Create Account Success",
+                new UserCreateModel(user.getUsername(), password));
         return UserMapper.INSTANCE.toUserResponseDTO(rp);
     }
 
@@ -84,7 +78,7 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
     public UserResponseDTO updateMyProfile(UpdateMyProfileDTO rq) {
         String username = UserPrincipal.getUsernameCurrent();
         ELUser user = userRepository.findByUsername(username).get();
-        
+
         if (isValidString(rq.getDisplayName())) {
             user.setDisplayName(rq.getDisplayName());
         }
@@ -147,69 +141,49 @@ public class UserManagementServiceImpl extends ServiceHelper<ELUser> implements 
         if (isValidString(user.getMajor())) {
             u.setMajor(user.getMajor());
         }
-        u.setStatus(user.getStatus());
 
+        if (user.getStatus() != null) {
+            u.setStatus(user.getStatus());
+        }
         ELUser newUser = userRepository.save(u);
 
         return UserMapper.INSTANCE.toUserResponseDTO(newUser);
     }
 
-	
-	@Override
-	public UserResponseDTO addGroup(String userId, String groupId) {
-		ELUser user = getById(userId);
-		ELGroup group = getGroupById(groupId);
-		
-		user.addGroup(group);
-		
+    @Override
+    public UserResponseDTO addGroup(String userId, String groupId) {
+        ELUser user = getById(userId);
+        ELGroup group = getGroupById(groupId);
+
+        user.addGroup(group);
+
         return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
 
-	}
-
-	@Override
-	public UserResponseDTO getProfile(String id) {
-		ELUser user = getById(id);
-		return UserMapper.INSTANCE.toUserResponseDTO(user);
-	}
-
-	@Override
-	public UserResponseDTO deleteGroup(String userId, String groupId) {
-		ELUser user = getById(userId);
-		ELGroup group = getGroupById(groupId);
-		
-		user.removeGroup(group);
-		return  UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
-	}
-
-    @Override
-    protected String getMessageIdInvalid() {
-        return errorsIdInvalid;
     }
 
     @Override
-    protected JpaRepository<ELUser, UUID> getRepository() {
-        return userRepository;
+    public UserResponseDTO deleteGroup(String userId, String groupId) {
+        ELUser user = getById(userId);
+        ELGroup group = getGroupById(groupId);
+
+        user.removeGroup(group);
+        return UserMapper.INSTANCE.toUserResponseDTO(userRepository.save(user));
     }
 
-    @Override
-    protected String getErrorNotFound() {
-        return errorsUserNotFound;
-    }
-    
     private ELGroup getGroupById(String id) {
-        UUID uuid;
-        try{
-            uuid = UUID.fromString(id);
-        }catch(Exception e){
-            throw new BusinessException(getMessageIdInvalid());
-        }
-        
-        Optional<ELGroup> entityOpt = groupRepository.findById(uuid);
-        
-        if(entityOpt.isEmpty()){
-            throw new BusinessException(errorsGroupIdNotFound);
-        }
-        return entityOpt.get();
+        return groupRepository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new BusinessException(errorsGroupNotFound));
     }
 
+    private ELUser getById(String id) {
+        return userRepository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new BusinessException(errorsUserNotFound));
+    }
+
+    private boolean isValidString(String s) {
+        if (s == null || s.length() == 0) {
+            return false;
+        }
+        return true;
+    }
 }

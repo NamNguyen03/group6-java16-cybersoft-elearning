@@ -9,7 +9,7 @@ import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
     providedIn: 'root',
 })
 export class UserClient {
-    private _apiEndpoint = `${environment.api}users`
+    private _apiEndpoint = `${environment.api}users`;
     private _apiLogin = `${environment.api}auth/login`;
     private _apiMyProfile = `${this._apiEndpoint}/me`;
     private _apiUpdateAvatar = `${this._apiMyProfile}/avatar`;
@@ -69,7 +69,7 @@ export class UserClient {
         let formData = new FormData();
         formData.append('file', file);
     
-        return this.httpClient.put<Response<UserRp>>(this._apiUpdateAvatar, formData);
+        return this.httpClient.post<Response<UserRp>>(this._apiUpdateAvatar, formData);
     }
 
     generateTokenUpdatePassword(): Observable<Response<string>>{

@@ -11,14 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
-import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
-import com.group6.java16.cybersoft.course.dto.LessonReponseDTO;
+import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
 import com.group6.java16.cybersoft.course.mapper.LessonMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
@@ -26,31 +25,30 @@ import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 import com.group6.java16.cybersoft.course.repository.ELLessonRepository;
 
-
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class LessonManagementSeviceImpl extends ServiceHelper<ELLesson> implements LessonManagementService {
-	
+public class LessonManagementSeviceImpl implements LessonManagementService {
+
 	@Autowired
 	private ELLessonRepository lessonRepository;
-	
+
 	@Autowired
 	private ELCourseRepository courseRepository;
-	
+
 	@Value("${lesson.not-found}")
 	private String errorslessonNotFound;
-	
+
 	@Value("${entity.id.invalid}")
-    private String errorsIdInvalid;
+	private String errorsIdInvalid;
 
 	@Override
-	public LessonReponseDTO updateLesson(LessonUpdateDTO rq, String id) {
-			
+	public LessonResponseDTO updateLesson(LessonUpdateDTO rq, String id) {
+
 		ELLesson lessonCurrent = getById(id);
 		ELLesson lesson = setUpdatelesson(lessonCurrent, rq);
 		return LessonMapper.INSTANCE.toLessonResponseDTO(lessonRepository.save(lesson));
 	}
-	
+
 	private ELLesson setUpdatelesson(ELLesson lessonCurrent, LessonUpdateDTO rq) {
 		if (checkString(rq.getName())) {
 			lessonCurrent.setName(rq.getName());
@@ -66,7 +64,7 @@ public class LessonManagementSeviceImpl extends ServiceHelper<ELLesson> implemen
 
 		return lessonCurrent;
 	}
-	
+
 	private boolean checkString(String s) {
 		if (s == null || s.length() == 0) {
 			return false;
@@ -75,8 +73,7 @@ public class LessonManagementSeviceImpl extends ServiceHelper<ELLesson> implemen
 	}
 
 	@Override
-	public LessonReponseDTO createLesson(LessonCreateDTO dto) {
-		
+	public LessonResponseDTO createLesson(LessonCreateDTO dto) {
 
 		// Map dto to lesson
 
@@ -88,13 +85,13 @@ public class LessonManagementSeviceImpl extends ServiceHelper<ELLesson> implemen
 		ELLesson lesson = lessonRepository.save(s);
 
 		// Map lesson to dto
-		LessonReponseDTO srp = LessonMapper.INSTANCE.toLessonResponseDTO(lesson);
+		LessonResponseDTO srp = LessonMapper.INSTANCE.toLessonResponseDTO(lesson);
 
 		return srp;
 	}
 
 	@Override
-	public PageResponseModel<LessonReponseDTO> search(PageRequestModel pageRequestModel) {
+	public PageResponseModel<LessonResponseDTO> search(PageRequestModel pageRequestModel) {
 		int page = pageRequestModel.getPageCurrent() - 1;
 		int size = pageRequestModel.getItemPerPage();
 		boolean isAscending = pageRequestModel.isIncrementSort();
@@ -120,8 +117,8 @@ public class LessonManagementSeviceImpl extends ServiceHelper<ELLesson> implemen
 			rp = lessonRepository.findAll(pageable);
 		}
 
-		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(), 
-	            rp.getContent().stream().map(LessonMapper.INSTANCE::toLessonResponseDTO).collect(Collectors.toList()));
+		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(),
+				rp.getContent().stream().map(LessonMapper.INSTANCE::toLessonResponseDTO).collect(Collectors.toList()));
 	}
 
 	@Override
@@ -130,18 +127,14 @@ public class LessonManagementSeviceImpl extends ServiceHelper<ELLesson> implemen
 	}
 
 	@Override
-	protected String getMessageIdInvalid() {
-		return errorsIdInvalid;
+	public LessonResponseDTO getInfoLesson(String id) {
+		ELLesson lesson = getById(id);
+		return LessonMapper.INSTANCE.toLessonResponseDTO(lesson);
 	}
 
-	@Override
-	protected JpaRepository<ELLesson, UUID> getRepository() {
-		return lessonRepository;
-	}
-
-	@Override
-	protected String getErrorNotFound() {
-		return errorslessonNotFound;
+	private ELLesson getById(String id) {
+		return lessonRepository.findById(UUID.fromString(id))
+				.orElseThrow(() -> new BusinessException(errorslessonNotFound));
 	}
 
 }

@@ -37,4 +37,13 @@ export class RoleClient {
         return this.httpClient.put<Response<RoleResponse>>(this.apiEndpoint+"/"+id,rq);
 
     }
+    deleteProgramIntoRole(roleId, programId: string): Observable<Response<RoleResponse>>{
+        return this.httpClient.delete<Response<RoleResponse>>(this.apiEndpoint + "/" + roleId + "/" + programId)
+    }
+    getRoleDetails(id: string): Observable<Response<RoleResponse>>{
+        return this.httpClient.get<Response<RoleResponse>>(this.apiEndpoint+ "/" + id);
+    }
+    addProgramIntoRole(roleId, programId: string): Observable<Response<RoleResponse>>{
+        return this.httpClient.post<Response<RoleResponse>>(this.apiEndpoint + "/" + roleId + "/" + programId,'')
+    }
 }

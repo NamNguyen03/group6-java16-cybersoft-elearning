@@ -3,7 +3,6 @@ package com.group6.java16.cybersoft.user.repository;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.group6.java16.cybersoft.role.model.ELRole;
 import com.group6.java16.cybersoft.user.model.ELUser;
 
 import org.springframework.data.domain.Page;

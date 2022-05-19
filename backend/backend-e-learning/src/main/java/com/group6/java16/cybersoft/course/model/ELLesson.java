@@ -1,8 +1,5 @@
 package com.group6.java16.cybersoft.course.model;
 
-
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;

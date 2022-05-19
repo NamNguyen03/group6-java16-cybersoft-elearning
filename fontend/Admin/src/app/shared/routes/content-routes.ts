@@ -20,6 +20,13 @@ export const content: Routes = [
     }
   },
   {
+    path: 'program',
+    loadChildren: () => import('../../components/program/program.module').then(m => m.ProgramModule),
+    data: {
+      breadcrumb: "Program"
+    }
+  },
+  {
     path: 'courses',
     loadChildren: () => import('../../components/course/courses.module').then(m => m.CoursesModule),
     data: {

@@ -68,6 +68,12 @@ export class NavService {
 		// 	]
 		// },
 		{
+			title: 'Program', icon: 'dollar-sign', type: 'sub', active: false, children: [
+				{ path: '/program/create-program', title: 'Create Program', type: 'link' },
+				{ path: '/program/list-program', title: 'List Program', type: 'link' },
+			]
+		},
+		{
 			title: 'Courses', icon: 'tag', type: 'sub', active: false, children: [
 				{ path: '/courses/list-course', title: 'List Courses', type: 'link' },
 				{ path: '/courses/create-course', title: 'Create Courses', type: 'link' },
@@ -94,6 +100,12 @@ export class NavService {
 				{ path: '/users/create-user', title: 'Create User', type: 'link' },
 			]
 		},
+		// {
+		// 	title: 'Lessons', icon: 'users', type: 'sub', active: false, children: [
+		// 		{ path: '/lessons/list-lesson', title: 'Lesson List', type: 'link' },
+		// 		{ path: '/lessons/create-lesson', title: 'Create Lesson', type: 'link' },
+		// 	]
+		// },
 		// {
 		// 	title: 'Vendors', icon: 'users', type: 'sub', active: false, children: [
 		// 		{ path: '/vendors/list-vendors', title: 'Vendor List', type: 'link' },

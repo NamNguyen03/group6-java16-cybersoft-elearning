@@ -31,7 +31,6 @@ import com.group6.java16.cybersoft.role.repository.ELRoleRepository;
 import com.group6.java16.cybersoft.role.service.RoleService;
 import com.group6.java16.cybersoft.role.service.RoleServiceImpl;
 
-
 @SpringBootTest
 public class RoleServiceIntegrationTest {
 	@Mock
@@ -41,64 +40,68 @@ public class RoleServiceIntegrationTest {
 	private RoleMapper mapper;
 
 	@InjectMocks
-	private RoleService service = new RoleServiceImpl ();
-
+	private RoleService service = new RoleServiceImpl();
 
 	@Test
-	public void whenExistsRoleIsUsedToSearchAll_thenReturnPageResponseRole(){
-		PageRequestModel request = new PageRequestModel(1,10, null, true, null, null);
+	public void whenExistsRoleIsUsedToSearchAll_thenReturnPageResponseRole() {
+		PageRequestModel request = new PageRequestModel(1, 10, null, true, null, null);
 
 		Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
 
-		Page<ELRole> page = new PageImpl<ELRole>(new ArrayList<ELRole>(),pageable,10l);
+		Page<ELRole> page = new PageImpl<ELRole>(new ArrayList<ELRole>(), pageable, 10l);
 
 		when(roleRepository.findAll(pageable)).thenReturn(page);
 
-		PageResponseModel<RoleResponseDTO> expected = new PageResponseModel<RoleResponseDTO>(1,1,new ArrayList<RoleResponseDTO>());
+		PageResponseModel<RoleResponseDTO> expected = new PageResponseModel<RoleResponseDTO>(1, 1,
+				new ArrayList<RoleResponseDTO>());
 
 		PageResponseModel<RoleResponseDTO> response = service.search(request);
 
-		assertEquals(expected.getItems(),response.getItems());
-		assertEquals(expected.getTotalPage(),response.getTotalPage());
-		assertEquals(expected.getPageCurrent(),response.getPageCurrent());
+		assertEquals(expected.getItems(), response.getItems());
+		assertEquals(expected.getTotalPage(), response.getTotalPage());
+		assertEquals(expected.getPageCurrent(), response.getPageCurrent());
 
 	}
+
 	@Test
-	public void whenExistsRoleIsUsedToSearchByName_thenReturnPageResponseRole(){
-		PageRequestModel request = new PageRequestModel(1,10, null, true, "name", "value");
+	public void whenExistsRoleIsUsedToSearchByName_thenReturnPageResponseRole() {
+		PageRequestModel request = new PageRequestModel(1, 10, null, true, "name", "value");
 
 		Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
 
-		Page<ELRole> page = new PageImpl<ELRole>(new ArrayList<ELRole>(),pageable,10l);
+		Page<ELRole> page = new PageImpl<ELRole>(new ArrayList<ELRole>(), pageable, 10l);
 
-		when(roleRepository.searchByName("value",pageable)).thenReturn(page);
+		when(roleRepository.searchByName("value", pageable)).thenReturn(page);
 
-		PageResponseModel<RoleResponseDTO> expected = new PageResponseModel<RoleResponseDTO>(1,1,new ArrayList<RoleResponseDTO>());
+		PageResponseModel<RoleResponseDTO> expected = new PageResponseModel<RoleResponseDTO>(1, 1,
+				new ArrayList<RoleResponseDTO>());
 
 		PageResponseModel<RoleResponseDTO> response = service.search(request);
 
-		assertEquals(expected.getItems(),response.getItems());
-		assertEquals(expected.getTotalPage(),response.getTotalPage());
-		assertEquals(expected.getPageCurrent(),response.getPageCurrent());
+		assertEquals(expected.getItems(), response.getItems());
+		assertEquals(expected.getTotalPage(), response.getTotalPage());
+		assertEquals(expected.getPageCurrent(), response.getPageCurrent());
 
 	}
+
 	@Test
-	public void whenExistsRoleIsUsedToSearchAllAndSearch_thenReturnPageResponseRole(){
-		PageRequestModel request = new PageRequestModel(1,10, "name", true, null, null);
+	public void whenExistsRoleIsUsedToSearchAllAndSearch_thenReturnPageResponseRole() {
+		PageRequestModel request = new PageRequestModel(1, 10, "name", true, null, null);
 
 		Pageable pageable = PageRequest.of(0, 10, Sort.by("name").ascending());
 
-		Page<ELRole> page = new PageImpl<ELRole>(new ArrayList<ELRole>(),pageable,101);
+		Page<ELRole> page = new PageImpl<ELRole>(new ArrayList<ELRole>(), pageable, 101);
 
 		when(roleRepository.findAll(pageable)).thenReturn(page);
 
-		PageResponseModel<RoleResponseDTO> expected = new PageResponseModel<RoleResponseDTO>(1,11,new ArrayList<RoleResponseDTO>());
+		PageResponseModel<RoleResponseDTO> expected = new PageResponseModel<RoleResponseDTO>(1, 11,
+				new ArrayList<RoleResponseDTO>());
 
 		PageResponseModel<RoleResponseDTO> response = service.search(request);
 
-		assertEquals(expected.getItems(),response.getItems());
-		assertEquals(expected.getTotalPage(),response.getTotalPage());
-		assertEquals(expected.getPageCurrent(),response.getPageCurrent());
+		assertEquals(expected.getItems(), response.getItems());
+		assertEquals(expected.getTotalPage(), response.getTotalPage());
+		assertEquals(expected.getPageCurrent(), response.getPageCurrent());
 
 	}
 
@@ -108,6 +111,7 @@ public class RoleServiceIntegrationTest {
 		ELRole role = ELRole.builder()
 				.id(id)
 				.name("ADMIN")
+				.programs(null)
 				.description("hau test")
 				.build();
 
@@ -117,31 +121,24 @@ public class RoleServiceIntegrationTest {
 		RoleUpdateDTO request = RoleUpdateDTO.builder()
 				.name("LEADER")
 				.description("hau test")
+
 				.build();
 
 		when(roleRepository.save(role)).thenReturn(role);
 
-		RoleResponseDTO expected = RoleResponseDTO.builder()
-				.id(id)
-				.name("LEADER")
-				.description("hau test")
-				.build();
+		RoleResponseDTO expected = new RoleResponseDTO(id, "LEADER", "hau test", null);
 
 		when(mapper.toResponseDTO(role)).thenReturn(expected);
 
-		assertEquals(expected, service.update(id.toString(), request));
+		RoleResponseDTO rp = service.update(id.toString(), request);
 
+		assertEquals(expected, rp);
 
 	}
 
 	@Test
 	public void whenUpdateRoleExistsName_thenThrowBusinessException() {
 		UUID id = UUID.randomUUID();
-		ELRole role = ELRole.builder()
-				.id(UUID.randomUUID())
-				.name("LEADER")
-				.description("hau test")
-				.build();
 		RoleUpdateDTO request = RoleUpdateDTO.builder()
 				.name("LEADER").build();
 		when(roleRepository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(ELRole.builder()
@@ -151,17 +148,18 @@ public class RoleServiceIntegrationTest {
 				.build()));
 		when(roleRepository.existsByName(request.getName())).thenReturn(true);
 
-		assertThrows(BusinessException.class,() -> service.update(id.toString(),request));
+		assertThrows(BusinessException.class, () -> service.update(id.toString(), request));
 	}
+
 	@Test
-	public void whenCreateRoleSuccessfully_thenReturnRoleResponseDTO(){
+	public void whenCreateRoleSuccessfully_thenReturnRoleResponseDTO() {
 		RoleDTO rq = new RoleDTO("name", "description");
 
-		assertDoesNotThrow( () ->service.createRole(rq));
+		assertDoesNotThrow(() -> service.createRole(rq));
 	}
 
 	@Test
-	public void whenDeleteRoleSuccessfully_DoesNotThrowException(){
+	public void whenDeleteRoleSuccessfully_DoesNotThrowException() {
 		UUID id = UUID.randomUUID();
 		ELRole role = ELRole.builder()
 				.id(id)
@@ -169,11 +167,8 @@ public class RoleServiceIntegrationTest {
 				.description("hau test")
 				.build();
 		when(roleRepository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(role));
-		
-		assertDoesNotThrow( () ->service.deleteById(id.toString()));
+
+		assertDoesNotThrow(() -> service.deleteById(id.toString()));
 	}
-
-
-
 
 }

@@ -90,7 +90,6 @@ export class ListCourseComponent implements OnInit {
       let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '' : params['valueFieldNameSearch'];
 
       this.pageRequet = new PageRequest(1, 10, fieldNameSort, isIncrementSort, fieldNameSearch, valueFieldNameSearch)
-      console.log(this.pageRequet);
       this.courseClient.searchRequest(this.pageRequet).subscribe(
         response => {
           this.course_list = response.content.items;
@@ -170,7 +169,6 @@ export class ListCourseComponent implements OnInit {
 
   onUserRowSelected(event) {
     let courseId = event.data.id;
-
     this._router.navigate(['/courses/course-details'], {
       queryParams: { 'courseId': courseId }
     })

@@ -38,7 +38,6 @@ public class ELRole extends BaseEntity {
 	private Set<ELGroup> groups = new LinkedHashSet<>();
 
 	@Builder.Default
-	@JsonIgnore
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	@JoinTable(name = "el_role_program", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "program_id"))
 	private Set<ELProgram> programs = new LinkedHashSet();
@@ -48,5 +47,9 @@ public class ELRole extends BaseEntity {
 		program.getRoles().add(this);
 
 	}
+	public void removeProgram(ELProgram program) {
+	    programs.remove(program);
+	    program.getRoles().remove(this);
+	  }
 
 }

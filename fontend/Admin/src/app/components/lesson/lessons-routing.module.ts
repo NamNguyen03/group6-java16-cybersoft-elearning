@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListLessonComponent } from './list-lesson/list-lesson.component';
 import { CreateLessonComponent } from './create-lesson/create-lesson.component';
+import { LessonInfoComponent } from '../lesson-info/lesson-info.component';
 
 
 const routes: Routes = [

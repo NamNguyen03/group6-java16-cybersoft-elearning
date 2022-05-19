@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { PageRequest, PageResponse, Response } from './model/common.model';
 import { HttpClient } from '@angular/common/http';
 import { CourseCreate, CourseRp, CourseUpdateInformation } from './model/course.model';
+import { LessonRp } from './model/lesson.model';
 
 @Injectable({
     providedIn: 'root',
