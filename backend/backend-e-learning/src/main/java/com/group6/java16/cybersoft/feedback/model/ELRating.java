@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.group6.java16.cybersoft.common.model.BaseEntity;
-import com.group6.java16.cybersoft.course.model.ELCourse;
+import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.user.model.ELUser;
 
 import lombok.*;
@@ -25,12 +25,12 @@ public class ELRating extends BaseEntity {
 
 	@JsonIgnore
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinColumn(name = "course_id",referencedColumnName = "id")
-    private ELCourse course;
+	@JoinColumn(name = "user_id",referencedColumnName = "id")
+    private ELUser user;
 
     @JsonIgnore
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinColumn(name = "user_id",referencedColumnName = "id")
-    private ELUser user;
+	@JoinColumn(name = "lesson_id",referencedColumnName = "id")
+    private ELLesson lesson;
 }
 
