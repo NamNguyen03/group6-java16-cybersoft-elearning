@@ -1,6 +1,6 @@
 package com.group6.java16.cybersoft.backedelearning.course.controller;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,43 +21,41 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.gson.Gson;
-import com.group6.java16.cybersoft.common.model.PageRequestModel;
-import com.group6.java16.cybersoft.common.model.PageResponseModel;
+import com.group6.java16.cybersoft.course.controller.LessonManagementController;
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
-import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
+import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
+import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
+import com.group6.java16.cybersoft.course.mapper.LessonMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
+import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
+import com.group6.java16.cybersoft.course.repository.ELLessonRepository;
 import com.group6.java16.cybersoft.course.service.CourseManagementService;
+import com.group6.java16.cybersoft.course.service.LessonManagementService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CourseManagementControllerIntergratiomTest {
+public class LessonManagementControllerIntergrationTest {
 	@Autowired
     private MockMvc mvc;
 	
 	@MockBean
-	private CourseManagementService service;
+	private LessonManagementService service;
 	
 	@MockBean
-	private ELCourseRepository repository;
+	private ELLessonRepository repository;
 	
 	@Mock
-	private CourseMapper mapper;
+	private LessonMapper mapper;
 	
     @Test
     @WithMockUser("phan")
-    public void givenJsonObject_whenSearchCourse_theReturnStatus200() throws Exception{
-        mvc.perform(get("/api/v1/courses")
+    public void givenJsonObject_whenSearchLesson_theReturnStatus200() throws Exception{
+        mvc.perform(get("/api/v1/lessons")
             .param("pageCurrent", "1")
             .param("itemPerPage", "10")
             .param("fieldNameSort", "createdBy")
@@ -72,15 +69,15 @@ public class CourseManagementControllerIntergratiomTest {
     
     @Test
     @WithMockUser("phan")
-    public void givenJonObject_whenNameExistedIsUsedCreateCourse_thenReturnStatus400() throws Exception{
+    public void givenJonObject_whenNameExistedIsUsedCreateLesson_thenReturnStatus400() throws Exception{
     
-    	CourseCreateDTO course = new CourseCreateDTO("name1212122", 12, "description");
+    	LessonCreateDTO lesson = new LessonCreateDTO("huyphan", "Hello","Nam","courseid");
     	Gson gson = new Gson();
-        String json = gson.toJson(course);
+        String json = gson.toJson(lesson);
         
-        when(repository.findByCourseName("name1212122")).thenReturn(Optional.of(new ELCourse()));
+        when(repository.findByName("huyphan")).thenReturn(Optional.of(new ELLesson()));
         
-        mvc.perform(post("/api/v1/courses")
+        mvc.perform(post("/api/v1/lessons")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
             .andDo(print())
@@ -92,15 +89,15 @@ public class CourseManagementControllerIntergratiomTest {
     
     @Test
     @WithMockUser("nam")
-    public void givenJonObject_whenCreateCourseSuccessfully_thenReturnStatus200() throws Exception{
+    public void givenJonObject_whenCreateLessonSuccessfully_thenReturnStatus200() throws Exception{
     
-    	CourseCreateDTO course = new CourseCreateDTO("name1212122", 12, "description");
+    	LessonCreateDTO lesson = new LessonCreateDTO("name1212122", "Huy", "description","Phan");
     	Gson gson = new Gson();
-        String json = gson.toJson(course);
+        String json = gson.toJson(lesson);
         
-        when(repository.findByCourseName("name1212122")).thenReturn(Optional.empty());
+        when(repository.findByName("name1212122")).thenReturn(Optional.empty());
         
-        mvc.perform(post("/api/v1/courses")
+        mvc.perform(post("/api/v1/lessons")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
             .andDo(print())
@@ -112,21 +109,20 @@ public class CourseManagementControllerIntergratiomTest {
     
     @Test
     @WithMockUser("nam")
-    public void givenJonObject_whenUpdateSuccessfully_thenReturnStatus200() throws Exception{
+    public void givenJonObject_whenUpdateLessonfully_thenReturnStatus200() throws Exception{
     
-    	CourseUpdateDTO course = new CourseUpdateDTO("nam12232", 12, "asdfsdfsd");
+    	LessonUpdateDTO lesson = new LessonUpdateDTO("Huy", "Huy", "Phần");
     	Gson gson = new Gson();
-        String json = gson.toJson(course);
+        String json = gson.toJson(lesson);
         
         UUID uuid = UUID.randomUUID();
         
-        mvc.perform(put("/api/v1/courses/" + uuid.toString())
+        mvc.perform(put("/api/v1/lessons/" + uuid.toString())
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
             .andDo(print())
             .andExpect(status().isOk());
-        
-        
+     
     	
     }
     
@@ -136,42 +132,11 @@ public class CourseManagementControllerIntergratiomTest {
         
         UUID uuid = UUID.randomUUID();
         
-        mvc.perform(delete("/api/v1/courses/" + uuid.toString()))
+        mvc.perform(delete("/api/v1/lessons/" + uuid.toString()))
             .andDo(print())
             .andExpect(status().isOk());
         
         
     	
     }
-    
-    @Test
-    @WithMockUser("phan")
-    public void givenJonObject_whenCousreExistedIsUsedGetCourseDatails_thenReturnStatus200() throws Exception{
-        
-        UUID uuid = UUID.randomUUID();
-        
-        mvc.perform(get("/api/v1/courses/" + uuid.toString()))
-            .andDo(print())
-            .andExpect(status().isOk());
-        
-        
-    	
-    }
-    
-    @Test
-    public void whenCourseExistedIsUsedToDeleteCourse_thenDeleteSuccessfully(){
-
-        UUID id = UUID.randomUUID();
-
-        ELCourse course =  ELCourse.builder()
-        	.courseName("Java Back End")
-        	.courseTime(32)
-        	.description("Hello Nam")
-            .build();
-
-        when(repository.findById(id)).thenReturn(Optional.of(course));
-        assertDoesNotThrow( () ->service.deleteById(id.toString()));
-       
-    }
-    
 }
