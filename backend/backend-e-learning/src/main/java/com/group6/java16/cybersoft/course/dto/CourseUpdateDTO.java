@@ -4,6 +4,7 @@ import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.LevelEnum;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

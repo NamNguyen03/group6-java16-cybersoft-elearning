@@ -1,6 +1,7 @@
 package com.group6.java16.cybersoft.backedelearning.course.controller;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,6 +24,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.google.gson.Gson;
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.course.controller.LessonManagementController;
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
@@ -53,7 +55,7 @@ public class LessonManagementControllerIntergrationTest {
 	private LessonMapper mapper;
 	
     @Test
-    @WithMockUser("phan")
+    @WithMockUser
     public void givenJsonObject_whenSearchLesson_theReturnStatus200() throws Exception{
         mvc.perform(get("/api/v1/lessons")
             .param("pageCurrent", "1")
@@ -68,14 +70,17 @@ public class LessonManagementControllerIntergrationTest {
     }
     
     @Test
-    @WithMockUser("phan")
+    @WithMockUser
     public void givenJonObject_whenNameExistedIsUsedCreateLesson_thenReturnStatus400() throws Exception{
     
-    	LessonCreateDTO lesson = new LessonCreateDTO("huyphan", "Hello","Nam","courseid");
+    	LessonCreateDTO lesson = new LessonCreateDTO();
+    	lesson.setContent("Buoi 1");
+    	lesson.setDescription("Java Core");
+    	lesson.setName("Review Java");
     	Gson gson = new Gson();
         String json = gson.toJson(lesson);
         
-        when(repository.findByName("huyphan")).thenReturn(Optional.of(new ELLesson()));
+        when(repository.findByName("Review Java")).thenReturn(Optional.of(new ELLesson()));
         
         mvc.perform(post("/api/v1/lessons")
             .contentType(MediaType.APPLICATION_JSON)
@@ -88,14 +93,19 @@ public class LessonManagementControllerIntergrationTest {
     }
     
     @Test
-    @WithMockUser("nam")
+    @WithMockUser
     public void givenJonObject_whenCreateLessonSuccessfully_thenReturnStatus200() throws Exception{
     
-    	LessonCreateDTO lesson = new LessonCreateDTO("name1212122", "Huy", "description","Phan");
+    	
+    	LessonCreateDTO lesson = new LessonCreateDTO();
+    	lesson.setContent("Buoi 1");
+    	lesson.setDescription("Java Core");
+    	lesson.setName("Review Java");
+    	lesson.setCourse_id("course1");
     	Gson gson = new Gson();
         String json = gson.toJson(lesson);
         
-        when(repository.findByName("name1212122")).thenReturn(Optional.empty());
+        when(repository.findByName("Review Java")).thenReturn(Optional.empty());
         
         mvc.perform(post("/api/v1/lessons")
             .contentType(MediaType.APPLICATION_JSON)
@@ -108,10 +118,13 @@ public class LessonManagementControllerIntergrationTest {
     }
     
     @Test
-    @WithMockUser("nam")
+    @WithMockUser
     public void givenJonObject_whenUpdateLessonfully_thenReturnStatus200() throws Exception{
     
-    	LessonUpdateDTO lesson = new LessonUpdateDTO("Huy", "Huy", "Phần");
+    	LessonUpdateDTO lesson = new LessonUpdateDTO();
+    	lesson.setContent("Buoi 1");
+    	lesson.setDescription("Java Core");
+    	lesson.setName("Review Java");
     	Gson gson = new Gson();
         String json = gson.toJson(lesson);
         
@@ -127,12 +140,48 @@ public class LessonManagementControllerIntergrationTest {
     }
     
     @Test
-    @WithMockUser("phan")
+    @WithMockUser
+    public void givenJonObject_whenUpdateLessonError_thenReturnStatus400() throws Exception{
+    
+    	LessonUpdateDTO lesson = new LessonUpdateDTO();
+    	lesson.setContent("Buoi 1");
+    	lesson.setDescription("Java Core");
+    	lesson.setName("Review Java");
+    	Gson gson = new Gson();
+        String json = gson.toJson(lesson);
+        
+        when(service.updateLesson(any(),any())).thenThrow(new BusinessException("Lesson not found."));
+        
+        UUID uuid = UUID.randomUUID();
+        
+        mvc.perform(put("/api/v1/lessons/" + uuid.toString())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andDo(print())
+            .andExpect(status().isBadRequest());
+     
+    	
+    }
+    
+    @Test
+    @WithMockUser
     public void givenJonObject_whenDeleteSuccessfully_thenReturnStatus200() throws Exception{
         
         UUID uuid = UUID.randomUUID();
         
         mvc.perform(delete("/api/v1/lessons/" + uuid.toString()))
+            .andDo(print())
+            .andExpect(status().isOk());
+        
+    }
+    
+    @Test
+    @WithMockUser
+    public void givenJonObject_whenLessonsExistedIsUsedGetLessonInfo_thenReturnStatus200() throws Exception{
+        
+        UUID uuid = UUID.randomUUID();
+        
+        mvc.perform(get("/api/v1/lessons/" + uuid.toString()))
             .andDo(print())
             .andExpect(status().isOk());
         

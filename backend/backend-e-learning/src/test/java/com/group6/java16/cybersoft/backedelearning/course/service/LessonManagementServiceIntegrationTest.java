@@ -27,7 +27,7 @@ import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
-import com.group6.java16.cybersoft.course.dto.LessonReponseDTO;
+import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.mapper.LessonMapper;
@@ -75,7 +75,7 @@ public class LessonManagementServiceIntegrationTest {
 		expected.setDescription("description");
 		expected.setLessons(null);
 		
-		LessonReponseDTO actual = service.createLesson(lsson);
+		LessonResponseDTO actual = service.createLesson(lsson);
 		
 		assertEquals(expected,actual);
 		
@@ -98,13 +98,13 @@ UUID uuid = UUID.randomUUID();
 		when(repository.findById(uuid)).thenReturn(Optional.of(elLesson));
 		when(repository.save(any())).thenReturn(elLesson); 
 		
-		LessonReponseDTO expected = new LessonReponseDTO();
+		LessonResponseDTO expected = new LessonResponseDTO();
 		expected.setId(uuid);
 		expected.setContent("Hello");
 		expected.setDescription("nam");
 		expected.setName("Hallo");
 		
-		LessonReponseDTO actual = service.updateLesson(lsson, uuid.toString());
+		LessonResponseDTO actual = service.updateLesson(lsson, uuid.toString());
 		
 		assertEquals(expected,actual);
 		
@@ -166,10 +166,10 @@ UUID uuid = UUID.randomUUID();
 
 		when(repository.findAll(pageable)).thenReturn(page);
 
-		PageResponseModel<LessonReponseDTO> expected = new PageResponseModel<LessonReponseDTO>(1, 11,
-				new ArrayList<LessonReponseDTO>());
+		PageResponseModel<LessonResponseDTO> expected = new PageResponseModel<LessonResponseDTO>(1, 11,
+				new ArrayList<LessonResponseDTO>());
 
-		PageResponseModel<LessonReponseDTO> response = service.search(request);
+		PageResponseModel<LessonResponseDTO> response = service.search(request);
 
 		assertEquals(expected.getItems(), response.getItems());
 		assertEquals(expected.getTotalPage(), response.getTotalPage());
@@ -181,16 +181,16 @@ UUID uuid = UUID.randomUUID();
 	public void whenExistsCourseIsUsedToSearchCourseName_thenReturnPageResponseGroup() {
 		PageRequestModel request = new PageRequestModel(1, 10, null, true, "name", "value");
 
-		Pageable pageable = PageRequest.of(0, 10, Sort.by("name").ascending());
+		Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
 
 		Page<ELLesson> page = new PageImpl<ELLesson>(new ArrayList<ELLesson>(), pageable, 101);
 
 		when(repository.findAll(pageable)).thenReturn(page);
 
-		PageResponseModel<LessonReponseDTO> expected = new PageResponseModel<LessonReponseDTO>(1, 11,
-				new ArrayList<LessonReponseDTO>());
+		PageResponseModel<LessonResponseDTO> expected = new PageResponseModel<LessonResponseDTO>(1, 11,
+				new ArrayList<LessonResponseDTO>());
 
-		PageResponseModel<LessonReponseDTO> response = service.search(request);
+		PageResponseModel<LessonResponseDTO> response = service.search(request);
 
 		assertEquals(expected.getItems(), response.getItems());
 		assertEquals(expected.getTotalPage(), response.getTotalPage());

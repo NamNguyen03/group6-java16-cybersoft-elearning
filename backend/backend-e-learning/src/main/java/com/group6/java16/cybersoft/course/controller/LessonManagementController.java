@@ -43,13 +43,7 @@ public class LessonManagementController {
 	}
 
 	@PutMapping("{id}")
-	public Object updateSession(@PathVariable("id") String id, @Valid @RequestBody LessonUpdateDTO rq,
-			BindingResult result) {
-
-		if (result.hasErrors()) {
-			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
-		}
-
+	public Object updateSession(@PathVariable("id") String id,@RequestBody LessonUpdateDTO rq) {
 		LessonResponseDTO rp = service.updateLesson(rq, id);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);

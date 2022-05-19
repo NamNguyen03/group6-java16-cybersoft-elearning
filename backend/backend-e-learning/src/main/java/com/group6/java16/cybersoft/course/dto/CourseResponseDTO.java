@@ -21,9 +21,11 @@ public class CourseResponseDTO {
 
 	private String img;
 
-	private LevelEnum level;
+	private String level;
 
 	private float starAvg;
+	
+	private int courseTime;
 
 	private int totalStar;
 

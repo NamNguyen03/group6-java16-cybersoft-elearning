@@ -1,6 +1,6 @@
 package com.group6.java16.cybersoft.backedelearning.course.controller;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,18 +21,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.gson.Gson;
-import com.group6.java16.cybersoft.common.model.PageRequestModel;
-import com.group6.java16.cybersoft.common.model.PageResponseModel;
+import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
-import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
@@ -56,7 +47,7 @@ public class CourseManagementControllerIntergratiomTest {
 	private CourseMapper mapper;
 	
     @Test
-    @WithMockUser("phan")
+    @WithMockUser
     public void givenJsonObject_whenSearchCourse_theReturnStatus200() throws Exception{
         mvc.perform(get("/api/v1/courses")
             .param("pageCurrent", "1")
@@ -70,15 +61,21 @@ public class CourseManagementControllerIntergratiomTest {
             .andExpect(status().isOk());
     }
     
+    @WithMockUser
     @Test
-    @WithMockUser("phan")
     public void givenJonObject_whenNameExistedIsUsedCreateCourse_thenReturnStatus400() throws Exception{
     
-    	CourseCreateDTO course = new CourseCreateDTO("name1212122", 12, "description");
+    	CourseCreateDTO course = new CourseCreateDTO();
+    	course.setCourseName("Java Backend");
+    	course.setImg("anh.img");
+    	course.setDescription("hello Java Backend");
+    	course.setSkill1("Java");
+    	course.setSkill2("HTML-CSS");
+    	course.setSkill3("SQL");
     	Gson gson = new Gson();
         String json = gson.toJson(course);
         
-        when(repository.findByCourseName("name1212122")).thenReturn(Optional.of(new ELCourse()));
+        when(repository.findByCourseName("Java Backend")).thenReturn(Optional.of(new ELCourse()));
         
         mvc.perform(post("/api/v1/courses")
             .contentType(MediaType.APPLICATION_JSON)
@@ -90,15 +87,22 @@ public class CourseManagementControllerIntergratiomTest {
     	
     }
     
+    
     @Test
-    @WithMockUser("nam")
+    @WithMockUser
     public void givenJonObject_whenCreateCourseSuccessfully_thenReturnStatus200() throws Exception{
     
-    	CourseCreateDTO course = new CourseCreateDTO("name1212122", 12, "description");
+    	CourseCreateDTO course = new CourseCreateDTO();
+    	course.setCourseName("Java Backend");
+    	course.setImg("anh.img");
+    	course.setDescription("hello Java Backend");
+    	course.setSkill1("Java");
+    	course.setSkill2("HTML-CSS");
+    	course.setSkill3("SQL");
     	Gson gson = new Gson();
         String json = gson.toJson(course);
         
-        when(repository.findByCourseName("name1212122")).thenReturn(Optional.empty());
+        when(repository.findByCourseName("Java Backend")).thenReturn(Optional.empty());
         
         mvc.perform(post("/api/v1/courses")
             .contentType(MediaType.APPLICATION_JSON)
@@ -111,10 +115,11 @@ public class CourseManagementControllerIntergratiomTest {
     }
     
     @Test
-    @WithMockUser("nam")
+    @WithMockUser
     public void givenJonObject_whenUpdateSuccessfully_thenReturnStatus200() throws Exception{
     
-    	CourseUpdateDTO course = new CourseUpdateDTO("nam12232", 12, "asdfsdfsd");
+    	CourseUpdateDTO course = new CourseUpdateDTO();
+
     	Gson gson = new Gson();
         String json = gson.toJson(course);
         
@@ -131,7 +136,35 @@ public class CourseManagementControllerIntergratiomTest {
     }
     
     @Test
-    @WithMockUser("phan")
+    @WithMockUser
+    public void givenJonObject_whenUpdateError_thenReturnStatus400() throws Exception{
+    
+    	CourseUpdateDTO course = new CourseUpdateDTO();
+    	course.setCourseName("Java Backend");
+    	course.setImg("anh.img");
+    	course.setDescription("hello Java Backend");
+    	course.setSkill1("Java");
+    	course.setSkill2("HTML-CSS");
+    	course.setSkill3("SQL");
+    	Gson gson = new Gson();
+        String json = gson.toJson(course);
+        
+        when(service.updateCourse(any(),any())).thenThrow(new BusinessException("Course not found."));
+        
+        UUID uuid = UUID.randomUUID();
+        
+        mvc.perform(put("/api/v1/users/" + uuid.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+        
+        
+    	
+    }
+    
+    @Test
+    @WithMockUser
     public void givenJonObject_whenDeleteSuccessfully_thenReturnStatus200() throws Exception{
         
         UUID uuid = UUID.randomUUID();
@@ -145,7 +178,7 @@ public class CourseManagementControllerIntergratiomTest {
     }
     
     @Test
-    @WithMockUser("phan")
+    @WithMockUser
     public void givenJonObject_whenCousreExistedIsUsedGetCourseDatails_thenReturnStatus200() throws Exception{
         
         UUID uuid = UUID.randomUUID();
@@ -159,14 +192,19 @@ public class CourseManagementControllerIntergratiomTest {
     }
     
     @Test
+    @WithMockUser
     public void whenCourseExistedIsUsedToDeleteCourse_thenDeleteSuccessfully(){
 
         UUID id = UUID.randomUUID();
 
         ELCourse course =  ELCourse.builder()
         	.courseName("Java Back End")
-        	.courseTime(32)
-        	.description("Hello Nam")
+        	.id(id)
+        	.img("anh.img")
+        	.skill1("JAVA")
+        	.skill2("CSS")
+        	.skill3("HTML")
+        	.description("Hello Java")
             .build();
 
         when(repository.findById(id)).thenReturn(Optional.of(course));

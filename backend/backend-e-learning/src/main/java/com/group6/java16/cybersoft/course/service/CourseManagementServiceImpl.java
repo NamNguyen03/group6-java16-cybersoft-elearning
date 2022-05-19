@@ -132,13 +132,15 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		if (null != fieldNameSort && fieldNameSort.matches("courseName")) {
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
-
+		}else {
+			pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
 		}
 
 		// coursename
 		if ("courseName".equals(fieldNameSearch)) {
 			rp = courseRepository.searchByCourseName(valueSearch, pageable);
 		}
+		
 		if ("category".equals(fieldNameSearch)) {
 			rp = courseRepository.findByCategory(valueSearch, pageable);
 		}
@@ -158,22 +160,6 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		return CourseMapper.INSTANCE.toCourseResponseDTO(course);
 	}
 
-	private ELLesson getLessonById(String id) {
-		UUID uuid;
-		try {
-			uuid = UUID.fromString(id);
-		} catch (Exception e) {
-			throw new BusinessException(getMessageIdInvalid());
-		}
-
-		Optional<ELLesson> entityOpt = lessonRepository.findById(uuid);
-
-		if (entityOpt.isEmpty()) {
-			throw new BusinessException(errorsLessonIdNotFound);
-		}
-		return entityOpt.get();
-	}
-	
 	private ELCourse getById(String id) {
 		return courseRepository.findById(UUID.fromString(id))
 				.orElseThrow(() -> new BusinessException(errorsCourseNotFound));

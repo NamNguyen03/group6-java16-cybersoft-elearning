@@ -79,6 +79,10 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 
 		ELLesson s = LessonMapper.INSTANCE.toModel(dto);
 		ELCourse c = courseRepository.findById(UUID.fromString(dto.getCourse_id())).get();
+		
+		c.setCourseTime(c.getCourseTime()+1);
+		
+		courseRepository.save(c);
 
 		// save lesson return lesson
 		s.setCourse(c);
@@ -104,8 +108,9 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 		if (null != fieldNameSort && fieldNameSort.matches("name")) {
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
-
-		}
+		}else{
+            pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
+        }
 
 		// lessonName
 		if ("name".equals(fieldNameSearch)) {
@@ -124,6 +129,12 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 	@Override
 	public void deleteById(String id) {
 		lessonRepository.delete(getById(id));
+		
+		ELCourse c = getById(id).getCourse();
+		
+		c.setCourseTime(c.getCourseTime()-1);
+		
+		courseRepository.save(c);
 	}
 
 	@Override
