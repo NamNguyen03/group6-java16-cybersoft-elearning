@@ -11,16 +11,19 @@ public class ExceptionHelper {
 
 	@ExceptionHandler(UnauthorizedException.class)
 	public Object handlerUnauthorizedException (UnauthorizedException ex) {
+		ex.printStackTrace();
 		return ResponseHelper.getResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED, true);
 	}
 
 	@ExceptionHandler(BusinessException.class)
 	public Object handlerBusinessException (BusinessException ex) {
+		ex.printStackTrace();
 		return ResponseHelper.getResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, true);
 	}
 	
 	@ExceptionHandler(IllegalArgumentException.class)
-	public Object handlerIllegalArgumentExceptio(IllegalArgumentException ex) {
+	public Object handlerIllegalArgumentException (IllegalArgumentException ex) {
+		ex.printStackTrace();
 		return ResponseHelper.getResponse("Data type invalid", HttpStatus.BAD_REQUEST, true);
 	}
 

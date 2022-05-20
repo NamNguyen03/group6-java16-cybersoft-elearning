@@ -11,9 +11,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserTokenRepository extends JpaRepository<ELUserToken, UUID>  {
-
-
-
     @Query("Select t From ELUserToken t where t.user.username = :username ")
     List<ELUserToken> findByUsername(@Param("username") String username);
      
