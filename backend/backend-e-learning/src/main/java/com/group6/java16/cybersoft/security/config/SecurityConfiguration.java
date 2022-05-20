@@ -5,6 +5,7 @@ import com.group6.java16.cybersoft.security.jwt.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -59,6 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter   {
 		
 		// API AUTHENTICATION
 		http.antMatcher("/api/v1/**").authorizeRequests()
+			.antMatchers(HttpMethod.GET,"/api/v1/courses").permitAll()
 			.antMatchers("/api/v1/auth/**").permitAll()
 			.antMatchers("/api/v1/users/password").permitAll()
 			.anyRequest().authenticated();

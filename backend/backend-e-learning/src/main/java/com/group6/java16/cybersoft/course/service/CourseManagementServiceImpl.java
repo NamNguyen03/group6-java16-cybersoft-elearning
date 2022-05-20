@@ -131,6 +131,8 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
 
+		}else {
+			pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
 		}
 
 		// coursename
