@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CourseClient } from 'src/app/api-clients/course.client';
 import { LessonClient } from 'src/app/api-clients/lesson.client';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
-import { CourseRp } from 'src/app/api-clients/model/course.model';
+import { CourseRp, CourseUpdateInformation } from 'src/app/api-clients/model/course.model';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -17,6 +17,9 @@ export class CourseDetailsComponent implements OnInit {
 
   public selected = [];
   public detailsForm: FormGroup;
+  public isUpdateCourse= false;
+  public isActions = false;
+  public isUpdateImg = false;
 
   public detailCourse: CourseRp = new CourseRp();
   public isSearch = false;
@@ -25,6 +28,7 @@ export class CourseDetailsComponent implements OnInit {
     true,
     null,
     null);
+  imgCourse: string;
 
   constructor(private courseClient: CourseClient,
     private lessonClient: LessonClient,
@@ -74,23 +78,47 @@ export class CourseDetailsComponent implements OnInit {
           this.detailCourse = response.content
            this.createProfileForm();
            this.setDefaultValueForm();
+           this.imgCourse = response.content.img;
         }
       )
     })
   }
   setDefaultValueForm() {
     this.detailsForm.patchValue({
-      courseName: this.detailCourse.courseName,
-      courseTime: this.detailCourse.courseTime,
-      description: this.detailCourse.description
+      img:this.detailCourse.img,
+      courseName: this.detailCourse.courseName, 
+      description: this.detailCourse.description,
+      category:this.detailCourse.category,
+      level:this.detailCourse.level,
+      starAvg:this.detailCourse.starAvg,
+      totalStar:this.detailCourse.totalStar,
+      totalRating:this.detailCourse.totalRating,
+      skill1:this.detailCourse.skill1,
+      skill2:this.detailCourse.skill2,
+      skill3:this.detailCourse.skill3,
+      skill4:this.detailCourse.skill4,
+      skill5:this.detailCourse.skill5,
+      lessons:this.detailCourse.lessons
     })
   }
   
   createProfileForm() {
     this.detailsForm = this.form.group({
+      img:[''],
       courseName: [''],
-      courseTime: [''],
-      description: ['']
+      description: [''],
+      category:[''],
+      level:[''],
+      starAvg:[''],
+      totalStar:[''],
+      totalRating:[''],
+      skill1:[''],
+      skill2:[''],
+      skill3:[''],
+      skill4:[''],
+      skill5:[''],
+      lesson:[],
+      
     })
   }
 
@@ -125,6 +153,40 @@ export class CourseDetailsComponent implements OnInit {
     this._router.navigate(['courses/lesson-info'], {
       queryParams: { 'lessonId': lessonId }
     })
+  }
+  updateCourse(){
+    let coursename = this.detailsForm.controls['courseName'].value;
+    let description = this.detailsForm.controls['description'].value;
+    let category = this.detailsForm.controls['category'].value;
+    let level = this.detailsForm.controls['level'].value;
+    let skill1 = this.detailsForm.controls['skill1'].value;
+    let skill2 = this.detailsForm.controls['skill2'].value;
+    let skill3 = this.detailsForm.controls['skill3'].value;
+    let skill4 = this.detailsForm.controls['skill4'].value;
+    let skill5 = this.detailsForm.controls['skill5'].value;
+    this.courseClient.updateCourse(this.detailCourse.id,new CourseUpdateInformation(coursename,description,category,level,this.detailCourse.img,skill1,skill2,skill3,skill4,skill5)).subscribe(
+      response =>{
+        this.toastr.success('Success','Update course success');
+      }
+    )
+  }
+
+  goToUpdateCourse(){
+    let courseId = this.detailCourse.id
+    this._router.navigate(['/courses/update-course'],{
+      queryParams: { 'courseId': courseId}
+  })
+  }
+  toggleAction(){
+    this.isActions = !this.isActions;
+    if(!this.isActions){
+      this.isUpdateImg = true;
+    }
+  }
+  changeInputImg(event: any){
+    this.courseClient.updateImg(event.target.files[0]).subscribe(response => 
+     this.detailCourse.img = response.content   
+    );
   }
 
 }

@@ -137,7 +137,9 @@ export class ListCourseComponent implements OnInit {
         if (result.isConfirmed) {
           let isLoadData = false;
           event.confirm.resolve(event.newData);
-          let courseUpdate = new CourseUpdateInformation(event.newData.courseName,event.newData.courseTime,event.newData.description);
+          let courseUpdate = new CourseUpdateInformation(event.newData.courseName,event.newData.description,
+            event.newDate.category,event.newDate.level,
+            event.newDate.img,event.newDate.skill1,event.newDate.skill2,event.newDate.skill3,event.newDate.skill4,event.newDate.skill5);
           this.courseClient.updateCourse(event.data.id,courseUpdate).subscribe(() => {
             this.loadData();
             isLoadData = true;
@@ -150,8 +152,7 @@ export class ListCourseComponent implements OnInit {
     });
 
   }
-
-  
+ 
   search(){
     let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
     let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;

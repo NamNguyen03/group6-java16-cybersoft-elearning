@@ -11,11 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Sort;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
+import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
@@ -29,6 +31,9 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	@Autowired
 	private ELCourseRepository courseRepository;
+	
+	@Autowired
+	private MyFirebaseService firebaseFileService;
 
 	@Value("${entity.id.invalid}")
 	private String errorsIdInvalid;
@@ -41,7 +46,6 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	@Override
 	public CourseResponseDTO createCourse(CourseCreateDTO dto) {
-
 		// Map dto to course
 		ELCourse c = CourseMapper.INSTANCE.toModel(dto);
 		c.setStarAvg(0f);
@@ -127,6 +131,8 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
 
+		}else {
+			pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
 		}
 
 		// coursename
@@ -155,6 +161,12 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 	private ELCourse getById(String id) {
 		return courseRepository.findById(UUID.fromString(id))
 				.orElseThrow(() -> new BusinessException(errorsCourseNotFound));
+	}
+
+	@Override
+	public String updateImg(MultipartFile file) {
+		  String urlImg = firebaseFileService.saveFile(file);
+		return urlImg;
 	}
 
 }
