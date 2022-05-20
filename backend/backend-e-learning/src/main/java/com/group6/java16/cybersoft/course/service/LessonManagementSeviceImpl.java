@@ -12,10 +12,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
+import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
@@ -40,6 +42,12 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 
 	@Value("${entity.id.invalid}")
 	private String errorsIdInvalid;
+
+	@Autowired
+	private MyFirebaseService firebaseFileService;
+
+	@Value("${course.not-found}")
+	private String errorscourseNotFound;
 
 	@Override
 	public LessonResponseDTO updateLesson(LessonUpdateDTO rq, String id) {
@@ -78,10 +86,13 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 		// Map dto to lesson
 
 		ELLesson s = LessonMapper.INSTANCE.toModel(dto);
-		ELCourse c = courseRepository.findById(UUID.fromString(dto.getCourse_id())).get();
+		ELCourse c = courseRepository.findById(UUID.fromString(dto.getCourse_id())).orElseThrow(
+				() -> new BusinessException(errorscourseNotFound));
 		
+		
+
 		c.setCourseTime(c.getCourseTime()+1);
-		
+
 		courseRepository.save(c);
 
 		// save lesson return lesson
@@ -109,8 +120,8 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
 		}else{
-            pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
-        }
+			pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
+		}
 
 		// lessonName
 		if ("name".equals(fieldNameSearch)) {
@@ -129,11 +140,11 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 	@Override
 	public void deleteById(String id) {
 		lessonRepository.delete(getById(id));
-		
+
 		ELCourse c = getById(id).getCourse();
-		
+
 		c.setCourseTime(c.getCourseTime()-1);
-		
+
 		courseRepository.save(c);
 	}
 
@@ -146,6 +157,11 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 	private ELLesson getById(String id) {
 		return lessonRepository.findById(UUID.fromString(id))
 				.orElseThrow(() -> new BusinessException(errorslessonNotFound));
+	}
+
+	@Override
+	public String postImg(MultipartFile file) {
+		return firebaseFileService.saveFile(file);
 	}
 
 }

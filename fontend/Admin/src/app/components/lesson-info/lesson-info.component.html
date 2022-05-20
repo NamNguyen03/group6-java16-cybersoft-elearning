@@ -3,14 +3,14 @@
     <div class="row">
         <div class="col-sm-2"></div>
         <div class="col-sm-12">
-            <div class="card tab2-card">
-                <div class="card-header">
+            <div class="card tab2-card" >
+                <div class="card-header" >
                     <h5> Lesson Information</h5>
                 </div>
                 <div class="card-body">
                     <div *ngIf="!isUpdateInfo" class="tab-pane fade show active" id="top-profile" role="tabpanel"
-                        aria-labelledby="top-profile-tab">
-                        <div class="table-responsive profile-table">
+                        aria-labelledby="top-profile-tab" style="height: 100%;">
+                        <div style="height: 900px;" style="height: 90%;">
                             <h4>General</h4>
                             <div class="form-group row" style="margin-top:30px">
                                 <label for="validationCustom2" class="col-xl-3 col-md-4">
@@ -26,13 +26,14 @@
 
                             <label style="margin-top:30px"> Content:</label>
                             <div [innerHTML]="infoLesson.content"
-                                style="height: 100px;margin-top:20px;">
-
+                                style="height: 100%;margin-top:20px;">
                             </div>
                         </div>
-                        <button class="btn btn-secondary mr-1" style="margin-left: 35%; margin-top: 5%;"
+                        <div style="height: 10%;">
+                            <button class="btn btn-secondary mr-1" style="margin-left: 35%; margin-top: 5%;"
                             (click)="goToUpdateInfo()">Go to update
                             lesson</button>
+                        </div>
                     </div>
 
                     <div *ngIf="isUpdateInfo">
@@ -53,13 +54,17 @@
 
                             <div>
                                 <label> Content</label>
+                                <div  class="form-group row">
+                                    <label class="col-xl-3 col-md-4">Image</label>
+                                    <input class="form-control form-control-sm mb-2 col-xl-8 col-md-7" id="formFileSm" type="file" (change)="changeInputAvatar($event)"/>
+                                </div>  
                                 <angular-editor class="mb-3" id="editor1" formControlName="content"
                                     [config]="editorConfig" name="content"></angular-editor>
                             </div>
 
                             <div style="margin-top:5%; margin-left:35%">
                                 <button class="btn btn-primary mr-1" (click)="updateInfo()">Submit</button>
-                                <button class="btn btn-secondary mr-1" (click)="goToInfo()">Cancel</button>
+                                <button class="btn btn-secondary mr-1"  (click)="goToInfo()">Cancel</button>
                             </div>
                         </form>
                         

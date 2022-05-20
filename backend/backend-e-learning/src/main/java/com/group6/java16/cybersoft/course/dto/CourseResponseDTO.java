@@ -4,14 +4,18 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.course.model.LevelEnum;
+import com.group6.java16.cybersoft.user.model.UserStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Getter
+@Setter
 public class CourseResponseDTO {
 	private UUID id;
 

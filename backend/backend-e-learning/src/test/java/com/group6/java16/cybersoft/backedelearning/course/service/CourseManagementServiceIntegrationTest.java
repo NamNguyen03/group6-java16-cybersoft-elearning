@@ -27,9 +27,11 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
+import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.ELCourse;
+import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.course.model.LevelEnum;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 import com.group6.java16.cybersoft.course.service.CourseManagementService;
@@ -154,8 +156,7 @@ public class CourseManagementServiceIntegrationTest {
 		
 		when(courseRepository.findById(uuid)).thenReturn(Optional.of(elcourse));
 		when(courseRepository.existsByCourseName(course.getCourseName())).thenReturn(true); 
-		
-		
+				
 		assertThrows( BusinessException.class ,() -> service.updateCourse(course, uuid.toString()));
 	}
 	
@@ -257,6 +258,45 @@ public class CourseManagementServiceIntegrationTest {
 		assertEquals(expected.getPageCurrent(), response.getPageCurrent());
 
 	}
+	
+	@Test
+	public void whenExistsCourseIsUsedToSearchCourseCategory_thenReturnPageResponseGroup() {
+		PageRequestModel request = new PageRequestModel(1, 10, null, true, "category", "BUSINESS");
+
+		Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").ascending());
+
+		Page<ELCourse> page = new PageImpl<ELCourse>(new ArrayList<ELCourse>(), pageable, 10l);
+
+		when(courseRepository.findByCategory("BUSINESS", pageable)).thenReturn(page);
+
+		PageResponseModel<CourseResponseDTO> expected = new PageResponseModel<CourseResponseDTO>(1, 1,
+				new ArrayList<CourseResponseDTO>());
+
+		PageResponseModel<CourseResponseDTO> response = service.search(request);
+
+		assertEquals(expected.getItems(), response.getItems());
+		assertEquals(expected.getTotalPage(), response.getTotalPage());
+		assertEquals(expected.getPageCurrent(), response.getPageCurrent());
+
+	}
+	
+	@Test
+    public void whenExistsUserIsUsedToSearchAllAndSort_thenReturnPageResponseUser(){
+        PageRequestModel rq = new PageRequestModel(1,10, "courseName", true, null, null);
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("courseName").ascending());
+
+        Page<ELCourse> page = new PageImpl<ELCourse>(new ArrayList<ELCourse>(), pageable, 10l);
+
+        when(courseRepository.findAll(pageable)).thenReturn(page);
+
+        PageResponseModel<CourseResponseDTO> expected = new PageResponseModel<CourseResponseDTO>(1,1, new ArrayList<CourseResponseDTO>());
+
+        PageResponseModel<CourseResponseDTO> rp = service.search(rq);
+        assertEquals(expected.getItems(), rp.getItems());
+        assertEquals(expected.getTotalPage(), rp.getTotalPage());
+        assertEquals(expected.getPageCurrent(), rp.getPageCurrent());
+    }
 	
 	
 }

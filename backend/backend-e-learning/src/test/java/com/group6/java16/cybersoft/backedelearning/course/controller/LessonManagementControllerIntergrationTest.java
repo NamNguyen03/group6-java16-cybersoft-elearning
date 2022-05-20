@@ -1,10 +1,10 @@
 package com.group6.java16.cybersoft.backedelearning.course.controller;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -20,23 +20,17 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.google.gson.Gson;
 import com.group6.java16.cybersoft.common.exception.BusinessException;
-import com.group6.java16.cybersoft.course.controller.LessonManagementController;
-import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
-import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
-import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.mapper.LessonMapper;
-import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.model.ELLesson;
-import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 import com.group6.java16.cybersoft.course.repository.ELLessonRepository;
-import com.group6.java16.cybersoft.course.service.CourseManagementService;
 import com.group6.java16.cybersoft.course.service.LessonManagementService;
 
 @SpringBootTest
@@ -188,4 +182,19 @@ public class LessonManagementControllerIntergrationTest {
         
     	
     }
+    
+    @Test 
+    @WithMockUser()
+    public void whenPostImg_thenReturnStatus200() throws Exception{
+        MockMultipartFile file 
+            = new MockMultipartFile(
+            "file", 
+            "hello.txt", 
+            MediaType.TEXT_PLAIN_VALUE, 
+            "Hello, World!".getBytes()
+            );
+        mvc.perform(multipart("/api/v1/lessons/img").file(file))
+            .andExpect(status().isOk());
+    }
+    
 }

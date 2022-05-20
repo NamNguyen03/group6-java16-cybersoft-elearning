@@ -84,10 +84,10 @@ export class ListCourseComponent implements OnInit {
 
   loadData() {
     this.route.queryParams.subscribe(params => {
-      let fieldNameSort = params['fieldNameSort'] == undefined ? null : params['fieldNameSort'];
-      let isIncrementSort = params['isIncrementSort'] == (undefined || null) ? true : params['isIncrementSort'];
-      let fieldNameSearch = params['fieldNameSearch'] == undefined ? '' : params['fieldNameSearch'];
-      let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '' : params['valueFieldNameSearch'];
+      let fieldNameSort = params['fieldNameSort'] == undefined ? null: params['fieldNameSort'];
+      let isIncrementSort = params['isIncrementSort'] == (undefined||null) ? true : params['isIncrementSort'];
+      let fieldNameSearch = params['fieldNameSearch'] == undefined ? '': params['fieldNameSearch'];
+      let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
 
       this.pageRequet = new PageRequest(1, 10, fieldNameSort, isIncrementSort, fieldNameSearch, valueFieldNameSearch)
       this.courseClient.searchRequest(this.pageRequet).subscribe(
