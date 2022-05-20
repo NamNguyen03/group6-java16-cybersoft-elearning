@@ -44,12 +44,8 @@ public class CourseManagementController {
 	}
 
 	@PutMapping("{id}")
-	public Object updateCourse(@PathVariable("id") String id, @Valid @RequestBody CourseUpdateDTO rq,
-			BindingResult result) {
+	public Object updateCourse(@PathVariable("id") String id,@RequestBody CourseUpdateDTO rq) {
 
-		if (result.hasErrors()) {
-			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
-		}
 
 		CourseResponseDTO rp = service.updateCourse(rq, id);
 

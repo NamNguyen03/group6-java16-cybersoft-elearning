@@ -2,14 +2,19 @@ package com.group6.java16.cybersoft.course.dto;
 
 import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.LevelEnum;
+import com.group6.java16.cybersoft.user.model.UserStatus;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class CourseUpdateDTO {
 
 	private String courseName;

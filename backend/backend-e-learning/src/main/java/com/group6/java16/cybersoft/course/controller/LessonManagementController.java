@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
@@ -23,6 +24,7 @@ import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
 import com.group6.java16.cybersoft.course.service.LessonManagementService;
+import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 
 @RestController
 @RequestMapping("api/v1/lessons")
@@ -43,13 +45,7 @@ public class LessonManagementController {
 	}
 
 	@PutMapping("{id}")
-	public Object updateSession(@PathVariable("id") String id, @Valid @RequestBody LessonUpdateDTO rq,
-			BindingResult result) {
-
-		if (result.hasErrors()) {
-			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
-		}
-
+	public Object updateSession(@PathVariable("id") String id,@RequestBody LessonUpdateDTO rq) {
 		LessonResponseDTO rp = service.updateLesson(rq, id);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
@@ -88,5 +84,12 @@ public class LessonManagementController {
 		LessonResponseDTO rp = service.getInfoLesson(id);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	}
+	
+	@PostMapping("/img")
+	public Object postImg(@RequestParam(name = "file") MultipartFile file) {
+        String rp = service.postImg(file);
+        
+        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
 }

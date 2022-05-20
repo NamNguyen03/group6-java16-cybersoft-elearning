@@ -14,6 +14,7 @@ import lombok.*;
 public class UpdatePasswordDTO {
     @NotFoundUsername(message ="Username not existed.")
     private String username;
+    
     @Size(min = 6, max = 64 , message ="user.password.size")
     @NotBlank(message = "{user.password.not-blank}")
     private String password;

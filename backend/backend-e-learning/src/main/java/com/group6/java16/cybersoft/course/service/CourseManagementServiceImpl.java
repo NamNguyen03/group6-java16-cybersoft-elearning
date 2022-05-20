@@ -43,6 +43,9 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	@Value("${lesson.id.not-found}")
 	private String errorsLessonIdNotFound;
+	
+	@Value("${course.name.existed}")
+	private String messageNameCouseExists;
 
 	@Override
 	public CourseResponseDTO createCourse(CourseCreateDTO dto) {
@@ -70,6 +73,9 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	private ELCourse setUpdateCourse(ELCourse courseCurrent, CourseUpdateDTO rq) {
 		if (checkString(rq.getCourseName())) {
+			if (!courseCurrent.getCourseName().equals(rq.getCourseName()) && courseRepository.existsByCourseName(rq.getCourseName())) {
+				throw new BusinessException(messageNameCouseExists);
+			}
 			courseCurrent.setCourseName(rq.getCourseName());
 		}
 
@@ -130,7 +136,6 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		if (null != fieldNameSort && fieldNameSort.matches("courseName")) {
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
-
 		}else {
 			pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
 		}
@@ -139,6 +144,7 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		if ("courseName".equals(fieldNameSearch)) {
 			rp = courseRepository.searchByCourseName(valueSearch, pageable);
 		}
+		
 		if ("category".equals(fieldNameSearch)) {
 			rp = courseRepository.findByCategory(valueSearch, pageable);
 		}
