@@ -4,14 +4,18 @@ import javax.validation.constraints.NotBlank;
 
 import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.LevelEnum;
+import com.group6.java16.cybersoft.user.model.UserStatus;
 import com.group6.java16.cybersoft.validation.annotation.UniqueCourseName;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class CourseCreateDTO {
 	@NotBlank(message = "{course.name.not-blank}")

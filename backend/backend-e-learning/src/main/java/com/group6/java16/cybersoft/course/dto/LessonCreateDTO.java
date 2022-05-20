@@ -7,10 +7,13 @@ import com.group6.java16.cybersoft.validation.annotation.UniqueLessonName;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 public class LessonCreateDTO {
 	@NotBlank(message = "{lesson.name.not-blank}")

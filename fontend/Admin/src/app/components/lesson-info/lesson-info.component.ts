@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { ToastrService } from 'ngx-toastr';
 import { LessonClient } from 'src/app/api-clients/lesson.client';
@@ -30,6 +30,7 @@ export class LessonInfoComponent implements OnInit {
     private toastr: ToastrService,
     private form: FormBuilder,
     private route: ActivatedRoute,
+    private router : Router
   ) { }
 
   public editorConfig: AngularEditorConfig = {
@@ -116,6 +117,8 @@ export class LessonInfoComponent implements OnInit {
        this.lessonClient.updateLesson(id,lessonupdate).subscribe(
           response => {
             this.toastr.success('Success', 'Update lesson success');
+            this.goToInfo();
+            this.router.navigate(['/courses/lesson-info',id]);
           }
         )
       }
@@ -129,4 +132,13 @@ export class LessonInfoComponent implements OnInit {
       content: ['']
     })
   }
+
+  changeInputAvatar(event: any): void{
+    this.lessonClient.uploadImg(event.target.files[0]).subscribe(
+      response => 
+        this.detailsForm.controls['content'].setValue(this.detailsForm.controls['content'].value + '<br/> <img src="' + response.content + '" /> <br/> ')
+      
+    )
+  }
+
 }

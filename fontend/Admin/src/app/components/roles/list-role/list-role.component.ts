@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
 import { BaseRole } from 'src/app/api-clients/model/role.model';
 import { RoleClient } from 'src/app/api-clients/role.client';
+import { PageService } from 'src/app/shared/service/page/page.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -17,18 +18,15 @@ export class ListRoleComponent implements OnInit {
   public list_role: BaseRole[] = [];
   public searchForm: FormGroup;
   public isSearch = false;
-
-  pageRequest: PageRequest = new PageRequest(1,
-    10,
-    null,
-    true,
-    null,
-    null);
+  public pages = [];
+  private pageRequest = new PageRequest(0, 10, null, true, null, null);
+  public pageCurrent = 1;
 
   constructor(private roleClient: RoleClient,
               private form: FormBuilder,
               private toastr: ToastrService,
               private _router: Router,
+              private _pageService: PageService,
               private route: ActivatedRoute) {
 
     this.searchForm = this.form.group({
@@ -40,7 +38,7 @@ export class ListRoleComponent implements OnInit {
   }
   ngOnInit(): void {
     
-    this.loadData();
+    this.getPageDetails();
   }
 
   toggleSearch(){
@@ -76,24 +74,32 @@ export class ListRoleComponent implements OnInit {
     }
   
   }
-
-  loadData() {
-    this.route.queryParams.subscribe(params =>{
+  getPageDetails(): void{
+   
+    this.route.queryParams.subscribe(params => {
       let fieldNameSort = params['fieldNameSort'] == undefined ? null: params['fieldNameSort'];
       let isIncrementSort = params['isIncrementSort'] == (undefined||null) ? true : params['isIncrementSort'];
       let fieldNameSearch = params['fieldNameSearch'] == undefined ? '': params['fieldNameSearch'];
       let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
+      this.pageCurrent = params['page'] == undefined ? 1 : params['page'];
+      this.pageRequest = new PageRequest(this.pageCurrent, 10, fieldNameSort, isIncrementSort, fieldNameSearch, valueFieldNameSearch);
+      this.loadData();
 
-      this.pageRequest = new PageRequest(1,10,fieldNameSort,isIncrementSort,fieldNameSearch,valueFieldNameSearch)
+  });
+  }
+
+
+  loadData() {
+    
       this.roleClient.search(this.pageRequest).subscribe(
         response =>
         {
           this.list_role= response.content.items
+          this.pages = this._pageService.getPager(response.content.pageCurrent, response.content.totalPage);
+
         });
-    }) 
+    }
 
-
-  }
   onDeleteConfirm(event) {
     Swal.fire({
       title: 'Are you sure?',
@@ -160,5 +166,17 @@ export class ListRoleComponent implements OnInit {
        queryParams: {'roleId':roleId}})
   
    }
+   clickPage(index: string): void {
+    if(index == 'next'){
+      this.pageCurrent++;
+    }
+    if(index == 'prev'){
+      this.pageCurrent--;
+    }
+    if(index != 'prev' && index != 'next'){
+      this.pageCurrent = Number(index);
+    }
+    this.search();
+  }
   
 }
