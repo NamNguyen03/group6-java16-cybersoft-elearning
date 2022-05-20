@@ -1,0 +1,72 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-1"></div>
+        <div class="col-xl-12">
+            <div class="card tab2-card">
+                <div class="card-body">     
+                    <div class="table-responsive profile-table">
+                        <h4 style="font-weight: 600">Course Detail</h4>
+                        <div class="profile-details text-center" style="cursor: pointer;" >
+                        <img src="{{detailCourse.img}}" alt=""
+                        class="rounded mx-auto d-block " style="height: 300px;">
+                    </div>
+                        <div >
+                        <table class="table table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td>Course Name:</td>
+                                    <td>{{detailCourse.courseName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Description:</td>
+                                    <td>{{detailCourse.description}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Category:</td>
+                                    <td>{{detailCourse.category}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Level:</td>
+                                    <td>{{detailCourse.level}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Skill 1:</td>
+                                    <td>{{detailCourse.skill1}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Skill 2:</td>
+                                    <td>{{detailCourse.skill2}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Skill 3:</td>
+                                    <td>{{detailCourse.skill3}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Skill 4:</td>
+                                    <td>{{detailCourse.skill4}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Skill 5:</td>
+                                    <td>{{detailCourse.skill5}}</td>
+                                </tr>               
+                            </tbody>
+                        </table>
+                        <button class="btn btn-secondary mr-1" (click)="goToUpdateCourse()">Update Course</button>
+                        </div>
+                        
+                        <a  class="btn btn-secondary mr-1 mb-3"  (click)="createLesson()" style="float: right;">Create Lesson</a>
+                        <div class="table-responsive">
+                            <ng2-smart-table 
+                            [settings]="settings"
+                            [source]="detailCourse.lessons"
+                            (deleteConfirm)="onDeleteConfirm($event)"
+                            (userRowSelect)="onUserRowSelected($event)"
+                            ></ng2-smart-table>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

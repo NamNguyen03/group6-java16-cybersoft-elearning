@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { GroupClient } from 'src/app/api-clients/group.client';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
 import { BaseGroup } from 'src/app/api-clients/model/group.model';
+import { PageService } from 'src/app/shared/service/page/page.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,18 +17,16 @@ export class ListGroupComponent implements OnInit {
   public list_group: BaseGroup[] = [];
   public searchForm: FormGroup;
   public isSearch = false;
+  public pages = [];
+  private pageRequest = new PageRequest(0, 10, null, true, null, null);
+  public pageCurrent = 1;
 
-  pageRequest: PageRequest = new PageRequest(1,
-    10,
-    null,
-    true,
-    null,
-    null);
-
+ 
   constructor(private groupClient: GroupClient,
               private form: FormBuilder,
               private toastr: ToastrService,
               private _router: Router,
+              private _pageService: PageService,
               private route: ActivatedRoute) {
     this.searchForm = this.form.group({
       fieldNameSort:[''],
@@ -38,7 +37,7 @@ export class ListGroupComponent implements OnInit {
   }
   ngOnInit(): void {
     
-    this.loadData();
+    this.getPageDetails();
   }
 
   toggleSearch(){
@@ -73,24 +72,31 @@ export class ListGroupComponent implements OnInit {
     }
   
   }
-
-  loadData() {
-    this.route.queryParams.subscribe(params =>{
+  getPageDetails(): void{
+   
+    this.route.queryParams.subscribe(params => {
       let fieldNameSort = params['fieldNameSort'] == undefined ? null: params['fieldNameSort'];
       let isIncrementSort = params['isIncrementSort'] == (undefined||null) ? true : params['isIncrementSort'];
       let fieldNameSearch = params['fieldNameSearch'] == undefined ? '': params['fieldNameSearch'];
       let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
+      this.pageCurrent = params['page'] == undefined ? 1 : params['page'];
+      this.pageRequest = new PageRequest(this.pageCurrent, 10, fieldNameSort, isIncrementSort, fieldNameSearch, valueFieldNameSearch);
+      this.loadData();
 
-      this.pageRequest = new PageRequest(1,10,fieldNameSort,isIncrementSort,fieldNameSearch,valueFieldNameSearch)
+  });
+  }
+
+  loadData() {
+    
       this.groupClient.search(this.pageRequest).subscribe(
         response =>
         {
           this.list_group= response.content.items
+          this.pages = this._pageService.getPager(response.content.pageCurrent, response.content.totalPage);
+
         });
-    }) 
+    }
 
-
-  }
   onDeleteConfirm(event) {
     Swal.fire({
       title: 'Are you sure?',
@@ -105,7 +111,7 @@ export class ListGroupComponent implements OnInit {
           let isLoadData = false;
           
           this.groupClient.deleteById(event.data.id).subscribe(
-            response => 
+           () => 
             { 
               isLoadData=true;
 
@@ -135,7 +141,6 @@ export class ListGroupComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         let isLoadData = false;
-        console.log(event.newdata)
           let groupUpdate = new BaseGroup(event.newData.name,event.newData.description)
          this.groupClient.updateById(event.data.id,groupUpdate).subscribe(
           () => 
@@ -165,12 +170,23 @@ export class ListGroupComponent implements OnInit {
   }
   onGroupRowSelected(event) {
     let groupId = event.data.id;
-    console.log(groupId)
    
    this._router.navigate(['/groups/group-details'],{
      queryParams: {'groupId':groupId}})
 
  }
+ clickPage(index: string): void {
+  if(index == 'next'){
+    this.pageCurrent++;
+  }
+  if(index == 'prev'){
+    this.pageCurrent--;
+  }
+  if(index != 'prev' && index != 'next'){
+    this.pageCurrent = Number(index);
+  }
+  this.search();
+}
   
 
 }

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseClient } from 'src/app/api-clients/course.client';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
 import { CourseRp } from 'src/app/api-clients/model/course.model';
+import { PageService } from 'src/app/share/page/page.service';
 
 @Component({
   selector: 'app-coursetwomain',
@@ -13,17 +14,19 @@ import { CourseRp } from 'src/app/api-clients/model/course.model';
 export class CoursetwomainComponent implements OnInit {
   public course_list:CourseRp[] =[];
   public searchForm: FormGroup;
-  pageRequet: PageRequest = new PageRequest(1,10,
+  private valueSearch = '';
+  pageRequest: PageRequest = new PageRequest(1,12,
     'name',
     true,
     'name',
     '');
+  public pages: (string | number)[] = [];
+  public pageCurrent = 1;
   constructor(private form: FormBuilder,
     private route: ActivatedRoute,
     private _router: Router,
-    private courseClient:CourseClient,
-    
-    
+    private courseClient: CourseClient,
+    private _pageService: PageService
   ) {
     this.searchForm = this.form.group({
       fieldNameSort:['name'],
@@ -34,27 +37,50 @@ export class CoursetwomainComponent implements OnInit {
   }
  
   ngOnInit(): void {
-    this.loadData();
+    this.getPageDetails();
   }
+
   loadData() {
-    this.route.queryParams.subscribe(params =>{
-      let fieldNameSort = params['fieldNameSort'] == undefined ? 'courseName': params['fieldNameSort'];
-      let isIncrementSort = params['isIncrementSort'] == (undefined||null) ? true : params['isIncrementSort'];
-      let fieldNameSearch = params['fieldNameSearch'] == undefined ? 'courseName': params['fieldNameSearch'];
-      let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
-
-      this.pageRequet = new PageRequest(1,10,fieldNameSort,isIncrementSort,fieldNameSearch,valueFieldNameSearch)
-      console.log(this.pageRequet);
-      this.courseClient.searchRequest(this.pageRequet).subscribe(
+    
+      this.courseClient.searchRequest(this.pageRequest).subscribe(
         response =>{
-          console.log(response)
           this.course_list = response.content.items||[];
-      }
-      
-    );  
-    }) 
+          this.pages = this._pageService.getPager(response.content.pageCurrent ? response.content.pageCurrent : 1 , response.content.totalPage ? response.content.totalPage : 1 );
+      });  
+    }
 
+  getPageDetails(): void{
+   
+    this.route.queryParams.subscribe(params => {
+      this.valueSearch = params['search'] == undefined ? '': params['search'];
+      this.pageCurrent = params['page'] == undefined ? 1 : params['page'];
+      this.pageRequest = new PageRequest(this.pageCurrent, 12, '', true, 'courseName', this.valueSearch);
+      this.loadData();
 
+    });
   }
+
+  clickPage(index: string | number): void {
+    if(index == 'next'){
+      this.pageCurrent++;
+    }
+    if(index == 'prev'){
+      this.pageCurrent--;
+    }
+    if(index != 'prev' && index != 'next'){
+      this.pageCurrent = Number(index);
+    }
+    this.search();
+  }
+
+  search(){
+    this._router.navigate(['/course-2'],{
+      queryParams: {
+        'page':this.pageCurrent,
+        'search': this.valueSearch
+      }
+
+    })
+   }
 }
   

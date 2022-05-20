@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseUpdateInformation } from 'src/app/api-clients/model/course.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
+import { PageService } from 'src/app/shared/service/page/page.service';
 
 @Component({
   selector: 'app-list-course',
@@ -17,16 +18,15 @@ export class ListCourseComponent implements OnInit {
   public course_list = [];
   public selected = [];
   public searchForm: FormGroup;
-  pageRequet: PageRequest = new PageRequest(1, 10,
-    null,
-    true,
-    null,
-    null);
+  public pages = [];
+  private pageRequest = new PageRequest(0, 10, null, true, null, null);
+  public pageCurrent = 1;
 
   constructor(private courseClient: CourseClient,
     private form: FormBuilder,
     private toastr: ToastrService,
     private _router: Router,
+     private _pageService: PageService,
     private route: ActivatedRoute) {
     this.searchForm = this.form.group({
       fieldNameSort: [''],
@@ -66,10 +66,6 @@ export class ListCourseComponent implements OnInit {
         title: 'Course Name',
         editable: true,
       },
-      courseTime: {
-        title: 'Course Time',
-        editable: true,
-      },
       description: {
         title: 'Description',
         editable: true,
@@ -79,7 +75,20 @@ export class ListCourseComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.loadData();
+    this.getPageDetails();
+  }
+  getPageDetails(): void{
+   
+    this.route.queryParams.subscribe(params => {
+      let fieldNameSort = params['fieldNameSort'] == undefined ? null: params['fieldNameSort'];
+      let isIncrementSort = params['isIncrementSort'] == (undefined||null) ? true : params['isIncrementSort'];
+      let fieldNameSearch = params['fieldNameSearch'] == undefined ? '': params['fieldNameSearch'];
+      let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
+      this.pageCurrent = params['page'] == undefined ? 1 : params['page'];
+      this.pageRequest = new PageRequest(this.pageCurrent, 10, fieldNameSort, isIncrementSort, fieldNameSearch, valueFieldNameSearch);
+      this.loadData();
+
+  });
   }
 
   loadData() {
@@ -93,13 +102,12 @@ export class ListCourseComponent implements OnInit {
       this.courseClient.searchRequest(this.pageRequet).subscribe(
         response => {
           this.course_list = response.content.items;
+          this.pages = this._pageService.getPager(response.content.pageCurrent, response.content.totalPage);
+
         }
 
       );
-    })
-
-
-  }
+    }
 
   onDeleteConfirm(event) {
     Swal.fire({
@@ -126,6 +134,18 @@ export class ListCourseComponent implements OnInit {
       }
     });
   }
+  clickPage(index: string): void {
+    if(index == 'next'){
+      this.pageCurrent++;
+    }
+    if(index == 'prev'){
+      this.pageCurrent--;
+    }
+    if(index != 'prev' && index != 'next'){
+      this.pageCurrent = Number(index);
+    }
+    this.search();
+  }
 
   onSaveConfirm(event) {
     Swal.fire({
@@ -140,10 +160,12 @@ export class ListCourseComponent implements OnInit {
       if (result.isConfirmed) {
         let isLoadData = false;
         event.confirm.resolve(event.newData);
-        let courseUpdate = new CourseUpdateInformation(event.newData.courseName, event.newData.courseTime, event.newData.description);
-        this.courseClient.updateCourse(event.data.id, courseUpdate).subscribe(() => {
-
+        let courseUpdate = new CourseUpdateInformation(event.newData.courseName,event.newData.description,
+          event.newDate.category,event.newDate.level,
+          event.newDate.img,event.newDate.skill1,event.newDate.skill2,event.newDate.skill3,event.newDate.skill4,event.newDate.skill5);
+        this.courseClient.updateCourse(event.data.id,courseUpdate).subscribe(() => {
           this.loadData();
+          isLoadData = true;
           this.toastr.success('Success', 'Update Course success!');
         })
         if (!isLoadData) {
@@ -154,18 +176,23 @@ export class ListCourseComponent implements OnInit {
 
   }
 
-
-  search() {
+  search(){
     let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
     let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
     let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
     let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
-    this._router.navigate(['/courses/list-course'], {
-      queryParams: { 'fieldNameSort': fieldNameSort, 'isIncr ementSort': isIncrementSort, 'fieldNameSearch': fieldNameSearch, 'valueFieldNameSearch': valueFieldNameSearch }
+    
+    this._router.navigate(['/courses/list-course'],{
+      queryParams: {
+        'page':this.pageCurrent,
+        'fieldNameSort':fieldNameSort,
+        'isIncrementSort':isIncrementSort,
+        'fieldNameSearch':fieldNameSearch,
+        'valueFieldNameSearch':valueFieldNameSearch}
 
     })
-
   }
+
 
   onUserRowSelected(event) {
     let courseId = event.data.id;

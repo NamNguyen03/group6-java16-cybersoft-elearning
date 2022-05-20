@@ -18,8 +18,7 @@
                                             <label for="validationCustom01" class="col-xl-3 col-sm-4 mb-0">Field Name Sort </label>
                                             <select class="form-control digits col-xl-8 col-sm-7"
                                                 id="exampleFormControlSelect1" name="fieldNameSort" formControlName="fieldNameSort">
-                                                <option value="">--Select--</option>
-                                                <option value ="name" >Name</option>
+                                                <option selected value ="name" >Name</option>
                                                 <option value ="type" >Type</option>
                                                 <option value ="module" >Module</option>
                                             </select>
@@ -28,7 +27,7 @@
                                             <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Sort </label>
                                             <select class="form-control digits col-xl-8 col-sm-7"
                                                 id="exampleFormControlSelect1" name="isIncrementSort" formControlName="isIncrementSort">
-                                                <option value="true">Sort Increment</option>
+                                                <option selected value="true">Sort Increment</option>
                                                 <option value="false">Sort Descending</option>
                                             </select>
                                         </div>
@@ -36,8 +35,7 @@
                                             <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Field Name Search </label>
                                             <select class="form-control digits col-xl-8 col-sm-7"
                                                 id="exampleFormControlSelect1" name="fieldNameSearch" formControlName="fieldNameSearch">
-                                                <option value="">--Select--</option>
-                                                <option value ="name">Name</option>
+                                                <option selected value ="name">Name</option>
                                                 <option value ="type" >Type</option>
                                                 <option value ="module" >Module</option>
 
@@ -66,6 +64,13 @@
                                     (deleteConfirm)="onDeleteConfirm($event)"
                                     (editConfirm)="onSaveConfirm($event)"
                                 ></ng2-smart-table>
+                        </div>
+                        <div class="mt-3">
+                            <div *ngFor="let pageIndex of pages">
+                                <button class="btn mr-2" style="float: left;"
+                                    (click)="clickPage(pageIndex)"
+                                    [ngClass]="pageIndex==pageCurrent ? 'btn-secondary' : 'btn-primary'">{{pageIndex}}</button>
+                            </div>
                         </div>
                     </div>
                 </div>
