@@ -127,12 +127,6 @@ export class ListCourseComponent implements OnInit {
       }
     });
   }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-
-=======
->>>>>>> 961cc6dbf32f48883939f25fff40ad6c93a779e1
   clickPage(index: string): void {
     if(index == 'next'){
       this.pageCurrent++;
@@ -145,10 +139,6 @@ export class ListCourseComponent implements OnInit {
     }
     this.search();
   }
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> 961cc6dbf32f48883939f25fff40ad6c93a779e1
 
   onSaveConfirm(event) {
     Swal.fire({
