@@ -17,16 +17,26 @@ export class ListCourseComponent implements OnInit {
   public course_list = [];
   public selected = [];
   public searchForm: FormGroup;
+<<<<<<< Updated upstream
   pageRequet: PageRequest = new PageRequest(1, 10,
     null,
     true,
     null,
     null);
+=======
+  public pages = [];
+  private pageRequest: PageRequest = new PageRequest(0, 10, null, true, null, null);
+  public pageCurrent = 1;
+>>>>>>> Stashed changes
 
   constructor(private courseClient: CourseClient,
     private form: FormBuilder,
     private toastr: ToastrService,
     private _router: Router,
+<<<<<<< Updated upstream
+=======
+    private _pageService: PageService,
+>>>>>>> Stashed changes
     private route: ActivatedRoute) {
     this.searchForm = this.form.group({
       fieldNameSort: [''],
@@ -126,6 +136,22 @@ export class ListCourseComponent implements OnInit {
       }
     });
   }
+<<<<<<< Updated upstream
+=======
+
+  clickPage(index: string): void {
+    if(index == 'next'){
+      this.pageCurrent++;
+    }
+    if(index == 'prev'){
+      this.pageCurrent--;
+    }
+    if(index != 'prev' && index != 'next'){
+      this.pageCurrent = Number(index);
+    }
+    this.search();
+  }
+>>>>>>> Stashed changes
 
   onSaveConfirm(event) {
     Swal.fire({
