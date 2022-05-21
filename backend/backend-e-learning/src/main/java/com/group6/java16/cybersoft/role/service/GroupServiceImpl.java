@@ -12,13 +12,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
-import com.group6.java16.cybersoft.common.util.ServiceHelper;
 import com.group6.java16.cybersoft.role.dto.GroupDTO;
 import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
 import com.group6.java16.cybersoft.role.dto.GroupUpdateDTO;
@@ -30,7 +28,7 @@ import com.group6.java16.cybersoft.role.repository.ELRoleRepository;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupService {
+public class GroupServiceImpl implements GroupService {
 
 	@Autowired
 	private ELGroupRepository groupRepository;
@@ -66,9 +64,9 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
 
-		}else{
-            pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
-        }
+		} else {
+			pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
+		}
 
 		if ("name".equals(fieldNameSearch)) {
 			response = groupRepository.searchByName(valueSearch, pageable);
@@ -144,21 +142,6 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 	}
 
 	@Override
-	protected String getMessageIdInvalid() {
-		return errorsIdInvalid;
-	}
-
-	@Override
-	protected JpaRepository<ELGroup, UUID> getRepository() {
-		return groupRepository;
-	}
-
-	@Override
-	protected String getErrorNotFound() {
-		return messagesGroupIdNotFound;
-	}
-
-	@Override
 	public GroupResponseDTO deleteRole(String groupId, String roleId) {
 		ELGroup group = getById(groupId);
 		ELRole role = getRoleById(roleId);
@@ -171,7 +154,20 @@ public class GroupServiceImpl extends ServiceHelper<ELGroup> implements GroupSer
 
 	@Override
 	public GroupResponseDTO getGroupDetail(String id) {
-		
+
 		return GroupMapper.INSTANCE.toGroupResponseDTO(getById(id));
 	}
+
+	private ELGroup getById(String id) {
+		return groupRepository.findById(UUID.fromString(id))
+				.orElseThrow(() -> new BusinessException(messagesGroupIdNotFound));
+	}
+
+	private boolean isValidString(String s) {
+		if (s == null || s.length() == 0) {
+			return false;
+		}
+		return true;
+	}
+
 }

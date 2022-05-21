@@ -9,8 +9,10 @@ import { LessonCreate, LessonRp, UpdateLesson } from "./model/lesson.model";
     providedIn: 'root',
 })
 export class LessonClient {
-    
+   
     private _apiEndpoint = `${environment.api}lessons`;
+
+    private _apiUploadImg = `${this._apiEndpoint}/img`;
 
     constructor(protected httpClient: HttpClient) {}
 
@@ -44,5 +46,9 @@ export class LessonClient {
         return this.httpClient.put<Response<LessonRp>>(this._apiEndpoint+"/" + id, lesson);
     }
 
-    
+    uploadImg(file: File): Observable<Response<string>>{
+        let formData = new FormData();
+        formData.append('file', file);
+        return this.httpClient.post<Response<string>>(this._apiUploadImg,formData);
+    }
 }

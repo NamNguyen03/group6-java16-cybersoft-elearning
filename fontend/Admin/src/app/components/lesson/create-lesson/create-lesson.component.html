@@ -26,8 +26,12 @@
                                         </div>
 
                                         <div>
-                                            <input class="form-control form-control-sm mb-2" id="formFileSm" type="file" (change)="changeInputAvatar($event)"/>
                                             <label> Content</label>
+                                            <div  class="form-group row">
+                                                <label class="col-xl-3 col-md-4">Image</label>
+                                                <input class="form-control form-control-sm mb-2 col-xl-8 col-md-7" id="formFileSm" type="file" (change)="changeInputAvatar($event)"/>
+                                            </div>
+                                            
                                             <angular-editor class="mb-3" id="editor1" formControlName="content" [config]="editorConfig"></angular-editor>
                                         </div>
                                         

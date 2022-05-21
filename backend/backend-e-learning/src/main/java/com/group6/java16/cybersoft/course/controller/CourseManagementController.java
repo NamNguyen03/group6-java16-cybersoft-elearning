@@ -1,6 +1,5 @@
 package com.group6.java16.cybersoft.course.controller;
 
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
@@ -24,7 +24,6 @@ import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.service.CourseManagementService;
-import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 
 @RestController
 @RequestMapping("api/v1/courses")
@@ -45,12 +44,8 @@ public class CourseManagementController {
 	}
 
 	@PutMapping("{id}")
-	public Object updateCourse(@PathVariable("id") String id, @Valid @RequestBody CourseUpdateDTO rq,
-			BindingResult result) {
+	public Object updateCourse(@PathVariable("id") String id,@RequestBody CourseUpdateDTO rq) {
 
-		if (result.hasErrors()) {
-			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
-		}
 
 		CourseResponseDTO rp = service.updateCourse(rq, id);
 
@@ -63,8 +58,7 @@ public class CourseManagementController {
 			@RequestParam(value = "fieldNameSort", required = false) String fieldNameSort,
 			@RequestParam(value = "isIncrementSort", defaultValue = "true") boolean isIncrementSort,
 			@RequestParam(value = "fieldNameSearch", required = false) String fieldNameSearch,
-			@RequestParam(value = "valueFieldNameSearch", required = false) String valueFieldNameSearch
-			){
+			@RequestParam(value = "valueFieldNameSearch", required = false) String valueFieldNameSearch) {
 
 		PageResponseModel<CourseResponseDTO> rp = service.search(new PageRequestModel(
 				pageCurrent,
@@ -72,14 +66,13 @@ public class CourseManagementController {
 				fieldNameSort,
 				isIncrementSort,
 				fieldNameSearch,
-				valueFieldNameSearch
-				));
+				valueFieldNameSearch));
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
 
 	@DeleteMapping("{id}")
-	public Object delete(@PathVariable("id") String id){
+	public Object delete(@PathVariable("id") String id) {
 
 		service.deleteById(id);
 
@@ -87,12 +80,16 @@ public class CourseManagementController {
 	}
 
 	@GetMapping("{id}")
-	public Object getDetailCourse(@PathVariable("id")String id){
+	public Object getDetailCourse(@PathVariable("id") String id) {
 
 		CourseResponseDTO rp = service.getDetailCourse(id);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
-
+	@PostMapping("{img}")
+	public Object updateImg(@RequestParam(name = "file") MultipartFile file) {
+		String urlImg = service.updateImg(file);
+		return ResponseHelper.getResponse(urlImg, HttpStatus.OK, false);
+	}
 
 }

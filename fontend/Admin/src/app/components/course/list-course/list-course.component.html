@@ -67,6 +67,13 @@
                                 (userRowSelect)="onUserRowSelected($event)"
                             ></ng2-smart-table>
                         </div>
+                        <div class="mt-3">
+                            <div *ngFor="let pageIndex of pages">
+                                <button class="btn mr-2" style="float: left;"
+                                    (click)="clickPage(pageIndex)"
+                                    [ngClass]="pageIndex==pageCurrent ? 'btn-secondary' : 'btn-primary'">{{pageIndex}}</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

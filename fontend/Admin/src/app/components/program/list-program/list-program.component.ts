@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
 import { BaseProgram } from 'src/app/api-clients/model/program.model';
 import { ProgramClient } from 'src/app/api-clients/program.client';
+import { PageService } from 'src/app/shared/service/page/page.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,6 +17,9 @@ export class ListProgramComponent implements OnInit {
   public list_program: BaseProgram[] = [];
   public searchForm: FormGroup;
   public isSearch = false;
+  public pages = [];
+  public pageCurrent = 1;
+
 
   pageRequest: PageRequest = new PageRequest(1,
     10,
@@ -28,7 +32,8 @@ export class ListProgramComponent implements OnInit {
               private toastr: ToastrService,
               private _router: Router,
               private route: ActivatedRoute,
-              private programClient: ProgramClient) {
+              private programClient: ProgramClient,
+              private _pageService:PageService) {
       this.searchForm = this.form.group({
         fieldNameSort:[''],
         isIncrementSort:[''],
@@ -38,7 +43,7 @@ export class ListProgramComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    this.loadData();
+    this.getPageDetails();
   }
 
   toggleSearch(){
@@ -81,23 +86,28 @@ export class ListProgramComponent implements OnInit {
     }
   
   }
-  loadData() {
-    this.route.queryParams.subscribe(params =>{
+  getPageDetails(): void{
+   
+    this.route.queryParams.subscribe(params => {
       let fieldNameSort = params['fieldNameSort'] == undefined ? null: params['fieldNameSort'];
       let isIncrementSort = params['isIncrementSort'] == (undefined||null) ? true : params['isIncrementSort'];
       let fieldNameSearch = params['fieldNameSearch'] == undefined ? '': params['fieldNameSearch'];
       let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '': params['valueFieldNameSearch'];
+      this.pageCurrent = params['page'] == undefined ? 1 : params['page'];
+      this.pageRequest = new PageRequest(this.pageCurrent, 10, fieldNameSort, isIncrementSort, fieldNameSearch, valueFieldNameSearch);
+      this.loadData();
 
-      this.pageRequest = new PageRequest(1,10,fieldNameSort,isIncrementSort,fieldNameSearch,valueFieldNameSearch)
+  });
+  }
+  loadData() {
+    
       this.programClient.search(this.pageRequest).subscribe(
         response =>
         {
           this.list_program= response.content.items
+          this.pages = this._pageService.getPager(response.content.pageCurrent, response.content.totalPage);
         });
-    }) 
-
-
-  }
+    }
 
   onDeleteConfirm(event) {
     Swal.fire({
@@ -167,8 +177,17 @@ export class ListProgramComponent implements OnInit {
       queryParams: {'fieldNameSort':fieldNameSort,'isIncrementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
 
     })
-    
-    
-    
+   }
+   clickPage(index: string): void {
+    if(index == 'next'){
+      this.pageCurrent++;
+    }
+    if(index == 'prev'){
+      this.pageCurrent--;
+    }
+    if(index != 'prev' && index != 'next'){
+      this.pageCurrent = Number(index);
+    }
+    this.search();
   }
 }
