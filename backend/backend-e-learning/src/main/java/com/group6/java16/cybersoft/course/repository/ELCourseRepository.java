@@ -13,13 +13,15 @@ import org.springframework.stereotype.Repository;
 import com.group6.java16.cybersoft.course.model.ELCourse;
 
 @Repository
-public interface ELCourseRepository extends JpaRepository<ELCourse, UUID>  {
-	
-	 boolean existsByCourseName(String courseName);
-	
+public interface ELCourseRepository extends JpaRepository<ELCourse, UUID> {
+
+	boolean existsByCourseName(String courseName);
+
 	Optional<ELCourse> findByCourseName(String cousrseName);
 
-	@Query( value =  "Select u from ELCourse u where u.courseName like %:courseName% ")
-	Page<ELCourse> searchByCourseName(@Param("courseName")String courseName, Pageable pageable);
+	@Query(value = "Select u from ELCourse u where lower(u.courseName) like lower(concat('%', :courseName,'%'))")
+	Page<ELCourse> searchByCourseName(@Param("courseName") String courseName, Pageable pageable);
+
+	Page<ELCourse> findByCategory(String valueSearch, Pageable pageable);
 
 }

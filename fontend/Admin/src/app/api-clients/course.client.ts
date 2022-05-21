@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { PageRequest, PageResponse, Response } from './model/common.model';
 import { HttpClient } from '@angular/common/http';
 import { CourseCreate, CourseRp, CourseUpdateInformation } from './model/course.model';
+import { LessonRp } from './model/lesson.model';
 
 @Injectable({
     providedIn: 'root',
@@ -39,4 +40,16 @@ export class CourseClient {
     updateCourse(id: string, course:CourseUpdateInformation): Observable<Response<CourseRp>> {
         return this.httpClient.put<Response<CourseRp>>(this._apiEndpoint+"/" + id, course);
     }
+
+    getDetailCourse(id: string): Observable<Response<CourseRp>>{
+        return this.httpClient.get<Response<CourseRp>>(this._apiEndpoint+ "/" + id);
+    }
+    updateImg(file: File): Observable<Response<string>>{
+
+        let formData = new FormData();
+        formData.append('file', file);
+    
+        return this.httpClient.post<Response<string>>(this._apiEndpoint+ "/"+"img", formData);
+    }
+
 }

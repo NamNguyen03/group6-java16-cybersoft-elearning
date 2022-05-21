@@ -28,9 +28,6 @@ import com.google.gson.Gson;
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
-import com.group6.java16.cybersoft.role.dto.GroupDTO;
-import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
-import com.group6.java16.cybersoft.role.dto.GroupUpdateDTO;
 import com.group6.java16.cybersoft.role.dto.ProgramDTO;
 import com.group6.java16.cybersoft.role.dto.ProgramResponseDTO;
 import com.group6.java16.cybersoft.role.dto.ProgramUpdateDTO;
@@ -43,10 +40,10 @@ import com.group6.java16.cybersoft.role.service.ProgramService;
 public class ProgramManagementControllerIntegrationTest {
 	@Autowired
 	private MockMvc mvc;
-	
+
 	@MockBean
 	private ProgramService service;
-	
+
 	@Test
 	@WithMockUser("hau")
 	public void givenJsonObject_whenSearchProgram_thenReturnStatus200AndResponseHelper() throws Exception {
@@ -59,7 +56,8 @@ public class ProgramManagementControllerIntegrationTest {
 				null,
 				true,
 				null,
-				null))).thenReturn(new PageResponseModel<ProgramResponseDTO>(1, 10, new ArrayList<ProgramResponseDTO>()));
+				null)))
+				.thenReturn(new PageResponseModel<ProgramResponseDTO>(1, 10, new ArrayList<ProgramResponseDTO>()));
 
 		mvc.perform(get("/api/v1/programs"))
 				.andDo(print())
@@ -70,7 +68,7 @@ public class ProgramManagementControllerIntegrationTest {
 	@Test
 	@WithMockUser("hau")
 	public void givenJsonObject_whenCreateProgram_thenReturnStatus200() throws Exception {
-		ProgramDTO rq = new ProgramDTO("name",ProgramModule.ROLE,ProgramType.READ,"description");
+		ProgramDTO rq = new ProgramDTO("name", ProgramModule.ROLE, ProgramType.READ, "description");
 		Gson gson = new Gson();
 		String json = gson.toJson(rq);
 		when(service.save(rq)).thenReturn(new ProgramResponseDTO());
@@ -84,7 +82,7 @@ public class ProgramManagementControllerIntegrationTest {
 	@Test
 	@WithMockUser("hau")
 	public void givenJsonObject_whenCreateProgram_thenReturnStatus400() throws Exception {
-		ProgramDTO rq = new ProgramDTO(null,ProgramModule.ROLE,ProgramType.READ,"description");
+		ProgramDTO rq = new ProgramDTO(null, ProgramModule.ROLE, ProgramType.READ, "description");
 		Gson gson = new Gson();
 		String json = gson.toJson(rq);
 
@@ -93,17 +91,19 @@ public class ProgramManagementControllerIntegrationTest {
 				.content(json))
 				.andDo(print())
 				.andExpect(status().isBadRequest());
-		
+
 	}
 
 	@Test
 	@WithMockUser("hau")
 	public void givenJsonObject_whenUpdateProgram_thenReturnStatus200AndResponseHelper() throws Exception {
-		ProgramUpdateDTO rq = new ProgramUpdateDTO("LEADER",ProgramModule.ROLE,ProgramType.READ,"test");
-				
+		ProgramUpdateDTO rq = new ProgramUpdateDTO("LEADER", ProgramModule.ROLE, ProgramType.READ, "test");
+
 		Gson gson = new Gson();
 		String json = gson.toJson(rq);
-		when(service.update("5117d63c-a38e-4042-9f69-94f7d7777985", rq)).thenReturn(new ProgramResponseDTO(UUID.fromString("5117d63c-a38e-4042-9f69-94f7d7777985"),"LEADER",ProgramModule.ROLE,ProgramType.READ,"test"));
+		when(service.update("5117d63c-a38e-4042-9f69-94f7d7777985", rq))
+				.thenReturn(new ProgramResponseDTO(UUID.fromString("5117d63c-a38e-4042-9f69-94f7d7777985"), "LEADER",
+						ProgramModule.ROLE, ProgramType.READ, "test"));
 
 		mvc.perform(put("/api/v1/programs/5117d63c-a38e-4042-9f69-94f7d7777985")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -115,8 +115,8 @@ public class ProgramManagementControllerIntegrationTest {
 	@Test
 	@WithMockUser("hau")
 	public void givenJsonObject_whenUpdateProgram_thenReturnStatus400() throws Exception {
-		ProgramUpdateDTO rq = new ProgramUpdateDTO("LEADER",ProgramModule.ROLE,ProgramType.READ,"test");
-				
+		ProgramUpdateDTO rq = new ProgramUpdateDTO("LEADER", ProgramModule.ROLE, ProgramType.READ, "test");
+
 		Gson gson = new Gson();
 		String json = gson.toJson(rq);
 
@@ -142,5 +142,4 @@ public class ProgramManagementControllerIntegrationTest {
 
 	}
 
-	
 }

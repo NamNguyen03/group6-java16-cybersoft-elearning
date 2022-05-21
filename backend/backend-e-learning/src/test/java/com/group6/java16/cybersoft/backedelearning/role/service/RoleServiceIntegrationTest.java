@@ -139,11 +139,6 @@ public class RoleServiceIntegrationTest {
 	@Test
 	public void whenUpdateRoleExistsName_thenThrowBusinessException() {
 		UUID id = UUID.randomUUID();
-		ELRole role = ELRole.builder()
-				.id(UUID.randomUUID())
-				.name("LEADER")
-				.description("hau test")
-				.build();
 		RoleUpdateDTO request = RoleUpdateDTO.builder()
 				.name("LEADER").build();
 		when(roleRepository.findById(UUID.fromString(id.toString()))).thenReturn(Optional.of(ELRole.builder()
