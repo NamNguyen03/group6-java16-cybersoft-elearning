@@ -139,13 +139,15 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 
 	@Override
 	public void deleteById(String id) {
-		lessonRepository.delete(getById(id));
-
 		ELCourse c = getById(id).getCourse();
 
 		c.setCourseTime(c.getCourseTime()-1);
 
 		courseRepository.save(c);
+		
+		lessonRepository.delete(getById(id));
+
+		
 	}
 
 	@Override

@@ -267,7 +267,7 @@ public class CourseManagementServiceIntegrationTest {
 
 		Page<ELCourse> page = new PageImpl<ELCourse>(new ArrayList<ELCourse>(), pageable, 10l);
 
-		when(courseRepository.findByCategory("BUSINESS", pageable)).thenReturn(page);
+		when(courseRepository.findByCategory(CategoryEnum.valueOf("BUSINESS"), pageable)).thenReturn(page);
 
 		PageResponseModel<CourseResponseDTO> expected = new PageResponseModel<CourseResponseDTO>(1, 1,
 				new ArrayList<CourseResponseDTO>());

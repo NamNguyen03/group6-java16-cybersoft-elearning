@@ -1,5 +1,6 @@
 package com.group6.java16.cybersoft.role.repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.role.model.ELGroup;
@@ -17,5 +18,7 @@ public interface ELGroupRepository extends JpaRepository<ELGroup, UUID> {
     Page<ELGroup> searchByName(@Param("name") String name, Pageable pageable);
 
     boolean existsByName(String name);
+
+    Optional<ELGroup> findByName(String name);
 
 }
