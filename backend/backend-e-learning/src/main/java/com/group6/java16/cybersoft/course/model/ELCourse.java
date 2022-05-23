@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 import com.group6.java16.cybersoft.common.model.BaseEntity;
+import com.group6.java16.cybersoft.feedback.model.ELStatusComment;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -34,6 +35,10 @@ public class ELCourse extends BaseEntity {
 	@OneToMany(mappedBy = "course")
 	@Builder.Default
 	private Set<ELLesson> lessons = new LinkedHashSet<ELLesson>();
+	
+	@OneToMany(mappedBy = "course")
+	@Builder.Default
+	private Set<ELStatusComment> statuses = new LinkedHashSet<ELStatusComment>();
 
 	private String img;
 
