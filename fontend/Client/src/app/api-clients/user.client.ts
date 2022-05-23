@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { LoginRequest, UserRp } from "./model/user.model";
+import { LoginRequest, RegisterRequest, UserRp } from "./model/user.model";
 import { Response } from './model/common.model';
 import { environment } from "../environments/environment";
 @Injectable({
@@ -10,6 +10,7 @@ import { environment } from "../environments/environment";
 export class UserClient {
     private _apiEndpoint = `${environment.api}users`;
     private _apiLogin = `${environment.api}auth/login`;
+    private _apiRegister = `${environment.api}auth/register`;
     private _apiMyProfile = `${this._apiEndpoint}/me`;
     
     constructor(protected httpClient: HttpClient) {}
@@ -21,5 +22,9 @@ export class UserClient {
 
     getMyProfile(): Observable<Response<UserRp>>{
         return this.httpClient.get<Response<UserRp>>(this._apiMyProfile);
+    }
+
+    register(rq: RegisterRequest): Observable<Response<UserRp>>{
+        return this.httpClient.post<Response<UserRp>>(this._apiRegister, rq)
     }
 }
