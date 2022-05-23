@@ -11,8 +11,5 @@ import com.group6.java16.cybersoft.feedback.service.RatingService;
 @RequestMapping("api/v1/comments")
 @CrossOrigin(origins = "*")
 public class RatingController {
-	
-	@Autowired
-	private RatingService service;
 
 }
