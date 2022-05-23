@@ -19,7 +19,7 @@ export class ListCourseComponent implements OnInit {
   public selected = [];
   public searchForm: FormGroup;
   public pages = [];
-  private pageRequest = new PageRequest(0, 10, null, true, null, null);
+  private pageRequest: PageRequest = new PageRequest(0, 10, null, true, null, null);
   public pageCurrent = 1;
 
   constructor(private courseClient: CourseClient,
@@ -108,6 +108,14 @@ export class ListCourseComponent implements OnInit {
 
       );
     })
+    this.courseClient.searchRequest(this.pageRequest).subscribe(
+      response => {
+        this.course_list = response.content.items;
+        this.pages = this._pageService.getPager(response.content.pageCurrent, response.content.totalPage);
+
+      }
+
+    );
   }
 
   onDeleteConfirm(event) {
