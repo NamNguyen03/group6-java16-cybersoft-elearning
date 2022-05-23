@@ -22,6 +22,7 @@ import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
+import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 
@@ -43,6 +44,9 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	@Value("${lesson.id.not-found}")
 	private String errorsLessonIdNotFound;
+	
+	@Value("${course.name.existed}")
+	private String messageNameCouseExists;
 
 	@Override
 	public CourseResponseDTO createCourse(CourseCreateDTO dto) {
@@ -70,6 +74,9 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	private ELCourse setUpdateCourse(ELCourse courseCurrent, CourseUpdateDTO rq) {
 		if (checkString(rq.getCourseName())) {
+			if (!courseCurrent.getCourseName().equals(rq.getCourseName()) && courseRepository.existsByCourseName(rq.getCourseName())) {
+				throw new BusinessException(messageNameCouseExists);
+			}
 			courseCurrent.setCourseName(rq.getCourseName());
 		}
 
@@ -130,17 +137,16 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		if (null != fieldNameSort && fieldNameSort.matches("courseName")) {
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
-
 		}else {
 			pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
 		}
 
-		// coursename
 		if ("courseName".equals(fieldNameSearch)) {
 			rp = courseRepository.searchByCourseName(valueSearch, pageable);
 		}
+		
 		if ("category".equals(fieldNameSearch)) {
-			rp = courseRepository.findByCategory(valueSearch, pageable);
+			rp = courseRepository.findByCategory(CategoryEnum.valueOf(valueSearch), pageable);
 		}
 
 		// if firstName not existed then search all

@@ -46,6 +46,9 @@ public class ELCourse extends BaseEntity {
 	private LevelEnum level;
 
 	private float starAvg;
+	
+	@Builder.Default
+	private int courseTime = 0;
 
 	// totalStar = sum (star.value)
 	private int totalStar;

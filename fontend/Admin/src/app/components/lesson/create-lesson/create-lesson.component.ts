@@ -95,8 +95,8 @@ export class CreateLessonComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       let id = params['courseId'];
       if (this.accountForm.valid) {
-        this.lesonsClient.createLesson(new LessonCreate(name, content, description, id)).subscribe(
-          response => {
+        this.lesonsClient.createLesson(new LessonCreate(name, content, description, id)).subscribe(       
+          ()=> {
             this.toastr.success('Success', 'Create lesson success');
           }
         )
@@ -106,12 +106,10 @@ export class CreateLessonComponent implements OnInit {
   }
 
   changeInputAvatar(event: any): void{
-    this._userClient.uploadAvatar(event.target.files[0]).subscribe(
-      response => {
-        this._toastr.success('Success', 'Update avatar success!');
-        this._userService.setUserCurrent(response.content);
-        this.isUpdateAvatar = false;
-      }
+    this.lesonsClient.uploadImg(event.target.files[0]).subscribe(
+      response => 
+        this.accountForm.controls['content'].setValue(this.accountForm.controls['content'].value + '<br/> <img src="' + response.content + '" /> <br/> ')
+      
     )
   }
 

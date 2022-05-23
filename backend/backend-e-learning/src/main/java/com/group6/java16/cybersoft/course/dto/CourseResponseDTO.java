@@ -4,28 +4,34 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.course.model.LevelEnum;
+import com.group6.java16.cybersoft.user.model.UserStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Getter
+@Setter
 public class CourseResponseDTO {
 	private UUID id;
 
 	private String courseName;
 
+	private String createdBy;
+
 	private String description;
 
 	private String img;
 
-	private LevelEnum level;
+	private String level;
 
 	private float starAvg;
-
-	private int totalStar;
+	
+	private int courseTime;
 
 	private int totalRating;
 
