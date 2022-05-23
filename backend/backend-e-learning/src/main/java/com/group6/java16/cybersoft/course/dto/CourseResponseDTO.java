@@ -17,6 +17,8 @@ public class CourseResponseDTO {
 
 	private String courseName;
 
+	private String createdBy;
+
 	private String description;
 
 	private String img;
@@ -26,8 +28,6 @@ public class CourseResponseDTO {
 	private float starAvg;
 	
 	private int courseTime;
-
-	private int totalStar;
 
 	private int totalRating;
 

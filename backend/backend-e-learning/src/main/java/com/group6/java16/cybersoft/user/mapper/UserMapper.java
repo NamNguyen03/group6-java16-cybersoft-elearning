@@ -1,5 +1,8 @@
 package com.group6.java16.cybersoft.user.mapper;
 
+import javax.validation.Valid;
+
+import com.group6.java16.cybersoft.security.dto.RegisterDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.model.ELUser;
@@ -14,4 +17,7 @@ public interface UserMapper {
     ELUser toModel(UserCreateDTO user);
 
     UserResponseDTO toUserResponseDTO(ELUser user);
+
+    ELUser mapFromRegisterToModel(@Valid RegisterDTO rq);
+    
 }

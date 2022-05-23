@@ -4,9 +4,9 @@ export class CourseCreate{
     courseTime: number;
     description: string;
 
-    constructor(coursename: string, coursetime: number, description: string){
-        this.courseName = coursename;
-        this.courseTime = coursetime;
+    constructor(courseName: string, courseTime: number, description: string){
+        this.courseName = courseName;
+        this.courseTime = courseTime;
         this.description = description;
     }
     // starAVG: number;
@@ -18,22 +18,22 @@ export class CourseCreate{
 
 }
 export class CourseRp{
-    id!: string;
-    courseName!: string;
-    courseTime!: number;
-    description!: string;
+    id?: string;
+    courseName?: string;
+    category?: string;
+    courseTime?: number;
+    img?: string;
+    starAvg?: number ;
+    description?: string;
+    createdBy?: string;
+    totalRating?: number;
+    level?: string;
+    skill1?: string;
+    skill2?: string;
+    skill3?: string;
+    skill4?: string;
+    skill5?: string;
 }
 
-export class CourseUpdateInformation {
-    courseName!: string;
-    courseTime!: number;
-    description!: string;
-
-    constructor(coursename: string, coursetime: number, description: string){
-        this.courseName = coursename;
-        this.courseTime = coursetime;
-        this.description = description;
-}
-}
 
 

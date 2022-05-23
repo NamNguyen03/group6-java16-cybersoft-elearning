@@ -1,5 +1,7 @@
 /* Include the core Angular Material styles */
 @import './custom-palettes';
+@import '~ngx-toastr/toastr';
+
 
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;900&family=Raleway:wght@400;500;600;700;900&display=swap");
 @import "~bootstrap/dist/css/bootstrap.css";

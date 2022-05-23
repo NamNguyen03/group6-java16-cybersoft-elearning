@@ -20,7 +20,8 @@ public class ExceptionHelper {
 	}
 	
 	@ExceptionHandler(IllegalArgumentException.class)
-	public Object handlerIllegalArgumentExceptio(IllegalArgumentException ex) {
+	public Object handlerIllegalArgumentException(IllegalArgumentException ex) {
+		ex.printStackTrace();
 		return ResponseHelper.getResponse("Data type invalid", HttpStatus.BAD_REQUEST, true);
 	}
 

@@ -22,6 +22,7 @@ import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
+import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 
@@ -140,13 +141,12 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 			pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
 		}
 
-		// coursename
 		if ("courseName".equals(fieldNameSearch)) {
 			rp = courseRepository.searchByCourseName(valueSearch, pageable);
 		}
 		
 		if ("category".equals(fieldNameSearch)) {
-			rp = courseRepository.findByCategory(valueSearch, pageable);
+			rp = courseRepository.findByCategory(CategoryEnum.valueOf(valueSearch), pageable);
 		}
 
 		// if firstName not existed then search all

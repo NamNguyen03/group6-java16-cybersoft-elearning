@@ -382,30 +382,34 @@
           </div>
        </div>
        <div class="signup-form-wrapper">
-          <div class="signup-input-wrapper">
-             <input type="text" placeholder="First Name">
-             <input type="text" placeholder="First Name">
-          </div>
-          <div class="signup-wrapper">
-            <input type="text" placeholder="Display Name">
-         </div>
-          <div class="signup-wrapper">
-             <input type="email" placeholder="Email">
-          </div>
-          <div class="signup-wrapper">
-             <input type="text" placeholder="Username">
-          </div>
-          <div class="signup-wrapper">
-             <input type="password" placeholder="Password">
-          </div>
+         <form  [formGroup]="registerForm" novalidate="">
+            <div class="signup-input-wrapper">
+               <input type="text" placeholder="First Name" formControlName="firstName">
+               <input type="text" placeholder="Last Name" formControlName="lastName">
+            </div>
+         
+            <div class="signup-wrapper">
+               <input type="text" placeholder="Display Name" formControlName="displayName">
+            </div>
+             <div class="signup-wrapper">
+                <input type="email" placeholder="Email" formControlName="email">
+             </div>
+             <div class="signup-wrapper">
+                <input type="text" placeholder="Username" formControlName="username">
+             </div>
+             <div class="signup-wrapper">
+                <input type="password" placeholder="Password" formControlName="password">
+             </div>
+          </form>
+         
           <div class="signup-action">
              <div class="course-sidebar-list">
                 <input class="signup-checkbo" type="checkbox" id="sing-up">
                 <label class="sign-check" for="sing-up"><span>Accept the terms and <a href="#">Privacy Policy</a></span></label>
              </div>
           </div>
-          <div class="sing-buttom mb-20">
-             <button class="sing-btn">Register now</button>
+          <div class="sing-buttom mb-20"  (click)="register()">
+             <button class="sing-btn" >Register now</button>
           </div>
           <div class="acount-login text-center">
              <span>Already have an account? <a href="javascript:void(0)" (click)="signinclick()">Login</a></span>
