@@ -171,8 +171,7 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	@Override
 	public String updateImg(MultipartFile file) {
-		  String urlImg = firebaseFileService.saveFile(file);
-		return urlImg;
+		return  firebaseFileService.saveFile(file);
 	}
 
 }

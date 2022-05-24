@@ -47,7 +47,7 @@ public class CommentServiceImpl implements CommentService{
 		String userCurrent = UserPrincipal.getUsernameCurrent();
 		List<ELComment> response = new ArrayList<ELComment>();
 		
-		if(userCurrent == lesson.getCreatedBy()) {
+		if(userCurrent.equals(lesson.getCreatedBy())) {
 			response = repository.findAll();
 		}else {
 			response = repository.findByStatusComment(UUID.fromString(idLesson));

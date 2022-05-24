@@ -24,7 +24,6 @@ import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
 import com.group6.java16.cybersoft.course.service.LessonManagementService;
-import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 
 @RestController
 @RequestMapping("api/v1/lessons")

@@ -6,7 +6,6 @@ import javax.validation.constraints.NotBlank;
 import com.group6.java16.cybersoft.validation.annotation.UniqueLessonName;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
