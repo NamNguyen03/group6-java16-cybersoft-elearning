@@ -12,6 +12,8 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
@@ -87,12 +92,12 @@ public class CourseManagementServiceIntegrationTest {
 	}
 	
 	@Test
-	 public void whenUpdateCourseSussessfully_thenCourseResponseDTO() {
+	 public void whenUpdateCourseSuccessfully_thenCourseResponseDTO() {
 		
 			UUID uuid = UUID.randomUUID();
 		
-		CourseUpdateDTO course = new CourseUpdateDTO("name1212122", "description", "anh.img", LevelEnum.BEGINNER, "Java", "HTML","CSS", null, null,CategoryEnum.BUSINESS);
-		ELCourse elcourse = ELCourse.builder()
+		CourseUpdateDTO rq = new CourseUpdateDTO("name1212122", "description", "anh.img", LevelEnum.BEGINNER, "Java", "HTML","CSS", null, null,CategoryEnum.BUSINESS);
+		ELCourse course = ELCourse.builder()
 				.courseName("name1212122")
 				.courseTime(0)
 				.description("description")
@@ -106,10 +111,10 @@ public class CourseManagementServiceIntegrationTest {
 				.lessons(null)
 				.build();
 		
-		when(courseRepository.findById(uuid)).thenReturn(Optional.of(elcourse));
-		when(courseRepository.save(any())).thenReturn(elcourse); 
+		when(courseRepository.findById(uuid)).thenReturn(Optional.of(course));
+		when(courseRepository.save(any())).thenReturn(course); 
 		
-		CourseResponseDTO actual = service.updateCourse(course, uuid.toString());
+		CourseResponseDTO actual = service.updateCourse(rq, uuid.toString());
 		CourseResponseDTO expected = new CourseResponseDTO();
 		expected.setCourseName("name1212122");
 		expected.setDescription("description");
@@ -221,7 +226,13 @@ public class CourseManagementServiceIntegrationTest {
 
 		Page<ELCourse> page = new PageImpl<ELCourse>(new ArrayList<ELCourse>(), pageable, 10l);
 
-		when(courseRepository.findAll(pageable)).thenReturn(page);
+		Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("nam");
+
+		when(courseRepository.searchAll("nam",pageable)).thenReturn(page);
 
 		PageResponseModel<CourseResponseDTO> expected = new PageResponseModel<CourseResponseDTO>(1, 1,
 				new ArrayList<CourseResponseDTO>());
@@ -241,7 +252,12 @@ public class CourseManagementServiceIntegrationTest {
 
 		Page<ELCourse> page = new PageImpl<ELCourse>(new ArrayList<ELCourse>(), pageable, 10l);
 
-		when(courseRepository.searchByCourseName("value", pageable)).thenReturn(page);
+		Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("nam");
+		when(courseRepository.searchByCourseName("nam","value", pageable)).thenReturn(page);
 
 		PageResponseModel<CourseResponseDTO> expected = new PageResponseModel<CourseResponseDTO>(1, 1,
 				new ArrayList<CourseResponseDTO>());
@@ -262,7 +278,13 @@ public class CourseManagementServiceIntegrationTest {
 
 		Page<ELCourse> page = new PageImpl<ELCourse>(new ArrayList<ELCourse>(), pageable, 10l);
 
-		when(courseRepository.findByCategory(CategoryEnum.valueOf("BUSINESS"), pageable)).thenReturn(page);
+		Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("nam");
+
+		when(courseRepository.findByCategory("nam", CategoryEnum.valueOf("BUSINESS"), pageable)).thenReturn(page);
 
 		PageResponseModel<CourseResponseDTO> expected = new PageResponseModel<CourseResponseDTO>(1, 1,
 				new ArrayList<CourseResponseDTO>());
@@ -283,7 +305,13 @@ public class CourseManagementServiceIntegrationTest {
 
         Page<ELCourse> page = new PageImpl<ELCourse>(new ArrayList<ELCourse>(), pageable, 10l);
 
-        when(courseRepository.findAll(pageable)).thenReturn(page);
+		Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("nam");
+
+        when(courseRepository.searchAll("nam",pageable)).thenReturn(page);
 
         PageResponseModel<CourseResponseDTO> expected = new PageResponseModel<CourseResponseDTO>(1,1, new ArrayList<CourseResponseDTO>());
 

@@ -26,5 +26,5 @@ public class LessonCreateDTO {
 	private String description;
 	
 	@NotBlank(message = "{lesson.courseid.not-blank}")
-	private String course_id;
+	private String courseId;
 }

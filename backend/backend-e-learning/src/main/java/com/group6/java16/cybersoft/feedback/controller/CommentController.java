@@ -35,11 +35,11 @@ public class CommentController {
 	}
 	
 	@PostMapping
-	public Object createComment(@Valid @RequestBody CommentCreateDTO dto,BindingResult bindingResult) {
+	public Object createComment(@Valid @RequestBody CommentCreateDTO rq,BindingResult bindingResult) {
 		 if (bindingResult.hasErrors()) {
 	            return ResponseHelper.getResponse(bindingResult, HttpStatus.BAD_REQUEST, true);
 	        }
-		CommentResponseDTO response = service.create(dto);
+		CommentResponseDTO response = service.create(rq);
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
 	
@@ -47,7 +47,7 @@ public class CommentController {
 	public Object deleteComment(@PathVariable("comment-id")String commentId) {
 		 
 		service.delete(commentId);
-		return ResponseHelper.getResponse("Delete Sucessfully", HttpStatus.OK, false);
+		return ResponseHelper.getResponse("Delete Successfully", HttpStatus.OK, false);
 	}
 	
 }

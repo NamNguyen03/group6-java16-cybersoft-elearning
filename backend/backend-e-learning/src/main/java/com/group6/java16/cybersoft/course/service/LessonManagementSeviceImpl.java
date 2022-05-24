@@ -86,7 +86,7 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 		// Map dto to lesson
 
 		ELLesson s = LessonMapper.INSTANCE.toModel(dto);
-		ELCourse c = courseRepository.findById(UUID.fromString(dto.getCourse_id())).orElseThrow(
+		ELCourse c = courseRepository.findById(UUID.fromString(dto.getCourseId())).orElseThrow(
 				() -> new BusinessException(errorscourseNotFound));
 
 		s.setStarAvg(0f);

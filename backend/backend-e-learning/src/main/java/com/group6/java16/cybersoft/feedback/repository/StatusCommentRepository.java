@@ -26,6 +26,9 @@ public interface StatusCommentRepository extends JpaRepository<ELStatusComment, 
 
     @Query( value = "Select t from ELStatusComment t where t.user.id = :idUser and t.course.id = :idCourse")
     Optional<ELStatusComment> findByUserAndCourse(String idUser, String idCourse);
+
+    @Query( value =  "Select t from ELStatusComment t where t.course.id = :idCourse and t.user.id = :idUser ")
+    Optional<ELStatusComment>  findByIdCourseAndIdUser(@Param("idCourse") UUID idCourse, @Param("idUser") UUID idUser);
     
 
 }

@@ -14,6 +14,7 @@ import com.group6.java16.cybersoft.feedback.dto.StatusCommentDTO;
 import com.group6.java16.cybersoft.feedback.dto.StatusCommentResponseDTO;
 import com.group6.java16.cybersoft.feedback.mapper.StatusCommentMapper;
 import com.group6.java16.cybersoft.feedback.model.ELStatusComment;
+import com.group6.java16.cybersoft.feedback.model.EnumStatusComment;
 import com.group6.java16.cybersoft.feedback.repository.StatusCommentRepository;
 import com.group6.java16.cybersoft.user.model.ELUser;
 import com.group6.java16.cybersoft.user.repository.ELUserRepository;
@@ -48,6 +49,7 @@ public class StatusCommentServiceImpl implements StatusCommentService{
 
 	@Value("${status-comment.not-found}")
 	private String errorsStatusCommentNotFound;
+
 
     @Override
     public PageResponseModel<StatusCommentResponseDTO> search(PageRequestModel pageRequestModel) {
@@ -84,13 +86,13 @@ public class StatusCommentServiceImpl implements StatusCommentService{
     }
 
 	@Override
-	public StatusCommentResponseDTO updateStatusComment(StatusCommentDTO rq) {
+	public StatusCommentResponseDTO updateStatusComment(String id, EnumStatusComment status) {
 
-		ELStatusComment status = statusCommentRepository.findByUserAndCourse(rq.getIdUser(),rq.getIdCourse()).orElseThrow(
-			() -> new BusinessException(errorsStatusCommentNotFound)
-		);
+		ELStatusComment statusComment = statusCommentRepository.findById(UUID.fromString(id)).orElseThrow(() -> new BusinessException(errorsStatusCommentNotFound));
 
-		return StatusCommentMapper.INSTANCE.toResponseDTO(statusCommentRepository.save(status));
+		statusComment.setStatus(status);
+
+		return StatusCommentMapper.INSTANCE.toResponseDTO(statusCommentRepository.save(statusComment));
 	}
 
 	@Override

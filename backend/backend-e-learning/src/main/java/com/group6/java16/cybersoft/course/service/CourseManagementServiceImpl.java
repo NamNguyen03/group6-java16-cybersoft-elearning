@@ -18,6 +18,7 @@ import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
+import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
@@ -133,6 +134,8 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		String valueSearch = pageRequestModel.getValueSearch();
 		Pageable pageable = PageRequest.of(page, size);
 		Page<ELCourse> rp = null;
+		String userCurrent = UserPrincipal.getUsernameCurrent();
+		
 
 		if (null != fieldNameSort && fieldNameSort.matches("courseName")) {
 			pageable = PageRequest.of(page, size,
@@ -142,16 +145,16 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		}
 
 		if ("courseName".equals(fieldNameSearch)) {
-			rp = courseRepository.searchByCourseName(valueSearch, pageable);
+			rp = courseRepository.searchByCourseName(userCurrent, valueSearch, pageable);
 		}
 		
 		if ("category".equals(fieldNameSearch)) {
-			rp = courseRepository.findByCategory(CategoryEnum.valueOf(valueSearch), pageable);
+			rp = courseRepository.findByCategory(userCurrent, CategoryEnum.valueOf(valueSearch), pageable);
 		}
 
 		// if firstName not existed then search all
 		if (rp == null) {
-			rp = courseRepository.findAll(pageable);
+			rp = courseRepository.searchAll(userCurrent, pageable);
 		}
 
 		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(),

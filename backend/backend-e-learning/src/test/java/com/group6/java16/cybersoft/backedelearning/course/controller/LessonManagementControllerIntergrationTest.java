@@ -95,7 +95,7 @@ public class LessonManagementControllerIntergrationTest {
     	lesson.setContent("Buoi 1");
     	lesson.setDescription("Java Core");
     	lesson.setName("Review Java");
-    	lesson.setCourse_id("course1");
+    	lesson.setCourseId("course1");
     	Gson gson = new Gson();
         String json = gson.toJson(lesson);
         

@@ -5,12 +5,14 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.feedback.dto.StatusCommentDTO;
 import com.group6.java16.cybersoft.feedback.dto.StatusCommentResponseDTO;
+import com.group6.java16.cybersoft.feedback.model.EnumStatusComment;
 import com.group6.java16.cybersoft.feedback.service.StatusCommentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,9 +50,9 @@ public class StatusCommentController {
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
 
-    @PutMapping()
-    public Object updateStatusComment(@RequestBody StatusCommentDTO rq){
-        StatusCommentResponseDTO rp = service.updateStatusComment(rq); 
+    @PutMapping("{id}")
+    public Object updateStatusComment(@RequestBody EnumStatusComment status, @PathVariable("id") String id){
+        StatusCommentResponseDTO rp = service.updateStatusComment(id, status); 
 
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
