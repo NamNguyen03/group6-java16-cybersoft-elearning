@@ -34,7 +34,5 @@ public interface CommentService {
 	 * */
 	CommentResponseDTO create(CommentCreateDTO dto);
 
-	CommentResponseDTO update(String commentId, String contentUpdate);
-
 	void delete(String commentId);
 }

@@ -9,7 +9,7 @@ import com.group6.java16.cybersoft.feedback.dto.RatingResponseDTO;
 
 public interface RatingService {
 
-	List<CommentResponseDTO> search(String lessonId);
+	List<RatingResponseDTO> search(String lessonId);
 
 	RatingResponseDTO create(RatingCreateDTO dto);
 

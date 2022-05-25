@@ -2,8 +2,7 @@ package com.group6.java16.cybersoft.feedback.dto;
 
 import java.util.UUID;
 
-import com.group6.java16.cybersoft.course.model.ELLesson;
-import com.group6.java16.cybersoft.user.model.ELUser;
+import com.group6.java16.cybersoft.user.dto.client.UserResponseClientDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,9 +18,6 @@ public class CommentResponseDTO {
 	
 	private String content;
 	
-	private ELUser user;
+	private UserResponseClientDTO user;
 	
-	private ELLesson lesson;
-	
-
 }

@@ -12,11 +12,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentRepository extends JpaRepository<ELComment, UUID> {
-	 @Query( value =  " Select c from ELComment c "
-	 		+ " join c.lesson l  join l.course x join x.statuses s "
-	 		+ " where l.id = :id "
-	 		+ " and s.status = 'PUBLIC' ") 
+	 @Query( value =  " Select c from ELComment c left join c.lesson l"
+	 		+ " left join l.course t "
+	 		+ " where 0 < (select count(sc) from ELStatusComment sc where ( sc.user.username = :userCurrent or "
+	 		+ " sc.status = 'PUBLIC') and ( c.createdBy = sc.user.username and t.id = sc.course.id ) ) and l.id = :id order by c.createdAt DESC ") 
 	 
-	List<ELComment> findByStatusComment(@Param("id")UUID idLesson);
+	List<ELComment> findByIdLesson(@Param("id")UUID idLesson,@Param("userCurrent")String userCurrent);
     
 }

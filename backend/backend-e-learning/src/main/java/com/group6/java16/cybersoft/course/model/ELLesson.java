@@ -33,12 +33,16 @@ public class ELLesson extends BaseEntity{
 	@Column(name = "content",nullable = false)
 	private String content;
 	
-	private float starAvg;
+	@Builder.Default
+	private float starAvg = 0;
 	
+	@Builder.Default
 	// totalStar = sum (star.value)
-	private int totalStar;
+	private int totalStar= 0;
+	
+	@Builder.Default
 	// count rating
-	private int totalRating;
+	private int totalRating= 0;
 
 	
 	@JsonIgnore
