@@ -7,7 +7,6 @@ import javax.validation.constraints.Size;
 import com.group6.java16.cybersoft.validation.annotation.UniqueLessonName;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,5 +28,5 @@ public class LessonCreateDTO {
 	private String description;
 	
 	@NotBlank(message = "{lesson.courseid.not-blank}")
-	private String course_id;
+	private String courseId;
 }

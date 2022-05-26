@@ -1,7 +1,7 @@
-package com.group6.java16.cybersoft.course.dto;
+package com.group6.java16.cybersoft.course.dto.client;
 
-import java.util.Set;
 import java.util.UUID;
+
 
 import lombok.Data;
 import lombok.Getter;
@@ -12,7 +12,8 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class CourseResponseDTO {
+public class CardCourseReponseClientDTO {
+	
 	private UUID id;
 
 	private String courseName;
@@ -43,5 +44,7 @@ public class CourseResponseDTO {
 
 	private String category;
 	
-	private Set<LessonResponseDTO> lessons;
+	private String idFirstLesson;
+	
+
 }
