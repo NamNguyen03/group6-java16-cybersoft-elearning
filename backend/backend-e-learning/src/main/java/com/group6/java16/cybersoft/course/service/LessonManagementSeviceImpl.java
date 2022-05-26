@@ -21,6 +21,7 @@ import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
+import com.group6.java16.cybersoft.course.dto.client.LessonDetailsResponseClientDTO;
 import com.group6.java16.cybersoft.course.mapper.LessonMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.model.ELLesson;
@@ -164,6 +165,14 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 	@Override
 	public String postImg(MultipartFile file) {
 		return firebaseFileService.saveFile(file);
+	}
+
+	@Override
+	public LessonDetailsResponseClientDTO getLessonDetail(String id) {
+		ELLesson lesson = lessonRepository.getDetailsById(UUID.fromString(id));
+		lesson.getCourse().getLessons().forEach(l -> System.out.println(l.getName()));
+		
+		return LessonMapper.INSTANCE.toLessonDetailsClientDTO(lesson);
 	}
 
 }

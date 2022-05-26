@@ -17,7 +17,7 @@
                             <div style="width: 100%; height: auto">
                                 <div style="display: grid; gap: 10px; grid-template-columns: auto auto auto;">
                                     <div  *ngFor="let course of coursesAll">
-                                        <div class="course-wrapper-2 mb-30">
+                                        <div class="course-wrapper-2 mb-30" >
                                             <div class="student-course-img">
                                                 <img [src]="course.img" alt="image not found">
                                             </div>
@@ -43,7 +43,7 @@
                                                             </ul>
                                                         </div>
                                                         <div class="course-action">
-                                                            <a [routerLink]="['/course-details']" class="view-details-btn">View Details</a>
+                                                            <a [routerLink]="['/course-details', course.idFirstLesson] " class="view-details-btn">View Details</a>
                                                             <button class="wishlist-btn"><i class="flaticon-like"></i></button>
                                                             <a [routerLink]="['/course-details']" class="c-share-btn"><i
                                                                     class="flaticon-previous"></i></a>
