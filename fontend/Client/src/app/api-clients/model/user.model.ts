@@ -47,3 +47,15 @@ export class RegisterRequest{
         this.password = password;
     }
 }
+
+export class UserCommentResponse{
+    id:string;
+    avatar: string;
+    displayName: string;
+    
+    constructor(id:string,avatar:string,displayName:string){
+        this.id=id;
+        this.avatar=avatar;
+        this.displayName=displayName;
+    }
+}

@@ -32,7 +32,7 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	@Autowired
 	private ELCourseRepository courseRepository;
-	
+
 	@Autowired
 	private MyFirebaseService firebaseFileService;
 
@@ -44,7 +44,7 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	@Value("${lesson.id.not-found}")
 	private String errorsLessonIdNotFound;
-	
+
 	@Value("${course.name.existed}")
 	private String messageNameCouseExists;
 
@@ -74,7 +74,8 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	private ELCourse setUpdateCourse(ELCourse courseCurrent, CourseUpdateDTO rq) {
 		if (checkString(rq.getCourseName())) {
-			if (!courseCurrent.getCourseName().equals(rq.getCourseName()) && courseRepository.existsByCourseName(rq.getCourseName())) {
+			if (!courseCurrent.getCourseName().equals(rq.getCourseName())
+					&& courseRepository.existsByCourseName(rq.getCourseName())) {
 				throw new BusinessException(messageNameCouseExists);
 			}
 			courseCurrent.setCourseName(rq.getCourseName());
@@ -137,14 +138,14 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		if (null != fieldNameSort && fieldNameSort.matches("courseName")) {
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
-		}else {
+		} else {
 			pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
 		}
 
 		if ("courseName".equals(fieldNameSearch)) {
 			rp = courseRepository.searchByCourseName(valueSearch, pageable);
 		}
-		
+
 		if ("category".equals(fieldNameSearch)) {
 			rp = courseRepository.findByCategory(CategoryEnum.valueOf(valueSearch), pageable);
 		}
@@ -171,7 +172,7 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	@Override
 	public String updateImg(MultipartFile file) {
-		  String urlImg = firebaseFileService.saveFile(file);
+		String urlImg = firebaseFileService.saveFile(file);
 		return urlImg;
 	}
 

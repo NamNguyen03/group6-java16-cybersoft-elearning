@@ -82,5 +82,9 @@ export class CoursetwomainComponent implements OnInit {
 
     })
    }
-}
-  
+   viewDetail(courseId:string|undefined){
+    this._router.navigate(['/course-details'], {
+      queryParams: { 'courseId': courseId }
+    })
+
+}}

@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
@@ -25,58 +28,59 @@ import com.group6.java16.cybersoft.user.repository.ELUserRepository;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 	@Autowired
 	private CommentRepository repository;
-	
+
 	@Autowired
 	private ELLessonRepository lessonRepository;
-	
+
 	@Autowired
 	private ELUserRepository userRepository;
-		
+
 	@Value("${comment.not-found}")
 	private String errorsCommentNotFound;
-	
+
 	@Value("${entity.id.invalid}")
 	private String errorsIdInvalid;
-	
+
 	@Value("${lesson.not-found}")
 	private String errorsLessonNotFound;
-	
+
 	@Value("${user.not-found}")
 	private String errorsUserNotFound;
-	
+
 	@Override
 	public List<CommentResponseDTO> search(String idLesson) {
 		ELLesson lesson = lessonRepository.findById(UUID.fromString(idLesson))
-                .orElseThrow(() -> new BusinessException(errorsLessonNotFound));
+				.orElseThrow(() -> new BusinessException(errorsLessonNotFound));
 		String userCurrent = UserPrincipal.getUsernameCurrent();
 		List<ELComment> response = new ArrayList<ELComment>();
-		
-		if(userCurrent.equals( lesson.getCreatedBy())) {
-			response = repository.findAll();
-		}else {
-			response = repository.findByIdLesson(UUID.fromString(idLesson),userCurrent);
-			
+		Pageable pageable = PageRequest.of(0, 5, Sort.by("createdAt").descending());
+
+		if (userCurrent.equals(lesson.getCreatedBy())) {
+			response = repository.findAll(pageable).getContent();
 		}
-		
-		
+		if (userCurrent.equals(null)) {
+			response = repository.findByIdLesson(UUID.fromString(idLesson), pageable).getContent();
+
+		}
+
 		return response.stream().map(CommentMapper.INSTANCE::toResponseDTO).collect(Collectors.toList());
 	}
 
 	@Override
 	public CommentResponseDTO create(CommentCreateDTO dto) {
 		ELUser user = userRepository.findById(UUID.fromString(dto.getUserId()))
-                .orElseThrow(() -> new BusinessException(errorsUserNotFound));
+				.orElseThrow(() -> new BusinessException(errorsUserNotFound));
 		ELLesson lesson = lessonRepository.findById(UUID.fromString(dto.getLessonId()))
-                .orElseThrow(() -> new BusinessException(errorsLessonNotFound));
+				.orElseThrow(() -> new BusinessException(errorsLessonNotFound));
 		ELComment response = ELComment.builder()
 				.content(dto.getContent())
 				.user(user)
 				.lesson(lesson).build();
-		
-		return CommentMapper.INSTANCE.toResponseDTO(repository.save(response)); 	 	
+
+		return CommentMapper.INSTANCE.toResponseDTO(repository.save(response));
 	}
 
 	@Override
@@ -86,10 +90,8 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	private ELComment getById(String id) {
-        return repository.findById(UUID.fromString(id))
-                .orElseThrow(() -> new BusinessException(errorsCommentNotFound));
-    }
-	
-	 	 
+		return repository.findById(UUID.fromString(id))
+				.orElseThrow(() -> new BusinessException(errorsCommentNotFound));
+	}
 
 }

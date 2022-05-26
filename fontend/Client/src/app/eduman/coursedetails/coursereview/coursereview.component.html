@@ -2,31 +2,21 @@
     <div class="course-detalis-reviews-tittle">
         <h3>Reviews</h3>
     </div>
-    <div class="course-review-item mb-30">
-        <div class="course-reviews-img">
-            <a href="#"><img src="assets/img/course/course-reviews-1.png"
-                    alt="image not found"></a>
-        </div>
-        <div class="course-review-list">
-            <h5><a [routerLink]="['/instructor']">Sotapdi Kunda</a></h5>
-            <div class="course-start-icon">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <span>55 min ago</span>
+    <div *ngFor="let comment of listComments">
+        <div class="course-review-item mb-30">
+            <div class="course-reviews-img">
+                <a href="#"><img [src]="comment.user.avatar"
+                        alt="avatar not found"></a>
             </div>
-            <p>Very clean and organized with easy to follow tutorials, Exercises, and
-                solutions.
-                This course does start from the beginning with very little knowledge and
-                gives a
-                great overview of common tools used for data science and progresses into
-                more
-                complex concepts and ideas.</p>
+            <div class="course-review-list">
+                <div class="course-start-icon">
+                    <span>{{comment.timeComment}}</span>
+                </div>
+                <p>{{comment.content}}</p>
+            </div>
         </div>
     </div>
-    <div class="course-review-item mb-30">
+    <!-- <div class="course-review-item mb-30">
         <div class="course-reviews-img">
             <a href="#"><img src="assets/img/course/course-reviews-2.png"
                     alt="image not found"></a>
@@ -67,5 +57,5 @@
                 Query
                 handling can be improved.Overall very happy with the course.</p>
         </div>
-    </div>
+    </div> -->
 </div>

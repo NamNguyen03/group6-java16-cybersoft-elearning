@@ -121,36 +121,12 @@
                             <a id="show-review-box" class="edu-btn" href="javascript:void(0)" (click)=writeReview()>Write a Review</a>
 
                             <div id="review-box" class="review-comment mt-45" [class.d-block]="writeReviewActive">
-                                <div class="comment-title mb-20">
-                                    <p>Your email address will not be published. Required fields are marked *
-                                    </p>
-                                </div>
-                                <div class="comment-rating mb-20">
-                                    <span>Overall ratings</span>
-                                    <ul>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fal fa-star"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="comment-input-box mb-15">
-                                    <form action="#">
+                               <div class="comment-input-box mb-15">
+                                    <form [formGroup]="formComment" action="comment" >
                                         <div class="row">
                                             <div class="col-xxl-12">
                                                 <textarea placeholder="Your review"
-                                                    class="comment-input comment-textarea mb-20"></textarea>
-                                            </div>
-                                            <div class="col-xxl-6">
-                                                <div class="comment-input mb-20">
-                                                    <input type="text" placeholder="Your Name">
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-6">
-                                                <div class="comment-input mb-20">
-                                                    <input type="email" placeholder="Your Email">
-                                                </div>
+                                                    class="comment-input comment-textarea mb-20" name ="comment"></textarea>
                                             </div>
                                             <div class="col-xxl-12">
                                                 <div class="comment-submit">

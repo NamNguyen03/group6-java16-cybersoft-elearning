@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
-import com.group6.java16.cybersoft.feedback.dto.CommentResponseDTO;
 import com.group6.java16.cybersoft.feedback.dto.RatingCreateDTO;
 import com.group6.java16.cybersoft.feedback.dto.RatingResponseDTO;
 import com.group6.java16.cybersoft.feedback.service.RatingService;
@@ -27,20 +26,25 @@ import com.group6.java16.cybersoft.feedback.service.RatingService;
 public class RatingController {
 	@Autowired
 	private RatingService service;
-	
+
 	@GetMapping("{lesson-id}")
-	public Object findRatingIntoLesson(@PathVariable("lesson-id")String lessonId) {
+	public Object findRatingIntoLesson(@PathVariable("lesson-id") String lessonId) {
 		List<RatingResponseDTO> response = service.search(lessonId);
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
-	
+
 	@PostMapping
-	public Object createRating(@Valid @RequestBody RatingCreateDTO dto,BindingResult bindingResult) {
-		 if (bindingResult.hasErrors()) {
-	            return ResponseHelper.getResponse(bindingResult, HttpStatus.BAD_REQUEST, true);
-	        }
+	public Object createRating(@Valid @RequestBody RatingCreateDTO dto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return ResponseHelper.getResponse(bindingResult, HttpStatus.BAD_REQUEST, true);
+		}
 		RatingResponseDTO response = service.create(dto);
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
-	
+
+	@GetMapping("me/{lesson-id}")
+	public Object findMyRatingIntoLesson(@PathVariable("lesson-id") String lessonId) {
+		RatingResponseDTO response = service.getMyRatingByLesson(lessonId);
+		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
+	}
 }
