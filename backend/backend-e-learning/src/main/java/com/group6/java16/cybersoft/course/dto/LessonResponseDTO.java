@@ -19,5 +19,4 @@ public class LessonResponseDTO {
 	private String content;
 	
 	private String description;
-	
 }

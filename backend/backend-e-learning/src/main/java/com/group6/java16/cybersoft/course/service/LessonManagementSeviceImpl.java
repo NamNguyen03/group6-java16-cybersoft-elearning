@@ -89,9 +89,10 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 		ELLesson s = LessonMapper.INSTANCE.toModel(dto);
 		ELCourse c = courseRepository.findById(UUID.fromString(dto.getCourseId())).orElseThrow(
 				() -> new BusinessException(errorscourseNotFound));
-		
-		
 
+		s.setStarAvg(0f);
+		s.setTotalStar(0);
+		s.setTotalRating(0);
 		c.setCourseTime(c.getCourseTime()+1);
 
 		courseRepository.save(c);
@@ -100,10 +101,8 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 		s.setCourse(c);
 		ELLesson lesson = lessonRepository.save(s);
 
-		// Map lesson to dto
-		LessonResponseDTO srp = LessonMapper.INSTANCE.toLessonResponseDTO(lesson);
 
-		return srp;
+		return LessonMapper.INSTANCE.toLessonResponseDTO(lesson);
 	}
 
 	@Override

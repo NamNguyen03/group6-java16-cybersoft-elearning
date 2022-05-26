@@ -2,7 +2,6 @@ package com.group6.java16.cybersoft.backedelearning.course.service;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -13,30 +12,18 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
-import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
-import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
-import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
-import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.mapper.LessonMapper;
 import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.ELCourse;
@@ -44,16 +31,8 @@ import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.course.model.LevelEnum;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 import com.group6.java16.cybersoft.course.repository.ELLessonRepository;
-import com.group6.java16.cybersoft.course.service.CourseManagementService;
-import com.group6.java16.cybersoft.course.service.CourseManagementServiceImpl;
 import com.group6.java16.cybersoft.course.service.LessonManagementService;
 import com.group6.java16.cybersoft.course.service.LessonManagementSeviceImpl;
-import com.group6.java16.cybersoft.role.dto.GroupUpdateDTO;
-import com.group6.java16.cybersoft.role.model.ELGroup;
-import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
-import com.group6.java16.cybersoft.user.model.ELUser;
-import com.group6.java16.cybersoft.user.model.UserStatus;
-
 @SpringBootTest
 public class LessonManagementServiceIntegrationTest {
 
@@ -204,18 +183,18 @@ public class LessonManagementServiceIntegrationTest {
 
 	}
 
-	@Test
-	public void whenPostImg_thenUpdateSuccessfully() {
-		String imageName = "filename";
-		MockMultipartFile file = new MockMultipartFile(imageName, imageName + ".txt", MediaType.TEXT_PLAIN_VALUE,
-				"Hello, World!".getBytes());
+	// @Test
+	// public void whenPostImg_thenUpdateSuccessfully() {
+	// 	String imageName = "filename";
+	// 	MockMultipartFile file = new MockMultipartFile(imageName, imageName + ".txt", MediaType.TEXT_PLAIN_VALUE,
+	// 			"Hello, World!".getBytes());
 
-		String url = "https://firebasestorage.googleapis.com/v0/b/e-learning-5efea.appspot.com/o/" + imageName
-				+ "?alt=media&token=" + imageName;
+	// 	String url = "https://firebasestorage.googleapis.com/v0/b/e-learning-5efea.appspot.com/o/" + imageName
+	// 			+ "?alt=media&token=" + imageName;
 
-		when(firebaseFileService.saveFile(file)).thenReturn(url);
+	// 	when(firebaseFileService.saveFile(file)).thenReturn(url);
 
-	}
+	// }
 	
 	  @Test
 	    public void whenExistsUserIsUsedToSearchAllAndSort_thenReturnPageResponseUser(){

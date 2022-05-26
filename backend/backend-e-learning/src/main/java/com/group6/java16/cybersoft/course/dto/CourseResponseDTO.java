@@ -2,7 +2,6 @@ package com.group6.java16.cybersoft.course.dto;
 
 import java.util.Set;
 import java.util.UUID;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

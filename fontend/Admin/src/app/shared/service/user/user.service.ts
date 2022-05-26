@@ -1,9 +1,7 @@
-import { UserClient } from 'src/app/api-clients/user.client';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import { UserRp } from 'src/app/api-clients/model/user.model';
-import * as e from 'express';
 import { Router } from '@angular/router';
 
 @Injectable({

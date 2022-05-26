@@ -92,7 +92,7 @@
                         </app-feather-icons><span class="dot"></span>
                     </a></li>
                 <li class="onhover-dropdown">
-                    <div class="media align-items-center"><img class="align-self-center pull-right img-50 rounded-circle" src="{{userCurrent.avatar}}" alt="header-user">
+                    <div class="media align-items-center"><img class="align-self-center pull-right img-50 rounded-circle" [src]="userCurrent.avatar? userCurrent.avatar : './assets/images/user.png'" alt="header-user">
 
                         <div class="dotted-animation"><span class="animate-circle"></span><span class="main-circle"></span></div>
                     </div>

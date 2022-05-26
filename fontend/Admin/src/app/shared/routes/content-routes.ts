@@ -6,24 +6,10 @@ export const content: Routes = [
     loadChildren: () => import('../../components/dashboard/dashboard.module').then(m => m.DashboardModule),
   },
   {
-    path: 'products',
-    loadChildren: () => import('../../components/products/products.module').then(m => m.ProductsModule),
-    data: {
-      breadcrumb: "Products"
-    }
-  },
-  {
-    path: 'sales',
-    loadChildren: () => import('../../components/sales/sales.module').then(m => m.SalesModule),
-    data: {
-      breadcrumb: "Sales"
-    }
-  },
-  {
-    path: 'program',
+    path: 'programs',
     loadChildren: () => import('../../components/program/program.module').then(m => m.ProgramModule),
     data: {
-      breadcrumb: "Program"
+      breadcrumb: "Programs"
     }
   },
   {
@@ -39,10 +25,6 @@ export const content: Routes = [
     data: {
       breadcrumb: "Roles"
     }
-  },
-  {
-    path: 'media',
-    loadChildren: () => import('../../components/media/media.module').then(m => m.MediaModule),
   },
   {
     path: 'groups',
@@ -66,15 +48,11 @@ export const content: Routes = [
     }
   },
   {
-    path: 'localization',
-    loadChildren: () => import('../../components/localization/localization.module').then(m => m.LocalizationModule),
+    path: 'comments',
+    loadChildren: () => import('../../components/comment/comment.module').then(m => m.CommentModule),
     data: {
-      breadcrumb: "Localization"
+      breadcrumb: "Comments"
     }
-  },
-  {
-    path: 'reports',
-    loadChildren: () => import('../../components/reports/reports.module').then(m => m.ReportsModule),
   },
   {
     path: 'settings',
@@ -82,12 +60,6 @@ export const content: Routes = [
     data: {
       breadcrumb: "Settings"
     }
-  },
-  {
-    path: 'invoice',
-    loadChildren: () => import('../../components/invoice/invoice.module').then(m => m.InvoiceModule),
-    data: {
-      breadcrumb: "Invoice"
-    }
   }
+
 ];
