@@ -22,13 +22,19 @@ public interface StatusCommentRepository extends JpaRepository<ELStatusComment, 
     Page<ELStatusComment> searchAll(@Param("username") String usernameCurrent, Pageable pageable);
 
     @Query( value = "Select count(t)>0  from ELStatusComment t where t.user.id = :idUser and t.course.id = :idCourse")
-    boolean existsByUserAndCourse(@Param("idUser") UUID idUser,@Param("idCourse") UUID idCourse);
+    boolean existsByUserAndCourse(@Param("idUser") UUID idUser, @Param("idCourse") UUID idCourse);
 
     @Query( value = "Select t from ELStatusComment t where t.user.id = :idUser and t.course.id = :idCourse")
     Optional<ELStatusComment> findByUserAndCourse(String idUser, String idCourse);
 
     @Query( value =  "Select t from ELStatusComment t where t.course.id = :idCourse and t.user.id = :idUser ")
     Optional<ELStatusComment>  findByIdCourseAndIdUser(@Param("idCourse") UUID idCourse, @Param("idUser") UUID idUser);
+
+    @Query( value =  "Select s from ELStatusComment s where s.course.createdBy = :username and lower(s.user.displayName) = lower(concat('%', :displayName, '%')) ")
+    Page<ELStatusComment> searchByDisplayNameUser(@Param("username") String usernameCurrent, @Param("displayName") String displayName, Pageable pageable);
+
+    @Query( value =  "Select s from ELStatusComment s where s.course.createdBy = :username and lower(s.course.courseName) = lower(concat('%', :courseName, '%')) ")
+    Page<ELStatusComment> searchByNameCourse(@Param("username") String usernameCurrent, @Param("courseName") String courseName, Pageable pageable);
     
 
 }

@@ -5,6 +5,7 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.feedback.dto.StatusCommentDTO;
 import com.group6.java16.cybersoft.feedback.dto.StatusCommentResponseDTO;
+import com.group6.java16.cybersoft.feedback.dto.UpdateStatusCommentDTO;
 import com.group6.java16.cybersoft.feedback.model.EnumStatusComment;
 import com.group6.java16.cybersoft.feedback.service.StatusCommentService;
 
@@ -51,8 +52,8 @@ public class StatusCommentController {
     }
 
     @PutMapping("{id}")
-    public Object updateStatusComment(@RequestBody EnumStatusComment status, @PathVariable("id") String id){
-        StatusCommentResponseDTO rp = service.updateStatusComment(id, status); 
+    public Object updateStatusComment(@RequestBody UpdateStatusCommentDTO rq, @PathVariable("id") String id){
+        StatusCommentResponseDTO rp = service.updateStatusComment(id, rq.getStatus()); 
 
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }

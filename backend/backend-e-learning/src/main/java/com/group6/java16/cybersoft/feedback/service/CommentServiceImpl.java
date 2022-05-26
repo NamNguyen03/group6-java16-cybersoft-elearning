@@ -77,16 +77,22 @@ public class CommentServiceImpl implements CommentService{
 	public CommentResponseDTO create(CommentCreateDTO rq) {
 		ELLesson lesson = lessonRepository.findById(UUID.fromString(rq.getLessonId())).orElseThrow(()->new BusinessException(errorLessonNotFound));
 		ELUser user = userRepository.findByUsername(UserPrincipal.getUsernameCurrent()).get();
-		ELStatusComment statusComment = statusCommentRepository.findByIdCourseAndIdUser(lesson.getCourse().getId() , user.getId())
-			.orElse(statusCommentRepository.save(
+
+	
+		Optional<ELStatusComment> statusCommentOpt = statusCommentRepository.findByIdCourseAndIdUser(lesson.getCourse().getId() , user.getId());
+		
+		// if status not exists then create status private
+		if(statusCommentOpt.isEmpty()){
+			statusCommentRepository.save(
 				ELStatusComment.builder()
 					.id(UUID.randomUUID())
 					.user(user)
 					.course(lesson.getCourse())
 					.status(EnumStatusComment.PRIVATE)
-					.build()));
-		
-		if(statusComment.getStatus().equals(EnumStatusComment.BLOCKED)){
+					.build());
+		}
+
+		if(statusCommentOpt.isPresent() && statusCommentOpt.get().getStatus().equals(EnumStatusComment.BLOCKED)){
 			throw new BusinessException(errorsCanNotComment);
 		}
 		

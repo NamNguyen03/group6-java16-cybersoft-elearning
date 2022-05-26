@@ -75,6 +75,14 @@ public class StatusCommentServiceImpl implements StatusCommentService{
 			response = statusCommentRepository.searchByStatus(usernameCurrent, valueSearch, pageable);
 		}
 
+		if ("displayName".equals(fieldNameSearch)) {
+			response = statusCommentRepository.searchByDisplayNameUser(usernameCurrent, valueSearch, pageable);
+		}
+
+		if ("courseName".equals(fieldNameSearch)) {
+			response = statusCommentRepository.searchByNameCourse(usernameCurrent, valueSearch, pageable);
+		}
+
 		if (response == null) {
 			response = statusCommentRepository.searchAll(usernameCurrent, pageable);
 		}
