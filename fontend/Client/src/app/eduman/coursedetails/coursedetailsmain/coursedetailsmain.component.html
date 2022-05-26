@@ -32,21 +32,21 @@
                     <div class="course-detelis-meta">
                         <div class="course-meta-wrapper border-line-meta">
                             <div class="course-meta-img">
-                                <a [routerLink]="['/instructor-profile']"><img src="assets/img/course/course-meta.png"
+                                <a [routerLink]="['/instructor-profile']"><img src="{{courseDetail.img}}"
                                         alt="course-meta"></a>
                             </div>
                             <div class="course-meta-text">
                                 <span>Created by</span>
-                                <h6><a [routerLink]="['/instructor-profile']">{{courseDetail.id}}</a></h6>
+                                <h6><a [routerLink]="['/instructor-profile']">{{courseDetail.createdBy}}</a></h6>
                             </div>
                         </div>
                         <div class="course-Enroll border-line-meta">
-                            <p>Total Enrolled</p>
-                            <span>5,420</span>
+                            <p>Total Rating</p>
+                            <span>{{courseDetail.totalRating}}</span>
                         </div>
                         <div class="course-update border-line-meta">
                             <p>Last Update</p>
-                            <span>01 January 2022 </span>
+                            <span></span>
                         </div>
                         <div class="course-category">
                             <p>01 January 2022 </p>
@@ -57,37 +57,28 @@
                         <div class="course-Description">
                             <h4>Description</h4>
                         </div>
-                        <p>This course has been designed by two professional Data Scientists so that we can
-                            share our knowledge and help you learn complex theory, algorithms, and coding
-                            libraries in a simple way. We will walk you step-by-step into the World of Machine
-                            Learning. With every tutorial, you will develop new skills and improve your
-                            understanding of this challenging yet lucrative sub-field of Data Science.</p>
+                        <p>{{courseDetail.description}}</p>
                     </div>
                     <div class="course-learn-wrapper">
                         <div class="course-learn">
                             <div class="course-leranm-tittle">
-                                <h4 class="mb-15">What you'll learn</h4>
+                                <h4 class="mb-15">Skills and knowledge required</h4>
                             </div>
                             <div class="row">
                                 <div class="col-xl-6">
                                     <div class="course-leran-text f-left">
                                         <ul>
-                                            <li>Handle advanced techniques like Dimensionality Reduction</li>
-                                            <li>Handle specific topics like Reinforcement Learning best</li>
-                                            <li>Know which Machine Learning model to choose for each type of
-                                                problem</li>
+                                            <li>{{courseDetail.skill1}}</li>
+                                            <li>{{courseDetail.skill2}}</li>
+                                            <li>{{courseDetail.skill3}}</li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="course-leran-text">
                                         <ul>
-                                            <li>Reinforcement learning upper
-                                                confidence bound Thompson sampling</li>
-                                            <li>Model Selection & Boosting fold cross
-                                                validation parameter</li>
-                                            <li>Use Machine Learning for personal
-                                                purpose of machine</li>
+                                            <li>{{courseDetail.skill4}}</li>
+                                            <li>{{courseDetail.skill5}}</li>
                                         </ul>
                                     </div>
                                 </div>
