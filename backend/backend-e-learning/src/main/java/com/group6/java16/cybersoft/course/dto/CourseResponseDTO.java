@@ -41,5 +41,6 @@ public class CourseResponseDTO {
 	private String skill5;
 
 	private String category;
+	
 	private Set<LessonResponseDTO> lessons;
 }

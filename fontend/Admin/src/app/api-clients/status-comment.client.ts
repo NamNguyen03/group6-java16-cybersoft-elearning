@@ -25,4 +25,8 @@ export class StatusCommentClient {
     update(id: string , status: string): Observable<Response<StatusCommentRp>>{
         return this.httpClient.put<Response<StatusCommentRp>>(this._apiEndpoint + '/' + id, {status});
     }
+
+    getById(id: string): Observable<Response<StatusCommentRp>>{
+        return this.httpClient.get<Response<StatusCommentRp>>(this._apiEndpoint + '/' + id);
+    }
 }

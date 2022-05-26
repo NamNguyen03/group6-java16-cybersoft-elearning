@@ -1,6 +1,6 @@
 package com.group6.java16.cybersoft.feedback.mapper;
 
-import com.group6.java16.cybersoft.feedback.dto.StatusCommentResponseDTO;
+import com.group6.java16.cybersoft.feedback.dto.reponse.status.StatusCommentResponseDTO;
 import com.group6.java16.cybersoft.feedback.model.ELStatusComment;
 
 import org.mapstruct.Mapper;

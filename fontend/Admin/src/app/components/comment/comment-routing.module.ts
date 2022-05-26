@@ -9,7 +9,7 @@ const routes: Routes = [
       path: '',
       children: [
             {
-                path: 'list-comment-details',
+                path: 'list-comment-details/:id',
                 component: ListCommentDetailsComponent,
                 data: {
                     title: "List Comment Details",

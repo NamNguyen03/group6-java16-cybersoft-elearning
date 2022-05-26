@@ -36,5 +36,8 @@ public interface StatusCommentRepository extends JpaRepository<ELStatusComment, 
     @Query( value =  "Select s from ELStatusComment s where s.course.createdBy = :username and lower(s.course.courseName) = lower(concat('%', :courseName, '%')) ")
     Page<ELStatusComment> searchByNameCourse(@Param("username") String usernameCurrent, @Param("courseName") String courseName, Pageable pageable);
     
+    @Query( value =  "Select s from ELStatusComment s where id = :id")
+    Optional<ELStatusComment> findByAndUserId(@Param("id") UUID id);
+    
 
 }

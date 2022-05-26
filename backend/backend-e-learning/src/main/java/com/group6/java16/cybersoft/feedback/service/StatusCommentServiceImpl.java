@@ -1,5 +1,7 @@
 package com.group6.java16.cybersoft.feedback.service;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -9,10 +11,13 @@ import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.course.model.ELCourse;
+import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
+import com.group6.java16.cybersoft.course.repository.ELLessonRepository;
 import com.group6.java16.cybersoft.feedback.dto.StatusCommentDTO;
-import com.group6.java16.cybersoft.feedback.dto.StatusCommentResponseDTO;
+import com.group6.java16.cybersoft.feedback.dto.reponse.status.StatusCommentResponseDTO;
 import com.group6.java16.cybersoft.feedback.mapper.StatusCommentMapper;
+import com.group6.java16.cybersoft.feedback.model.ELComment;
 import com.group6.java16.cybersoft.feedback.model.ELStatusComment;
 import com.group6.java16.cybersoft.feedback.model.EnumStatusComment;
 import com.group6.java16.cybersoft.feedback.repository.StatusCommentRepository;
@@ -37,6 +42,9 @@ public class StatusCommentServiceImpl implements StatusCommentService{
 
 	@Autowired
 	private ELCourseRepository courseRepository;
+
+	@Autowired
+	private ELLessonRepository lessonRepository;
 
 	@Value("${user.not-found}")
     private String errorsUserNotFound;
@@ -87,10 +95,14 @@ public class StatusCommentServiceImpl implements StatusCommentService{
 			response = statusCommentRepository.searchAll(usernameCurrent, pageable);
 		}
 
+		
 
 		return new PageResponseModel<>(response.getNumber() + 1, response.getTotalPages(),
-				response.getContent().stream().map(StatusCommentMapper.INSTANCE::toResponseDTO)
-						.collect(Collectors.toList()));
+				response.getContent().stream().map(status ->{
+					status.getCourse().setLessons(null);
+					return status;
+				}).map(StatusCommentMapper.INSTANCE::toResponseDTO)
+					.collect(Collectors.toList()));
     }
 
 	@Override
@@ -126,6 +138,32 @@ public class StatusCommentServiceImpl implements StatusCommentService{
 			.build();
 
 		return StatusCommentMapper.INSTANCE.toResponseDTO(statusCommentRepository.save(status));
+	}
+
+	@Override
+	public StatusCommentResponseDTO getById(String id) {
+		ELStatusComment rp = statusCommentRepository.findByAndUserId(UUID.fromString(id)).orElseThrow(() -> new BusinessException(errorsStatusCommentNotFound));
+		
+		ELUser user = rp.getUser();
+		Set<ELLesson> lessons = new LinkedHashSet<>();
+
+		for(ELLesson lesson : rp.getCourse().getLessons()){
+			Set<ELComment> comments = new LinkedHashSet<>();
+			for(ELComment comment : lesson.getComments()){
+				if(comment.getUser().equals(user)){
+					comments.add(comment);
+				}
+			}
+			if(!comments.isEmpty()){
+				ELLesson l = lesson;
+				l.setComments(comments);
+				lessons.add(l);
+			}
+		}
+
+		rp.getCourse().setLessons(lessons);
+
+		return StatusCommentMapper.INSTANCE.toResponseDTO(rp);
 	}
     
 }

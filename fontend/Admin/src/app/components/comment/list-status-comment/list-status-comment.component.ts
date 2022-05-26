@@ -153,11 +153,8 @@ export class ListStatusCommentComponent implements OnInit {
 
 
   onUserRowSelected(event) {
-  //   let userId = event.data.id;
-  //   console.log(userId)
-   
-  //  this._router.navigate(['/users/user-details'],{
-  //    queryParams: {'userId':userId}})
+    let id = event.data.id;
+    this._router.navigate(['/comments/list-comment-details/' + id]);
 
  }
 

@@ -33,6 +33,14 @@ export class ListCommentDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.createFormSearch();
+    this.getData();
+  }
+
+  private getData(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.statusCommentClient.getById(id).subscribe((response) => {
+      console.log(response)
+    })
   }
 
   private createFormSearch() {
