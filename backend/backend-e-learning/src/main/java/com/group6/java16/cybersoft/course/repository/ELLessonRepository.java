@@ -22,4 +22,6 @@ public interface ELLessonRepository extends JpaRepository<ELLesson, UUID> {
 	@Query( value =  "Select u from ELLesson u where u.name like %:name% ")
 	Page<ELLesson> searchByLessonName(@Param("name")String name, Pageable pageable);
 
+	@Query( value = "select l from ELLesson l left join l.course c left join c.lessons where l.id = :id ")
+	ELLesson getDetailsById(@Param("id") UUID id);
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.ELCourse;
+import com.group6.java16.cybersoft.course.model.ELLesson;
 
 @Repository
 public interface ELCourseRepository extends JpaRepository<ELCourse, UUID> {

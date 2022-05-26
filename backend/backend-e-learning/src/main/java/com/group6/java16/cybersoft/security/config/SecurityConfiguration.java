@@ -60,7 +60,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter   {
 		
 		// API AUTHENTICATION
 		http.antMatcher("/api/v1/**").authorizeRequests()
-			.antMatchers(HttpMethod.GET,"/api/v1/courses").permitAll()
+			.antMatchers(HttpMethod.GET,"/api/v1/courses/**").permitAll()
+			.antMatchers(HttpMethod.GET,"/api/v1/lessons/client/**").permitAll()
 			.antMatchers("/api/v1/auth/**").permitAll()
 			.antMatchers("/api/v1/users/password").permitAll()
 			.anyRequest().authenticated();

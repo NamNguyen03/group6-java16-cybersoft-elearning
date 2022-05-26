@@ -1,5 +1,7 @@
 package com.group6.java16.cybersoft.course.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,10 @@ import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
+import com.group6.java16.cybersoft.course.dto.client.CardCourseReponseClientDTO;
+import com.group6.java16.cybersoft.course.dto.client.LessonDetailsResponseClientDTO;
+import com.group6.java16.cybersoft.course.dto.client.SearchCourseRequestClientDTO;
+import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.service.CourseManagementService;
 
 @RestController
@@ -44,8 +50,7 @@ public class CourseManagementController {
 	}
 
 	@PutMapping("{id}")
-	public Object updateCourse(@PathVariable("id") String id,@RequestBody CourseUpdateDTO rq) {
-
+	public Object updateCourse(@PathVariable("id") String id, @RequestBody CourseUpdateDTO rq) {
 
 		CourseResponseDTO rp = service.updateCourse(rq, id);
 
@@ -60,13 +65,8 @@ public class CourseManagementController {
 			@RequestParam(value = "fieldNameSearch", required = false) String fieldNameSearch,
 			@RequestParam(value = "valueFieldNameSearch", required = false) String valueFieldNameSearch) {
 
-		PageResponseModel<CourseResponseDTO> rp = service.search(new PageRequestModel(
-				pageCurrent,
-				itemPerPage,
-				fieldNameSort,
-				isIncrementSort,
-				fieldNameSearch,
-				valueFieldNameSearch));
+		PageResponseModel<CourseResponseDTO> rp = service.search(new PageRequestModel(pageCurrent, itemPerPage,
+				fieldNameSort, isIncrementSort, fieldNameSearch, valueFieldNameSearch));
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
@@ -86,10 +86,26 @@ public class CourseManagementController {
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
+
 	@PostMapping("{img}")
 	public Object updateImg(@RequestParam(name = "file") MultipartFile file) {
 		String urlImg = service.updateImg(file);
 		return ResponseHelper.getResponse(urlImg, HttpStatus.OK, false);
 	}
+
+	@GetMapping("/client")
+	public Object searchHomePage(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
+			@RequestParam(value = "itemPerPage", defaultValue = "10") int itemPerPage,
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "categories", required = false) List<String> categories,
+			@RequestParam(value = "rating", defaultValue = "-1") int rating,
+			@RequestParam(value = "time", defaultValue = "-1") int time,
+			@RequestParam(value = "level", required = false) List<String> level
+			) {
+		PageResponseModel<CardCourseReponseClientDTO> rp = service.searchHomePage(new SearchCourseRequestClientDTO(pageCurrent, itemPerPage, name, categories, rating, time, level) );
+
+		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	}
+	
 
 }
