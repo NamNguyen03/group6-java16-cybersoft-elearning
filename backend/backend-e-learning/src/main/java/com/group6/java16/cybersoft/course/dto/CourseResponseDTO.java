@@ -2,11 +2,6 @@ package com.group6.java16.cybersoft.course.dto;
 
 import java.util.Set;
 import java.util.UUID;
-
-import com.group6.java16.cybersoft.course.model.LevelEnum;
-import com.group6.java16.cybersoft.user.model.UserStatus;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,5 +41,6 @@ public class CourseResponseDTO {
 	private String skill5;
 
 	private String category;
+	
 	private Set<LessonResponseDTO> lessons;
 }

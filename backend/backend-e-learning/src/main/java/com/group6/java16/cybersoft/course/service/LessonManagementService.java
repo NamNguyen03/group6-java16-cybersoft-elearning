@@ -7,6 +7,7 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
+import com.group6.java16.cybersoft.course.dto.client.LessonDetailsResponseClientDTO;
 
 public interface LessonManagementService {
 	LessonResponseDTO updateLesson(LessonUpdateDTO rq, String id);
@@ -20,4 +21,6 @@ public interface LessonManagementService {
 	LessonResponseDTO getInfoLesson(String id);
 
 	String postImg(MultipartFile file);
+
+	LessonDetailsResponseClientDTO getLessonDetail(String id);
 }

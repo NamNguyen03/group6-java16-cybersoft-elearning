@@ -14,26 +14,28 @@ export class PageResponse<T>{
 export class PageRequest{
     pageCurrent: number;
     itemPerPage: number;
-    fieldNameSort: string;
-    isIncrementSort: boolean;
-    fieldNameSearch: string;
-    valueFieldNameSearch: string;
+    name: string | undefined;
+    categories: string[] | undefined;
+    rating: number | undefined;
+    time: number | undefined;
+    level: string[] | undefined;;
 
     constructor(
         pageCurrent: number,
         itemPerPage: number,
-        fieldNameSort: string,
-        isIncrementSort: boolean,
-        fieldNameSearch: string,
-        valueFieldNameSearch: string){
+        rating: number,
+        time: number,
+        level: string[],
+        categories:string[],
+
+        ){
         
         this.pageCurrent = pageCurrent <=0 ? 1 : pageCurrent;
         this.itemPerPage = itemPerPage <=0 ? 10 : itemPerPage;
-		this.fieldNameSort = fieldNameSort;
-		this.isIncrementSort = isIncrementSort;
-		this.fieldNameSearch = fieldNameSearch;
-		this.valueFieldNameSearch = valueFieldNameSearch;
-
+		this.rating = rating;
+		this.time = time;
+		this.level = level;
+		this.categories = categories;
 
     }
     

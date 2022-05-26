@@ -1,0 +1,72 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h5>User List</h5>
+        </div>
+        <div class="card-body">
+            
+            <a class="btn btn-secondary mr-1 w-100 mb-5 " (click)="toggleSearch()">Form Search</a>
+            <div *ngIf="isSearch" >
+                <div class="col-xl-7">
+                    <form class="needs-validation" [formGroup]="searchForm" novalidate>
+                        <div class="search-form">
+                            <div class="form-group row">
+                                <label for="validationCustom01" class="col-xl-3 col-sm-4 mb-0">Field Name Sort </label>
+                                <select class="form-control digits col-xl-8 col-sm-7"
+                                    id="exampleFormControlSelect1" name="fieldNameSort" formControlName="fieldNameSort">
+                                    <option value ="status"  selected="selected" >Status</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Sort </label>
+                                <select class="form-control digits col-xl-8 col-sm-7"
+                                    id="exampleFormControlSelect1" name="isIncrementSort" formControlName="isIncrementSort">
+                                    <option value="true"  selected="selected">Sort Increment</option>
+                                    <option value="false">Sort Descending</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Field Name Search </label>
+                                <select class="form-control digits col-xl-8 col-sm-7"
+                                    id="exampleFormControlSelect1" name="fieldNameSearch" formControlName="fieldNameSearch">
+                                    <option value ="status"  selected="selected" >Status</option>
+                                    <option value ="displayName" >Display Name</option>
+                                    <option value="courseName">Course Name</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="validationCustom03" class="col-xl-3 col-sm-4 mb-0">Value Search </label>
+                                <input class="form-control col-xl-8 col-sm-7" id="validationCustom03"
+                                    type="text" name="valueFieldNameSearch" formControlName="valueFieldNameSearch" required="">
+                            </div>
+                            
+                        </div>
+                    </form>
+                    <div class="form-group row mb-0">
+                        <div class="product-buttons col-sm-8 offset-xl-3 offset-sm-4">
+                            <button type="button" class="btn btn-primary mr-1 mb-5"(click)="search()">Search</button>
+                        
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <div class="btn-popup pull-right">
+                <a class="btn btn-secondary" [routerLink]="'/users/create-user'">Create User</a>
+            </div>
+            <div id="batchDelete" class="category-table custom-datatable transcation-datatable user-image"></div>
+                <div class="table-responsive">
+                    <ng2-smart-table [settings]="settings" [source]="statusComments"
+                    (editConfirm)="onSaveConfirm($event)"
+                    (userRowSelect)="onUserRowSelected($event)"
+                    ></ng2-smart-table>
+                </div>
+                <div class="mt-3">
+                    <div *ngFor="let pageIndex of pages">
+                        <button class="btn mr-2" style="float: left;"
+                            (click)="clickPage(pageIndex)"
+                            [ngClass]="pageIndex==pageCurrent ? 'btn-secondary' : 'btn-primary'">{{pageIndex}}</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

@@ -3,7 +3,7 @@
 </div>
 <div class="sidebar custom-scrollbar">
   <div class="sidebar-user text-center">
-    <div><img class="img-60 rounded-circle" src="{{userCurrent.avatar}}" alt="#">
+    <div><img class="img-60 rounded-circle" [src]="userCurrent.avatar? userCurrent.avatar : './assets/images/user.png'" alt="#">
     </div>
     <h6 class="mt-3 f-14">{{userCurrent.displayName}}</h6>
     <p>{{userCurrent.major}}</p>

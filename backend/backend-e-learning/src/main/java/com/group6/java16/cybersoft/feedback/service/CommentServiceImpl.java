@@ -2,6 +2,7 @@ package com.group6.java16.cybersoft.feedback.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,10 @@ import com.group6.java16.cybersoft.feedback.dto.CommentCreateDTO;
 import com.group6.java16.cybersoft.feedback.dto.CommentResponseDTO;
 import com.group6.java16.cybersoft.feedback.mapper.CommentMapper;
 import com.group6.java16.cybersoft.feedback.model.ELComment;
+import com.group6.java16.cybersoft.feedback.model.ELStatusComment;
+import com.group6.java16.cybersoft.feedback.model.EnumStatusComment;
 import com.group6.java16.cybersoft.feedback.repository.CommentRepository;
+import com.group6.java16.cybersoft.feedback.repository.StatusCommentRepository;
 import com.group6.java16.cybersoft.user.model.ELUser;
 import com.group6.java16.cybersoft.user.repository.ELUserRepository;
 
@@ -38,6 +42,9 @@ public class CommentServiceImpl implements CommentService {
 	@Autowired
 	private ELUserRepository userRepository;
 
+	@Autowired
+	private StatusCommentRepository statusCommentRepository;
+
 	@Value("${comment.not-found}")
 	private String errorsCommentNotFound;
 
@@ -45,22 +52,26 @@ public class CommentServiceImpl implements CommentService {
 	private String errorsIdInvalid;
 
 	@Value("${lesson.not-found}")
-	private String errorsLessonNotFound;
+	private String errorLessonNotFound;
 
 	@Value("${user.not-found}")
-	private String errorsUserNotFound;
+	private String errorUserNotFound;
+
+	@Value("${can-not-comment}")
+	private String errorsCanNotComment;
 
 	@Override
 	public List<CommentResponseDTO> search(String idLesson) {
 		ELLesson lesson = lessonRepository.findById(UUID.fromString(idLesson))
-				.orElseThrow(() -> new BusinessException(errorsLessonNotFound));
+				.orElseThrow(() -> new BusinessException(errorLessonNotFound));
 		String userCurrent = UserPrincipal.getUsernameCurrent();
 		List<ELComment> response = new ArrayList<ELComment>();
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("createdAt").descending());
 
 		if (userCurrent.equals(lesson.getCreatedBy())) {
-			response = repository.findAll(pageable).getContent();
+			response = repository.findAll();
 		}
+
 		if (userCurrent.equals(null)) {
 			response = repository.findByIdLesson(UUID.fromString(idLesson), pageable).getContent();
 
@@ -70,17 +81,38 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public CommentResponseDTO create(CommentCreateDTO dto) {
-		ELUser user = userRepository.findById(UUID.fromString(dto.getUserId()))
-				.orElseThrow(() -> new BusinessException(errorsUserNotFound));
-		ELLesson lesson = lessonRepository.findById(UUID.fromString(dto.getLessonId()))
-				.orElseThrow(() -> new BusinessException(errorsLessonNotFound));
-		ELComment response = ELComment.builder()
-				.content(dto.getContent())
-				.user(user)
-				.lesson(lesson).build();
+	public CommentResponseDTO create(CommentCreateDTO rq) {
+		ELLesson lesson = lessonRepository.findById(UUID.fromString(rq.getLessonId()))
+				.orElseThrow(() -> new BusinessException(errorLessonNotFound));
+		ELUser user = userRepository.findByUsername(UserPrincipal.getUsernameCurrent()).get();
 
-		return CommentMapper.INSTANCE.toResponseDTO(repository.save(response));
+		Optional<ELStatusComment> statusCommentOpt = statusCommentRepository
+				.findByIdCourseAndIdUser(lesson.getCourse().getId(), user.getId());
+
+		// if status not exists then create status private
+		if (statusCommentOpt.isEmpty()) {
+			statusCommentRepository.save(
+					ELStatusComment.builder()
+							.id(UUID.randomUUID())
+							.user(user)
+							.course(lesson.getCourse())
+							.status(EnumStatusComment.PRIVATE)
+							.build());
+		}
+
+		if (statusCommentOpt.isPresent() && statusCommentOpt.get().getStatus().equals(EnumStatusComment.BLOCKED)) {
+			throw new BusinessException(errorsCanNotComment);
+		}
+
+		ELComment comment = ELComment.builder()
+				.id(UUID.randomUUID())
+				.content(rq.getContent())
+				.lesson(lesson)
+				.user(user)
+				.build();
+
+		return CommentMapper.INSTANCE.toResponseDTO(repository.save(comment));
+
 	}
 
 	@Override

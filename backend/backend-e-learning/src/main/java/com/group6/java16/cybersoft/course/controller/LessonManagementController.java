@@ -23,8 +23,8 @@ import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
+import com.group6.java16.cybersoft.course.dto.client.LessonDetailsResponseClientDTO;
 import com.group6.java16.cybersoft.course.service.LessonManagementService;
-import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 
 @RestController
 @RequestMapping("api/v1/lessons")
@@ -34,7 +34,7 @@ public class LessonManagementController {
 	private LessonManagementService service;
 
 	@PostMapping
-	public Object createSession(@Valid @RequestBody LessonCreateDTO rq, BindingResult result) {
+	public Object createLesson(@Valid @RequestBody LessonCreateDTO rq, BindingResult result) {
 		if (result.hasErrors()) {
 			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
 		}
@@ -45,7 +45,7 @@ public class LessonManagementController {
 	}
 
 	@PutMapping("{id}")
-	public Object updateSession(@PathVariable("id") String id,@RequestBody LessonUpdateDTO rq) {
+	public Object updateLesson(@PathVariable("id") String id,@RequestBody LessonUpdateDTO rq) {
 		LessonResponseDTO rp = service.updateLesson(rq, id);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
@@ -92,4 +92,13 @@ public class LessonManagementController {
         
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
+	
+	@GetMapping("client/{id}")
+	public Object getLessonDetail(@PathVariable("id") String id) {
+
+		LessonDetailsResponseClientDTO rp = service.getLessonDetail(id);
+
+		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	}
+	
 }

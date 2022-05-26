@@ -15,11 +15,7 @@ export class CoursetwomainComponent implements OnInit {
   public course_list:CourseRp[] =[];
   public searchForm: FormGroup;
   private valueSearch = '';
-  pageRequest: PageRequest = new PageRequest(1,12,
-    'name',
-    true,
-    'name',
-    '');
+  pageRequest: PageRequest = new PageRequest(1, 12, 0, 0, [], []);
   public pages: (string | number)[] = [];
   public pageCurrent = 1;
   constructor(private form: FormBuilder,
@@ -50,15 +46,16 @@ export class CoursetwomainComponent implements OnInit {
     }
 
   getPageDetails(): void{
-   
     this.route.queryParams.subscribe(params => {
       this.valueSearch = params['search'] == undefined ? '': params['search'];
       this.pageCurrent = params['page'] == undefined ? 1 : params['page'];
-      this.pageRequest = new PageRequest(this.pageCurrent, 12, '', true, 'courseName', this.valueSearch);
+      this.pageRequest = new PageRequest(1, 6, 0, 0, [], []);
       this.loadData();
 
     });
   }
+
+
 
   clickPage(index: string | number): void {
     if(index == 'next'){

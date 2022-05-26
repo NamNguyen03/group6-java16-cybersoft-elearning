@@ -39,7 +39,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() { 
-    this._userService.$userCurrent.subscribe(user => this.userCurrent = user);
+    this._userService.$userCurrent.subscribe(user => {
+      this.userCurrent = user
+     
+    });
    }
 
 }

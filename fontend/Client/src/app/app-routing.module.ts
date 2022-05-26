@@ -130,7 +130,7 @@ const routes: Routes = [
     component: CoursefourmainComponent
   },
   {
-    path: 'course-details',
+    path: 'course-details/:id',
     component: CoursedetailsmainComponent
   },
   {

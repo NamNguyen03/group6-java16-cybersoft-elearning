@@ -47,7 +47,7 @@ public class CommentController {
 	public Object deleteComment(@PathVariable("comment-id") String commentId) {
 
 		service.delete(commentId);
-		return ResponseHelper.getResponse("Delete Sucessfully", HttpStatus.OK, false);
+		return ResponseHelper.getResponse("Delete Successfully", HttpStatus.OK, false);
 	}
 
 }

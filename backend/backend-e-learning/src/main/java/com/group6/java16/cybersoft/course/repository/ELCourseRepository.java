@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.ELCourse;
+import com.group6.java16.cybersoft.course.model.ELLesson;
 
 @Repository
 public interface ELCourseRepository extends JpaRepository<ELCourse, UUID> {
@@ -20,9 +21,13 @@ public interface ELCourseRepository extends JpaRepository<ELCourse, UUID> {
 
 	Optional<ELCourse> findByCourseName(String name);
 
-	@Query(value = "Select u from ELCourse u where lower(u.courseName) like lower(concat('%', :courseName,'%'))")
-	Page<ELCourse> searchByCourseName(@Param("courseName") String courseName, Pageable pageable);
+	@Query(value = "Select u from ELCourse u where lower(u.courseName) like lower(concat('%', :courseName,'%')) and u.createdBy = :username ")
+	Page<ELCourse> searchByCourseName(@Param("username")String username, @Param("courseName") String courseName, Pageable pageable);
 
-	Page<ELCourse> findByCategory(CategoryEnum valueSearch, Pageable pageable);
+	@Query(value = "Select u from ELCourse u where u.category = :category and u.createdBy = :username ")
+	Page<ELCourse> findByCategory(@Param("username")String username, CategoryEnum category, Pageable pageable);
+
+	@Query(value = "Select u from ELCourse u where u.createdBy = :username ")
+    Page<ELCourse> searchAll(@Param("username")String username, Pageable pageable);
 
 }

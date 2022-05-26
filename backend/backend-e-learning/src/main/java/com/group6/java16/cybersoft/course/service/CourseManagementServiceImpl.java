@@ -18,12 +18,17 @@ import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
+import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
+import com.group6.java16.cybersoft.course.dto.client.CardCourseReponseClientDTO;
+import com.group6.java16.cybersoft.course.dto.client.LessonDetailsResponseClientDTO;
+import com.group6.java16.cybersoft.course.dto.client.SearchCourseRequestClientDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.ELCourse;
+import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 
 @Service
@@ -134,6 +139,7 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		String valueSearch = pageRequestModel.getValueSearch();
 		Pageable pageable = PageRequest.of(page, size);
 		Page<ELCourse> rp = null;
+		String userCurrent = UserPrincipal.getUsernameCurrent();
 
 		if (null != fieldNameSort && fieldNameSort.matches("courseName")) {
 			pageable = PageRequest.of(page, size,
@@ -143,16 +149,16 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		}
 
 		if ("courseName".equals(fieldNameSearch)) {
-			rp = courseRepository.searchByCourseName(valueSearch, pageable);
+			rp = courseRepository.searchByCourseName(userCurrent, valueSearch, pageable);
 		}
 
 		if ("category".equals(fieldNameSearch)) {
-			rp = courseRepository.findByCategory(CategoryEnum.valueOf(valueSearch), pageable);
+			rp = courseRepository.findByCategory(userCurrent, CategoryEnum.valueOf(valueSearch), pageable);
 		}
 
 		// if firstName not existed then search all
 		if (rp == null) {
-			rp = courseRepository.findAll(pageable);
+			rp = courseRepository.searchAll(userCurrent, pageable);
 		}
 
 		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(),
@@ -172,8 +178,19 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
 	@Override
 	public String updateImg(MultipartFile file) {
-		String urlImg = firebaseFileService.saveFile(file);
-		return urlImg;
+		return firebaseFileService.saveFile(file);
+	}
+
+	@Override
+	public PageResponseModel<CardCourseReponseClientDTO> searchHomePage(SearchCourseRequestClientDTO rq) {
+		int page = rq.getPageCurrent() - 1;
+		int size = rq.getItemPerPage();
+		Pageable pageable = PageRequest.of(page, size);
+		Page<ELCourse> rp = courseRepository.findAll(pageable);
+
+		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(),
+				rp.getContent().stream().map(CourseMapper.INSTANCE::toCourseResponseClientDTO)
+						.collect(Collectors.toList()));
 	}
 
 }
