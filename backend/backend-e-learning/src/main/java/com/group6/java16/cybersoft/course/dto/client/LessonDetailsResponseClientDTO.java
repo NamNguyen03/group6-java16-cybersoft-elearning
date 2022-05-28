@@ -16,6 +16,8 @@ public class LessonDetailsResponseClientDTO {
 	
 	private String name;
 	
+	private Author author;
+	
 	private String content;
 	
 	private String description;
