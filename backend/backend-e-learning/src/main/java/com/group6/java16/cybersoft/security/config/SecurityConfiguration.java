@@ -19,14 +19,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter   {
-    
-    @Autowired
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+	@Autowired
 	private UserDetailsService userDetailsService;
-	
+
 	@Autowired
 	private JwtAuthorizationFilter jwtAuthFilter;
-	
+
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -37,34 +37,33 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter   {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService)
-			.passwordEncoder(getPasswordEncoder());
+				.passwordEncoder(getPasswordEncoder());
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// CORS
 		http.cors();
-		
+
 		// SESSION -> STATELESS
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		
+
 		// CSRF
 		http.csrf().disable();
-		
+
 		// JWT FILTER
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-		
+
 		// API AUTHENTICATION
 		http.antMatcher("/api/v1/**").authorizeRequests()
-			.antMatchers(HttpMethod.GET,"/api/v1/courses/**").permitAll()
-			.antMatchers(HttpMethod.GET,"/api/v1/lessons/client/**").permitAll()
-			.antMatchers("/api/v1/auth/**").permitAll()
-			.antMatchers("/api/v1/users/password").permitAll()
-			.anyRequest().authenticated();
+				.antMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
+				.antMatchers("/api/v1/auth/**").permitAll()
+				.antMatchers("/api/v1/users/password").permitAll()
+				.anyRequest().authenticated();
 	}
-	
+
 }

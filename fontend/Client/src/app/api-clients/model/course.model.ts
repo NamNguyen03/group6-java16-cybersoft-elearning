@@ -1,3 +1,5 @@
+import { LessonRp } from "./lesson.model";
+
 import { CardLessonReponseClientDTO } from "./lesson.model";
 
 export class CourseCreate {

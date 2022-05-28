@@ -14,6 +14,8 @@ import lombok.Setter;
 @Setter
 public class CardCourseReponseClientDTO {
 	
+
+	
 	private UUID id;
 
 	private String courseName;

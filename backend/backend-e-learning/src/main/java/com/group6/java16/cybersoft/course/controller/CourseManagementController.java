@@ -26,9 +26,7 @@ import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.dto.client.CardCourseReponseClientDTO;
-import com.group6.java16.cybersoft.course.dto.client.LessonDetailsResponseClientDTO;
 import com.group6.java16.cybersoft.course.dto.client.SearchCourseRequestClientDTO;
-import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.service.CourseManagementService;
 
 @RestController
@@ -97,12 +95,13 @@ public class CourseManagementController {
 	public Object searchHomePage(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
 			@RequestParam(value = "itemPerPage", defaultValue = "10") int itemPerPage,
 			@RequestParam(value = "name", required = false) String name,
-			@RequestParam(value = "categories", required = false) List<String> categories,
-			@RequestParam(value = "rating", defaultValue = "-1") int rating,
-			@RequestParam(value = "time", defaultValue = "-1") int time,
-			@RequestParam(value = "level", required = false) List<String> level
+			@RequestParam(value = "categories",defaultValue = "NONE") List<String> categories,
+			@RequestParam(value = "rating", defaultValue = "0") int rating,
+			@RequestParam(value = "formTime", defaultValue = "1") int fromTime,
+			@RequestParam(value = "toTime", defaultValue = "5") int toTime,
+			@RequestParam(value = "level",defaultValue = "ALL") List<String> level
 			) {
-		PageResponseModel<CardCourseReponseClientDTO> rp = service.searchHomePage(new SearchCourseRequestClientDTO(pageCurrent, itemPerPage, name, categories, rating, time, level) );
+		PageResponseModel<CardCourseReponseClientDTO> rp = service.searchHomePage(new SearchCourseRequestClientDTO(pageCurrent, itemPerPage, name, categories, rating, fromTime,toTime, level) );
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}

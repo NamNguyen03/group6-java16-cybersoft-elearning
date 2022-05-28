@@ -10,10 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.group6.java16.cybersoft.course.dto.client.QueryCourseClientDTO;
 import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.ELCourse;
-import com.group6.java16.cybersoft.course.model.ELLesson;
-
 @Repository
 public interface ELCourseRepository extends JpaRepository<ELCourse, UUID> {
 
@@ -29,5 +28,12 @@ public interface ELCourseRepository extends JpaRepository<ELCourse, UUID> {
 
 	@Query(value = "Select u from ELCourse u where u.createdBy = :username ")
     Page<ELCourse> searchAll(@Param("username")String username, Pageable pageable);
+	
+	@Query(value =" Select u from ELCourse u where lower(u.courseName) like lower(concat('%', :#{#rq.courseName},'%'))"
+			+ " and u.category in(:#{#rq.categories})"
+			+ " and u.level in (:#{#rq.levels})"
+			+ " and u.starAvg  >= :#{#rq.fromRating} AND u.starAvg < :#{#rq.toRating}"
+			+ " and u.courseTime >= :#{#rq.fromTime} and u.courseTime < :#{#rq.toTime}")
+	Page<ELCourse> findCourseClient(@Param("rq")QueryCourseClientDTO queryCourseClientDTO, Pageable pageable);
 
 }

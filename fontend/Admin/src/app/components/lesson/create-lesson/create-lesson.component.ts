@@ -92,16 +92,16 @@ export class CreateLessonComponent implements OnInit {
     let description = this.accountForm.controls['description'].value;
     console.log(content);
     
-    this.route.queryParams.subscribe(params => {
-      let id = params['courseId'];
-      if (this.accountForm.valid) {
-        this.lesonsClient.createLesson(new LessonCreate(name, content, description, id)).subscribe(       
-          ()=> {
-            this.toastr.success('Success', 'Create lesson success');
-          }
-        )
-      }
-    })
+    // this.route.queryParams.subscribe(params => {
+    //   let id = params['courseId'];
+    //   if (this.accountForm.valid) {
+    //     this.lesonsClient.createLesson(new LessonCreate(name, content, description, id)).subscribe(       
+    //       ()=> {
+    //         this.toastr.success('Success', 'Create lesson success');
+    //       }
+    //     )
+    //   }
+    // })
 
   }
 

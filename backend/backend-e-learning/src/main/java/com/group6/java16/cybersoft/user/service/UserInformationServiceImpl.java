@@ -21,7 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserInformationServiceImpl  implements UserInformationService{
+public class UserInformationServiceImpl implements UserInformationService {
 
     @Autowired
     private ELUserRepository repository;
@@ -34,7 +34,7 @@ public class UserInformationServiceImpl  implements UserInformationService{
 
     @Override
     public PageResponseModel<UserResponseDTO> search(PageRequestModel pageRequestModel) {
-        int page = pageRequestModel.getPageCurrent()-1;
+        int page = pageRequestModel.getPageCurrent() - 1;
         int size = pageRequestModel.getItemPerPage();
         boolean isAscending = pageRequestModel.isIncrementSort();
         String fieldNameSearch = pageRequestModel.getFieldNameSearch();
@@ -43,57 +43,58 @@ public class UserInformationServiceImpl  implements UserInformationService{
         Pageable pageable = PageRequest.of(page, size);
         Page<ELUser> rp = null;
 
-        if (null != fieldNameSort && fieldNameSort.matches("username|displayName|email|firstName|lastName|major|department|status")) {
-            pageable = PageRequest.of(page, size, isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
-        }else{
+        if (null != fieldNameSort
+                && fieldNameSort.matches("username|displayName|email|firstName|lastName|major|department|status")) {
+            pageable = PageRequest.of(page, size,
+                    isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
+        } else {
             pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
         }
 
-        //username
-        if("username".equals(fieldNameSearch)){
-            rp =  repository.searchByUsername(valueSearch, pageable);
+        // username
+        if ("username".equals(fieldNameSearch)) {
+            rp = repository.searchByUsername(valueSearch, pageable);
         }
 
-        //display name
-        if("displayName".equals(fieldNameSearch)){
-            rp =  repository.searchByDisplayName(valueSearch, pageable);
+        // display name
+        if ("displayName".equals(fieldNameSearch)) {
+            rp = repository.searchByDisplayName(valueSearch, pageable);
         }
 
-        //email
-        if("email".equals(fieldNameSearch)){
-            rp =  repository.searchByEmail(valueSearch, pageable);
+        // email
+        if ("email".equals(fieldNameSearch)) {
+            rp = repository.searchByEmail(valueSearch, pageable);
         }
 
-        //first name
-        if("firstName".equals(fieldNameSearch)){
-            rp =  repository.searchByFirstName(valueSearch, pageable);
+        // first name
+        if ("firstName".equals(fieldNameSearch)) {
+            rp = repository.searchByFirstName(valueSearch, pageable);
         }
 
-        //last name
-        if("lastName".equals(fieldNameSearch)){
-            rp =  repository.searchByLastName(valueSearch, pageable);
+        // last name
+        if ("lastName".equals(fieldNameSearch)) {
+            rp = repository.searchByLastName(valueSearch, pageable);
         }
 
-        //if firstName not existed then search all
-        if(rp == null ){
+        // if firstName not existed then search all
+        if (rp == null) {
             rp = repository.findAll(pageable);
         }
-
-        return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(), 
-            rp.getContent().stream().map(UserMapper.INSTANCE::toUserResponseDTO).collect(Collectors.toList()));
+        return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(),
+                rp.getContent().stream().map(UserMapper.INSTANCE::toUserResponseDTO).collect(Collectors.toList()));
     }
-    
+
     @Override
     public UserResponseDTO getMyProfile() {
         String usernameCurrent = UserPrincipal.getUsernameCurrent();
 
-        return UserMapper.INSTANCE.toUserResponseDTO( repository.findByUsername(usernameCurrent).get());
+        return UserMapper.INSTANCE.toUserResponseDTO(repository.findByUsername(usernameCurrent).get());
     }
 
-    
-	@Override
-	public UserResponseDTO getProfile(String id) {
-		ELUser user = repository.findById(UUID.fromString(id)).orElseThrow(() -> new BusinessException(errorsUserNotFound));
-		return UserMapper.INSTANCE.toUserResponseDTO(user);
-	}
+    @Override
+    public UserResponseDTO getProfile(String id) {
+        ELUser user = repository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new BusinessException(errorsUserNotFound));
+        return UserMapper.INSTANCE.toUserResponseDTO(user);
+    }
 }

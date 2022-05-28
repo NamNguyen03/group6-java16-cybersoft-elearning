@@ -6,11 +6,10 @@ import org.mapstruct.factory.Mappers;
 import com.group6.java16.cybersoft.feedback.dto.CommentResponseDTO;
 import com.group6.java16.cybersoft.feedback.model.ELComment;
 
-
 @Mapper
 public interface CommentMapper {
 	CommentMapper INSTANCE = Mappers.getMapper(CommentMapper.class);
-	
+
 	CommentResponseDTO toResponseDTO(ELComment model);
 
 }
