@@ -67,6 +67,7 @@ export class CourseDetailsReponseClientDTO {
     starAvg?: number;
     description?: string;
     createdBy?: string;
+    createdAt?: string;
     totalRating?: number;
     level?: string;
     skill1?: string;
@@ -85,6 +86,7 @@ export class CourseDetailsReponseClientDTO {
         this.description = "";
         this.createdBy = "";
         this.totalRating = 0;
+        this.createdAt ="";
         this.level = "";
         this.skill1 = "";
         this.skill2 = "";

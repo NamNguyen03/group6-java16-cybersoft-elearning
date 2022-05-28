@@ -36,6 +36,7 @@ export class CoursedetailsmainComponent implements OnInit {
       comment: [''],})
   }
 
+
   ngOnInit(): void {
           console.log(this.lessonDetails)
           console.log(this.courseDetail)
@@ -54,12 +55,10 @@ export class CoursedetailsmainComponent implements OnInit {
           this.courseDetail = this.lessonDetails.course == null ? new CourseDetailsReponseClientDTO() : this.lessonDetails.course;
         
           this.listCardLesson = this.courseDetail.lessons == undefined ? [] : this.courseDetail.lessons;
-
-          console.log(this.lessonDetails)
-          console.log(this.courseDetail)
-          console.log(this.listCardLesson)
         }
       )
     });
   }
+
+  
 }

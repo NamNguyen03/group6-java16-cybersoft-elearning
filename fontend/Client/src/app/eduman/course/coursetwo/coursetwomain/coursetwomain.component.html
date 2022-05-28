@@ -34,9 +34,10 @@
                               grid-template-columns: auto auto auto;">
                            <div *ngFor="let course of course_list">
                                              
-                              <div class="course-wrapper-2 mb-30">
-                                 <div class="student-course-img">
-                                     <img [src]="course.img" alt="image not found">
+                              <div class="protfolio-course-2-wrapper mb-30" >
+                                 <div class="student-course-img" >
+                                    <a [routerLink]="['/course-details']"><img style="width: 300px;height:200px;" [src]="course.img"
+                                          alt="course-img"></a>
                                  </div>
                                  <div class="course-cart course-cart-box-size">
                                      <div class="course-info-wrapper">
