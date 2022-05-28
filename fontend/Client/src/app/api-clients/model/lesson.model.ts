@@ -10,10 +10,12 @@ export class LessonRp {
 export class CardLessonReponseClientDTO {
     id?: string;
     name?: string;
+    content?: string;
     description?: string;
     constructor() {
         this.id="";
         this.name="";
+        this.content="";
         this.description="";
     }
 }
