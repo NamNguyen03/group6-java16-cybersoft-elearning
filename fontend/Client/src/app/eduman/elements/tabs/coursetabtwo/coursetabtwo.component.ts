@@ -18,35 +18,35 @@ export class CoursetabtwoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllCourseRp();
-    // this.getDevelopmentCourseRp();
-    // this.getDataScienceCourseRp();
-    // this.getDesignCourseRp();
+    this.getDevelopmentCourseRp();
+    this.getDataScienceCourseRp();
+    this.getDesignCourseRp();
   }
 
-  // getDesignCourseRp(): void {
-  //   this._courseClient.searchRequest(new PageRequest(1 , 6, 0, 00, 'category' , 'DESIGN')).subscribe(
-  //     response =>{
-  //       this.coursesDesign = response.content.items || [];
-  //     }
-  //   )
-  // }
+  getDesignCourseRp(): void {
+    this._courseClient.searchRequest(new PageRequest(1, 6, 0, 0, [], ['DESIGN'])).subscribe(
+      response =>{
+        this.coursesDesign = response.content.items || [];
+      }
+    )
+  }
 
-  // getDataScienceCourseRp(): void {
-  //   this._courseClient.searchRequest(new PageRequest(1 , 6, '', true, 'category' , 'DATA_SCIENCE')).subscribe(
-  //     response =>{
-  //       this.coursesDataScience = response.content.items || [];
-  //     }
-  //   )
-  // }
+  getDataScienceCourseRp(): void {
+    this._courseClient.searchRequest(new PageRequest(1, 6, 0, 0, [], ['DATA_SCIENCE'])).subscribe(
+      response =>{
+        this.coursesDataScience = response.content.items || [];
+      }
+    )
+  }
 
-  // getDevelopmentCourseRp(): void{
-  //   this._courseClient.searchRequest(new PageRequest(1 , 6, '', true, 'category' , 'DEVELOPMENT')).subscribe(
-  //     response =>{
-  //       this.coursesDevelopment = response.content.items || [];
+  getDevelopmentCourseRp(): void{
+    this._courseClient.searchRequest(new PageRequest(1, 6, 0, 0, [], ['DEVELOPMENT'])).subscribe(
+      response =>{
+        this.coursesDevelopment = response.content.items || [];
 
-  //     }
-  //   )
-  // }
+      }
+    )
+  }
 
   getAllCourseRp(): void {
     this._courseClient.searchRequest(new PageRequest(1, 6, 0, 0, [], [])).subscribe(

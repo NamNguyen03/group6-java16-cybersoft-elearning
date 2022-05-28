@@ -42,7 +42,6 @@ public class StatusCommentServiceImpl implements StatusCommentService{
 	@Autowired
 	private ELCourseRepository courseRepository;
 
-
 	@Value("${user.not-found}")
     private String errorsUserNotFound;
 
