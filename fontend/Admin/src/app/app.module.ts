@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -7,18 +8,12 @@ import { AppComponent } from './app.component';
 
 import { DashboardModule } from './components/dashboard/dashboard.module';
 import { SharedModule } from './shared/shared.module';
-import { ProductsModule } from './components/products/products.module';
-import { SalesModule } from './components/sales/sales.module';
 import { CoursesModule } from './components/course/courses.module';
 import { RolesModule } from './components/roles/roles.module';
-import { MediaModule } from './components/media/media.module';
 import { GroupModule } from './components/group/group.module';
 import { LessonsModule } from './components/lesson/lessons.module';
 import { UsersModule } from './components/users/users.module';
-import { LocalizationModule } from './components/localization/localization.module';
-import { InvoiceModule } from './components/invoice/invoice.module';
-import { SettingModule } from './components/setting/setting.module';;
-import { ReportsModule } from './components/reports/reports.module';
+import { SettingModule } from './components/setting/setting.module';
 import { AuthModule } from './components/auth/auth.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -29,6 +24,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { LessonInfoComponent } from './components/lesson-info/lesson-info.component';
 import { ProgramModule } from './components/program/program.module';
+import { CommentModule } from './components/comment/comment.module';
 
 @NgModule({
   declarations: [
@@ -42,19 +38,14 @@ import { ProgramModule } from './components/program/program.module';
     AppRoutingModule,
     FormsModule,
     DashboardModule,
-    InvoiceModule,
     HttpClientModule,
     SettingModule,
-    ReportsModule,
     AuthModule,
     SharedModule,
-    LocalizationModule,
-    ProductsModule,
-    SalesModule,
+    CommentModule,
     LessonsModule,
     CoursesModule,
     RolesModule,
-    MediaModule,
     GroupModule,
     UsersModule,
     ProgramModule,

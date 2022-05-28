@@ -1,4 +1,3 @@
-<!-- Container-fluid starts-->
 <div class="container-fluid">
     <div class="card">
         <div class="card-header">
@@ -15,18 +14,14 @@
                                 <label for="validationCustom01" class="col-xl-3 col-sm-4 mb-0">Field Name Sort </label>
                                 <select class="form-control digits col-xl-8 col-sm-7"
                                     id="exampleFormControlSelect1" name="fieldNameSort" formControlName="fieldNameSort">
-                                    <option value ="username" >Username</option>
-                                    <option value ="email" >Email</option>
-                                    <option value ="major" >Major</option>
-                                    <option value ="department" >Department</option>
-                                    <option value ="status" >Status</option>
+                                    <option value ="status"  selected="selected" >Status</option>
                                 </select>
                             </div>
                             <div class="form-group row">
                                 <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Sort </label>
                                 <select class="form-control digits col-xl-8 col-sm-7"
                                     id="exampleFormControlSelect1" name="isIncrementSort" formControlName="isIncrementSort">
-                                    <option value="true">Sort Increment</option>
+                                    <option value="true"  selected="selected">Sort Increment</option>
                                     <option value="false">Sort Descending</option>
                                 </select>
                             </div>
@@ -34,9 +29,9 @@
                                 <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Field Name Search </label>
                                 <select class="form-control digits col-xl-8 col-sm-7"
                                     id="exampleFormControlSelect1" name="fieldNameSearch" formControlName="fieldNameSearch">
-                                    <option value ="username" >Username</option>
-                                    <option value ="email" >Email</option>
-
+                                    <option value ="status"  selected="selected" >Status</option>
+                                    <option value ="displayName" >Display Name</option>
+                                    <option value="courseName">Course Name</option>
                                 </select>
                             </div>
                             <div class="form-group row">
@@ -60,8 +55,7 @@
             </div>
             <div id="batchDelete" class="category-table custom-datatable transcation-datatable user-image"></div>
                 <div class="table-responsive">
-                    <ng2-smart-table [settings]="settings" [source]="user_list"
-                    (deleteConfirm)="onDeleteConfirm($event)"
+                    <ng2-smart-table [settings]="settings" [source]="statusComments"
                     (editConfirm)="onSaveConfirm($event)"
                     (userRowSelect)="onUserRowSelected($event)"
                     ></ng2-smart-table>
@@ -76,4 +70,3 @@
         </div>
     </div>
 </div>
-<!-- Container-fluid Ends-->

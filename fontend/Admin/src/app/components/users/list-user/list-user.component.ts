@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PageService } from 'src/app/shared/service/page/page.service';
-import { id } from '@swimlane/ngx-charts';
+
 
 
 @Component({
