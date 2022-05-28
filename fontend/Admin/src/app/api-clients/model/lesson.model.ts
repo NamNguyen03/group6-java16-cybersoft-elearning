@@ -10,13 +10,13 @@ export class LessonCreate {
     name: string;
     content: string;
     description: string;
-    course_id: string;
+    courseId: string;
 
-    constructor(name: string,content: string,description: string,course_id: string) {
+    constructor(name: string,content: string,description: string,courseId: string) {
         this.name = name;
         this.content = content;
         this.description = description;
-        this.course_id = course_id;
+        this.courseId = courseId;
     }
 }
 

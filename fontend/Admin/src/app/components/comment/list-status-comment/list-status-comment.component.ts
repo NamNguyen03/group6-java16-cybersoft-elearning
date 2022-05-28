@@ -111,8 +111,8 @@ export class ListStatusCommentComponent implements OnInit {
                 config: {
                     selectText: 'Select',
                     list: [
-                        { value: 'PRIVATE', title: 'PRIVATE' },
                         { value: 'PUBLIC', title: 'PUBLIC' },
+                        { value: 'PRIVATE', title: 'PRIVATE' },
                         { value: 'BLOCKED', title: 'BLOCKED' }
                     ],
                 },

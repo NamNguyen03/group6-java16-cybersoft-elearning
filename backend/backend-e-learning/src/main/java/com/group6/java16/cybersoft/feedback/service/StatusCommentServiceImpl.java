@@ -13,7 +13,6 @@ import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
-import com.group6.java16.cybersoft.course.repository.ELLessonRepository;
 import com.group6.java16.cybersoft.feedback.dto.StatusCommentDTO;
 import com.group6.java16.cybersoft.feedback.dto.reponse.status.StatusCommentResponseDTO;
 import com.group6.java16.cybersoft.feedback.mapper.StatusCommentMapper;
@@ -42,9 +41,6 @@ public class StatusCommentServiceImpl implements StatusCommentService{
 
 	@Autowired
 	private ELCourseRepository courseRepository;
-
-	@Autowired
-	private ELLessonRepository lessonRepository;
 
 	@Value("${user.not-found}")
     private String errorsUserNotFound;
