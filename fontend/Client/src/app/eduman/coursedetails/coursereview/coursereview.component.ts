@@ -28,10 +28,11 @@ export class CoursereviewComponent implements OnInit {
   }
 
   findComment(){
-    
-      this.feedBackClient.findComment(this.lessonId).subscribe(
+    this.route.params.subscribe((params) => {
+      let id = params["id"];
+      this.feedBackClient.findComment(id).subscribe(
         response => 
-         this.listComments = response.content);
+         this.listComments = response.content);})
      
   }
   writeComment(){
