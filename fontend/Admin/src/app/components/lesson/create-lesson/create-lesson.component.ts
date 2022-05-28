@@ -93,7 +93,7 @@ export class CreateLessonComponent implements OnInit {
     
     this.route.queryParams.subscribe(params => {
       let id = params['courseId'];
-      console.log(id)
+
       if (this.accountForm.valid) {
         this.lesonsClient.createLesson(new LessonCreate(name, content, description, id)).subscribe(       
           ()=> {

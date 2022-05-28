@@ -1,10 +1,11 @@
 package com.group6.java16.cybersoft.feedback.dto;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.group6.java16.cybersoft.user.dto.client.UserResponseClientDTO;
 import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,12 +18,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CommentResponseDTO {
 	private UUID id;
-	
+
 	private String content;
-	
-	private UserResponseDTO user;
-	
+
+	private UserResponseClientDTO user;
+
+	private LocalDateTime createdAt;
+
 	private LessonResponseDTO lesson;
-	
 
 }

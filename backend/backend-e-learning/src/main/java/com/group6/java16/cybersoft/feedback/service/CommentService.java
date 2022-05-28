@@ -11,7 +11,5 @@ public interface CommentService {
 
 	CommentResponseDTO create(CommentCreateDTO rq);
 
-	CommentResponseDTO update(String commentId, String contentUpdate);
-
 	void delete(String commentId);
 }

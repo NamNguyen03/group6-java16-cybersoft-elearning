@@ -1,9 +1,9 @@
 package com.group6.java16.cybersoft.course.dto.client;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import com.group6.java16.cybersoft.course.model.ELLesson;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +23,8 @@ public class CourseDetailsReponseClientDTO {
 	private String createdBy;
 
 	private String description;
+	
+	private LocalDateTime createdAt;
 
 	private String img;
 

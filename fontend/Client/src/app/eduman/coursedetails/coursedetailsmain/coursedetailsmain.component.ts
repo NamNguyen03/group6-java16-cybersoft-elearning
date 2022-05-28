@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { LessonClient } from 'src/app/api-clients/lesson.client';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
-import { CourseDetailsReponseClientDTO } from 'src/app/api-clients/model/course.model';
+import { CourseDetailsReponseClientDTO, CourseRp } from 'src/app/api-clients/model/course.model';
 import { CardLessonReponseClientDTO, LessonDetailsResponseClientDTO, LessonRp } from 'src/app/api-clients/model/lesson.model';
 
 @Component({
@@ -13,7 +13,7 @@ import { CardLessonReponseClientDTO, LessonDetailsResponseClientDTO, LessonRp } 
   encapsulation: ViewEncapsulation.None
 })
 export class CoursedetailsmainComponent implements OnInit {
-  
+  formComment : FormGroup
   writeReviewActive:boolean=false;
   writeReview(){
     if(this.writeReviewActive==false){
@@ -29,7 +29,13 @@ export class CoursedetailsmainComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private lessonClient: LessonClient,
-  ) { }
+    private form: FormBuilder,
+
+  ) { 
+    this.formComment = this.form.group({
+      comment: [''],})
+  }
+
 
   ngOnInit(): void {
           console.log(this.lessonDetails)
@@ -49,12 +55,10 @@ export class CoursedetailsmainComponent implements OnInit {
           this.courseDetail = this.lessonDetails.course == null ? new CourseDetailsReponseClientDTO() : this.lessonDetails.course;
         
           this.listCardLesson = this.courseDetail.lessons == undefined ? [] : this.courseDetail.lessons;
-
-          console.log(this.lessonDetails)
-          console.log(this.courseDetail)
-          console.log(this.listCardLesson)
         }
       )
     });
   }
+
+  
 }

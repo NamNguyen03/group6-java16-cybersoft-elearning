@@ -21,7 +21,8 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "el_rating")
 public class ELRating extends BaseEntity { 
-    private int value;
+    
+	private int value;
 
 	@JsonIgnore
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })

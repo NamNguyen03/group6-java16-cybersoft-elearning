@@ -1,4 +1,6 @@
 @import '../../../../custom-palettes.scss';
+@import "~swiper/css/bundle";
+@import '../../../../custom-palettes.scss';
 
 .hero-arera.course-item-height {
 	z-index: 0;
@@ -78,4 +80,99 @@
 	color: $body-text;
 	font-size: 14px;
 	opacity: 1;
+}
+.category-shap-01 {
+	position: absolute;
+	top: -28%;
+	left: -5%;
+}
+.category-shap-02 {
+	position: absolute;
+	top: 0;
+	right: 0;
+	overflow: hidden;
+	@media #{$xxxl,$xxl,$xl} {
+		right: 0;
+	}
+	@media #{$lg,$md,$sm,$xs} {
+		display: none;
+	}
+}
+.category-button-prev {
+	width: 45px;
+	height: 45px;
+	border: 1px solid $border;
+	text-align: center;
+	line-height: 45px;
+	border-radius: 50%;
+	background: $white;
+	position: absolute;
+	top: 46%;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+	left: 0;
+	transition: 0.3s;
+    cursor: pointer;
+	@media #{$xs} {
+		transform: translate(-25%, -50%);
+	}
+	&:hover {
+		border-color: $theme-color;
+		background: $theme-color;
+		color: $white;
+	}
+}
+.category-button-next {
+	width: 45px;
+	height: 45px;
+	border: 1px solid $border;
+	text-align: center;
+	line-height: 45px;
+	border-radius: 50%;
+	background: $white;
+	position: absolute;
+	top: 46%;
+	transform: translate(50%, -50%);
+	z-index: 2;
+	right: 0;
+	transition: 0.3s;
+    cursor: pointer;
+	@media #{$xs} {
+		transform: translate(25%, -50%);
+	}
+	&:hover {
+		border-color: $theme-color;
+		background: $theme-color;
+		color: $white;
+	}
+}
+
+.categories-area {
+	background-color: $theme-bg;
+}
+.categories-wrapper {
+	padding: 37px 20px 15px 20px;
+	background: $white;
+	box-shadow: 0px 20px 30px rgba(24, 44, 74, 0.05);
+	border-radius: 10px;
+}
+.categiories-thumb {
+	transition: 0.3s;
+	svg {
+		margin-bottom: 30px;
+	}
+}
+.categories-wrapper:hover .categiories-thumb {
+	transform: translateY(-10px);
+}
+.categories-content {
+	h4 {
+		margin-bottom: 5px;
+	}
+	p {
+		font-weight: 600;
+		@media #{$xxxl} {
+			font-size: 15px;
+		}
+	}
 }
