@@ -3,7 +3,6 @@ package com.group6.java16.cybersoft.course.dto.client;
 import java.util.List;
 import java.util.UUID;
 
-import com.group6.java16.cybersoft.course.model.ELLesson;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

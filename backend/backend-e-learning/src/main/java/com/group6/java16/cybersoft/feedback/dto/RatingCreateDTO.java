@@ -14,9 +14,6 @@ import lombok.Setter;
 public class RatingCreateDTO {
 	private int value ;
 	
-	@NotBlank(message="{rating.user.not-blank}")
-	private String userId;
-	
 	@NotBlank(message="{rating.lesson.not-blank}")
 	private String lessonId;
 

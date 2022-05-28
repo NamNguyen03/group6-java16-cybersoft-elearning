@@ -19,4 +19,7 @@ public interface RatingRepository extends JpaRepository<ELRating, UUID> {
 	@Query(value = " Select r from ELRating r  where  r.lesson.id = :lessonId and r.user.username = :username")
 	Optional<ELRating> getRatingByLessonAndUser(@Param("lessonId") String lessonId, @Param("username") String username);
 
+	@Query(value = " select count(r)>0 from ELRating r where r.user.id = :userId and r.lesson.id = :lessonId ")
+	boolean existsByUserAndLesson(@Param("userId") UUID userId,@Param("lessonId") UUID lessonId);
+
 }

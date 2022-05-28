@@ -14,7 +14,8 @@ public class SearchCourseRequestClientDTO {
 	private String name;
 	private List<String> categories;
 	private int rating;
-	private int time;
+	private int fromTime;
+	private int toTime;
 	private List<String> level;
 
 }

@@ -1,6 +1,5 @@
 package com.group6.java16.cybersoft.feedback.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
@@ -65,16 +61,19 @@ public class CommentServiceImpl implements CommentService {
 		ELLesson lesson = lessonRepository.findById(UUID.fromString(idLesson))
 				.orElseThrow(() -> new BusinessException(errorLessonNotFound));
 		String userCurrent = UserPrincipal.getUsernameCurrent();
-		List<ELComment> response = new ArrayList<ELComment>();
-		Pageable pageable = PageRequest.of(0, 5, Sort.by("createdAt").descending());
+		List<ELComment> response = null;
 
-		if (userCurrent.equals(lesson.getCreatedBy())) {
-			response = repository.findAll();
+		UUID idCourse = lesson.getCourse().getId();
+
+		if (userCurrent.equals(lesson.getCourse().getCreatedBy())) {
+			response = repository.findByIdLesson(UUID.fromString(idLesson));
 		}
 
 		if (userCurrent.equals(null)) {
-			response = repository.findByIdLesson(UUID.fromString(idLesson), pageable).getContent();
-
+			response = repository.findByIdLesson(UUID.fromString(idLesson), idCourse);
+		}
+		if (!userCurrent.equals(lesson.getCourse().getCreatedBy()) && !userCurrent.equals(null)) {
+			response = repository.findByIdLessonAndUserCurrent(UUID.fromString(idLesson), idCourse, userCurrent);
 		}
 
 		return response.stream().map(CommentMapper.INSTANCE::toResponseDTO).collect(Collectors.toList());

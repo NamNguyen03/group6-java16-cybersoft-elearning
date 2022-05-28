@@ -13,7 +13,7 @@ import { CardLessonReponseClientDTO, LessonDetailsResponseClientDTO, LessonRp } 
   encapsulation: ViewEncapsulation.None
 })
 export class CoursedetailsmainComponent implements OnInit {
-  
+  formComment : FormGroup
   writeReviewActive:boolean=false;
   writeReview(){
     if(this.writeReviewActive==false){
@@ -29,7 +29,12 @@ export class CoursedetailsmainComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private lessonClient: LessonClient,
-  ) { }
+    private form: FormBuilder,
+
+  ) { 
+    this.formComment = this.form.group({
+      comment: [''],})
+  }
 
   ngOnInit(): void {
           console.log(this.lessonDetails)

@@ -49,6 +49,9 @@ public class RatingServiceImpl implements RatingService {
 	@Value("${user.not-found}")
 	private String errorsUserNotFound;
 
+	@Value("${rating.existed}")
+	private String errorsRatingExists;
+
 	@Override
 	public List<RatingResponseDTO> search(String lessonId) {
 		ELLesson lesson = lessonRepository.findById(UUID.fromString(lessonId))
@@ -69,19 +72,24 @@ public class RatingServiceImpl implements RatingService {
 
 	@Override
 	public RatingResponseDTO create(RatingCreateDTO dto) {
-		ELUser user = userRepository.findById(UUID.fromString(dto.getUserId()))
-				.orElseThrow(() -> new BusinessException(errorsUserNotFound));
+		ELUser user = userRepository.findByUsername(UserPrincipal.getUsernameCurrent()).get();
 
 		ELLesson lesson = lessonRepository.findById(UUID.fromString(dto.getLessonId()))
 				.orElseThrow(() -> new BusinessException(errorsLessonNotFound));
 
 		ELCourse course = lesson.getCourse();
 
+		if(repository.existsByUserAndLesson(user.getId(), lesson.getId())) {
+			throw new BusinessException(errorsRatingExists);
+		}
+		
 		lesson.setTotalStar(lesson.getTotalStar() + dto.getValue());
 		lesson.setTotalRating(lesson.getTotalRating() + 1);
-
-		course.setTotalStar(course.getTotalStar() + lesson.getTotalStar());
-		course.setTotalRating(course.getTotalRating() + lesson.getTotalRating());
+		lesson.setStarAvg(lesson.getTotalStar()*1.0f/lesson.getTotalRating());
+		
+		course.setTotalStar(course.getTotalStar() +  dto.getValue());
+		course.setTotalRating(course.getTotalRating() + 1);
+		course.setStarAvg(course.getTotalStar()*1.0f/course.getTotalRating());
 
 		lessonRepository.save(lesson);
 

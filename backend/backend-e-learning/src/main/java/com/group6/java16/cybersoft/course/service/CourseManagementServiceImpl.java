@@ -23,12 +23,11 @@ import com.group6.java16.cybersoft.course.dto.CourseCreateDTO;
 import com.group6.java16.cybersoft.course.dto.CourseResponseDTO;
 import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.dto.client.CardCourseReponseClientDTO;
-import com.group6.java16.cybersoft.course.dto.client.LessonDetailsResponseClientDTO;
+import com.group6.java16.cybersoft.course.dto.client.QueryCourseClientDTO;
 import com.group6.java16.cybersoft.course.dto.client.SearchCourseRequestClientDTO;
 import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.ELCourse;
-import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 
 @Service
@@ -185,8 +184,13 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 	public PageResponseModel<CardCourseReponseClientDTO> searchHomePage(SearchCourseRequestClientDTO rq) {
 		int page = rq.getPageCurrent() - 1;
 		int size = rq.getItemPerPage();
-		Pageable pageable = PageRequest.of(page, size);
-		Page<ELCourse> rp = courseRepository.findAll(pageable);
+		Pageable pageable = PageRequest.of(page, size,Sort.by("createdAt").ascending());
+//		Page<ELCourse> rp = courseRepository.findAll(pageable);
+		
+		Page<ELCourse> rp  = courseRepository.findCourseClient(QueryCourseClientDTO.buildQueryCourseClientDTO(rq),pageable);
+		
+		
+		
 
 		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(),
 				rp.getContent().stream().map(CourseMapper.INSTANCE::toCourseResponseClientDTO)
