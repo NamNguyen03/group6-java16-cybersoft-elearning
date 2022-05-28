@@ -51,9 +51,12 @@ public class ELCourse extends BaseEntity {
 	private int courseTime = 0;
 
 	// totalStar = sum (star.value)
-	private int totalStar;
+	@Builder.Default
+	private int totalStar = 0;
+	
 	// count rating
-	private int totalRating;
+	@Builder.Default
+	private int totalRating = 0;
 
 	private String skill1;
 

@@ -1,6 +1,5 @@
 package com.group6.java16.cybersoft.feedback.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,13 +28,13 @@ import com.group6.java16.cybersoft.user.repository.ELUserRepository;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 	@Autowired
 	private CommentRepository repository;
-	
+
 	@Autowired
 	private ELLessonRepository lessonRepository;
-	
+
 	@Autowired
 	private ELUserRepository userRepository;
 
@@ -44,10 +43,10 @@ public class CommentServiceImpl implements CommentService{
 
 	@Value("${comment.not-found}")
 	private String errorsCommentNotFound;
-	
+
 	@Value("${entity.id.invalid}")
 	private String errorsIdInvalid;
-	
+
 	@Value("${lesson.not-found}")
 	private String errorLessonNotFound;
 
@@ -56,64 +55,63 @@ public class CommentServiceImpl implements CommentService{
 
 	@Value("${can-not-comment}")
 	private String errorsCanNotComment;
-	
+
 	@Override
 	public List<CommentResponseDTO> search(String idLesson) {
-		ELLesson lesson = lessonRepository.findById(UUID.fromString(idLesson)).orElseThrow(()->new BusinessException(errorLessonNotFound));
+		ELLesson lesson = lessonRepository.findById(UUID.fromString(idLesson))
+				.orElseThrow(() -> new BusinessException(errorLessonNotFound));
 		String userCurrent = UserPrincipal.getUsernameCurrent();
-		List<ELComment> response = new ArrayList<ELComment>();
-		
-		if(userCurrent.equals(lesson.getCreatedBy())) {
-			response = repository.findAll();
-		}else {
-			response = repository.findByStatusComment(UUID.fromString(idLesson));
+		List<ELComment> response = null;
+
+		UUID idCourse = lesson.getCourse().getId();
+
+		if (userCurrent.equals(lesson.getCourse().getCreatedBy())) {
+			response = repository.findByIdLesson(UUID.fromString(idLesson));
 		}
-		
-		
+
+		if (userCurrent.equals(null)) {
+			response = repository.findByIdLesson(UUID.fromString(idLesson), idCourse);
+		}
+		if (!userCurrent.equals(lesson.getCourse().getCreatedBy()) && !userCurrent.equals(null)) {
+			response = repository.findByIdLessonAndUserCurrent(UUID.fromString(idLesson), idCourse, userCurrent);
+		}
+
 		return response.stream().map(CommentMapper.INSTANCE::toResponseDTO).collect(Collectors.toList());
 	}
 
 	@Override
 	public CommentResponseDTO create(CommentCreateDTO rq) {
-		ELLesson lesson = lessonRepository.findById(UUID.fromString(rq.getLessonId())).orElseThrow(()->new BusinessException(errorLessonNotFound));
+		ELLesson lesson = lessonRepository.findById(UUID.fromString(rq.getLessonId()))
+				.orElseThrow(() -> new BusinessException(errorLessonNotFound));
 		ELUser user = userRepository.findByUsername(UserPrincipal.getUsernameCurrent()).get();
 
-	
-		Optional<ELStatusComment> statusCommentOpt = statusCommentRepository.findByIdCourseAndIdUser(lesson.getCourse().getId() , user.getId());
-		
+		Optional<ELStatusComment> statusCommentOpt = statusCommentRepository
+				.findByIdCourseAndIdUser(lesson.getCourse().getId(), user.getId());
+
 		// if status not exists then create status private
-		if(statusCommentOpt.isEmpty()){
+		if (statusCommentOpt.isEmpty()) {
 			statusCommentRepository.save(
-				ELStatusComment.builder()
-					.id(UUID.randomUUID())
-					.user(user)
-					.course(lesson.getCourse())
-					.status(EnumStatusComment.PRIVATE)
-					.build());
+					ELStatusComment.builder()
+							.id(UUID.randomUUID())
+							.user(user)
+							.course(lesson.getCourse())
+							.status(EnumStatusComment.PRIVATE)
+							.build());
 		}
 
-		if(statusCommentOpt.isPresent() && statusCommentOpt.get().getStatus().equals(EnumStatusComment.BLOCKED)){
+		if (statusCommentOpt.isPresent() && statusCommentOpt.get().getStatus().equals(EnumStatusComment.BLOCKED)) {
 			throw new BusinessException(errorsCanNotComment);
 		}
-		
+
 		ELComment comment = ELComment.builder()
-			.id(UUID.randomUUID())
-			.content(rq.getContent())
-			.lesson(lesson)
-			.user(user)
-			.build();
+				.id(UUID.randomUUID())
+				.content(rq.getContent())
+				.lesson(lesson)
+				.user(user)
+				.build();
 
 		return CommentMapper.INSTANCE.toResponseDTO(repository.save(comment));
-	}
 
-	@Override
-	public CommentResponseDTO update(String commentId, String contentUpdate) {
-		ELComment comment = getById(commentId);
-		if(isValidString(contentUpdate)) {
-			comment.setContent(contentUpdate);
-		}
-		
-		return CommentMapper.INSTANCE.toResponseDTO(repository.save(comment));
 	}
 
 	@Override
@@ -123,14 +121,8 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	private ELComment getById(String id) {
-        return repository.findById(UUID.fromString(id))
-                .orElseThrow(() -> new BusinessException(errorsCommentNotFound));
-    }
-	
-	private boolean isValidString(String s) {
-	    if (s == null || s.length() == 0) {
-	        return false;
-	    }
-	    return true;
+		return repository.findById(UUID.fromString(id))
+				.orElseThrow(() -> new BusinessException(errorsCommentNotFound));
 	}
+
 }

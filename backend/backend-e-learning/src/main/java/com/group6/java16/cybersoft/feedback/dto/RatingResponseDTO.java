@@ -1,30 +1,23 @@
 package com.group6.java16.cybersoft.feedback.dto;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.user.dto.client.UserResponseClientDTO;
-import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
-import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentResponseDTO {
+public class RatingResponseDTO {
 	private UUID id;
-
-	private String content;
-
+	
+	private String value;
+	
 	private UserResponseClientDTO user;
-
-	private LocalDateTime createdAt;
-
-	private LessonResponseDTO lesson;
+		
 
 }

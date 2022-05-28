@@ -27,27 +27,27 @@ import com.group6.java16.cybersoft.feedback.service.CommentService;
 public class CommentController {
 	@Autowired
 	private CommentService service;
-	
+
 	@GetMapping("{lesson-id}")
-	public Object findCommentIntoLesson(@PathVariable("lesson-id")String lessonId) {
+	public Object findCommentIntoLesson(@PathVariable("lesson-id") String lessonId) {
 		List<CommentResponseDTO> response = service.search(lessonId);
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
-	
+
 	@PostMapping
-	public Object createComment(@Valid @RequestBody CommentCreateDTO rq,BindingResult bindingResult) {
-		 if (bindingResult.hasErrors()) {
-	            return ResponseHelper.getResponse(bindingResult, HttpStatus.BAD_REQUEST, true);
-	        }
-		CommentResponseDTO response = service.create(rq);
+	public Object createComment(@Valid @RequestBody CommentCreateDTO dto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return ResponseHelper.getResponse(bindingResult, HttpStatus.BAD_REQUEST, true);
+		}
+		CommentResponseDTO response = service.create(dto);
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
-	
+
 	@DeleteMapping("{comment-id}")
-	public Object deleteComment(@PathVariable("comment-id")String commentId) {
-		 
+	public Object deleteComment(@PathVariable("comment-id") String commentId) {
+
 		service.delete(commentId);
 		return ResponseHelper.getResponse("Delete Successfully", HttpStatus.OK, false);
 	}
-	
+
 }
