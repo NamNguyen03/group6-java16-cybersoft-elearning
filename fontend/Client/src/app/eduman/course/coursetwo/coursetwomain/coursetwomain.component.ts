@@ -49,7 +49,7 @@ export class CoursetwomainComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.valueSearch = params['search'] == undefined ? '': params['search'];
       this.pageCurrent = params['page'] == undefined ? 1 : params['page'];
-      this.pageRequest = new PageRequest(1, 6, 0, 0, [], []);
+      this.pageRequest = new PageRequest(1, 12, 0, 0, [], []);
       this.loadData();
 
     });
