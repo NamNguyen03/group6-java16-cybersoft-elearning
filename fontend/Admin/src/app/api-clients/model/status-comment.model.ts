@@ -26,3 +26,15 @@ export class CommentRp{
     id?: string;
     content?: string;    
 }
+
+export class CommentLesson{
+    id: string;
+    content: string;  
+    lessonName: string;
+    
+    constructor(id: string, content: string, lessonName: string){
+        this.id = id;
+        this.content = content;
+        this.lessonName = lessonName;
+    }
+}
