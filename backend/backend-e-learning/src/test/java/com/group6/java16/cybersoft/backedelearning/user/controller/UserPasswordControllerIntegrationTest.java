@@ -13,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,7 +35,7 @@ public class UserPasswordControllerIntegrationTest {
     public void givenJsonObject_whenGetToken_thenReturnReturnStatus200() throws Exception{
 
         mvc.perform(post("/api/v1/users/password/token/me"))
-            .andDo(print())
+            
             .andExpect(status().isOk());
     }
     
@@ -57,7 +56,7 @@ public class UserPasswordControllerIntegrationTest {
         mvc.perform(put("/api/v1/users/password")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
-            .andDo(print())
+            
             .andExpect(status().isOk());
     }
 
@@ -76,7 +75,7 @@ public class UserPasswordControllerIntegrationTest {
         mvc.perform(put("/api/v1/users/password")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
-            .andDo(print())
+            
             .andExpect(status().isBadRequest());
     }
     

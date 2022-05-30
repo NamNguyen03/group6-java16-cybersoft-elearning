@@ -85,7 +85,7 @@ public class CourseManagementController {
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
 
-	@PostMapping("{img}")
+	@PostMapping("img")
 	public Object updateImg(@RequestParam(name = "file") MultipartFile file) {
 		String urlImg = service.updateImg(file);
 		return ResponseHelper.getResponse(urlImg, HttpStatus.OK, false);
