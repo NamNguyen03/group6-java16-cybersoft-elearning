@@ -3,6 +3,7 @@ package com.group6.java16.cybersoft.user.controller;
 import javax.validation.Valid;
 
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
+import com.group6.java16.cybersoft.security.authorization.ELPermission;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
@@ -30,7 +31,8 @@ public class UserManagementController {
 
     @Autowired
     private UserManagementService service;
-
+    
+    @ELPermission("createUser")
     @PostMapping
     public Object createUser(@Valid @RequestBody UserCreateDTO rq, BindingResult result) {
         if (result.hasErrors()) {
@@ -41,20 +43,20 @@ public class UserManagementController {
 
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
-
+    @ELPermission("deleteUser")
     @DeleteMapping("{id}")
     public Object deleteUser(@PathVariable("id") String id) {
         service.deleteUser(id);
         return ResponseHelper.getResponse("Delete user success", HttpStatus.OK, false);
     }
-
+    
     @PutMapping("me")
     public Object updateMyProfile(@RequestBody UpdateMyProfileDTO rq) {
         UserResponseDTO rp = service.updateMyProfile(rq);
 
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
-
+    @ELPermission("updateUser")
     @PutMapping("{id}")
     public Object updateUser(@RequestBody UpdateUserDTO rq, @PathVariable("id") String id) {
         UserResponseDTO rp = service.update(id, rq);
@@ -68,14 +70,14 @@ public class UserManagementController {
         
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
-    
+    @ELPermission("addGroupIntoUser")
     @PostMapping("{user-id}/{group-id}")
     public Object addGroupIntoUser(@PathVariable("user-id") String userId,@PathVariable("group-id")String groupId) {
     	UserResponseDTO rp = service.addGroup(userId,groupId) ;   	
     	
     	return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
-
+    @ELPermission("deleteGroupIntoUser")
     @DeleteMapping("{user-id}/{group-id}")
     public Object deleteGroupIntoUser(@PathVariable("user-id") String userId,@PathVariable("group-id")String groupId) {
     	UserResponseDTO rp = service.deleteGroup(userId,groupId) ;   	
