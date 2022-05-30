@@ -14,13 +14,7 @@
                   <app-shoprating></app-shoprating>
                   </div>
                   <div class="course-sidebar-widget mb-20">
-                     <app-shopprice></app-shopprice>
-                  </div>
-                  <div class="course-sidebar-widget mb-20">
                      <app-shoplevel></app-shoplevel>
-                  </div>
-                  <div class="course-sidebar-widget mb-20">
-                     <app-shoplanguage></app-shoplanguage>
                   </div>
                   <div class="course-sidebar-widget mb-20">
                      <app-shopduration></app-shopduration>
@@ -36,15 +30,15 @@
                                              
                               <div class="protfolio-course-2-wrapper mb-30" >
                                  <div class="student-course-img" >
-                                    <a [routerLink]="['/course-details']"><img style="width: 300px;height:200px;" [src]="course.img"
+                                    <a [routerLink]="['/course-details', course.idFirstLesson]"><img style="width: 300px;height:200px;" [src]="course.img"
                                           alt="course-img"></a>
                                  </div>
                                  <div class="course-cart course-cart-box-size">
                                      <div class="course-info-wrapper">
                                          <div class="cart-info-body">
                                              <span class="category-color category-color-1"><a
-                                                     [routerLink]="['/course']">{{course.category}}</a></span>
-                                             <a (click)="viewDetail(course.id)">
+                                                [routerLink]="['/course-details', course.idFirstLesson]">{{course.category}}</a></span>
+                                             <a>
                                                  <h3>{{course.courseName}}</h3>
                                              </a>
                                              <div class="cart-lavel">
@@ -61,9 +55,9 @@
                                                  </ul>
                                              </div>
                                              <div class="course-action">
-                                                 <a (click)="viewDetail(course.id)" class="view-details-btn">View Details</a>
+                                                 <a [routerLink]="['/course-details', course.idFirstLesson]" class="view-details-btn">View Details</a>
                                                  <button class="wishlist-btn"><i class="flaticon-like"></i></button>
-                                                 <a (click)="viewDetail(course.id)" class="c-share-btn"><i
+                                                 <a class="c-share-btn"><i
                                                          class="flaticon-previous"></i></a>
                                              </div>
                                          </div>
@@ -84,7 +78,7 @@
                                          </div>
                                      </div>
                                      <div class="student-course-text">
-                                         <h3><a (click)="viewDetail(course.id)">{{course.courseName}}</a></h3>
+                                         <h3><a >{{course.courseName}}</a></h3>
                                      </div>
                                      <div class="portfolio-user">
                                          <div class="user-icon">
@@ -96,7 +90,7 @@
                                              <i class="fas fa-star" [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=3) ? '' : 'gray'}"></i>
                                              <i class="fas fa-star" [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=4) ? '' : 'gray'}"></i>
                                              <i class="fas fa-star" [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=5) ? '' : 'gray'}"></i>
-                                             <span>{{course.starAvg }}({{course.totalRating   }})</span>
+                                             <span>{{course.starAvg?.toFixed(2) }}({{course.totalRating   }})</span>
                                          </div>
                                      </div>
                                  </div>
@@ -104,13 +98,7 @@
                            </div>
                         </div>
                      </div>
-                     <div class="w-100">
-                        <div *ngFor="let pageIndex of pages">
-                           <button class="btn m-2" style="float: left;"
-                               (click)="clickPage(pageIndex)"
-                               [ngClass]="pageIndex==pageCurrent ? 'btn-secondary' : 'btn-primary'">{{pageIndex}}</button>
-                       </div>
-                     </div>
+                     <app-shop-paging></app-shop-paging>
                   </div>
             </div>
          </div>   

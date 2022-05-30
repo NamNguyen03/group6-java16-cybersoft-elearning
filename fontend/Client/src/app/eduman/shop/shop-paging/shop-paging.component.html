@@ -1,0 +1,7 @@
+<div class="w-100">
+    <div *ngFor="let pageIndex of pages">
+       <button class="btn m-2" style="float: left;"
+           (click)="clickPage(pageIndex)"
+           [ngClass]="pageIndex==pageCurrent ? 'btn-secondary' : 'btn-primary'">{{pageIndex}}</button>
+   </div>
+ </div>

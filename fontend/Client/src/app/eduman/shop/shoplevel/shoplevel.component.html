@@ -1,29 +1,10 @@
 <div class="course-sidebar-info" [class.content-hidden]="shopLevelActive">
     <h3 class="drop-btn" (click)="shopLevel()">Level</h3>
     <ul>
-       <li>
-          <div class="course-sidebar-list">
-             <input class="edu-check-box" type="checkbox" id="e-lave">
-             <label class="edu-check-label" for="e-lave">All levels (5)</label>
-          </div>
-       </li>
-       <li>
-          <div class="course-sidebar-list">
-             <input class="edu-check-box" type="checkbox" id="e-beg">
-             <label class="edu-check-label" for="e-beg">Beginner (36)</label>
-          </div>
-       </li>
-       <li>
-          <div class="course-sidebar-list">
-             <input class="edu-check-box" type="checkbox" id="e-inter">
-             <label class="edu-check-label" for="e-inter">Intermediate (25)</label>
-          </div>
-       </li>
-       <li>
-          <div class="course-sidebar-list">
-             <input class="edu-check-box" type="checkbox" id="e-exp">
-             <label class="edu-check-label" for="e-exp">Expert (32)</label>
-          </div>
-       </li>
-    </ul>
- </div>
+      <li class="list-group-item" *ngFor="let item of checklist">
+        <input type="checkbox" [(ngModel)]="item.isSelected" value="item.value"
+          (change)="changeLevel()"/>
+        {{item.name}}
+      </li>
+   </ul>
+</div>

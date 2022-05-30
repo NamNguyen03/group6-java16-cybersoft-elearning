@@ -27,6 +27,16 @@ public class LessonResponseDTO {
 
 	private int totalRating;
 
+	private int totalOneStar;
+
+	private int totalTwoStar;
+
+	private int totalThreeStar;
+
+	private int totalFourStar;
+
+	private int totalFiveStar;
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -58,9 +68,19 @@ public class LessonResponseDTO {
 			return false;
 		if (Float.floatToIntBits(starAvg) != Float.floatToIntBits(other.starAvg))
 			return false;
+		if (totalFiveStar != other.totalFiveStar)
+			return false;
+		if (totalFourStar != other.totalFourStar)
+			return false;
+		if (totalOneStar != other.totalOneStar)
+			return false;
 		if (totalRating != other.totalRating)
 			return false;
 		if (totalStar != other.totalStar)
+			return false;
+		if (totalThreeStar != other.totalThreeStar)
+			return false;
+		if (totalTwoStar != other.totalTwoStar)
 			return false;
 		return true;
 	}

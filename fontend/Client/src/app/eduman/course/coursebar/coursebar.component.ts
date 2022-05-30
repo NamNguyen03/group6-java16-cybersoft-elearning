@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseClient } from 'src/app/api-clients/course.client';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
 import { CourseRp } from 'src/app/api-clients/model/course.model';
+import { HomepageService } from 'src/app/share/homepage/homepage.service';
 
 @Component({
   selector: 'app-coursebar',
@@ -16,8 +17,7 @@ export class CoursebarComponent implements OnInit {
   public valueFieldNameSearch = '';
   
   constructor(
-    private route: ActivatedRoute,
-    private _router: Router
+    private _homePageService: HomepageService
     
   ) {
     
@@ -28,12 +28,7 @@ export class CoursebarComponent implements OnInit {
 
   changeInputSearch(event:any){
     if(event.keyCode == 13){
-      this._router.navigate(['/course-2'],{
-        queryParams: {
-          'search':this.valueFieldNameSearch
-        }
-  
-      })
+      this._homePageService.setValueSearch(this.valueFieldNameSearch);
     }
   }
 }

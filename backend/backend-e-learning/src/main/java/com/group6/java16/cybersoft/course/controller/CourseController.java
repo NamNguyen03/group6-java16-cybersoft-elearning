@@ -97,14 +97,15 @@ public class CourseController {
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "categories",defaultValue = "NONE") List<String> categories,
 			@RequestParam(value = "rating", defaultValue = "0") int rating,
-			@RequestParam(value = "formTime", defaultValue = "1") int fromTime,
+			@RequestParam(value = "fromTime",defaultValue = "1") int fromTime,
 			@RequestParam(value = "toTime", defaultValue = "5") int toTime,
 			@RequestParam(value = "level",defaultValue = "ALL") List<String> level
 			) {
+		System.out.println(fromTime);
 		PageResponseModel<CardCourseReponseClientDTO> rp = service.searchHomePage(new SearchCourseRequestClientDTO(pageCurrent, itemPerPage, name, categories, rating, fromTime,toTime, level) );
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
 	
-
+	
 }
