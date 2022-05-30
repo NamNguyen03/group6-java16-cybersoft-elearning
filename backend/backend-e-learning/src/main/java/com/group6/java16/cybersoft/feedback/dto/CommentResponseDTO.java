@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import com.group6.java16.cybersoft.user.dto.client.UserResponseClientDTO;
 import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
-import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

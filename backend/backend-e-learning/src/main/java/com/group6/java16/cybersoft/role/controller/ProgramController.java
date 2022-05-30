@@ -27,7 +27,7 @@ import com.group6.java16.cybersoft.role.service.ProgramService;
 @RestController
 @RequestMapping("api/v1/programs")
 @CrossOrigin(origins = "*")
-public class ProgramManagementController {
+public class ProgramController {
 
 	@Autowired
 	private ProgramService service;

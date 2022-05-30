@@ -2,6 +2,7 @@ package com.group6.java16.cybersoft.backedelearning.user.controller;
 
 import com.google.gson.Gson;
 import com.group6.java16.cybersoft.common.exception.BusinessException;
+import com.group6.java16.cybersoft.common.exception.UnauthorizedException;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
@@ -58,18 +59,24 @@ public class UserControllerIntegrationTest {
                 .param("isIncrementSort", "true")
                 .param("fieldNameSearch", "createBy")
                 .param("valueFieldNameSearch", "nam"))
-                
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser("nam")
     public void givenJsonObject_whenGetMyProfile_theReturnStatus200() throws Exception{
-        mvc.perform(get("/api/v1/users/me"))
-                
+        mvc.perform(get("/api/v1/users/me"))                
                 .andExpect(status().isOk());
     }
 
+    @Test
+    @WithMockUser("nam")
+    public void whenUserNotExsistGetMyProfile_theReturnStatus403() throws Exception{
+    	when(serviceInfor.getMyProfile()).thenThrow(new UnauthorizedException());
+        mvc.perform(get("/api/v1/users/me"))
+                .andExpect(status().isUnauthorized());
+    }
+    
     @Test
     @WithMockUser("nam")
     public void givenJsonObject_whenProfile_theReturnStatus200AndResponseHelper() throws Exception{
