@@ -2,19 +2,13 @@ package com.group6.java16.cybersoft.course.dto.client;
 
 import java.util.UUID;
 
-
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
-@Data
 @Getter
 @Setter
+@AllArgsConstructor
 public class CardCourseReponseClientDTO {
-	
-
 	
 	private UUID id;
 

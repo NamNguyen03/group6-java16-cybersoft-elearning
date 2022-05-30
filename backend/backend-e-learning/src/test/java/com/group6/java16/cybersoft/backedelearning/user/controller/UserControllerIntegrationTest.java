@@ -1,16 +1,5 @@
 package com.group6.java16.cybersoft.backedelearning.user.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.UUID;
-
 import com.google.gson.Gson;
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
@@ -19,7 +8,20 @@ import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
 import com.group6.java16.cybersoft.user.model.UserStatus;
 import com.group6.java16.cybersoft.user.repository.ELUserRepository;
+import com.group6.java16.cybersoft.user.service.UserInformationService;
 import com.group6.java16.cybersoft.user.service.UserManagementService;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.UUID;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +35,50 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserManagerControllerIntegrationTest {
+public class UserControllerIntegrationTest {
+    @MockBean
+    private UserInformationService serviceInfor;
     
     @MockBean
     private UserManagementService service;
 
     @MockBean
     private ELUserRepository repository;
-
+    
     @Autowired
     private MockMvc mvc;
 
+    @Test
+    @WithMockUser("nam")
+    public void givenJsonObject_whenSearchUser_theReturnStatus200() throws Exception{
+        mvc.perform(get("/api/v1/users")
+                .param("pageCurrent", "1")
+                .param("itemPerPage", "10")
+                .param("fieldNameSort", "createdBy")
+                .param("isIncrementSort", "true")
+                .param("fieldNameSearch", "createBy")
+                .param("valueFieldNameSearch", "nam"))
+                
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser("nam")
+    public void givenJsonObject_whenGetMyProfile_theReturnStatus200() throws Exception{
+        mvc.perform(get("/api/v1/users/me"))
+                
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser("nam")
+    public void givenJsonObject_whenProfile_theReturnStatus200AndResponseHelper() throws Exception{
+
+        mvc.perform(get("/api/v1/users/" + UUID.randomUUID().toString()))
+            
+            .andExpect(status().isOk());
+    }
+    
     @Test
     @WithMockUser("nam")
     public void givenJsonObject_whenUpdateMyProfile_theReturnStatus200AndResponseHelper() throws Exception{
@@ -53,7 +88,7 @@ public class UserManagerControllerIntegrationTest {
         mvc.perform(put("/api/v1/users/me")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
-            .andDo(print())
+            
             .andExpect(status().isOk());
     }
 
@@ -67,7 +102,7 @@ public class UserManagerControllerIntegrationTest {
         mvc.perform(put("/api/v1/users/5117d63c-a38e-4042-9f69-94f7d7777985")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
-            .andDo(print())
+            
             .andExpect(status().isOk());
     }
 
@@ -83,7 +118,7 @@ public class UserManagerControllerIntegrationTest {
         mvc.perform(put("/api/v1/users/5117d63c-a38e-4042-9f69-94f7d7777985")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
-            .andDo(print())
+            
             .andExpect(status().isBadRequest());
     }
 
@@ -100,7 +135,7 @@ public class UserManagerControllerIntegrationTest {
         mvc.perform(post("/api/v1/users")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
-            .andDo(print())
+            
             .andExpect(status().isOk());
             
     }
@@ -117,7 +152,7 @@ public class UserManagerControllerIntegrationTest {
         mvc.perform(post("/api/v1/users")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
-            .andDo(print())
+            
             .andExpect(status().isBadRequest());
             
     }
@@ -134,7 +169,7 @@ public class UserManagerControllerIntegrationTest {
         mvc.perform(post("/api/v1/users")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
-            .andDo(print())
+            
             .andExpect(status().isBadRequest());
             
     }
@@ -143,7 +178,7 @@ public class UserManagerControllerIntegrationTest {
     @WithMockUser("nam")
     public void whenDeleteUser_thenReturnStatus200() throws Exception{
         mvc.perform(delete("/api/v1/users/" + UUID.randomUUID().toString()))
-            .andDo(print())
+            
             .andExpect(status().isOk());
     }
 
@@ -165,7 +200,7 @@ public class UserManagerControllerIntegrationTest {
     @WithMockUser("nam")
     public void whenAddGroupIntoUserSuccess_thenReturnStatus200() throws Exception{
         mvc.perform(post("/api/v1/users/"+ UUID.randomUUID().toString() + "/" + UUID.randomUUID().toString()))
-            .andDo(print())
+            
             .andExpect(status().isOk());
     }
 
@@ -173,7 +208,8 @@ public class UserManagerControllerIntegrationTest {
     @WithMockUser("nam")
     public void whenDeleteGroupIntoUserSuccess_thenReturnStatus200() throws Exception{
         mvc.perform(delete("/api/v1/users/"+ UUID.randomUUID().toString() + "/" + UUID.randomUUID().toString()))
-            .andDo(print())
+            
             .andExpect(status().isOk());
     }
+
 }
