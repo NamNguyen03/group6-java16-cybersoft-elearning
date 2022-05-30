@@ -1,5 +1,5 @@
-<div class="course-video-widget">
-    <div class="course-widget-wrapper mb-30">
+<div class="course-video-widget" >
+    <div class="course-widget-wrapper mb-70">
         <div class="course-video-thumb w-img">
             <img src="assets/img/shape/image-removebg-preview (2).png" style="width:100px ;height: 100px;margin-left: 120px;" alt="image not found">
             <h3 style="margin-left: 80px;">Related Courses </h3>
@@ -22,22 +22,37 @@
                                                 <div class="course-cart course-cart-box-size">
                                                     <div class="course-info-wrapper">
                                                         <div class="cart-info-body">
-                                                            
-                                                            <a [routerLink]="['/course']">
-                                                                <h3>Name : {{courses.courseName}}</h3>
+                                                            <span class="category-color category-color-1"><a
+                                                                    [routerLink]="['/course']">{{courses.category}}</a></span>
+                                                            <a [routerLink]="['/course-details']">
+                                                                <h3>{{courses.courseName}}</h3>
                                                             </a>
                                                             <div class="cart-lavel">
-                                                                <h5>Description :
-                                                                    <span>{{courses.description}}</span>
-                                                                </h5>
+                                                                <h5>Level : <span>{{courses.level}}</span></h5>
+                                                                <p>{{courses.description}}</p>
                                                             </div>
-
+                                                            <div class="info-cart-text">
+                                                                <ul>
+                                                                    <li><i class="far fa-check"></i>{{courses.skill1}}
+                                                                    </li>
+                                                                    <li><i class="far fa-check"></i>{{courses.skill2}}
+                                                                    </li>
+                                                                    <li><i class="far fa-check"></i>{{courses.skill3}}
+                                                                    </li>
+                                                                    <li *ngIf="courses.skill4 != null"><i
+                                                                            class="far fa-check"></i>{{courses.skill4}}
+                                                                    </li>
+                                                                    <li *ngIf="courses.skill5 != null"><i
+                                                                            class="far fa-check"></i>{{courses.skill5}}
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                             <div class="course-action">
-                                                                <a [routerLink]="['/course-2']"
+                                                                <a [routerLink]="['/course-details', courses.idFirstLesson] "
                                                                     class="view-details-btn">View Details</a>
                                                                 <button class="wishlist-btn"><i
                                                                         class="flaticon-like"></i></button>
-                                                                <a [routerLink]="['/course-2']"
+                                                                <a [routerLink]="['/course-details']"
                                                                     class="c-share-btn"><i
                                                                         class="flaticon-previous"></i></a>
                                                             </div>
