@@ -13,34 +13,41 @@ import { CardLessonReponseClientDTO, LessonDetailsResponseClientDTO, LessonRp } 
   encapsulation: ViewEncapsulation.None
 })
 export class CoursedetailsmainComponent implements OnInit {
-  formComment : FormGroup
-  writeReviewActive:boolean=false;
-  writeReview(){
-    if(this.writeReviewActive==false){
-      this.writeReviewActive=true;
+  formComment: FormGroup
+  writeReviewActive: boolean = false;
+  writeReview() {
+    if (this.writeReviewActive == false) {
+      this.writeReviewActive = true;
     }
     else {
-      this.writeReviewActive=false;
+      this.writeReviewActive = false;
     }
   }
-  public listCardLesson : CardLessonReponseClientDTO[] = [];
-  public courseDetail : CourseDetailsReponseClientDTO = new CourseDetailsReponseClientDTO();
+  public listCardLesson: CardLessonReponseClientDTO[] = [];
+  public listCardLesson2: CardLessonReponseClientDTO[] = [];
+  public listCardLessonResult: CardLessonReponseClientDTO[] = [];
+  public courseDetail: CourseDetailsReponseClientDTO = new CourseDetailsReponseClientDTO();
   public lessonDetails: LessonDetailsResponseClientDTO = new LessonDetailsResponseClientDTO();
+  public isShow = false;
+  public isNotShow = true;
+  public isShowLesson = false;
+  public isShowContent = false;
+  public isHideContent = true;
+  public isShow3 = true;
+  public isShowAll = false;
   constructor(
     private route: ActivatedRoute,
     private lessonClient: LessonClient,
     private form: FormBuilder,
 
-  ) { 
+  ) {
     this.formComment = this.form.group({
-      comment: [''],})
+      comment: [''],
+    })
   }
 
 
   ngOnInit(): void {
-          console.log(this.lessonDetails)
-          console.log(this.courseDetail)
-          console.log(this.listCardLesson)
     this.loadData();
   }
 
@@ -53,12 +60,38 @@ export class CoursedetailsmainComponent implements OnInit {
           this.lessonDetails = response.content;
 
           this.courseDetail = this.lessonDetails.course == null ? new CourseDetailsReponseClientDTO() : this.lessonDetails.course;
-        
+
           this.listCardLesson = this.courseDetail.lessons == undefined ? [] : this.courseDetail.lessons;
+
+          if (this.listCardLesson.length < 3) {
+            this.listCardLesson2 = this.listCardLesson;
+          } else {
+            for (let i = 0; i < 3; i++) {
+              this.listCardLesson2[i] = this.listCardLesson[i];
+            }
+          }
+
+          this.listCardLesson2;
+
+
+          console.log(this.lessonDetails)
         }
       )
     });
   }
 
-  
+  toggleShow() {
+    this.isShow3 = !this.isShow3;
+    this.isShowAll = !this.isShowAll;
+    this.isNotShow = !this.isNotShow;
+  }
+  toggleShowContent() {
+    this.isShowContent = !this.isShowContent;
+    this.isHideContent = !this.isHideContent;
+  }
+
+  getLessonDetail(id: String): void {
+    this.lessonClient.getInfoLesson(id)
+  }
+
 }

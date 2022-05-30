@@ -190,8 +190,6 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		Page<ELCourse> rp  = courseRepository.findCourseClient(QueryCourseClientDTO.buildQueryCourseClientDTO(rq),pageable);
 		
 		
-		
-
 		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(),
 				rp.getContent().stream().map(CourseMapper.INSTANCE::toCourseResponseClientDTO)
 						.collect(Collectors.toList()));
