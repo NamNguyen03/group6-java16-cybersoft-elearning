@@ -3,7 +3,7 @@ package com.group6.java16.cybersoft.course.dto;
 
 import javax.validation.constraints.NotBlank;
 
-import com.group6.java16.cybersoft.validation.annotation.UniqueLessonName;
+import com.group6.java16.cybersoft.course.validation.annotation.UniqueLessonName;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
