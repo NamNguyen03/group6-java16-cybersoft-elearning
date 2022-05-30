@@ -32,7 +32,7 @@ import com.group6.java16.cybersoft.course.service.CourseManagementService;
 @RestController
 @RequestMapping("api/v1/courses")
 @CrossOrigin(origins = "*")
-public class CourseManagementController {
+public class CourseController {
 	@Autowired
 	private CourseManagementService service;
 

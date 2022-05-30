@@ -1,4 +1,4 @@
-package com.group6.java16.cybersoft.validation.validator;
+package com.group6.java16.cybersoft.course.validation.validator;
 
 import java.util.Optional;
 
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.course.repository.ELLessonRepository;
-import com.group6.java16.cybersoft.validation.annotation.UniqueLessonName;
+import com.group6.java16.cybersoft.course.validation.annotation.UniqueLessonName;
 
 public class UniqueLessonNameValidator implements ConstraintValidator<UniqueLessonName, String> {
 	

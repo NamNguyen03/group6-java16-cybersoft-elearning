@@ -29,7 +29,7 @@ import com.group6.java16.cybersoft.course.service.LessonManagementService;
 @RestController
 @RequestMapping("api/v1/lessons")
 @CrossOrigin(origins = "*")
-public class LessonManagementController {
+public class LessonController {
 	@Autowired
 	private LessonManagementService service;
 

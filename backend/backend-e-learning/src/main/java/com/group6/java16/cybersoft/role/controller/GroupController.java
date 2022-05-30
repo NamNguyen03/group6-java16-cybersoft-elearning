@@ -19,27 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
-import com.group6.java16.cybersoft.role.dto.RoleDTO;
-import com.group6.java16.cybersoft.role.dto.RoleResponseDTO;
-import com.group6.java16.cybersoft.role.dto.RoleUpdateDTO;
-import com.group6.java16.cybersoft.role.service.RoleService;
+import com.group6.java16.cybersoft.role.dto.GroupDTO;
+import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
+import com.group6.java16.cybersoft.role.dto.GroupUpdateDTO;
+import com.group6.java16.cybersoft.role.service.GroupService;
+
+
 
 @RestController
-@RequestMapping("api/v1/roles")
+@RequestMapping("api/v1/groups")
 @CrossOrigin(origins = "*")
-public class RoleManagementController {
-
+public class GroupController {
 	@Autowired
-	private RoleService service;
-
-	@PostMapping
-	public Object createRole(@Valid @RequestBody RoleDTO dto, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return ResponseHelper.getResponse(bindingResult, HttpStatus.BAD_REQUEST, true);
-		}
-		RoleResponseDTO response = service.createRole(dto);
-		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
-	}
+	private GroupService service;
 
 	@GetMapping
 	public Object search(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
@@ -48,49 +40,66 @@ public class RoleManagementController {
 			@RequestParam(value = "isIncrementSort", defaultValue = "true") boolean isIncrementSort,
 			@RequestParam(value = "fieldNameSearch", required = false) String fieldNameSearch,
 			@RequestParam(value = "valueFieldNameSearch", required = false) String valueFieldNameSearch) {
-		PageResponseModel<RoleResponseDTO> response = service.search(new PageRequestModel(
+
+		PageResponseModel<GroupResponseDTO> response = service.search(new PageRequestModel(
 				pageCurrent,
 				itemPerPage,
 				fieldNameSort,
 				isIncrementSort,
 				fieldNameSearch,
 				valueFieldNameSearch));
+
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
+
+	}
+
+	@PostMapping
+	public Object createGroup(@RequestBody @Valid GroupDTO dto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return ResponseHelper.getResponse(bindingResult, HttpStatus.BAD_REQUEST, true);
+		}
+
+		GroupResponseDTO response = service.save(dto);
+
+		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
+
 	}
 
 	@PutMapping("{id}")
-	public Object updateRole(@PathVariable("id") String id, @RequestBody RoleUpdateDTO dto) {
+	public Object updateGroup(@PathVariable("id") String id, @RequestBody GroupUpdateDTO dto) {
+		GroupResponseDTO response = service.update(id, dto);
 
-		RoleResponseDTO response = service.update(id, dto);
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
 
 	@DeleteMapping("{id}")
-	public Object deleteRole(@PathVariable("id") String id) {
+	public Object deleteGroup(@PathVariable("id") String id) {
+
 		service.deleteById(id);
 		return ResponseHelper.getResponse("Delete successfully", HttpStatus.OK, false);
 	}
 
-	@PostMapping("{role-id}/{program-id}")
-	public Object addProgramIntoRole(@PathVariable("role-id") String roleId,
-			@PathVariable("program-id") String programId) {
-		RoleResponseDTO response = service.addProgram(roleId, programId);
+	@PostMapping("{group-id}/{role-id}")
+	public Object addRoleIntoGroup(@PathVariable(value = "group-id") String groupId,
+			@PathVariable(value = "role-id") String roleId) {
+		GroupResponseDTO response = service.addRole(groupId, roleId);
+
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 
 	}
 
-	@DeleteMapping("{role-id}/{program-id}")
-	public Object deleteProgramIntoRole(@PathVariable("role-id") String roleId,
-			@PathVariable("program-id") String programId) {
-		RoleResponseDTO response = service.deleteProgram(roleId, programId);
+	@DeleteMapping("{group-id}/{role-id}")
+	public Object deleteRoleIntoGroup(@PathVariable("group-id") String groupId,
+			@PathVariable("role-id") String roleId) {
+		GroupResponseDTO response = service.deleteRole(groupId, roleId);
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 
 	}
 
 	@GetMapping("{id}")
-	public Object getRoleDetail(@PathVariable("id") String id) {
+	public Object getGroupDetail(@PathVariable("id") String id) {
 
-		RoleResponseDTO rp = service.getRoleDetail(id);
+		GroupResponseDTO rp = service.getGroupDetail(id);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}

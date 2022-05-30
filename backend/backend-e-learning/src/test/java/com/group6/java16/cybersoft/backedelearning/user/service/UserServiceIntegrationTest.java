@@ -5,13 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
+import org.springframework.security.core.userdetails.User;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import com.group6.java16.cybersoft.common.exception.BusinessException;
+import com.group6.java16.cybersoft.common.exception.UnauthorizedException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.model.notification.UserCreateModel;
@@ -567,6 +568,59 @@ public class UserServiceIntegrationTest {
         UserResponseDTO actual =  service.getMyProfile();
 
         assertEquals(expected,actual);
+    }
+    
+    @Test
+    public void whenGetMyProfileWithUserCurrentIsUserDetails_theReturnUserResponse(){
+        
+        Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(new User("nam","123456", new ArrayList<>()));
+
+        ELUser user =  ELUser.builder()
+            .email("nam@gmail.com")
+            .username("nam")
+            .displayName("Nam")
+            .firstName("Nguyen")
+            .lastName("Nam")
+            .hobbies("swimming")
+            .facebook("facebook.com")
+            .phone("11111222222")
+            .groups(null)
+            .build();
+
+        when(userRepository.findByUsername("nam")).thenReturn(Optional.of(user));
+
+    
+        UserResponseDTO expected = new UserResponseDTO();
+        expected.setEmail("nam@gmail.com");	
+        expected.setUsername("nam");
+        expected.setDisplayName("Nam");
+        expected.setLastName("Nam");
+        expected.setHobbies("swimming");
+        expected.setFacebook("facebook.com");
+        expected.setPhone("11111222222");
+        expected.setFirstName("Nguyen");
+        expected.setGroups(null);
+
+        UserResponseDTO actual =  service.getMyProfile();
+
+        assertEquals(expected,actual);
+    }
+    
+    @Test
+    public void whenUserCurrentIsNullGetMyProfile_theReturnThrowBusinessException(){
+        
+        Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        Mockito.when(SecurityContextHolder.getContext().getAuthentication()).thenReturn(null);
+        assertThrows(UnauthorizedException.class, ()-> service.getMyProfile());
     }
 
     @Test
