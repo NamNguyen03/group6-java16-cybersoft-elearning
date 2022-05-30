@@ -72,13 +72,11 @@ export class NavService {
 		},
 		{
 			title: 'Lessons', icon: 'users', type: 'sub', active: false, children: [
-				{ path: '/lessons/list-lesson', title: 'Lesson List', type: 'link' },
 				{ path: '/lessons/create-lesson', title: 'Create Lesson', type: 'link' },
 			]
 		},
 		{
 			title: 'Comment', icon: 'users', type: 'sub', active: false, children: [
-				{ path: '/comments/list-comment-details', title: 'List Comment Details', type: 'link' },
 				{ path: '/comments/list-status-comment', title: 'List Status Comment', type: 'link' },
 			]
 		},
