@@ -40,5 +40,5 @@ jobs:
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
     - name: Build with Maven
-      run: cd backend/backend-e-learning && mvn -B package --file pom.xml
+      run: cd backend/backend-e-learning && mvn clean install --file pom.xml
     
