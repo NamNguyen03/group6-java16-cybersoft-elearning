@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CourseClient } from 'src/app/api-clients/course.client';
 import { LessonClient } from 'src/app/api-clients/lesson.client';
@@ -34,5 +34,6 @@ export class CoursevideoComponent implements OnInit {
       }
     )
   }
+
 
 }

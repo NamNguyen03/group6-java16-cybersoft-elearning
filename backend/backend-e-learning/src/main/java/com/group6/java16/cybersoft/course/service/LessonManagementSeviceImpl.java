@@ -21,12 +21,15 @@ import com.group6.java16.cybersoft.common.service.storage.MyFirebaseService;
 import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
+import com.group6.java16.cybersoft.course.dto.client.Author;
 import com.group6.java16.cybersoft.course.dto.client.LessonDetailsResponseClientDTO;
 import com.group6.java16.cybersoft.course.mapper.LessonMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.model.ELLesson;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 import com.group6.java16.cybersoft.course.repository.ELLessonRepository;
+import com.group6.java16.cybersoft.user.model.ELUser;
+import com.group6.java16.cybersoft.user.repository.ELUserRepository;
 
 @Service
 @PropertySources({ @PropertySource("classpath:/validation/message.properties") })
@@ -37,9 +40,15 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 
 	@Autowired
 	private ELCourseRepository courseRepository;
+	
+	@Autowired
+	private ELUserRepository userRepository;
 
 	@Value("${lesson.not-found}")
 	private String errorslessonNotFound;
+	
+	@Value("${author.not-found}")
+	private String authorNotFoud;
 
 	@Value("${entity.id.invalid}")
 	private String errorsIdInvalid;
@@ -168,10 +177,13 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 
 	@Override
 	public LessonDetailsResponseClientDTO getLessonDetail(String id) {
-		ELLesson lesson = lessonRepository.getDetailsById(UUID.fromString(id));
-		lesson.getCourse().getLessons().forEach(l -> System.out.println(l.getName()));
 		
-		return LessonMapper.INSTANCE.toLessonDetailsClientDTO(lesson);
+		ELLesson lesson = lessonRepository.getDetailsById(UUID.fromString(id));
+		ELUser user = userRepository.findByUsername(lesson.getCourse().getCreatedBy()).orElseThrow(()-> new BusinessException(authorNotFoud));
+		LessonDetailsResponseClientDTO clientDTO = LessonMapper.INSTANCE.toLessonDetailsClientDTO(lesson);
+		clientDTO.setAuthor(new Author(user.getId(),user.getDisplayName()));;
+		return clientDTO;
+		
 	}
 
 }
