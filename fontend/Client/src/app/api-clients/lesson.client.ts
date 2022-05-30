@@ -8,6 +8,9 @@ import { LessonDetailsResponseClientDTO, LessonRp } from "./model/lesson.model";
     providedIn: 'root',
 })
 export class LessonClient {
+    getInfoLesson(id: any) {
+      throw new Error('Method not implemented.');
+    }
     private _apiEndpoint = `${environment.api}lessons/client`;
   
     constructor(protected httpClient: HttpClient) {}

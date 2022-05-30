@@ -184,10 +184,10 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 	public PageResponseModel<CardCourseReponseClientDTO> searchHomePage(SearchCourseRequestClientDTO rq) {
 		int page = rq.getPageCurrent() - 1;
 		int size = rq.getItemPerPage();
-		Pageable pageable = PageRequest.of(page, size,Sort.by("createdAt").ascending());
-		
-		Page<ELCourse> rp  = courseRepository.findCourseClient(QueryCourseClientDTO.buildQueryCourseClientDTO(rq),pageable);
-		
+		Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
+
+		Page<ELCourse> rp = courseRepository.findCourseClient(QueryCourseClientDTO.buildQueryCourseClientDTO(rq),
+				pageable);
 
 		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(),
 				rp.getContent().stream().map(CourseMapper.INSTANCE::toCourseResponseClientDTO)
