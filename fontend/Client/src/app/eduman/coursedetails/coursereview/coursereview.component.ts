@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeedBackClient } from 'src/app/api-clients/feedback.client';
-import { CommentResponse } from 'src/app/api-clients/model/feedback.model';
+import { CommentCreate, CommentResponse } from 'src/app/api-clients/model/feedback.model';
 import { UserService } from 'src/app/share/user/user.service';
 
 @Component({
@@ -12,14 +13,28 @@ import { UserService } from 'src/app/share/user/user.service';
 })
 export class CoursereviewComponent implements OnInit {
   public listComments : CommentResponse[] =[];
-  private lessonId : string ="5e10f993-f2bf-4f68-b4c1-92b5d02e4133";
-  private userId : string ="";
-  private comment: string ="";
+  formComment: FormGroup
+  writeReviewActive: boolean = false;
+  public myComment :string =''
+  private idLesson ='';
+
+  writeReview() {
+    if (this.writeReviewActive == false) {
+      this.writeReviewActive = true;
+    }
+    else {
+      this.writeReviewActive = false;
+    }
+  }
 
   constructor(private route: ActivatedRoute,
-    private _router: Router,
-    private userService: UserService,
-    private feedBackClient: FeedBackClient ) { }
+    private feedBackClient: FeedBackClient,
+    private form: FormBuilder,
+    ) {
+      this.formComment = this.form.group({
+        comment: [''],
+      })
+     }
     
 
   ngOnInit(): void {
@@ -29,13 +44,20 @@ export class CoursereviewComponent implements OnInit {
 
   findComment(){
     this.route.params.subscribe((params) => {
-      let id = params["id"];
-      this.feedBackClient.findComment(id).subscribe(
+      this.idLesson = params["id"];
+      this.feedBackClient.findComment(this.idLesson).subscribe(
         response => 
-         this.listComments = response.content);})
-     
+          this.listComments = response.content
+        
+        ) ;
+      })
   }
-  writeComment(){
-   
+  postComment(){
+    this.myComment=this.formComment.controls['comment'].value;
+    this.feedBackClient.writeComment(new CommentCreate(this.myComment,this.idLesson)).subscribe( ()=> 
+      this.findComment()
+    );
+  
   }
+  
 }

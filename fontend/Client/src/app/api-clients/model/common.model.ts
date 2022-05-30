@@ -14,26 +14,30 @@ export class PageResponse<T>{
 export class PageRequest{
     pageCurrent: number;
     itemPerPage: number;
-    name: string | undefined;
-    categories: string[] | undefined;
-    rating: number | undefined;
-    time: number | undefined;
-    level: string[] | undefined;;
+    name: string ;
+    categories: string[] ;
+    rating: number ;
+    fromTime: number ;
+    toTime: number ;
+    level: string[] ;
 
     constructor(
         pageCurrent: number,
         itemPerPage: number,
+        name:string,
         rating: number,
-        time: number,
+        fromTime:number,
+        toTime: number,
         level: string[],
         categories:string[],
-
         ){
         
         this.pageCurrent = pageCurrent <=0 ? 1 : pageCurrent;
         this.itemPerPage = itemPerPage <=0 ? 10 : itemPerPage;
+        this.name =name;
 		this.rating = rating;
-		this.time = time;
+        this.fromTime=fromTime;
+		this.toTime = toTime;
 		this.level = level;
 		this.categories = categories;
 

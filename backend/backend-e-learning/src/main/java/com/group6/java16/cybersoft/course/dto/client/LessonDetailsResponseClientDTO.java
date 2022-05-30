@@ -13,14 +13,30 @@ import lombok.Setter;
 @Setter
 public class LessonDetailsResponseClientDTO {
 	private UUID id;
-	
+
 	private String name;
-	
+
 	private Author author;
-	
+
 	private String content;
-	
+
 	private String description;
-	
+
 	private CourseDetailsReponseClientDTO course;
+
+	private float starAvg;
+
+	private int totalStar;
+
+	private int totalRating;
+
+	private int totalOneStar;
+
+	private int totalTwoStar;
+
+	private int totalThreeStar;
+
+	private int totalFourStar;
+
+	private int totalFiveStar;
 }

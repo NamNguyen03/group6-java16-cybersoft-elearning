@@ -126,6 +126,7 @@ import { CoursevideoComponent } from './coursedetails/coursevideo/coursevideo.co
 import { ZoomclassmainComponent } from './zoom/zoomclassmain/zoomclassmain.component';
 import { ZoomclassdetailsmainComponent } from './zoom/zoomclassdetailsmain/zoomclassdetailsmain.component';
 import { BreadcrumbComponent } from './common/breadcrumb/breadcrumb.component';
+import { ShopPagingComponent } from './shop/shop-paging/shop-paging.component';
 
 
 
@@ -260,7 +261,8 @@ import { BreadcrumbComponent } from './common/breadcrumb/breadcrumb.component';
     CoursevideoComponent,
     ZoomclassmainComponent,
     ZoomclassdetailsmainComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    ShopPagingComponent
   ]
 })
 export class EdumanModule { }

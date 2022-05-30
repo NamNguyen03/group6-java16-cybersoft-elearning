@@ -58,6 +58,7 @@ public class QueryCourseClientDTO {
 			levels = dto.getLevel().stream().map(LevelEnum::valueOf).collect(Collectors.toList());
 		}
 		rp.setLevels(levels);
+		
 		if(dto.getRating() == 0) {
 			rp.setFromRating(0);
 			rp.setToRating(5);
