@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.google.firebase.auth.UserProvider;
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.course.model.ELCourse;
@@ -79,17 +78,32 @@ public class RatingServiceImpl implements RatingService {
 
 		ELCourse course = lesson.getCourse();
 
-		if(repository.existsByUserAndLesson(user.getId(), lesson.getId())) {
+		if (repository.existsByUserAndLesson(user.getId(), lesson.getId())) {
 			throw new BusinessException(errorsRatingExists);
 		}
-		
+		if (dto.getValue() == 1) {
+			lesson.setTotal_one_star(lesson.getTotal_one_star() + 1);
+		}
+		if (dto.getValue() == 2) {
+			lesson.setTotal_two_star(lesson.getTotal_two_star() + 1);
+		}
+		if (dto.getValue() == 3) {
+			lesson.setTotal_three_star(lesson.getTotal_three_star() + 1);
+		}
+		if (dto.getValue() == 4) {
+			lesson.setTotal_four_star(lesson.getTotal_four_star() + 1);
+		}
+		if (dto.getValue() == 5) {
+			lesson.setTotal_five_star(lesson.getTotal_five_star() + 1);
+		}
+
 		lesson.setTotalStar(lesson.getTotalStar() + dto.getValue());
 		lesson.setTotalRating(lesson.getTotalRating() + 1);
-		lesson.setStarAvg(lesson.getTotalStar()*1.0f/lesson.getTotalRating());
-		
-		course.setTotalStar(course.getTotalStar() +  dto.getValue());
+		lesson.setStarAvg(lesson.getTotalStar() * 1.0f / lesson.getTotalRating());
+
+		course.setTotalStar(course.getTotalStar() + dto.getValue());
 		course.setTotalRating(course.getTotalRating() + 1);
-		course.setStarAvg(course.getTotalStar()*1.0f/course.getTotalRating());
+		course.setStarAvg(course.getTotalStar() * 1.0f / course.getTotalRating());
 
 		lessonRepository.save(lesson);
 
@@ -110,7 +124,9 @@ public class RatingServiceImpl implements RatingService {
 		}
 		String userName = UserPrincipal.getUsernameCurrent();
 		return RatingMapper.INSTANCE
-				.toResponseDTO(repository.getRatingByLessonAndUser(lessonId, userName).orElseThrow(null));
+				.toResponseDTO(
+						repository.getRatingByLessonAndUser(UUID.fromString(lessonId), userName)
+								.orElse(null));
 	}
 
 }

@@ -27,32 +27,45 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Entity
 @Table(name = "el_lesson")
-public class ELLesson extends BaseEntity{
-	
-	@Column(name = "name",unique = true,nullable = false)
+public class ELLesson extends BaseEntity {
+
+	@Column(name = "name", unique = true, nullable = false)
 	private String name;
-	
+
 	@Column(name = "description")
 	private String description;
-	
-	@Column(name = "content",nullable = false)
+
+	@Column(name = "content", nullable = false)
 	private String content;
-	
+
 	@Builder.Default
 	private float starAvg = 0;
-	
+
 	@Builder.Default
 	// totalStar = sum (star.value)
-	private int totalStar= 0;
-	
+	private int totalStar = 0;
+
 	@Builder.Default
 	// count rating
-	private int totalRating= 0;
+	private int totalRating = 0;
+	@Builder.Default
+	private int total_one_star = 0;
 
-	
+	@Builder.Default
+	private int total_two_star = 0;
+
+	@Builder.Default
+	private int total_three_star = 0;
+
+	@Builder.Default
+	private int total_four_star = 0;
+
+	@Builder.Default
+	private int total_five_star = 0;
+
 	@JsonIgnore
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinColumn(name = "course_id",referencedColumnName = "id")
+	@JoinColumn(name = "course_id", referencedColumnName = "id")
 	private ELCourse course;
 
 	@OneToMany(mappedBy = "lesson")

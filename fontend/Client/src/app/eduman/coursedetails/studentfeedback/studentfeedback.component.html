@@ -1,5 +1,18 @@
 <div class="student-feedback pt-45 ">
     <h3>Student Feedback</h3>
+    <div class="course-icon">Your Rating: 
+                <i class="fas fa-star" (click)="rating(1)"
+                    [ngStyle]="{'color' :  ( myRating === undefined ||myRating>=1) ? '' : 'gray'}"></i>
+                <i class="fas fa-star" (click)="rating(2)"
+                    [ngStyle]="{'color' :  ( myRating === undefined ||myRating>=2) ? '' : 'gray'}"></i>
+                <i class="fas fa-star" (click)="rating(3)"
+                    [ngStyle]="{'color' :  ( myRating === undefined ||myRating>=3) ? '' : 'gray'}"></i>
+                <i class="fas fa-star" (click)="rating(4)"
+                    [ngStyle]="{'color' :  ( myRating === undefined ||myRating>=4) ? '' : 'gray'}"></i>
+                <i class="fas fa-star" (click)="rating(5)"
+                    [ngStyle]="{'color' :  ( myRating === undefined ||myRating>=5) ? '' : 'gray'}"></i>
+        
+    </div>
     <div class="row">
         <div class="col-xl-3">
             <div class="reating-point mb-30">
@@ -94,7 +107,7 @@
                     <div class="rating-row mb-10">
                         <div class="rating-star">
                             <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                            <i class="fal fa-star"></i>
                             <i class="fal fa-star"></i>
                             <i class="fal fa-star"></i>
                             <i class="fal fa-star"></i>

@@ -11,37 +11,31 @@
             <div class="course-review-list"  style=" width: 100%; background-color: rgb(240, 234, 227); border-radius: 15px;padding-left:20px">
                 <div >
                     <div style="font-size:30px ; padding-top: 15px; ">
-                        <h4>{{comment.user.displayName}}</h4>
+                        <h4 style="margin-bottom:0 ;">{{comment.user.displayName}}</h4>
                     </div>
-                    <p >{{comment.createdAt}}</p>
-        
-                </div>
-            
-                <div class="course-start-icon" style="font-size:10px ;"> 
-                        
-                        <div>
-                            <p >{{comment.content}}</p>
-                        </div>
+                    <span  style="margin-top:0 ;">{{comment.createdAt | date: 'mm:h - dd/MM/yyyy'}}</span>
+                    <p >{{comment.content}}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- <div class="col-xl-12">
+<div class="col-xl-12">
     <div class="course-review-btn">
-        <a id="show-review-box" class="edu-btn" href="javascript:void(0)" (click)=writeReview()>Write a Review</a>
+        <a id="show-review-box" class="edu-btn" href="javascript:void(0)" (click)=writeReview()>Write a
+            Review</a>
 
         <div id="review-box" class="review-comment mt-45" [class.d-block]="writeReviewActive">
-           <div class="comment-input-box mb-15">
-                <form [formGroup]="formComment" action="comment" >
+            <div class="comment-input-box mb-15">
+                <form action="#" [formGroup]="formComment">
                     <div class="row">
                         <div class="col-xxl-12">
                             <textarea placeholder="Your review"
-                                class="comment-input comment-textarea mb-20" name ="comment"></textarea>
+                                class="comment-input comment-textarea mb-20" formControlName ="comment"></textarea>
                         </div>
                         <div class="col-xxl-12">
                             <div class="comment-submit">
-                                <button type="submit" class="edu-btn">Submit</button>
+                                <button type="submit" class="edu-btn" (click)="postComment()">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -49,4 +43,4 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
