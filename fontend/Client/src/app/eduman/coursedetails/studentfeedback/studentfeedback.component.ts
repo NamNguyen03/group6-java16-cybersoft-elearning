@@ -2,7 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {  ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FeedBackClient } from 'src/app/api-clients/feedback.client';
+import { LessonClient } from 'src/app/api-clients/lesson.client';
 import { RatingCreate, RatingResponse } from 'src/app/api-clients/model/feedback.model';
+import { LessonDetailsResponseClientDTO } from 'src/app/api-clients/model/lesson.model';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -17,21 +19,33 @@ export class StudentfeedbackComponent implements OnInit {
 
   constructor( private feedBackClient: FeedBackClient,
     private route: ActivatedRoute,
-    private _toastr: ToastrService, ) { }
+    private _toastr: ToastrService,
+    private lessonClient: LessonClient, ) { }
+    public lessonDetails: LessonDetailsResponseClientDTO = new LessonDetailsResponseClientDTO();
+
 
   ngOnInit(): void {
-    this.findMyRating();
+    this.loadData();    
+    
+  }
+  loadData(){
+    this.route.params.subscribe((params) => {
+      this.idLesson = params["id"];
+      this.lessonClient.getLessonDetails(this.idLesson).subscribe(
+        response => {
+      this.lessonDetails = response.content
+  })
+  })
+  this.findMyRating();
   }
 
   findMyRating(){
-    this.route.params.subscribe((params) => {
-      this.idLesson = params["id"];
       this.feedBackClient.myRating(this.idLesson).subscribe(
         response => 
           this.myRating = response.content ? response.content.value : 0
         ) ;
-      })
-  }
+    }
+  
 
   rating(number: number): void{
     Swal.fire({
@@ -47,7 +61,7 @@ export class StudentfeedbackComponent implements OnInit {
        this.feedBackClient.writeRating(new RatingCreate(number,this.idLesson)).subscribe(
           () => {
            this._toastr.success('Success','Reviews Successfully')
-           this.findMyRating();
+           this.loadData();
           }
         )
        

@@ -68,3 +68,10 @@ INSERT INTO public.el_status_comment(id, created_at, created_by, last_modified_a
 
 Update el_status_comment s set created_by = (select username from el_user where id = s.user_id ), 
 last_modified_by = (select username from el_user where id = s.user_id );
+
+UPDATE public.el_lesson SET   total_three_star=1, total_five_star=1 WHERE id = 'aa74bdc4-de6e-11ec-9d64-0242ac120002';
+UPDATE public.el_lesson SET   total_four_star=1 WHERE id = 'aa74bdc4-de6e-11ec-9d64-0242ac120002';
+UPDATE public.el_lesson SET   total_three_star=2, total_five_star=1 WHERE id = 'aa74bf68-de6e-11ec-9d64-0242ac120002';
+UPDATE public.el_lesson SET   total_five_star=2 WHERE id = 'aa74c062-de6e-11ec-9d64-0242ac120002';
+UPDATE public.el_lesson SET   total_four_star=2, total_five_star=1 WHERE id = 'aa74c18e-de6e-11ec-9d64-0242ac120002';
+UPDATE public.el_lesson SET   total_three_star=1, total_four_star=1 WHERE id = 'aa74cfb2-de6e-11ec-9d64-0242ac120002';

@@ -48,20 +48,16 @@ public class ELLesson extends BaseEntity {
 	@Builder.Default
 	// count rating
 	private int totalRating = 0;
-	@Builder.Default
-	private int total_one_star = 0;
 
-	@Builder.Default
-	private int total_two_star = 0;
+	private int totalOneStar;
 
-	@Builder.Default
-	private int total_three_star = 0;
+	private int totalTwoStar;
 
-	@Builder.Default
-	private int total_four_star = 0;
+	private int totalThreeStar;
 
-	@Builder.Default
-	private int total_five_star = 0;
+	private int totalFourStar;
+
+	private int totalFiveStar;
 
 	@JsonIgnore
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })

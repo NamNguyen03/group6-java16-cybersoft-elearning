@@ -82,19 +82,19 @@ public class RatingServiceImpl implements RatingService {
 			throw new BusinessException(errorsRatingExists);
 		}
 		if (dto.getValue() == 1) {
-			lesson.setTotal_one_star(lesson.getTotal_one_star() + 1);
+			lesson.setTotalOneStar(lesson.getTotalOneStar() + 1);
 		}
 		if (dto.getValue() == 2) {
-			lesson.setTotal_two_star(lesson.getTotal_two_star() + 1);
+			lesson.setTotalTwoStar(lesson.getTotalTwoStar() + 1);
 		}
 		if (dto.getValue() == 3) {
-			lesson.setTotal_three_star(lesson.getTotal_three_star() + 1);
+			lesson.setTotalThreeStar(lesson.getTotalThreeStar() + 1);
 		}
 		if (dto.getValue() == 4) {
-			lesson.setTotal_four_star(lesson.getTotal_four_star() + 1);
+			lesson.setTotalFourStar(lesson.getTotalFourStar() + 1);
 		}
 		if (dto.getValue() == 5) {
-			lesson.setTotal_five_star(lesson.getTotal_five_star() + 1);
+			lesson.setTotalFiveStar(lesson.getTotalFiveStar() + 1);
 		}
 
 		lesson.setTotalStar(lesson.getTotalStar() + dto.getValue());
