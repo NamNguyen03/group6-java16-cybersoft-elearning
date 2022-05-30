@@ -5,57 +5,48 @@
     <div *ngFor="let comment of listComments">
         <div class="course-review-item mb-30">
             <div class="course-reviews-img">
-                <a href="#"><img style="width: 60px; height: 60; border-radius: 50%;" [src]="comment.user.avatar"
+                <a href="#"><img style="width: 60px; height: 60; border-radius: 50%; padding-top: auto;" [src]="comment.user.avatar"
                         alt="avatar not found"></a>
             </div>
-            <div class="course-review-list">
-                <div class="course-start-icon">
-                    <span>{{comment.timeComment}}</span>
+            <div class="course-review-list"  style=" width: 100%; background-color: rgb(240, 234, 227); border-radius: 15px;padding-left:20px">
+                <div >
+                    <div style="font-size:30px ; padding-top: 15px; ">
+                        <h4>{{comment.user.displayName}}</h4>
+                    </div>
+                    <p >{{comment.createdAt}}</p>
+        
                 </div>
-                <p>{{comment.content}}</p>
+            
+                <div class="course-start-icon" style="font-size:10px ;"> 
+                        
+                        <div>
+                            <p >{{comment.content}}</p>
+                        </div>
+                </div>
             </div>
         </div>
     </div>
-    <!-- <div class="course-review-item mb-30">
-        <div class="course-reviews-img">
-            <a href="#"><img src="assets/img/course/course-reviews-2.png"
-                    alt="image not found"></a>
-        </div>
-        <div class="course-review-list">
-            <h5><a [routerLink]="['/instructor']">Samantha</a></h5>
-            <div class="course-start-icon">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <span>45 min ago</span>
-            </div>
-            <p>The course is good at explaining very basic intuition of the concepts. It
-                will get
-                you scratching the surface so to say. where this course is unique is the
-                implementation methods are so well defined Thank you to the team !.</p>
-        </div>
-    </div>
-    <div class="course-review-item mb-30">
-        <div class="course-reviews-img">
-            <a [routerLink]="['/instructor']"><img src="assets/img/course/course-reviews-3.png"
-                    alt="image not found"></a>
-        </div>
-        <div class="course-review-list">
-            <h5><a [routerLink]="['/instructor']">Michell Mariya</a></h5>
-            <div class="course-start-icon">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <span>30 min ago</span>
-            </div>
-            <p>This course is amazing..!
-                I started this course as a beginner and learnt a lot. Instructors are great.
-                Query
-                handling can be improved.Overall very happy with the course.</p>
-        </div>
-    </div> -->
 </div>
+<!-- <div class="col-xl-12">
+    <div class="course-review-btn">
+        <a id="show-review-box" class="edu-btn" href="javascript:void(0)" (click)=writeReview()>Write a Review</a>
+
+        <div id="review-box" class="review-comment mt-45" [class.d-block]="writeReviewActive">
+           <div class="comment-input-box mb-15">
+                <form [formGroup]="formComment" action="comment" >
+                    <div class="row">
+                        <div class="col-xxl-12">
+                            <textarea placeholder="Your review"
+                                class="comment-input comment-textarea mb-20" name ="comment"></textarea>
+                        </div>
+                        <div class="col-xxl-12">
+                            <div class="comment-submit">
+                                <button type="submit" class="edu-btn">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->

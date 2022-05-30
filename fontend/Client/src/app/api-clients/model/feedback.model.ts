@@ -17,12 +17,12 @@ export class CommentResponse{
     id:string;
     content:string;
     user:UserCommentResponse;
-    timeComment:Date;
-    constructor(id:string,content:string,user:UserCommentResponse,timeComment:Date){
+    createdAt:Date;
+    constructor(id:string,content:string,user:UserCommentResponse,createdAt:Date){
         this.id=id;
         this.content=content;
         this.user=user;
-        this.timeComment=timeComment;
+        this.createdAt=createdAt;
     }
 }
 export  class RatingCreate{

@@ -1,34 +1,28 @@
 <div class="course-sidebar-info" [class.content-hidden]="shopDurationActive">
-    <h3 class="drop-btn" (click)="shopDuration()">Duration</h3>
+    <h3 class="drop-btn" (click)="shopDuration()">Lesson</h3>
     <ul>
        <li>
           <div class="course-sidebar-list">
-             <input class="edu-check-box" type="checkbox" id="e-less">
-             <label class="edu-check-label" for="e-less">Less than 1 Hours (24)</label>
+             <input class="edu-check-box" type="radio" (change)="changeTimeLesson($event)" value ="1" name="lesson" id="e-36">
+             <label class="edu-check-label" for="e-36">1 - 5 Lesson </label>
           </div>
        </li>
        <li>
           <div class="course-sidebar-list">
-             <input class="edu-check-box" type="checkbox" id="e-36">
-             <label class="edu-check-label" for="e-36">1-2 Hours (36)</label>
+             <input class="edu-check-box" type="radio" (change)="changeTimeLesson($event)" value ="5" name="lesson" id="m-25">
+             <label class="edu-check-label" for="m-25">6 - 10 Lesson</label>
           </div>
        </li>
        <li>
           <div class="course-sidebar-list">
-             <input class="edu-check-box" type="checkbox" id="m-25">
-             <label class="edu-check-label" for="m-25">2-5 Hours (25)</label>
+             <input class="edu-check-box" type="radio" (change)="changeTimeLesson($event)" value ="11" name="lesson" id="m-32">
+             <label class="edu-check-label" for="m-32">11-15 Lesson</label>
           </div>
        </li>
        <li>
           <div class="course-sidebar-list">
-             <input class="edu-check-box" type="checkbox" id="m-32">
-             <label class="edu-check-label" for="m-32">6-7 Hours (32)</label>
-          </div>
-       </li>
-       <li>
-          <div class="course-sidebar-list">
-             <input class="edu-check-box" type="checkbox" id="m-11">
-             <label class="edu-check-label" for="m-11">7-10 Hours (11)</label>
+             <input class="edu-check-box" type="radio" (change)="changeTimeLesson($event)" value ="0"  name="lesson" id="m-11">
+             <label class="edu-check-label" for="m-11">All</label>
           </div>
        </li>
     </ul>

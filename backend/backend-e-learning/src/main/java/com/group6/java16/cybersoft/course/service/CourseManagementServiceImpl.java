@@ -185,11 +185,8 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		int page = rq.getPageCurrent() - 1;
 		int size = rq.getItemPerPage();
 		Pageable pageable = PageRequest.of(page, size,Sort.by("createdAt").ascending());
-//		Page<ELCourse> rp = courseRepository.findAll(pageable);
 		
 		Page<ELCourse> rp  = courseRepository.findCourseClient(QueryCourseClientDTO.buildQueryCourseClientDTO(rq),pageable);
-		
-		
 		
 
 		return new PageResponseModel<>(rp.getNumber() + 1, rp.getTotalPages(),

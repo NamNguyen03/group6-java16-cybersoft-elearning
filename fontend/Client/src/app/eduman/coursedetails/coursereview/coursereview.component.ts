@@ -12,13 +12,11 @@ import { UserService } from 'src/app/share/user/user.service';
 })
 export class CoursereviewComponent implements OnInit {
   public listComments : CommentResponse[] =[];
-  private lessonId : string ="5e10f993-f2bf-4f68-b4c1-92b5d02e4133";
   private userId : string ="";
   private comment: string ="";
 
   constructor(private route: ActivatedRoute,
     private _router: Router,
-    private userService: UserService,
     private feedBackClient: FeedBackClient ) { }
     
 
@@ -32,7 +30,10 @@ export class CoursereviewComponent implements OnInit {
       let id = params["id"];
       this.feedBackClient.findComment(id).subscribe(
         response => 
-         this.listComments = response.content);})
+          this.listComments = response.content
+        
+        ) ;
+      })
      
   }
   writeComment(){
