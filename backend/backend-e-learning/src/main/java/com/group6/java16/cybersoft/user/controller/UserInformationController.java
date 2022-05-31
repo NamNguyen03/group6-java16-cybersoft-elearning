@@ -46,7 +46,8 @@ public class UserInformationController {
 
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
-    @ELPermission("getMyProfile")
+
+    @ELPermission("get my profile")
     @GetMapping("me")
     public Object getMyProfile(){
 
@@ -55,7 +56,7 @@ public class UserInformationController {
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
 
-    @ELPermission("getProfile")  
+    @ELPermission("get profile")  
     @GetMapping("{id}")
     public Object getProfile(@PathVariable("id")String id){
 

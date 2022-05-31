@@ -3,6 +3,7 @@ package com.group6.java16.cybersoft.user.controller;
 import javax.validation.Valid;
 
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
+import com.group6.java16.cybersoft.security.authorization.ELPermission;
 import com.group6.java16.cybersoft.user.dto.UpdatePasswordDTO;
 import com.group6.java16.cybersoft.user.service.UserPasswordService;
 
@@ -23,12 +24,13 @@ public class UserPasswordController {
 	@Autowired
 	private UserPasswordService service;
 
+    @ELPermission("generate token reset password")
 	@PostMapping("token/me")
-	public Object generateToken() {
+	public Object generateTokenResetPassword() {
 		service.generateToken();
 		return ResponseHelper.getResponse("Generate token reset password success", HttpStatus.OK, false);
 	}
-
+	@ELPermission("update password")
 	@PutMapping()
 	public Object updatePassword(@Valid @RequestBody UpdatePasswordDTO rq, BindingResult result) {
 
