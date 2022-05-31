@@ -26,7 +26,6 @@ public class AuthController {
     @Autowired
     private AuthService service;
 
-    @ELPermission("login")
     @PostMapping("login")
     public Object login(@RequestBody @Valid LoginRequestDTO rq, BindingResult result) {
         if (result.hasErrors()) {
@@ -38,7 +37,6 @@ public class AuthController {
         return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
 
-    @ELPermission("register")
     @PostMapping("register")
     public Object register(@RequestBody @Valid RegisterDTO rq, BindingResult result) {
         if (result.hasErrors()) {

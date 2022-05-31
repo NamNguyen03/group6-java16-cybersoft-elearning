@@ -24,13 +24,12 @@ public class UserPasswordController {
 	@Autowired
 	private UserPasswordService service;
 
-    @ELPermission("generate token reset password")
 	@PostMapping("token/me")
 	public Object generateTokenResetPassword() {
 		service.generateToken();
 		return ResponseHelper.getResponse("Generate token reset password success", HttpStatus.OK, false);
 	}
-	@ELPermission("update password")
+
 	@PutMapping()
 	public Object updatePassword(@Valid @RequestBody UpdatePasswordDTO rq, BindingResult result) {
 
