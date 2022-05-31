@@ -28,6 +28,7 @@ import com.group6.java16.cybersoft.course.dto.CourseUpdateDTO;
 import com.group6.java16.cybersoft.course.dto.client.CardCourseReponseClientDTO;
 import com.group6.java16.cybersoft.course.dto.client.SearchCourseRequestClientDTO;
 import com.group6.java16.cybersoft.course.service.CourseManagementService;
+import com.group6.java16.cybersoft.security.authorization.ELPermission;
 
 @RestController
 @RequestMapping("api/v1/courses")
@@ -36,6 +37,7 @@ public class CourseController {
 	@Autowired
 	private CourseManagementService service;
 
+	@ELPermission("create course")
 	@PostMapping
 	public Object createCourse(@Valid @RequestBody CourseCreateDTO rq, BindingResult result) {
 		if (result.hasErrors()) {
@@ -47,6 +49,7 @@ public class CourseController {
 		return ResponseHelper.getResponse(rp, HttpStatus.CREATED, false);
 	}
 
+	@ELPermission("update course")
 	@PutMapping("{id}")
 	public Object updateCourse(@PathVariable("id") String id, @RequestBody CourseUpdateDTO rq) {
 
@@ -55,8 +58,9 @@ public class CourseController {
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
 
+	@ELPermission("search course")
 	@GetMapping()
-	public Object search(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
+	public Object searchCourse(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
 			@RequestParam(value = "itemPerPage", defaultValue = "10") int itemPerPage,
 			@RequestParam(value = "fieldNameSort", required = false) String fieldNameSort,
 			@RequestParam(value = "isIncrementSort", defaultValue = "true") boolean isIncrementSort,
@@ -69,43 +73,45 @@ public class CourseController {
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
 
+	@ELPermission("delete course")
 	@DeleteMapping("{id}")
-	public Object delete(@PathVariable("id") String id) {
+	public Object deleteCourse(@PathVariable("id") String id) {
 
 		service.deleteById(id);
 
 		return ResponseHelper.getResponse("", HttpStatus.OK, false);
 	}
 
+	@ELPermission("get course details")
 	@GetMapping("{id}")
-	public Object getDetailCourse(@PathVariable("id") String id) {
+	public Object getCourseDetails(@PathVariable("id") String id) {
 
 		CourseResponseDTO rp = service.getDetailCourse(id);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
 
+	@ELPermission("update img course")
 	@PostMapping("img")
-	public Object updateImg(@RequestParam(name = "file") MultipartFile file) {
+	public Object updateImgCourse(@RequestParam(name = "file") MultipartFile file) {
 		String urlImg = service.updateImg(file);
 		return ResponseHelper.getResponse(urlImg, HttpStatus.OK, false);
 	}
 
 	@GetMapping("/client")
-	public Object searchHomePage(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
+	public Object searchCourseHomepage(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
 			@RequestParam(value = "itemPerPage", defaultValue = "10") int itemPerPage,
 			@RequestParam(value = "name", required = false) String name,
-			@RequestParam(value = "categories",defaultValue = "NONE") List<String> categories,
+			@RequestParam(value = "categories", defaultValue = "NONE") List<String> categories,
 			@RequestParam(value = "rating", defaultValue = "0") int rating,
-			@RequestParam(value = "fromTime",defaultValue = "1") int fromTime,
+			@RequestParam(value = "fromTime", defaultValue = "1") int fromTime,
 			@RequestParam(value = "toTime", defaultValue = "5") int toTime,
-			@RequestParam(value = "level",defaultValue = "ALL") List<String> level
-			) {
+			@RequestParam(value = "level", defaultValue = "ALL") List<String> level) {
 		System.out.println(fromTime);
-		PageResponseModel<CardCourseReponseClientDTO> rp = service.searchHomePage(new SearchCourseRequestClientDTO(pageCurrent, itemPerPage, name, categories, rating, fromTime,toTime, level) );
+		PageResponseModel<CardCourseReponseClientDTO> rp = service.searchHomePage(new SearchCourseRequestClientDTO(
+				pageCurrent, itemPerPage, name, categories, rating, fromTime, toTime, level));
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
-	
-	
+
 }

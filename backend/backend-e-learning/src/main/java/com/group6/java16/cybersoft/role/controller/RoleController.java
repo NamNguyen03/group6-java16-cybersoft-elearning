@@ -23,6 +23,7 @@ import com.group6.java16.cybersoft.role.dto.RoleDTO;
 import com.group6.java16.cybersoft.role.dto.RoleResponseDTO;
 import com.group6.java16.cybersoft.role.dto.RoleUpdateDTO;
 import com.group6.java16.cybersoft.role.service.RoleService;
+import com.group6.java16.cybersoft.security.authorization.ELPermission;
 
 @RestController
 @RequestMapping("api/v1/roles")
@@ -32,6 +33,7 @@ public class RoleController {
 	@Autowired
 	private RoleService service;
 
+	@ELPermission("create role")
 	@PostMapping
 	public Object createRole(@Valid @RequestBody RoleDTO dto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
@@ -40,9 +42,10 @@ public class RoleController {
 		RoleResponseDTO response = service.createRole(dto);
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
-
+	
+	@ELPermission("search role")
 	@GetMapping
-	public Object search(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
+	public Object searchRole(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
 			@RequestParam(value = "itemPerPage", defaultValue = "10") int itemPerPage,
 			@RequestParam(value = "fieldNameSort", required = false) String fieldNameSort,
 			@RequestParam(value = "isIncrementSort", defaultValue = "true") boolean isIncrementSort,
@@ -57,20 +60,22 @@ public class RoleController {
 				valueFieldNameSearch));
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
-
+	@ELPermission("update role")
 	@PutMapping("{id}")
 	public Object updateRole(@PathVariable("id") String id, @RequestBody RoleUpdateDTO dto) {
 
 		RoleResponseDTO response = service.update(id, dto);
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
-
+	
+	@ELPermission("delete role")
 	@DeleteMapping("{id}")
 	public Object deleteRole(@PathVariable("id") String id) {
 		service.deleteById(id);
 		return ResponseHelper.getResponse("Delete successfully", HttpStatus.OK, false);
 	}
-
+	
+	@ELPermission("add program into role")
 	@PostMapping("{role-id}/{program-id}")
 	public Object addProgramIntoRole(@PathVariable("role-id") String roleId,
 			@PathVariable("program-id") String programId) {
@@ -78,7 +83,8 @@ public class RoleController {
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 
 	}
-
+	
+	@ELPermission("delete program into role")
 	@DeleteMapping("{role-id}/{program-id}")
 	public Object deleteProgramIntoRole(@PathVariable("role-id") String roleId,
 			@PathVariable("program-id") String programId) {
@@ -86,9 +92,10 @@ public class RoleController {
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 
 	}
-
+	
+	@ELPermission("get role details")
 	@GetMapping("{id}")
-	public Object getRoleDetail(@PathVariable("id") String id) {
+	public Object getRoleDetails(@PathVariable("id") String id) {
 
 		RoleResponseDTO rp = service.getRoleDetail(id);
 
