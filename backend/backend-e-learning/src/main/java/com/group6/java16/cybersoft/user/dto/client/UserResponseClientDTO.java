@@ -15,4 +15,5 @@ public class UserResponseClientDTO {
 	private String displayName;
 	
 	private String avatar;
+	
 }

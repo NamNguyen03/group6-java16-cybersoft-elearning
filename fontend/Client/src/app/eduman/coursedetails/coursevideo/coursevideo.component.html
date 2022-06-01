@@ -12,8 +12,7 @@
                         <mat-tab>
                             <div class="portfolio-course-body">
                                 <div style="width: 100%; height: auto">
-                                    <div style="display: grid; gap: 10px; grid-template-columns: auto auto auto;">
-                                        <div *ngFor="let courses of coursesAll;">
+                                        <div *ngFor="let courses of coursesList3;">
                                             <div class="course-wrapper-2 mb-30" style=" width: 350px;height: 250px;">
                                                 <div class="student-course-img">
                                                     <img src="{{courses.img}}"
@@ -94,7 +93,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                
                             </div>
                         </mat-tab>
                     </mat-tab-group>

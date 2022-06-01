@@ -78,7 +78,7 @@ const routes: Routes = [
     component: InstructormainComponent
   },
   {
-    path: 'instructor-profile',
+    path: 'instructor-profile/:username',
     component: InstructorpromainComponent
   },
   {

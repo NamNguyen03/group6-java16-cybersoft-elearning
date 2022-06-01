@@ -14,7 +14,6 @@ export class CourseClient {
 
     searchRequest(pageRequest: PageRequest): Observable<Response<PageResponse<CourseRp>>> {
 
-
         const categories = pageRequest.categories == undefined ? "" : pageRequest.categories;
         const levels =pageRequest.level == undefined ? "" : pageRequest.level;
 

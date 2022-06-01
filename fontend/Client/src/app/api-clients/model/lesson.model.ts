@@ -1,3 +1,4 @@
+import { AuthorRp } from "./author.model";
 import { CourseDetailsReponseClientDTO } from "./course.model";
 
 export class LessonRp{
@@ -43,6 +44,7 @@ export class LessonDetailsResponseClientDTO {
     name?: string;
     description?: string;
     content?: string;
+    author?: AuthorRp;
     course?: CourseDetailsReponseClientDTO;
     constructor(
     ) {
@@ -50,6 +52,7 @@ export class LessonDetailsResponseClientDTO {
         this.name="";
         this.description="";
         this.content="";
+        this.author ={};
         this.course={};
     }
 }

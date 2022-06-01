@@ -4,6 +4,7 @@ import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
+import com.group6.java16.cybersoft.user.dto.client.InstructorCourseClientDTO;
 
 import org.springframework.web.multipart.MultipartFile;
 

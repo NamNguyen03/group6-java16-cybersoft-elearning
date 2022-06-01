@@ -21,6 +21,8 @@ public class CourseDetailsReponseClientDTO {
 	private String courseName;
 
 	private String createdBy;
+	
+	private String lastModifiedBy;
 
 	private String description;
 	

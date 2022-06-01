@@ -5,6 +5,7 @@ import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.security.authorization.ELPermission;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
+import com.group6.java16.cybersoft.user.dto.client.InstructorCourseClientDTO;
 import com.group6.java16.cybersoft.user.service.UserInformationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,47 +21,46 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/users")
 @CrossOrigin(origins = "*")
 public class UserInformationController {
-    
-    @Autowired 
-    private UserInformationService service;
 
-    @ELPermission("searchUser")
-    @GetMapping
-    public Object searchUser(
-        @RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
-        @RequestParam(value = "itemPerPage", defaultValue = "10") int itemPerPage,
-        @RequestParam(value = "fieldNameSort", required = false) String fieldNameSort,
-        @RequestParam(value = "isIncrementSort", defaultValue = "true") boolean isIncrementSort,
-        @RequestParam(value = "fieldNameSearch", required = false) String fieldNameSearch,
-        @RequestParam(value = "valueFieldNameSearch", required = false) String valueFieldNameSearch
-        ){
-        
-        PageResponseModel<UserResponseDTO> rp = service.search(new PageRequestModel(
-			pageCurrent,
-			itemPerPage,
-			fieldNameSort,
-			isIncrementSort,
-			fieldNameSearch,
-			valueFieldNameSearch
-		));
+	@Autowired
+	private UserInformationService service;
 
-        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
-    }
+	@ELPermission("searchUser")
+	@GetMapping
+	public Object searchUser(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
+			@RequestParam(value = "itemPerPage", defaultValue = "10") int itemPerPage,
+			@RequestParam(value = "fieldNameSort", required = false) String fieldNameSort,
+			@RequestParam(value = "isIncrementSort", defaultValue = "true") boolean isIncrementSort,
+			@RequestParam(value = "fieldNameSearch", required = false) String fieldNameSearch,
+			@RequestParam(value = "valueFieldNameSearch", required = false) String valueFieldNameSearch) {
 
-    @GetMapping("me")
-    public Object getMyProfile(){
+		PageResponseModel<UserResponseDTO> rp = service.search(new PageRequestModel(pageCurrent, itemPerPage,
+				fieldNameSort, isIncrementSort, fieldNameSearch, valueFieldNameSearch));
 
-        UserResponseDTO rp = service.getMyProfile();
+		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	}
 
-        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
-    }
+	@GetMapping("me")
+	public Object getMyProfile() {
 
-        
-    @GetMapping("{id}")
-    public Object getProfile(@PathVariable("id")String id){
+		UserResponseDTO rp = service.getMyProfile();
 
-        UserResponseDTO rp = service.getProfile(id);
+		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	}
 
-        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
-    }
+	@GetMapping("{id}")
+	public Object getProfile(@PathVariable("id") String id) {
+
+		UserResponseDTO rp = service.getProfile(id);
+
+		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	}
+
+	@GetMapping("client/{username}")
+	public Object getProfileFindUserName(@PathVariable("username") String username) {
+
+		InstructorCourseClientDTO rp = service.getProfileFindUserName(username);
+
+		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	}
 }

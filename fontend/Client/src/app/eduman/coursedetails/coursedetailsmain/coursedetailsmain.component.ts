@@ -2,9 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { LessonClient } from 'src/app/api-clients/lesson.client';
-import { PageRequest } from 'src/app/api-clients/model/common.model';
-import { CourseDetailsReponseClientDTO, CourseRp } from 'src/app/api-clients/model/course.model';
-import { CardLessonReponseClientDTO, LessonDetailsResponseClientDTO, LessonRp } from 'src/app/api-clients/model/lesson.model';
+import { AuthorRp } from 'src/app/api-clients/model/author.model';
+import { CourseDetailsReponseClientDTO } from 'src/app/api-clients/model/course.model';
+import { CardLessonReponseClientDTO, LessonDetailsResponseClientDTO } from 'src/app/api-clients/model/lesson.model';
 
 @Component({
   selector: 'app-coursedetailsmain',
@@ -27,14 +27,15 @@ export class CoursedetailsmainComponent implements OnInit {
   public listCardLesson2: CardLessonReponseClientDTO[] = [];
   public listCardLessonResult: CardLessonReponseClientDTO[] = [];
   public courseDetail: CourseDetailsReponseClientDTO = new CourseDetailsReponseClientDTO();
+  public author: AuthorRp = new AuthorRp();
   public lessonDetails: LessonDetailsResponseClientDTO = new LessonDetailsResponseClientDTO();
   public isShow = false;
-  public isNotShow = true;
   public isShowLesson = false;
   public isShowContent = false;
   public isHideContent = true;
   public isShow3 = true;
   public isShowAll = false;
+  public isNotShow = true;
   constructor(
     private route: ActivatedRoute,
     private lessonClient: LessonClient,
@@ -59,6 +60,8 @@ export class CoursedetailsmainComponent implements OnInit {
 
           this.lessonDetails = response.content;
 
+          this.author = this.lessonDetails.author == null ? new AuthorRp() : this.lessonDetails.author;
+
           this.courseDetail = this.lessonDetails.course == null ? new CourseDetailsReponseClientDTO() : this.lessonDetails.course;
 
           this.listCardLesson = this.courseDetail.lessons == undefined ? [] : this.courseDetail.lessons;
@@ -74,7 +77,7 @@ export class CoursedetailsmainComponent implements OnInit {
           this.listCardLesson2;
 
 
-          console.log(this.lessonDetails)
+          console.log(this.author)
         }
       )
     });
@@ -88,10 +91,6 @@ export class CoursedetailsmainComponent implements OnInit {
   toggleShowContent() {
     this.isShowContent = !this.isShowContent;
     this.isHideContent = !this.isHideContent;
-  }
-
-  getLessonDetail(id: String): void {
-    this.lessonClient.getInfoLesson(id)
   }
 
 }

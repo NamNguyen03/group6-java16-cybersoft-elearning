@@ -7,6 +7,7 @@ import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
+import com.group6.java16.cybersoft.user.dto.client.InstructorCourseClientDTO;
 import com.group6.java16.cybersoft.user.service.UserManagementService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -83,6 +85,13 @@ public class UserManagementController {
     	return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
     }
     
+//    @GetMapping("client/{createBy}")
+//	public Object getInstructorCourse(@PathVariable("createBy") String createBy) {
+//
+//		InstructorCourseClientDTO rp = service.getInstructorCourse(createBy);
+//
+//		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+//	}
     
     
 }
