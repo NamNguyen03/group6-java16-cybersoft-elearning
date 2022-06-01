@@ -18,7 +18,7 @@ export class InstructormainComponent implements OnInit {
   }
 
   getAllInstructor(): void {
-    this.userClient.searchRequest(new PageRequest(1, 6, 0, 0, [], [])).subscribe(
+    this.userClient.searchRequest(new PageRequest(1, 6,'',0, 0, 0, [], [])).subscribe(
       response => {
         this.userAll = response.content.items || [];
       }

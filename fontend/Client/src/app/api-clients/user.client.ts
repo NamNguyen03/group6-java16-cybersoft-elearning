@@ -40,7 +40,6 @@ export class UserClient {
         params = params.append('itemPerPage', pageRequest.itemPerPage);
         params = params.append('name', pageRequest.name == undefined ? "" : pageRequest.name);
         params = params.append('rating', pageRequest.rating == undefined ? "" : pageRequest.rating);
-        params = params.append('time', pageRequest.time == undefined ? "" : pageRequest.time);
         return this.httpClient.get<Response<PageResponse<UserRp>>>(this._apiEndpoint, { params: params });
     }
     
