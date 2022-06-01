@@ -24,7 +24,7 @@ export class CoursetabtwoComponent implements OnInit {
   }
 
   getDesignCourseRp(): void {
-    this._courseClient.searchRequest(new PageRequest(1, 6, 0, 0, [], ['DESIGN'])).subscribe(
+    this._courseClient.searchRequest(new PageRequest(1, 6, '', 0, 0, 100, [], ['DESIGN'])).subscribe(
       response =>{
         this.coursesDesign = response.content.items || [];
       }
@@ -32,7 +32,7 @@ export class CoursetabtwoComponent implements OnInit {
   }
 
   getDataScienceCourseRp(): void {
-    this._courseClient.searchRequest(new PageRequest(1, 6, 0, 0, [], ['DATA_SCIENCE'])).subscribe(
+    this._courseClient.searchRequest(new PageRequest(1, 6, '', 0, 0, 100, [], ['DATA_SCIENCE'])).subscribe(
       response =>{
         this.coursesDataScience = response.content.items || [];
       }
@@ -40,7 +40,7 @@ export class CoursetabtwoComponent implements OnInit {
   }
 
   getDevelopmentCourseRp(): void{
-    this._courseClient.searchRequest(new PageRequest(1, 6, 0, 0, [], ['DEVELOPMENT'])).subscribe(
+    this._courseClient.searchRequest(new PageRequest(1, 6, '', 0, 0, 100, [], ['DEVELOPMENT'])).subscribe(
       response =>{
         this.coursesDevelopment = response.content.items || [];
 
@@ -49,7 +49,7 @@ export class CoursetabtwoComponent implements OnInit {
   }
 
   getAllCourseRp(): void {
-    this._courseClient.searchRequest(new PageRequest(1, 6, 0, 0, [], [])).subscribe(
+    this._courseClient.searchRequest(new PageRequest(1, 6, '', 0, 0, 100, [], [])).subscribe(
       response => {
         this.coursesAll = response.content.items || [];
       }

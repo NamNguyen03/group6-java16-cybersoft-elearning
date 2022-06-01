@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { FeedBackClient } from 'src/app/api-clients/feedback.client';
 import { LessonClient } from 'src/app/api-clients/lesson.client';
 import { AuthorRp } from 'src/app/api-clients/model/author.model';
-import { CourseDetailsReponseClientDTO } from 'src/app/api-clients/model/course.model';
-import { CardLessonReponseClientDTO, LessonDetailsResponseClientDTO } from 'src/app/api-clients/model/lesson.model';
+import { PageRequest } from 'src/app/api-clients/model/common.model';
+import { CourseDetailsReponseClientDTO, CourseRp } from 'src/app/api-clients/model/course.model';
+import { CommentCreate } from 'src/app/api-clients/model/feedback.model';
+import { CardLessonReponseClientDTO, LessonDetailsResponseClientDTO, LessonRp } from 'src/app/api-clients/model/lesson.model';
 
 @Component({
   selector: 'app-coursedetailsmain',
@@ -13,16 +16,7 @@ import { CardLessonReponseClientDTO, LessonDetailsResponseClientDTO } from 'src/
   encapsulation: ViewEncapsulation.None
 })
 export class CoursedetailsmainComponent implements OnInit {
-  formComment: FormGroup
-  writeReviewActive: boolean = false;
-  writeReview() {
-    if (this.writeReviewActive == false) {
-      this.writeReviewActive = true;
-    }
-    else {
-      this.writeReviewActive = false;
-    }
-  }
+   
   public listCardLesson: CardLessonReponseClientDTO[] = [];
   public listCardLesson2: CardLessonReponseClientDTO[] = [];
   public listCardLessonResult: CardLessonReponseClientDTO[] = [];
@@ -39,13 +33,7 @@ export class CoursedetailsmainComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private lessonClient: LessonClient,
-    private form: FormBuilder,
-
-  ) {
-    this.formComment = this.form.group({
-      comment: [''],
-    })
-  }
+  ) {}
 
 
   ngOnInit(): void {
@@ -75,9 +63,6 @@ export class CoursedetailsmainComponent implements OnInit {
           }
 
           this.listCardLesson2;
-
-
-          console.log(this.author)
         }
       )
     });

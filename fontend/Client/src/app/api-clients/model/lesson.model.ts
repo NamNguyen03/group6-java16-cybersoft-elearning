@@ -15,7 +15,30 @@ export class LessonRp{
 	totalStar:number;
 
 	totalRating:number;
-    constructor(id:string,name:string,content:string,description:string,starAvg:number,totalStar:number,totalRating:number){
+
+    totalOneStar:number;
+
+    totalTwoStar:number;
+
+    totalThreeStar:number;
+
+    totalFourStar:number;
+
+    totalFiveStar:number;
+    constructor(
+        id:string,
+        name:string,
+        content:string,
+        description:string,
+        starAvg:number,
+        totalStar:number,
+        totalRating:number,
+        totalOneStar:number,
+        totalTwoStar:number,
+        totalThreeStar:number,
+        totalFourStar:number,
+        totalFiveStar:number)
+        {
         this.id=id;
         this.name=name;
         this.content=content;
@@ -23,6 +46,11 @@ export class LessonRp{
         this.starAvg=starAvg;
         this.totalStar=totalStar;
         this.totalRating=totalRating;
+        this.totalOneStar=totalOneStar;
+        this.totalTwoStar=totalTwoStar;
+        this.totalThreeStar=totalThreeStar;
+        this.totalFourStar=totalFourStar;
+        this.totalFiveStar=totalFiveStar;
     }
 }
 
@@ -46,6 +74,21 @@ export class LessonDetailsResponseClientDTO {
     content?: string;
     author?: AuthorRp;
     course?: CourseDetailsReponseClientDTO;
+    starAvg:number;
+
+	totalStar:number;
+
+	totalRating:number;
+
+    totalOneStar:number;
+
+    totalTwoStar:number;
+
+    totalThreeStar:number;
+
+    totalFourStar:number;
+
+    totalFiveStar:number;
     constructor(
     ) {
         this.id="";
@@ -54,6 +97,14 @@ export class LessonDetailsResponseClientDTO {
         this.content="";
         this.author ={};
         this.course={};
+        this.starAvg=0;
+        this.totalStar=0;
+        this.totalRating=0;
+        this.totalOneStar=0;
+        this.totalTwoStar=0;
+        this.totalThreeStar=0;
+        this.totalFourStar=0;
+        this.totalFiveStar=0;
     }
 }
 

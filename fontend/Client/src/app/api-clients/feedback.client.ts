@@ -10,6 +10,8 @@ import { Response } from './model/common.model';
 export class FeedBackClient {
     private _apiComment = `${environment.api}comments`;
     private _apiRating = `${environment.api}ratings`;
+    private _apiMyRating = `${environment.api}ratings/me`;
+
     
     constructor(protected httpClient: HttpClient) {}
 
@@ -22,11 +24,14 @@ export class FeedBackClient {
 
     }
 
+    deleteComment(lessonId:string) : Observable<Response<string>>{
+        return this.httpClient.delete<Response<string>>(this._apiComment+"/"+lessonId);
+    }
     writeRating(ratingCreate:RatingCreate): Observable<Response<RatingResponse>>{
         return this.httpClient.post<Response<RatingResponse>>(this._apiRating,ratingCreate);
     }
 
-    myRating(userId:string): Observable<Response<RatingResponse[]>>{
-        return this.httpClient.get<Response<RatingResponse[]>>(this._apiRating+"/"+userId);
+    myRating(lessonId:string): Observable<Response<RatingResponse>>{
+        return this.httpClient.get<Response<RatingResponse>>(this._apiMyRating+"/"+lessonId);
 }
 }

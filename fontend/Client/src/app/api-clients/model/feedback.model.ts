@@ -2,11 +2,9 @@ import { UserCommentResponse } from "./user.model";
 
 export  class CommentCreate{
     content:string;
-    userId:string;
     lessonId:string;
     
-    constructor(content:string,userId:string,lessonId:string){
-        this.userId=userId;
+    constructor(content:string,lessonId:string){
         this.lessonId=lessonId;
         this.content=content;
 
@@ -17,23 +15,21 @@ export class CommentResponse{
     id:string;
     content:string;
     user:UserCommentResponse;
-    timeComment:Date;
-    constructor(id:string,content:string,user:UserCommentResponse,timeComment:Date){
+    createdAt:Date;
+    constructor(id:string,content:string,user:UserCommentResponse,createdAt:Date){
         this.id=id;
         this.content=content;
         this.user=user;
-        this.timeComment=timeComment;
+        this.createdAt=createdAt;
     }
 }
 export  class RatingCreate{
     value:number;
-    userId:string;
     lessonId:string;
     
-    constructor(){
-        this.userId="";
-        this.lessonId="";
-        this.value=5;
+    constructor(value:number,lessonId:string){
+        this.lessonId=lessonId;
+        this.value=value;
 
     }
 }

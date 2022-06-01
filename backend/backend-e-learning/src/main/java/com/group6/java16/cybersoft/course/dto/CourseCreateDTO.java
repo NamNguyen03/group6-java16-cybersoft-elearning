@@ -4,7 +4,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.LevelEnum;
-import com.group6.java16.cybersoft.validation.annotation.UniqueCourseName;
+import com.group6.java16.cybersoft.course.validation.annotation.UniqueCourseName;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

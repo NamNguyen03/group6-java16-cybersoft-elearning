@@ -2,6 +2,7 @@ package com.group6.java16.cybersoft.backedelearning.sercutity.controller;
 
 import com.google.gson.Gson;
 import com.group6.java16.cybersoft.security.dto.LoginRequestDTO;
+import com.group6.java16.cybersoft.security.dto.RegisterDTO;
 import com.group6.java16.cybersoft.security.service.AuthService;
 import com.group6.java16.cybersoft.user.repository.ELUserRepository;
 
@@ -12,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,7 +41,7 @@ public class AuthControllerIntegrationTest {
         mvc.perform(post("/api/v1/auth/login")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
-            .andDo(print())
+            
             .andExpect(status().isBadRequest());
     }
 
@@ -56,7 +56,36 @@ public class AuthControllerIntegrationTest {
         mvc.perform(post("/api/v1/auth/login")
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
-            .andDo(print())
+            
             .andExpect(status().isOk());
+    }
+    
+    @Test
+    public void whenRegisterDTOInvalidIsUsedToRegister_thenReturnStatus400() throws Exception{
+    	RegisterDTO rq = new RegisterDTO();
+    	rq.setPassword("123");
+    	
+    	Gson gson = new Gson();
+        String json = gson.toJson(rq);
+        
+        mvc.perform(post("/api/v1/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                
+                .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    public void whenRegisterDTOValidIsUsedToRegister_thenReturnStatus400() throws Exception{
+    	RegisterDTO rq = new RegisterDTO("nam123user","1234566","Nam Nguyen","namTest@gmail.com","Nam","Nguyen");
+    	
+    	Gson gson = new Gson();
+        String json = gson.toJson(rq);
+        
+        mvc.perform(post("/api/v1/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                
+                .andExpect(status().isOk());
     }
 }

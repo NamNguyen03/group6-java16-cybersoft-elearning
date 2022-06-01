@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.group6.java16.cybersoft.common.exception.BusinessException;
@@ -61,19 +65,21 @@ public class CommentServiceImpl implements CommentService {
 		ELLesson lesson = lessonRepository.findById(UUID.fromString(idLesson))
 				.orElseThrow(() -> new BusinessException(errorLessonNotFound));
 		String userCurrent = UserPrincipal.getUsernameCurrent();
-		List<ELComment> response = null;
+		Page<ELComment> response = null;
+
+		Pageable page = PageRequest.of(0, 100, Sort.by("createdAt").descending());
 
 		UUID idCourse = lesson.getCourse().getId();
 
 		if (userCurrent.equals(lesson.getCourse().getCreatedBy())) {
-			response = repository.findByIdLesson(UUID.fromString(idLesson));
+			response = repository.findByIdLesson(UUID.fromString(idLesson), page);
 		}
 
 		if (userCurrent.equals(null)) {
-			response = repository.findByIdLesson(UUID.fromString(idLesson), idCourse);
+			response = repository.findByIdLesson(UUID.fromString(idLesson), idCourse, page);
 		}
 		if (!userCurrent.equals(lesson.getCourse().getCreatedBy()) && !userCurrent.equals(null)) {
-			response = repository.findByIdLessonAndUserCurrent(UUID.fromString(idLesson), idCourse, userCurrent);
+			response = repository.findByIdLessonAndUserCurrent(UUID.fromString(idLesson), idCourse, userCurrent, page);
 		}
 
 		return response.stream().map(CommentMapper.INSTANCE::toResponseDTO).collect(Collectors.toList());
@@ -117,7 +123,12 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public void delete(String commentId) {
 		ELComment comment = getById(commentId);
-		repository.delete(comment);
+
+		String user = UserPrincipal.getUsernameCurrent();
+
+		if (user.equals(comment.getCreatedBy()) || user.equals(comment.getLesson().getCreatedBy())) {
+			repository.delete(comment);
+		}
 	}
 
 	private ELComment getById(String id) {

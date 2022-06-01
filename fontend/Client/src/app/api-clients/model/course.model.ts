@@ -11,11 +11,6 @@ export class CourseCreate {
         this.courseTime = courseTime;
         this.description = description;
     }
-    // starAVG: number;
-    // img : string;
-    // level : string;
-    // skills: string []=[];
-    // category: string;
 
 
 }

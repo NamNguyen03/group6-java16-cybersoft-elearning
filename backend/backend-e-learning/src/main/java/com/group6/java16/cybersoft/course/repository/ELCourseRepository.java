@@ -34,7 +34,7 @@ public interface ELCourseRepository extends JpaRepository<ELCourse, UUID> {
 			+ " and u.category in(:#{#rq.categories})"
 			+ " and u.level in (:#{#rq.levels})"
 			+ " and u.starAvg  >= :#{#rq.fromRating} AND u.starAvg < :#{#rq.toRating}"
-			+ " and u.courseTime >= :#{#rq.fromTime} and u.courseTime < :#{#rq.toTime}")
+			+ " and u.courseTime >= :#{#rq.fromTime} AND u.courseTime < :#{#rq.toTime}")
 	Page<ELCourse> findCourseClient(@Param("rq")QueryCourseClientDTO queryCourseClientDTO, Pageable pageable);
 	
 	@Query(value = "Select u from ELCourse u where u.createdBy = :username ")

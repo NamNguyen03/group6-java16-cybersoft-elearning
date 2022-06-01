@@ -97,7 +97,7 @@
                                                                 [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=4) ? '' : 'gray'}"></i>
                                                             <i class="fas fa-star"
                                                                 [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=5) ? '' : 'gray'}"></i>
-                                                            <span>{{course.starAvg }}({{course.totalRating }})</span>
+                                                            <span>{{course.starAvg?.toFixed(2) }}({{course.totalRating }})</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -148,7 +148,7 @@
                                                                 </ul>
                                                             </div>
                                                             <div class="course-action">
-                                                                <a [routerLink]="['/course-details', course.idFirstLesson] "
+                                                                <a [routerLink]="['/course-details', course.idFirstLesson]"
                                                                     class="view-details-btn">View Details</a>
                                                                 <button class="wishlist-btn"><i
                                                                         class="flaticon-like"></i></button>
@@ -194,7 +194,7 @@
                                                                 [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=4) ? '' : 'gray'}"></i>
                                                             <i class="fas fa-star"
                                                                 [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=5) ? '' : 'gray'}"></i>
-                                                            <span>{{course.starAvg }}({{course.totalRating }})</span>
+                                                            <span>{{course.starAvg?.toFixed(2) }}({{course.totalRating }})</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -291,7 +291,7 @@
                                                                 [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=4) ? '' : 'gray'}"></i>
                                                             <i class="fas fa-star"
                                                                 [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=5) ? '' : 'gray'}"></i>
-                                                            <span>{{course.starAvg }}({{course.totalRating }})</span>
+                                                            <span>{{course.starAvg?.toFixed(2) }}({{course.totalRating }})</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -388,7 +388,7 @@
                                                                 [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=4) ? '' : 'gray'}"></i>
                                                             <i class="fas fa-star"
                                                                 [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=5) ? '' : 'gray'}"></i>
-                                                            <span>{{course.starAvg }}({{course.totalRating }})</span>
+                                                            <span>{{course.starAvg?.toFixed(2) }}({{course.totalRating }})</span>
                                                         </div>
                                                     </div>
                                                 </div>

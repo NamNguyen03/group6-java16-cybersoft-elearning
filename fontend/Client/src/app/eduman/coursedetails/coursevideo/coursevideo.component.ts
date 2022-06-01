@@ -24,7 +24,7 @@ export class CoursevideoComponent implements OnInit {
 
 
   getAllCourseRp(): void {
-    this._courseClient.searchRequest(new PageRequest(1, 6, 0, 0, [], [])).subscribe(
+    this._courseClient.searchRequest(new PageRequest(1, 6, '', 0, 0,100, [], [])).subscribe(
       response => {
         
         this.coursesAll = response.content.items || [];

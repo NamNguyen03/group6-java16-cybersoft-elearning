@@ -22,7 +22,8 @@ export class CourseClient {
         params = params.append('itemPerPage', pageRequest.itemPerPage);
         params = params.append('name', pageRequest.name == undefined ? "" : pageRequest.name);
         params = params.append('rating', pageRequest.rating == undefined ? "" : pageRequest.rating);
-        params = params.append('time', pageRequest.time == undefined ? "" : pageRequest.time);
+        params = params.append('fromTime', pageRequest.fromTime == undefined ? "" : pageRequest.fromTime);
+        params = params.append('toTime', pageRequest.toTime == undefined ? "" : pageRequest.toTime);
         for (const categorie of categories) {
             params = params.append('categories', categorie);
         }
