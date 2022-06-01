@@ -1,5 +1,3 @@
-import { LessonRp } from "./lesson.model";
-
 import { CardLessonReponseClientDTO } from "./lesson.model";
 
 export class CourseCreate {
@@ -58,6 +56,7 @@ export class CourseDetailsReponseClientDTO {
     courseName?: string;
     category?: string;
     courseTime?: number;
+    lastModifiedBy?:String;
     img?: string;
     starAvg?: number;
     description?: string;
@@ -80,6 +79,7 @@ export class CourseDetailsReponseClientDTO {
         this.starAvg = 0;
         this.description = "";
         this.createdBy = "";
+        this.lastModifiedBy = ""
         this.totalRating = 0;
         this.createdAt ="";
         this.level = "";

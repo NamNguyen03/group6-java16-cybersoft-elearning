@@ -11,43 +11,38 @@
                 <div class="course-detalis-wrapper mb-30">
                     <div class="course-heading mb-20">
                         <h2>Course: {{courseDetail.courseName}}</h2>
-                        <div class="course-star">
-                            <ul>
-                                <li><i class="fas fa-star"></i></li>
-                            </ul>
-                            <ul>
-                                <li><i class="fas fa-star"></i></li>
-                            </ul>
-                            <ul>
-                                <li><i class="fas fa-star"></i></li>
-                            </ul>
-                            <ul>
-                                <li><i class="fas fa-star"></i></li>
-                            </ul>
-                            <ul>
-                                <li><i class="fal fa-star"></i></li>
-                            </ul>
-                            <span>(254 reviews)</span>
+                        <div class="course-icon">
+                            <i class="fas fa-star"
+                                [ngStyle]="{'color' :  ( courseDetail.starAvg === undefined ||courseDetail.starAvg>=1) ? '' : 'gray'}"></i>
+                            <i class="fas fa-star"
+                                [ngStyle]="{'color' :  ( courseDetail.starAvg === undefined ||courseDetail.starAvg>=2) ? '' : 'gray'}"></i>
+                            <i class="fas fa-star"
+                                [ngStyle]="{'color' :  ( courseDetail.starAvg === undefined ||courseDetail.starAvg>=3) ? '' : 'gray'}"></i>
+                            <i class="fas fa-star"
+                                [ngStyle]="{'color' :  ( courseDetail.starAvg === undefined ||courseDetail.starAvg>=4) ? '' : 'gray'}"></i>
+                            <i class="fas fa-star"
+                                [ngStyle]="{'color' :  ( courseDetail.starAvg === undefined ||courseDetail.starAvg>=5) ? '' : 'gray'}"></i>
+                            <span>{{courseDetail.starAvg }}({{courseDetail.totalRating}} reviews)</span>
                         </div>
                     </div>
                     <div class="course-detelis-meta">
                         <div class="course-meta-wrapper border-line-meta">
                             <div class="course-meta-img">
-                                <a [routerLink]="['/instructor-profile']"><img src="{{courseDetail.img}}"
+                                <a [routerLink]="['/instructor-profile']"><img src="{{author.avatar}}"
                                         alt="course-meta"></a>
                             </div>
                             <div class="course-meta-text">
                                 <span>Created By</span>
-                                <h6><a [routerLink]="['/instructor-profile']">{{courseDetail.createdBy}}</a></h6>
+                                <h6><a [routerLink]="['/instructor-profile', author.username] ">{{author.username}}</a></h6>
                             </div>
                         </div>
                         <div class="course-Enroll border-line-meta">
-                            <p>Total Rating</p>
-                            <span>{{courseDetail.totalRating}}</span>
+                            <p>Create Date</p>
+                            <span>{{courseDetail.createdAt}}</span>
                         </div>
                         <div class="course-update border-line-meta">
-                            <p>Course Time</p>
-                            <span>{{courseDetail.courseTime}}</span>
+                            <p>Lessson</p>
+                            <span>{{courseDetail.courseTime}} Lesson</span>
                         </div>
                         <div class="course-category">
                             <p>Category</p>
@@ -96,8 +91,8 @@
                     <div class="course-learn-wrapper" style="margin-top:50px">
                         <div class="course-learn">
                             <div class="course-video-thumb w-img" style="margin-left: 200px;">
-                                <img src="assets/img/shape/image-removebg-preview (2).png"
-                                    style="width:100px ;height: 100px;margin-left: 120px;" alt="image not found">
+                                <img src="assets/img/shape/image-removebg-preview (3).png"
+                                    style="width:300px ;height: 100px;margin-left: 25px;" alt="image not found">
                                 <h3 style="margin-left: 87px;">Lesson Details </h3>
 
                             </div>
@@ -108,7 +103,7 @@
                                             <li>Name: {{lessonDetails.name}}</li>
                                             <li>Description: {{lessonDetails.description}}</li>
                                             <li>Content: </li>
-                                            <div style="margin-left:20px" *ngIf="isShowContent"
+                                            <div style="margin-left:20px" *ngIf="isShowContent" style="width:750px;"
                                                 [innerHTML]="lessonDetails.content">
                                             </div>
                                         </ul>
@@ -215,8 +210,11 @@
                                                     <div class="course-wrapper-2 mb-30"
                                                         style=" width: 350px;height: 250px;">
                                                         <div class="student-course-img">
-                                                            <img src="assets/img/shape/Lessons-Learned.png"
-                                                                alt="image not found" style="height:170px;">
+                                                            <a [routerLink]="['/course-details',lesson.id] "
+                                                                >
+                                                                <img src="assets/img/shape/Lessons-Learned.png"
+                                                                    alt="image not found" style="height:170px;">
+                                                            </a>
                                                         </div>
                                                         <div class="student-course-footer">
                                                             <div class="student-course-linkter">

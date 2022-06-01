@@ -1,13 +1,13 @@
 <!-- cart mini area start -->
 <div class="cartmini__area">
-    <div class="cartmini__wrapper" [class.opened]="sidebarCartActive">
-       <div class="cartmini__title">
-          <h4>Shopping cart</h4>
-       </div>
-       <div class="cartmini__close">
-          <button type="button" class="cartmini__close-btn" (click)="cartclick()"><i class="fal fa-times"></i></button>
-       </div>
-       <div class="cartmini__widget">
+   <div class="cartmini__wrapper" [class.opened]="sidebarCartActive">
+      <div class="cartmini__title">
+         <h4>Shopping cart</h4>
+      </div>
+      <div class="cartmini__close">
+         <button type="button" class="cartmini__close-btn" (click)="cartclick()"><i class="fal fa-times"></i></button>
+      </div>
+      <div class="cartmini__widget">
          <div class="cartmini__inner">
             <ul>
                <li>
@@ -38,9 +38,9 @@
                   <div class="cartmini__content">
                      <h5><a href="#">Art of Not Giving</a></h5>
                      <div class="product-quantity mt-10 mb-10">
-                       <span class="cart-minus" (click)="counter('minus')">-</span>
-                       <p class="cart-input">{{count}}</p>
-                       <span class="cart-plus" (click)="counter('add')">+</span>
+                        <span class="cart-minus" (click)="counter('minus')">-</span>
+                        <p class="cart-input">{{count}}</p>
+                        <span class="cart-plus" (click)="counter('add')">+</span>
                      </div>
                      <div class="product__sm-price-wrapper">
                         <span class="product__sm-price">$12.00</span>
@@ -57,9 +57,9 @@
                   <div class="cartmini__content">
                      <h5><a href="#">Attract Women</a></h5>
                      <div class="product-quantity mt-10 mb-10">
-                       <span class="cart-minus" (click)="counter2('minus')">-</span>
-                       <p class="cart-input">{{count2}}</p>
-                       <span class="cart-plus" (click)="counter2('add')">+</span>
+                        <span class="cart-minus" (click)="counter2('minus')">-</span>
+                        <p class="cart-input">{{count2}}</p>
+                        <span class="cart-plus" (click)="counter2('add')">+</span>
                      </div>
                      <div class="product__sm-price-wrapper">
                         <span class="product__sm-price">$42.00</span>
@@ -76,32 +76,33 @@
             </div>
          </div>
       </div>
-    </div>
- </div>
- <div class="body-overlay" [class.opened]="sidebarCartActive" (click)="cartclick()"></div>
- <div class="body-overlay" [class.opened]="sidebarInfoActive" (click)="infoclick()"></div>
- <!-- cart mini area end -->
+   </div>
+</div>
+<div class="body-overlay" [class.opened]="sidebarCartActive" (click)="cartclick()"></div>
+<div class="body-overlay" [class.opened]="sidebarInfoActive" (click)="infoclick()"></div>
+<!-- cart mini area end -->
 
- <!-- side toggle start -->
+<!-- side toggle start -->
 
- <div class="fix">
-    <div class="side-info" [class.opened]="sidebarInfoActive">
-        <div class="side-info-content">
-            <div class="offset-widget offset-logo mb-40">
-                <div class="row align-items-center">
-                    <div class="col-9">
-                        <a [routerLink]="['/']">
-                            <img src="assets/img/logo/logo-black.png" alt="Logo">
-                        </a>
-                    </div>
-                    <div class="col-3 text-end"><button class="side-info-close" (click)="infoclick()"><i class="fal fa-times"></i></button>
-                    </div>
-                </div>
+<div class="fix">
+   <div class="side-info" [class.opened]="sidebarInfoActive">
+      <div class="side-info-content">
+         <div class="offset-widget offset-logo mb-40">
+            <div class="row align-items-center">
+               <div class="col-9">
+                  <a [routerLink]="['/']">
+                     <img src="assets/img/logo/logo-black.png" alt="Logo">
+                  </a>
+               </div>
+               <div class="col-3 text-end"><button class="side-info-close" (click)="infoclick()"><i
+                        class="fal fa-times"></i></button>
+               </div>
             </div>
+         </div>
 
-            <app-mobilemenu></app-mobilemenu>
+         <app-mobilemenu></app-mobilemenu>
 
-            <!-- <div class="offset-widget offset_searchbar mb-30">
+         <!-- <div class="offset-widget offset_searchbar mb-30">
                 <div class="menu-search position-relative ">
                     <form action="#" class="filter-search-input">
                         <input type="text" placeholder="Search keyword">
@@ -116,137 +117,136 @@
                     <i class="fal fa-map-marker-alt"></i><span>3rd Avenue, San Francisco</span>
                 </div>
             </div> -->
-            <div class="offset-widget button mb-20 d-block" *ngIf="!isLogin" >
-                <a class="edu-four-btn" href="javascript:void(0)" (click)="signinclick()">Login</a>
-            </div>
-            <div class="offset-widget button mb-20 d-block" *ngIf="isLogin" >
-               <a class="edu-four-btn" href="javascript:void(0)"  (click)="logoutClick()">Logout</a>
-           </div>
-        </div>
-    </div>
+         <div class="offset-widget button mb-20 d-block" *ngIf="!isLogin">
+            <a class="edu-four-btn" href="javascript:void(0)" (click)="signinclick()">Login</a>
+         </div>
+         <div class="offset-widget button mb-20 d-block" *ngIf="isLogin">
+            <a class="edu-four-btn" href="javascript:void(0)" (click)="logoutClick()">Logout</a>
+         </div>
+      </div>
+   </div>
 </div>
 
 <div class="offcanvas-overlay" [class.open-signin]="signInActive" (click)="signinclick()"></div>
-<div class="offcanvas-overlay" [class.open-signup]="signUpActive"  (click)="signupclick()"></div>
- <div class="offcanvas-overlay-white"></div>
- <!-- side toggle end -->
+<div class="offcanvas-overlay" [class.open-signup]="signUpActive" (click)="signupclick()"></div>
+<div class="offcanvas-overlay-white"></div>
+<!-- side toggle end -->
 
 
- <header>
-    <!-- header-top start--> 
-    <div class="header-top-area d-none d-lg-block">
-        <div class="container-fluid">
-            <div class="header-top-inner">
-                <div class="row align-items-center">
-                    <div class="col-xl-8 col-lg-8">
-                        <div class="header-top-icon">
-                            <a href="tel:(555)674890556"><i class="fas fa-phone"></i>(555) 674 890 556</a>
-                            <a href="mailto:info@example.com"><i class="fal fa-envelope"></i>info@example.com</a>
-                            <i class="fal fa-map-marker-alt"></i><span>3rd Avenue, San Francisco</span>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4">
-                        <div class="header-top-login d-flex f-right">
-                            <!-- <div class="header-user-login p-relative">
+<header>
+   <!-- header-top start-->
+   <div class="header-top-area d-none d-lg-block">
+      <div class="container-fluid">
+         <div class="header-top-inner">
+            <div class="row align-items-center">
+               <div class="col-xl-8 col-lg-8">
+                  <div class="header-top-icon">
+                     <a href="tel:(555)674890556"><i class="fas fa-phone"></i>(555) 674 890 556</a>
+                     <a href="mailto:info@example.com"><i class="fal fa-envelope"></i>info@example.com</a>
+                     <i class="fal fa-map-marker-alt"></i><span>3rd Avenue, San Francisco</span>
+                  </div>
+               </div>
+               <div class="col-xl-4 col-lg-4">
+                  <div class="header-top-login d-flex f-right">
+                     <!-- <div class="header-user-login p-relative">
                                 <span><a class="user-btn-sign-up" href="javascript:void(0)" (click)="signupclick()">Login / Register</a></span>
                             </div> -->
-                            <div class="header-social">
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-vimeo-v"></i></a>
-                                <a href="#"><i class="fab fa-linkedin"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                     <div class="header-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-vimeo-v"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
-    <!-- .header-are-start -->
-    <div class="header-area-2 sticky-header" [ngClass]="{'mat-elevation-z5' : true, 'sticky' : isSticky}">
-        <div class="container-fluid">
-            <div class="header-main-wrapper">
-                <div class="row align-items-center">
-                    <div class="col-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                        <div class="header-logo">
-                            <a [routerLink]="['/']"><img src="assets/img/logo/logo-black.png" alt="img"></a>
-                        </div>
-                    </div>
-                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
-                        <div class="header-main-right  d-flex justify-content-end">
-                            <div class="main-menu mr-30 main-menu-lg-block">
-                                <nav id="mobile-menu">
-                                    <ul>
-                                        <li><a [routerLink]="['/']">Home</a>
-                                        </li>
-                                        <li ><a [routerLink]="['/course-2']">Course</a>
-                                            <!-- <ul class="sub-menu">
+         </div>
+      </div>
+   </div>
+   <!-- .header-are-start -->
+   <div class="header-area-2 sticky-header" [ngClass]="{'mat-elevation-z5' : true, 'sticky' : isSticky}">
+      <div class="container-fluid">
+         <div class="header-main-wrapper">
+            <div class="row align-items-center">
+               <div class="col-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                  <div class="header-logo">
+                     <a [routerLink]="['/']"><img src="assets/img/logo/logo-black.png" alt="img"></a>
+                  </div>
+               </div>
+               <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                  <div class="header-main-right  d-flex justify-content-end">
+                     <div class="main-menu mr-30 main-menu-lg-block">
+                        <nav id="mobile-menu">
+                           <ul>
+                              <li><a [routerLink]="['/']">Home</a>
+                              </li>
+                              <li><a [routerLink]="['/course-2']">Course</a>
+                                 <!-- <ul class="sub-menu">
                                                 <li><a [routerLink]="['/course']">Course 1</a></li>
                                                 <li><a [routerLink]="['/course-2']">Course 2</a></li>
                                                 <li><a [routerLink]="['/course-3']">Course 3</a></li>
                                                 <li><a [routerLink]="['/course-4']">Course 4</a></li>
                                                 <li><a [routerLink]="['/course-details']">course-details</a></li>
                                             </ul> -->
-                                        </li>
-                                        <li class="menu-item-has-children"><a [routerLink]="['/shop']">shop</a>
-                                            <ul class="sub-menu">
-                                                <li><a [routerLink]="['/shop']">shop</a></li>
-                                                <li><a [routerLink]="['/shop-details']">shop details</a></li>
-                                                <li><a [routerLink]="['/wishlist']">wishlist</a></li>
-                                                <li><a [routerLink]="['/cart']">cart</a></li>
-                                                <li><a [routerLink]="['/checkout']">checkout</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="menu-item-has-children"><a href="#!">Pages</a>
-                                            <ul class="sub-menu">
-                                                <li><a [routerLink]="['/about']">About</a></li>
-                                                <li class="menu-item-has-children"><a
-                                                        [routerLink]="['/instructor']">instructor</a>
-                                                    <ul class="sub-menu">
-                                                        <li><a [routerLink]="['/instructor']">instructor</a></li>
-                                                        <li><a [routerLink]="['/instructor-profile']">instructor profile</a>
-                                                        </li>
-                                                        <li><a [routerLink]="['/become-instructor']">become instructor</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="menu-item-has-children"><a [routerLink]="['/zoom-class']">zoom
-                                                        class</a>
-                                                    <ul class="sub-menu">
-                                                        <li><a [routerLink]="['/zoom-class']">zoom class</a></li>
-                                                        <li><a [routerLink]="['/zoom-class-detalis']">zoom class details</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="menu-item-has-children"><a [routerLink]="['/blog']">blog</a>
-                                                    <ul class="sub-menu">
-                                                        <li><a [routerLink]="['/blog']">blog</a></li>
-                                                        <li><a [routerLink]="['/blog-details']">blog details</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="menu-item-has-children"><a [routerLink]="['/event']">event</a>
-                                                    <ul class="sub-menu">
-                                                        <li><a [routerLink]="['/event']">event</a></li>
-                                                        <li><a [routerLink]="['/event-details']">event details</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a [routerLink]="['/membership']">membership plan</a></li>
-                                                <li class="menu-item-has-children"><a [routerLink]="['/faq-page']">FAQ
-                                                        page</a>
-                                                    <ul class="sub-menu">
-                                                        <li><a [routerLink]="['/faq-page']">FAQ page</a></li>
-                                                        <li><a [routerLink]="['/faq-details']">FAQ details</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a [routerLink]="['/404-page']">404 pages</a></li>
-                                                <li><a [routerLink]="['/contact']">contact</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                            <div class="header-btn">
-                                <!-- <div class="cart-wrapper mr-45">
+                              </li>
+                              <!-- <li class="menu-item-has-children"><a [routerLink]="['/shop']">shop</a>
+                                 <ul class="sub-menu">
+                                    <li><a [routerLink]="['/shop']">shop</a></li>
+                                    <li><a [routerLink]="['/shop-details']">shop details</a></li>
+                                    <li><a [routerLink]="['/wishlist']">wishlist</a></li>
+                                    <li><a [routerLink]="['/cart']">cart</a></li>
+                                    <li><a [routerLink]="['/checkout']">checkout</a></li>
+                                 </ul>
+                              </li> -->
+                              <!-- <li class="menu-item-has-children"><a href="#!">Pages</a>
+                                 <ul class="sub-menu">
+                                    <li><a [routerLink]="['/about']">About</a></li>
+                                    <li class="menu-item-has-children"><a [routerLink]="['/instructor']">instructor</a>
+                                       <ul class="sub-menu">
+                                          <li><a [routerLink]="['/instructor']">instructor</a></li>
+                                          <li><a [routerLink]="['/instructor-profile']">instructor profile</a>
+                                          </li>
+                                          <li><a [routerLink]="['/become-instructor']">become instructor</a>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                    <li class="menu-item-has-children"><a [routerLink]="['/zoom-class']">zoom
+                                          class</a>
+                                       <ul class="sub-menu">
+                                          <li><a [routerLink]="['/zoom-class']">zoom class</a></li>
+                                          <li><a [routerLink]="['/zoom-class-detalis']">zoom class details</a>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                    <li class="menu-item-has-children"><a [routerLink]="['/blog']">blog</a>
+                                       <ul class="sub-menu">
+                                          <li><a [routerLink]="['/blog']">blog</a></li>
+                                          <li><a [routerLink]="['/blog-details']">blog details</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="menu-item-has-children"><a [routerLink]="['/event']">event</a>
+                                       <ul class="sub-menu">
+                                          <li><a [routerLink]="['/event']">event</a></li>
+                                          <li><a [routerLink]="['/event-details']">event details</a></li>
+                                       </ul>
+                                    </li>
+                                    <li><a [routerLink]="['/membership']">membership plan</a></li>
+                                    <li class="menu-item-has-children"><a [routerLink]="['/faq-page']">FAQ
+                                          page</a>
+                                       <ul class="sub-menu">
+                                          <li><a [routerLink]="['/faq-page']">FAQ page</a></li>
+                                          <li><a [routerLink]="['/faq-details']">FAQ details</a></li>
+                                       </ul>
+                                    </li>
+                                    <li><a [routerLink]="['/404-page']">404 pages</a></li>
+                                    <li><a [routerLink]="['/contact']">contact</a></li>
+                                 </ul>
+                              </li> -->
+                           </ul>
+                        </nav>
+                     </div>
+                     <div class="header-btn">
+                        <!-- <div class="cart-wrapper mr-45">
                                     <a href="javascript:void(0);" class="cart-toggle-btn" (click)="cartclick()">
                                         <div class="header__cart-icon p-relative">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="19.988" height="19.988"
@@ -267,42 +267,43 @@
                                         </div>
                                     </a>
                                 </div> -->
-                                <a *ngIf="!isLogin" class="edu-four-btn d-none d-lg-block" href="javascript:void(0)" (click)="signinclick()">Login</a>
-                                <div *ngIf="isLogin" style="border-radius: 25px; width: 50px; height: 50px; cursor: pointer;">
-                                   <img height="50px"  [src]="getUrlAvatar()"/> 
-                                </div>
-                                <div class="menu-bar ml-20">
-                                    <a class="side-toggle header-2" href="javascript:void(0)" (click)="infoclick()">
-                                        <div class="bar-icon">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
+                        <a *ngIf="!isLogin" class="edu-four-btn d-none d-lg-block" href="javascript:void(0)"
+                           (click)="signinclick()">Login</a>
+                        <div *ngIf="isLogin" style="border-radius: 25px; width: 50px; height: 50px; cursor: pointer;">
+                           <img height="50px" [src]="getUrlAvatar()" />
                         </div>
-                    </div>
-                </div>
+                        <div class="menu-bar ml-20">
+                           <a class="side-toggle header-2" href="javascript:void(0)" (click)="infoclick()">
+                              <div class="bar-icon">
+                                 <span></span>
+                                 <span></span>
+                                 <span></span>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
-    <!-- header-area-end -->
+         </div>
+      </div>
+   </div>
+   <!-- header-area-end -->
 </header>
 
 
- <!-- sigin-area sart-->
- <div class="signin-area" [class.open]="signInActive">
-    <div class="signin-area-wrapper">
-       <div class="signup-box text-center">
-          <div class="signup-text">
-             <h3>Sign in</h3>
-          </div>
-          <div class="signup-thumb">
-             <img src="assets/img/sing-up/sign-up.png" alt="image not found">
-          </div>
-       </div>
-       <div class="signup-form-wrapper">
+<!-- sigin-area sart-->
+<div class="signin-area" [class.open]="signInActive">
+   <div class="signin-area-wrapper">
+      <div class="signup-box text-center">
+         <div class="signup-text">
+            <h3>Sign in</h3>
+         </div>
+         <div class="signup-thumb">
+            <img src="assets/img/sing-up/sign-up.png" alt="image not found">
+         </div>
+      </div>
+      <div class="signup-form-wrapper">
          <form [formGroup]="loginForm" novalidate="">
             <div class="signup-wrapper">
                <input type="text" placeholder="Username" formControlName="userName">
@@ -311,145 +312,147 @@
                <input type="password" placeholder="Password" formControlName="password">
             </div>
          </form>
-          <div class="signup-action">
-             <div class="course-sidebar-list">
-                <input class="signup-checkbo" type="checkbox" id="sing-in">
-                <label class="sign-check" for="sing-in"><span>Remember me</span></label>
-             </div>
-          </div>
-          <div class="sing-buttom mb-20" (click)="login()">
-             <button class="sing-btn" >Login</button>
-          </div>
-          <div class="registered wrapper">
-             <div class="not-register">
-                <span>Not registered?</span><span><a href="javascript:void(0)" (click)="signupclick()">Register</a></span>
-             </div>
-             <div class="forget-password">
-                <a href="javascript:void(0)">Forgot password?</a>
-             </div>
-          </div>
-          <div class="sign-social text-center">
-             <span>Or Sign- in with</span>
-          </div>
-          <div class="sign-social-icon">
-             <div class="sign-facebook">
-                <svg xmlns="http://www.w3.org/2000/svg" width="9.034" height="18.531" viewBox="0 0 9.034 18.531">
-                   <path id="Path_212" data-name="Path 212"
-                      d="M183.106,757.2v-1.622c0-.811.116-1.274,1.39-1.274h1.621v-3.127h-2.664c-3.243,0-4.285,1.506-4.285,4.169v1.969h-2.085v3.127h1.969v9.265h4.054v-9.265h2.664l.347-3.243Z"
-                      transform="translate(-177.083 -751.176)" fill="#2467ec" />
-                </svg>
-                <a href="#">Facebook</a>
-             </div>
-             <div class="sign-gmail">
-                <svg xmlns="http://www.w3.org/2000/svg" width="21.692" height="16.273" viewBox="0 0 21.692 16.273">
-                   <g id="gmail" transform="translate(0 -63.953)">
-                      <path id="Path_8685" data-name="Path 8685"
-                         d="M1.479,169.418H4.93v-8.381l-2.26-3.946L0,157.339v10.6a1.479,1.479,0,0,0,1.479,1.479Z"
-                         transform="translate(0 -89.192)" fill="#0085f7" />
-                      <path id="Path_8686" data-name="Path 8686"
-                         d="M395.636,169.418h3.451a1.479,1.479,0,0,0,1.479-1.479v-10.6l-2.666-.248-2.264,3.946v8.381Z"
-                         transform="translate(-378.874 -89.192)" fill="#00a94b" />
-                      <path id="Path_8687" data-name="Path 8687"
-                         d="M349.816,65.436,347.789,69.3l2.027,2.541,4.93-3.7V66.176A2.219,2.219,0,0,0,351.2,64.4Z"
-                         transform="translate(-333.054)" fill="#ffbc00" />
-                      <path id="Path_8688" data-name="Path 8688"
-                         d="M72.7,105.365l-1.932-4.08L72.7,98.956l5.916,4.437,5.916-4.437v6.409L78.619,109.8Z"
-                         transform="translate(-67.773 -33.52)" fill="#ff4131" fill-rule="evenodd" />
-                      <path id="Path_8689" data-name="Path 8689"
-                         d="M0,66.176v1.972l4.93,3.7V65.436L3.55,64.4A2.219,2.219,0,0,0,0,66.176Z"
-                         transform="translate(0)" fill="#e51c19" />
-                   </g>
-                </svg>
-                <a href="#">Google</a>
-             </div>
-          </div>
-       </div>
-    </div>
- </div>
- <!-- sigin-area end-->
- <!-- signup-area-start -->
- <div class="signup-area" [class.open]="signUpActive">
-    <div class="sign-up-wrapper">
-       <div class="signup-box text-center">
-          <div class="signup-text">
-             <h3>Sign up</h3>
-          </div>
-          <div class="signup-message">
-             <img src="assets/img/sing-up/sign-up-message.png" alt="image not found">
-          </div>
-          <div class="signup-thumb">
-             <img src="assets/img/sing-up/sign-up.png" alt="image not found">
-          </div>
-       </div>
-       <div class="signup-form-wrapper">
-         <form  [formGroup]="registerForm" novalidate="">
+         <div class="signup-action">
+            <div class="course-sidebar-list">
+               <input class="signup-checkbo" type="checkbox" id="sing-in">
+               <label class="sign-check" for="sing-in"><span>Remember me</span></label>
+            </div>
+         </div>
+         <div class="sing-buttom mb-20" (click)="login()">
+            <button class="sing-btn">Login</button>
+         </div>
+         <div class="registered wrapper">
+            <div class="not-register">
+               <span>Not registered?</span><span><a href="javascript:void(0)"
+                     (click)="signupclick()">Register</a></span>
+            </div>
+            <div class="forget-password">
+               <a href="javascript:void(0)">Forgot password?</a>
+            </div>
+         </div>
+         <div class="sign-social text-center">
+            <span>Or Sign- in with</span>
+         </div>
+         <div class="sign-social-icon">
+            <div class="sign-facebook">
+               <svg xmlns="http://www.w3.org/2000/svg" width="9.034" height="18.531" viewBox="0 0 9.034 18.531">
+                  <path id="Path_212" data-name="Path 212"
+                     d="M183.106,757.2v-1.622c0-.811.116-1.274,1.39-1.274h1.621v-3.127h-2.664c-3.243,0-4.285,1.506-4.285,4.169v1.969h-2.085v3.127h1.969v9.265h4.054v-9.265h2.664l.347-3.243Z"
+                     transform="translate(-177.083 -751.176)" fill="#2467ec" />
+               </svg>
+               <a href="#">Facebook</a>
+            </div>
+            <div class="sign-gmail">
+               <svg xmlns="http://www.w3.org/2000/svg" width="21.692" height="16.273" viewBox="0 0 21.692 16.273">
+                  <g id="gmail" transform="translate(0 -63.953)">
+                     <path id="Path_8685" data-name="Path 8685"
+                        d="M1.479,169.418H4.93v-8.381l-2.26-3.946L0,157.339v10.6a1.479,1.479,0,0,0,1.479,1.479Z"
+                        transform="translate(0 -89.192)" fill="#0085f7" />
+                     <path id="Path_8686" data-name="Path 8686"
+                        d="M395.636,169.418h3.451a1.479,1.479,0,0,0,1.479-1.479v-10.6l-2.666-.248-2.264,3.946v8.381Z"
+                        transform="translate(-378.874 -89.192)" fill="#00a94b" />
+                     <path id="Path_8687" data-name="Path 8687"
+                        d="M349.816,65.436,347.789,69.3l2.027,2.541,4.93-3.7V66.176A2.219,2.219,0,0,0,351.2,64.4Z"
+                        transform="translate(-333.054)" fill="#ffbc00" />
+                     <path id="Path_8688" data-name="Path 8688"
+                        d="M72.7,105.365l-1.932-4.08L72.7,98.956l5.916,4.437,5.916-4.437v6.409L78.619,109.8Z"
+                        transform="translate(-67.773 -33.52)" fill="#ff4131" fill-rule="evenodd" />
+                     <path id="Path_8689" data-name="Path 8689"
+                        d="M0,66.176v1.972l4.93,3.7V65.436L3.55,64.4A2.219,2.219,0,0,0,0,66.176Z"
+                        transform="translate(0)" fill="#e51c19" />
+                  </g>
+               </svg>
+               <a href="#">Google</a>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- sigin-area end-->
+<!-- signup-area-start -->
+<div class="signup-area" [class.open]="signUpActive">
+   <div class="sign-up-wrapper">
+      <div class="signup-box text-center">
+         <div class="signup-text">
+            <h3>Sign up</h3>
+         </div>
+         <div class="signup-message">
+            <img src="assets/img/sing-up/sign-up-message.png" alt="image not found">
+         </div>
+         <div class="signup-thumb">
+            <img src="assets/img/sing-up/sign-up.png" alt="image not found">
+         </div>
+      </div>
+      <div class="signup-form-wrapper">
+         <form [formGroup]="registerForm" novalidate="">
             <div class="signup-input-wrapper">
                <input type="text" placeholder="First Name" formControlName="firstName">
                <input type="text" placeholder="Last Name" formControlName="lastName">
             </div>
-         
+
             <div class="signup-wrapper">
                <input type="text" placeholder="Display Name" formControlName="displayName">
             </div>
-             <div class="signup-wrapper">
-                <input type="email" placeholder="Email" formControlName="email">
-             </div>
-             <div class="signup-wrapper">
-                <input type="text" placeholder="Username" formControlName="username">
-             </div>
-             <div class="signup-wrapper">
-                <input type="password" placeholder="Password" formControlName="password">
-             </div>
-          </form>
-         
-          <div class="signup-action">
-             <div class="course-sidebar-list">
-                <input class="signup-checkbo" type="checkbox" id="sing-up">
-                <label class="sign-check" for="sing-up"><span>Accept the terms and <a href="#">Privacy Policy</a></span></label>
-             </div>
-          </div>
-          <div class="sing-buttom mb-20"  (click)="register()">
-             <button class="sing-btn" >Register now</button>
-          </div>
-          <div class="acount-login text-center">
-             <span>Already have an account? <a href="javascript:void(0)" (click)="signinclick()">Login</a></span>
-          </div>
-          <div class="sign-social text-center">
-             <span>Or Sign- in with</span>
-          </div>
-          <div class="sign-social-icon">
-             <div class="sign-facebook">
-                <svg xmlns="http://www.w3.org/2000/svg" width="9.034" height="18.531" viewBox="0 0 9.034 18.531">
-                   <path id="Path_2121121" data-name="Path 212"
-                      d="M183.106,757.2v-1.622c0-.811.116-1.274,1.39-1.274h1.621v-3.127h-2.664c-3.243,0-4.285,1.506-4.285,4.169v1.969h-2.085v3.127h1.969v9.265h4.054v-9.265h2.664l.347-3.243Z"
-                      transform="translate(-177.083 -751.176)" fill="#2467ec" />
-                </svg>
-                <a href="#">Facebook</a>
-             </div>
-             <div class="sign-gmail">
-                <svg xmlns="http://www.w3.org/2000/svg" width="21.692" height="16.273" viewBox="0 0 21.692 16.273">
-                   <g id="gmail-01" transform="translate(0 -63.953)">
-                      <path id="Path_868365" data-name="Path 863185"
-                         d="M1.479,169.418H4.93v-8.381l-2.26-3.946L0,157.339v10.6a1.479,1.479,0,0,0,1.479,1.479Z"
-                         transform="translate(0 -89.192)" fill="#0085f7" />
-                      <path id="Path_863286" data-name="Path 8683106"
-                         d="M395.636,169.418h3.451a1.479,1.479,0,0,0,1.479-1.479v-10.6l-2.666-.248-2.264,3.946v8.381Z"
-                         transform="translate(-378.874 -89.192)" fill="#00a94b" />
-                      <path id="Path_8322687" data-name="Path 831687"
-                         d="M349.816,65.436,347.789,69.3l2.027,2.541,4.93-3.7V66.176A2.219,2.219,0,0,0,351.2,64.4Z"
-                         transform="translate(-333.054)" fill="#ffbc00" />
-                      <path id="Path_863088" data-name="Path 868038"
-                         d="M72.7,105.365l-1.932-4.08L72.7,98.956l5.916,4.437,5.916-4.437v6.409L78.619,109.8Z"
-                         transform="translate(-67.773 -33.52)" fill="#ff4131" fill-rule="evenodd" />
-                      <path id="Path_8682519" data-name="Path 868921"
-                         d="M0,66.176v1.972l4.93,3.7V65.436L3.55,64.4A2.219,2.219,0,0,0,0,66.176Z"
-                         transform="translate(0)" fill="#e51c19" />
-                   </g>
-                </svg>
-                <a href="#">Google</a>
-             </div>
-          </div>
-       </div>
-    </div>
- </div>
- <!-- signup-area-start -->
+            <div class="signup-wrapper">
+               <input type="email" placeholder="Email" formControlName="email">
+            </div>
+            <div class="signup-wrapper">
+               <input type="text" placeholder="Username" formControlName="username">
+            </div>
+            <div class="signup-wrapper">
+               <input type="password" placeholder="Password" formControlName="password">
+            </div>
+         </form>
+
+         <div class="signup-action">
+            <div class="course-sidebar-list">
+               <input class="signup-checkbo" type="checkbox" id="sing-up">
+               <label class="sign-check" for="sing-up"><span>Accept the terms and <a href="#">Privacy
+                        Policy</a></span></label>
+            </div>
+         </div>
+         <div class="sing-buttom mb-20" (click)="register()">
+            <button class="sing-btn">Register now</button>
+         </div>
+         <div class="acount-login text-center">
+            <span>Already have an account? <a href="javascript:void(0)" (click)="signinclick()">Login</a></span>
+         </div>
+         <div class="sign-social text-center">
+            <span>Or Sign- in with</span>
+         </div>
+         <div class="sign-social-icon">
+            <div class="sign-facebook">
+               <svg xmlns="http://www.w3.org/2000/svg" width="9.034" height="18.531" viewBox="0 0 9.034 18.531">
+                  <path id="Path_2121121" data-name="Path 212"
+                     d="M183.106,757.2v-1.622c0-.811.116-1.274,1.39-1.274h1.621v-3.127h-2.664c-3.243,0-4.285,1.506-4.285,4.169v1.969h-2.085v3.127h1.969v9.265h4.054v-9.265h2.664l.347-3.243Z"
+                     transform="translate(-177.083 -751.176)" fill="#2467ec" />
+               </svg>
+               <a href="#">Facebook</a>
+            </div>
+            <div class="sign-gmail">
+               <svg xmlns="http://www.w3.org/2000/svg" width="21.692" height="16.273" viewBox="0 0 21.692 16.273">
+                  <g id="gmail-01" transform="translate(0 -63.953)">
+                     <path id="Path_868365" data-name="Path 863185"
+                        d="M1.479,169.418H4.93v-8.381l-2.26-3.946L0,157.339v10.6a1.479,1.479,0,0,0,1.479,1.479Z"
+                        transform="translate(0 -89.192)" fill="#0085f7" />
+                     <path id="Path_863286" data-name="Path 8683106"
+                        d="M395.636,169.418h3.451a1.479,1.479,0,0,0,1.479-1.479v-10.6l-2.666-.248-2.264,3.946v8.381Z"
+                        transform="translate(-378.874 -89.192)" fill="#00a94b" />
+                     <path id="Path_8322687" data-name="Path 831687"
+                        d="M349.816,65.436,347.789,69.3l2.027,2.541,4.93-3.7V66.176A2.219,2.219,0,0,0,351.2,64.4Z"
+                        transform="translate(-333.054)" fill="#ffbc00" />
+                     <path id="Path_863088" data-name="Path 868038"
+                        d="M72.7,105.365l-1.932-4.08L72.7,98.956l5.916,4.437,5.916-4.437v6.409L78.619,109.8Z"
+                        transform="translate(-67.773 -33.52)" fill="#ff4131" fill-rule="evenodd" />
+                     <path id="Path_8682519" data-name="Path 868921"
+                        d="M0,66.176v1.972l4.93,3.7V65.436L3.55,64.4A2.219,2.219,0,0,0,0,66.176Z"
+                        transform="translate(0)" fill="#e51c19" />
+                  </g>
+               </svg>
+               <a href="#">Google</a>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- signup-area-start -->

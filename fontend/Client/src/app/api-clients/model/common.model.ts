@@ -5,7 +5,7 @@ export class Response<T>{
     errors!: string;
     timeStamp!: Date;
     status!: number;
-}
+  }
 export class PageResponse<T>{
     pageCurrent?: number;
     totalPage?: number;

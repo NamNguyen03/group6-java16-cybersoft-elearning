@@ -15,9 +15,7 @@ import { CardLessonReponseClientDTO, LessonDetailsResponseClientDTO } from 'src/
 export class CoursevideoComponent implements OnInit {
 
   public coursesAll: CourseRp[] = [];
-  public coursesDevelopment: CourseRp[] = [];
-  public coursesDataScience: CourseRp[] = [];
-  public coursesDesign: CourseRp[] = [];
+  public coursesList3: CourseRp[] = [];
   constructor(private _courseClient: CourseClient) { }
 
   ngOnInit(): void {
@@ -30,6 +28,14 @@ export class CoursevideoComponent implements OnInit {
       response => {
         
         this.coursesAll = response.content.items || [];
+
+        for (let i = 0; i < 3; i++) {
+          this.coursesList3[i] = this.coursesAll[i];
+        }
+
+        this.coursesList3;
+
+        console.log(this.coursesList3);
       }
     )
   }

@@ -181,7 +181,7 @@ public class LessonManagementSeviceImpl implements LessonManagementService {
 		ELLesson lesson = lessonRepository.getDetailsById(UUID.fromString(id));
 		ELUser user = userRepository.findByUsername(lesson.getCourse().getCreatedBy()).orElseThrow(()-> new BusinessException(authorNotFoud));
 		LessonDetailsResponseClientDTO clientDTO = LessonMapper.INSTANCE.toLessonDetailsClientDTO(lesson);
-		clientDTO.setAuthor(new Author(user.getId(),user.getDisplayName()));;
+		clientDTO.setAuthor(new Author(user.getId(),user.getAvatar(),user.getDisplayName(),user.getUsername()));
 		return clientDTO;
 		
 	}

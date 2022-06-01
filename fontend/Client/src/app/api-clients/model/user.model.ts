@@ -1,5 +1,7 @@
+import { CourseRp } from "./course.model";
+
 export class UserRp{
-    
+ 
     id: string;
     username: string;
     displayName: string;
@@ -15,6 +17,42 @@ export class UserRp{
        this.lastName = "";
        this.avatar = "";
        this.email = "";
+
+    }
+}
+
+export class InstructorCourseClientDTO{
+    username: string;
+    displayName: string;
+    createBy: string;
+    lastModifiedBy: string;
+    lastModifiedAt: string;
+    email: string;
+    hobbies: string;
+    facebook: string;
+    gender: string;
+    phone: string;
+    department: string;
+    firstName: string;
+    lastName: string;
+    avatar: string;
+    courses?: CourseRp[];
+    constructor(){
+       this.username = "";
+       this.displayName = "";
+       this.firstName = "";
+       this.lastName = "";
+       this.avatar = "";
+       this.email = "";
+       this.createBy="";
+       this.lastModifiedBy="";
+       this.lastModifiedAt="";
+       this.facebook="";
+       this.hobbies = "";
+       this.gender ="";
+       this.phone = "";
+       this.department="";
+       this.courses=[];
 
     }
 }

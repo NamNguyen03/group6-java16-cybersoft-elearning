@@ -14,6 +14,10 @@ public class Author {
 	
 	private UUID id;
 	
+	private String avatar;
+	
 	private String displayName;
+	
+	private String username;
 	
 }
