@@ -100,7 +100,6 @@ public class LessonController {
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
 
-	@ELPermission("get lesson detals client")
 	@GetMapping("client/{id}")
 	public Object getLessonDetailsClient(@PathVariable("id") String id) {
 

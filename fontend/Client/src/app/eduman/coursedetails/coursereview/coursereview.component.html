@@ -8,15 +8,18 @@
                 <a href="#"><img style="width: 60px; height: 60; border-radius: 50%; padding-top: auto;" [src]="comment.user.avatar"
                         alt="avatar not found"></a>
             </div>
+            <div class="row">
             <div class="course-review-list"  style=" width: 100%; background-color: rgb(240, 234, 227); border-radius: 15px;padding-left:20px">
                 <div >
                     <div style="font-size:30px ; padding-top: 15px; ">
                         <h4 style="margin-bottom:0 ;">{{comment.user.displayName}}</h4>
                     </div>
                     <span  style="margin-top:0 ;">{{comment.createdAt | date: 'mm:h - dd/MM/yyyy'}}</span>
-                    <p >{{comment.content}}</p>
+                    <p style="float: left;">{{comment.content}}</p>
                 </div>
-            </div>
+                </div>
+                <p *ngIf="comment.user.id == userCurrent.id || userCurrent.username == authorCourse" (click)="deleteComment(comment.id)">delete</p>
+                </div>  
         </div>
     </div>
 </div>

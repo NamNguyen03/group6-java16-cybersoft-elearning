@@ -28,7 +28,6 @@ public class RatingController {
 	@Autowired
 	private RatingService service;
 
-	@ELPermission("find rating into lesson")
 	@GetMapping("{lesson-id}")
 	public Object findRatingIntoLesson(@PathVariable("lesson-id") String lessonId) {
 		List<RatingResponseDTO> response = service.search(lessonId);

@@ -24,6 +24,9 @@ export class FeedBackClient {
 
     }
 
+    deleteComment(lessonId:string) : Observable<Response<string>>{
+        return this.httpClient.delete<Response<string>>(this._apiComment+"/"+lessonId);
+    }
     writeRating(ratingCreate:RatingCreate): Observable<Response<RatingResponse>>{
         return this.httpClient.post<Response<RatingResponse>>(this._apiRating,ratingCreate);
     }
