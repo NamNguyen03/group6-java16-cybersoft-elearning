@@ -123,7 +123,7 @@ export class ListProgramComponent implements OnInit {
           let isLoadData = false;
           
           this.programClient.deleteById(event.data.id).subscribe(
-            response => 
+            () => 
             { 
               isLoadData=true;
 

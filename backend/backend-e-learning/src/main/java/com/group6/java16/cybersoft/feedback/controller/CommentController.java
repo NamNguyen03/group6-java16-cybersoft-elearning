@@ -29,7 +29,6 @@ public class CommentController {
 	@Autowired
 	private CommentService service;
 
-	@ELPermission("find comment into lesson")
 	@GetMapping("{lesson-id}")
 	public Object findCommentIntoLesson(@PathVariable("lesson-id") String lessonId) {
 		List<CommentResponseDTO> response = service.search(lessonId);
