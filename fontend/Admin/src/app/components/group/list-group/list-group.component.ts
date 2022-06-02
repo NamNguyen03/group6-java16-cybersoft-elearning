@@ -159,9 +159,9 @@ export class ListGroupComponent implements OnInit {
   }
 
   search(){
-    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
+    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value == "NONE" ? null :this.searchForm.controls['fieldNameSort'].value;
     let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
-    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
+    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value== "NONE" ? null :this.searchForm.controls['fieldNameSearch'].value;
     let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
     this._router.navigate(['/groups/list-group'],{
       queryParams: {

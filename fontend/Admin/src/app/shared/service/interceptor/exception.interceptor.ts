@@ -38,8 +38,8 @@ export class ExceptionInterceptor implements HttpInterceptor {
                     this.userService.logout();
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
-                        text: 'unauthorized access error'
+                        title: 'Unauthorized access error',
+                        text:  error.error.errors
                       })
                 }
                 return throwError("");
