@@ -42,6 +42,7 @@ export class CourseRp{
     skill3: string;
     skill4: string;
     skill5: string;
+    courseTime:number;
     lessons: LessonRp[];
 }
 
