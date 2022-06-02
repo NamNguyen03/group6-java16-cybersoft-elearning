@@ -13,7 +13,7 @@ import { LessonRp, UpdateLesson } from 'src/app/api-clients/model/lesson.model';
   styleUrls: ['./lesson-info.component.scss']
 })
 export class LessonInfoComponent implements OnInit {
-
+  private id = '';
   public isUpdateInfo = false;
   public selected = [];
   public detailsForm: FormGroup;
@@ -77,9 +77,9 @@ export class LessonInfoComponent implements OnInit {
   }
 
   getData(): void {
-    this.route.queryParams.subscribe(params => {
-      let id = params['lessonId'];
-      this.lessonClient.getInfoLesson(id).subscribe(
+    this.route.params.subscribe(params => {
+      this.id = params['lessonId'];
+      this.lessonClient.getInfoLesson(this.id).subscribe(
         response => {
           this.infoLesson = response.content
           this.setDefaultValueForm();
@@ -104,25 +104,21 @@ export class LessonInfoComponent implements OnInit {
     this.isUpdateInfo = false;
   }
    
-  updateInfo(){
-    
+  updateInfo(){   
     let name = this.detailsForm.controls['name'].value;
     let content = this.detailsForm.controls['content'].value;
     let description = this.detailsForm.controls['description'].value;
 
     let lessonupdate = new UpdateLesson(name, content, description);
-    this.route.queryParams.subscribe(params => {
-      let id = params['lessonId'];
       if (this.detailsForm.valid) {
-       this.lessonClient.updateLesson(id,lessonupdate).subscribe(
+       this.lessonClient.updateLesson(this.id,lessonupdate).subscribe(
           response => {
             this.toastr.success('Success', 'Update lesson success');
             this.goToInfo();
-            this.router.navigate(['/courses/lesson-info',id]);
+            this.router.navigate(['/courses/lesson-info/'+this.id]);
           }
         )
-      }
-    })
+    }
   }
 
   createProfileForm() {

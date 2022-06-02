@@ -27,7 +27,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'user-details',
+        path: 'user-details/:userId',
         component: UserDetailsComponent,
         data: {
           title: "User Details",
@@ -35,7 +35,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'add-group',
+        path: 'add-group/:userId',
         component: AddGroupComponent,
         data: {
           title: "Add Group",

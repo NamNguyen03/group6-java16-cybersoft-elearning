@@ -27,7 +27,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'course-details',
+        path: 'course-details/:courseId',
         component: CourseDetailsComponent,
         data: {
           title: "Course Details",
@@ -43,7 +43,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'lesson-info',
+        path: 'lesson-info/:lessonId',
         component: LessonInfoComponent,
         data: {
           title: "Lesson Details",

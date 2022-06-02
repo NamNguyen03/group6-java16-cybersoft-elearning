@@ -166,9 +166,7 @@ export class ListRoleComponent implements OnInit {
     })}
     onRoleRowSelected(event) {
       let roleId = event.data.id;
-     
-     this._router.navigate(['/roles/role-details'],{
-       queryParams: {'roleId':roleId}})
+     this._router.navigate(['/roles/role-details/'+ roleId])
   
    }
    clickPage(index: string): void {

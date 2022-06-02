@@ -105,7 +105,7 @@ export class RoleDetailsComponent implements OnInit {
   }
  
   getData(): void{
-      this.route.queryParams.subscribe(params =>{
+      this.route.params.subscribe(params =>{
       let id  =  params['roleId'] ; 
       this._roleClient.getRoleDetails(id).subscribe(
       response =>{
@@ -150,7 +150,7 @@ export class RoleDetailsComponent implements OnInit {
     this.isDisableSubmit =true;
 
   }
-  addRole(){
+  addProgram(){
     if(this.isDisableSubmit){
       this._roleClient.addProgramIntoRole(this.roleDetail.id,this.programCurrent.id).subscribe(
         () =>{
