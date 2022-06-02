@@ -17,7 +17,7 @@ export class CourseDetailsComponent implements OnInit {
 
   public selected = [];
   public detailsForm: FormGroup;
-  public isUpdateCourse= false;
+  public isUpdateCourse = false;
   public isActions = false;
   public isUpdateImg = false;
 
@@ -70,54 +70,55 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   getData(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.params.subscribe((params) => {
       let id = params['courseId'];
+      console.log(id);
       this.courseClient.getDetailCourse(id).subscribe(
         response => {
           this.detailCourse = response.content
-           this.createProfileForm();
-           this.setDefaultValueForm();
-           this.imgCourse = response.content.img;
+          this.createProfileForm();
+          this.setDefaultValueForm();
+          this.imgCourse = response.content.img;
         }
       )
     })
   }
   setDefaultValueForm() {
     this.detailsForm.patchValue({
-      img:this.detailCourse.img,
-      courseName: this.detailCourse.courseName, 
+      img: this.detailCourse.img,
+      courseName: this.detailCourse.courseName,
       description: this.detailCourse.description,
-      category:this.detailCourse.category,
-      level:this.detailCourse.level,
-      starAvg:this.detailCourse.starAvg,
-      totalStar:this.detailCourse.totalStar,
-      totalRating:this.detailCourse.totalRating,
-      skill1:this.detailCourse.skill1,
-      skill2:this.detailCourse.skill2,
-      skill3:this.detailCourse.skill3,
-      skill4:this.detailCourse.skill4,
-      skill5:this.detailCourse.skill5,
-      lessons:this.detailCourse.lessons
+      category: this.detailCourse.category,
+      level: this.detailCourse.level,
+      starAvg: this.detailCourse.starAvg,
+      totalStar: this.detailCourse.totalStar,
+      totalRating: this.detailCourse.totalRating,
+      skill1: this.detailCourse.skill1,
+      skill2: this.detailCourse.skill2,
+      skill3: this.detailCourse.skill3,
+      skill4: this.detailCourse.skill4,
+      skill5: this.detailCourse.skill5,
+      lessons: this.detailCourse.lessons
     })
   }
-  
+
   createProfileForm() {
     this.detailsForm = this.form.group({
-      img:[''],
+      img: [''],
       courseName: [''],
       description: [''],
-      category:[''],
-      level:[''],
-      starAvg:[''],
-      totalStar:[''],
-      totalRating:[''],
-      skill1:[''],
-      skill2:[''],
-      skill3:[''],
-      skill4:[''],
-      skill5:[''],
-      lesson:[],
-      
+      category: [''],
+      level: [''],
+      starAvg: [''],
+      totalStar: [''],
+      totalRating: [''],
+      skill1: [''],
+      skill2: [''],
+      skill3: [''],
+      skill4: [''],
+      skill5: [''],
+      lesson: [],
+
     })
   }
 
@@ -131,29 +132,27 @@ export class CourseDetailsComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
-        if (result.isConfirmed) {
-          let isLoadData = false;
-          this.lessonClient.deleteLesson(event.data.id).subscribe(() => {
-            this.getData();
-            isLoadData = true;
-            this.toastr.success('Success', 'Delete Lesson success!');
-          })
+      if (result.isConfirmed) {
+        let isLoadData = false;
+        this.lessonClient.deleteLesson(event.data.id).subscribe(() => {
+          this.getData();
+          isLoadData = true;
+          this.toastr.success('Success', 'Delete Lesson success!');
+        })
 
-        }
+      }
     });
   }
 
-  createLesson(){
-    this._router.navigate(["/lessons/create-lesson"],{ queryParams: {'courseId':this.detailCourse.id}})
+  createLesson() {
+    this._router.navigate(["/lessons/create-lesson"], { queryParams: { 'courseId': this.detailCourse.id } })
   }
 
   onUserRowSelected(event) {
     let lessonId = event.data.id;
-    this._router.navigate(['courses/lesson-info'], {
-      queryParams: { 'lessonId': lessonId }
-    })
+    this._router.navigate(['courses/lesson-info/' + lessonId]);
   }
-  updateCourse(){
+  updateCourse() {
     let coursename = this.detailsForm.controls['courseName'].value;
     let description = this.detailsForm.controls['description'].value;
     let category = this.detailsForm.controls['category'].value;
@@ -163,28 +162,28 @@ export class CourseDetailsComponent implements OnInit {
     let skill3 = this.detailsForm.controls['skill3'].value;
     let skill4 = this.detailsForm.controls['skill4'].value;
     let skill5 = this.detailsForm.controls['skill5'].value;
-    this.courseClient.updateCourse(this.detailCourse.id,new CourseUpdateInformation(coursename,description,category,level,this.detailCourse.img,skill1,skill2,skill3,skill4,skill5)).subscribe(
-      response =>{
-        this.toastr.success('Success','Update course success');
+    this.courseClient.updateCourse(this.detailCourse.id, new CourseUpdateInformation(coursename, description, category, level, this.detailCourse.img, skill1, skill2, skill3, skill4, skill5)).subscribe(
+      response => {
+        this.toastr.success('Success', 'Update course success');
       }
     )
   }
 
-  goToUpdateCourse(){
+  goToUpdateCourse() {
     let courseId = this.detailCourse.id
-    this._router.navigate(['/courses/update-course'],{
-      queryParams: { 'courseId': courseId}
-  })
+    this._router.navigate(['/courses/update-course'], {
+      queryParams: { 'courseId': courseId }
+    })
   }
-  toggleAction(){
+  toggleAction() {
     this.isActions = !this.isActions;
-    if(!this.isActions){
+    if (!this.isActions) {
       this.isUpdateImg = true;
     }
   }
-  changeInputImg(event: any){
-    this.courseClient.updateImg(event.target.files[0]).subscribe(response => 
-     this.detailCourse.img = response.content   
+  changeInputImg(event: any) {
+    this.courseClient.updateImg(event.target.files[0]).subscribe(response =>
+      this.detailCourse.img = response.content
     );
   }
 

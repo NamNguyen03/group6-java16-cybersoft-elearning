@@ -222,9 +222,7 @@ export class ListUserComponent implements OnInit {
   onUserRowSelected(event) {
      let userId = event.data.id;
     
-    this._router.navigate(['/users/user-details'],{
-      queryParams: {'userId':userId}})
-
+    this._router.navigate(['/users/user-details/' + userId]);
   }
 
   getData(id: string): void{
