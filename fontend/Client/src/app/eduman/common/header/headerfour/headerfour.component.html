@@ -452,18 +452,11 @@
                            </div>
                         </div>
                      </div>
-
-
-                     <div class="user-btn-wrapper">
-                        <div class="user-btn-content ">
-                           <a class="user-btn-sign-in" href="javascript:void(0)" (click)="signinclick()">Login</a>
+                     <a *ngIf="!isLogin" class="edu-four-btn d-none d-lg-block" href="javascript:void(0)"
+                           (click)="signinclick()">Login</a>
+                        <div *ngIf="isLogin" style="border-radius: 25px; width: 50px; height: 50px; cursor: pointer;">
+                           <img height="50px" [src]="getUrlAvatar()" />
                         </div>
-                     </div>
-
-                     <div class="d-none d-md-block">
-                        <a class="user-btn-sign-up edu-btn" href="javascript:void(0)"
-                           (click)="signupclick()">Register</a>
-                     </div>
                      <div class="menu-bar d-xl-none ml-20">
                         <a class="side-toggle" href="javascript:void(0)" (click)="infoclick()">
                            <div class="bar-icon">
