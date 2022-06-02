@@ -7,7 +7,7 @@
                     <div class="table-responsive profile-table">
                         <h4 style="font-weight: 600">Course Detail</h4>
                         <div class="profile-details text-center" style="cursor: pointer;" >
-                        <img src="{{detailCourse.img}}" alt=""
+                        <img [src]="detailCourse.img ? detailCourse.img : './assets/images/course/book.jpg'" alt="img"
                         class="rounded mx-auto d-block " style="height: 300px;">
                     </div>
                         <div >
