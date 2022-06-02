@@ -1,4 +1,4 @@
-<app-headerfour></app-headerfour>
+<app-headertwo></app-headertwo>
 <app-breadcrumb breadcrumbTitle="Courses 02"  breadcrumbSubTitle="Courses"></app-breadcrumb>
 <app-coursebar></app-coursebar>
 
@@ -30,7 +30,7 @@
                                              
                               <div class="protfolio-course-2-wrapper mb-30" >
                                  <div class="student-course-img" >
-                                    <a [routerLink]="['/course-details', course.idFirstLesson]"><img style="width: 300px;height:200px;" [src]="course.img"
+                                    <a [routerLink]="['/course-details', course.idFirstLesson]"><img style="width: 300px;height:200px;" [src]="course.img ? course.img:'assets/img/course/book.jpg'"
                                           alt="course-img"></a>
                                  </div>
                                  <div class="course-cart course-cart-box-size">
