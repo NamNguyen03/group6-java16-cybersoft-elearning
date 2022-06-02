@@ -78,6 +78,7 @@ public class CommentServiceImpl implements CommentService {
 		if (userCurrent.equals(null)) {
 			response = repository.findByIdLesson(UUID.fromString(idLesson), idCourse, page);
 		}
+
 		if (!userCurrent.equals(lesson.getCourse().getCreatedBy()) && !userCurrent.equals(null)) {
 			response = repository.findByIdLessonAndUserCurrent(UUID.fromString(idLesson), idCourse, userCurrent, page);
 		}
@@ -98,11 +99,11 @@ public class CommentServiceImpl implements CommentService {
 		if (statusCommentOpt.isEmpty()) {
 			statusCommentRepository.save(
 					ELStatusComment.builder()
-							.id(UUID.randomUUID())
-							.user(user)
-							.course(lesson.getCourse())
-							.status(EnumStatusComment.PRIVATE)
-							.build());
+					.id(UUID.randomUUID())
+					.user(user)
+					.course(lesson.getCourse())
+					.status(EnumStatusComment.PRIVATE)
+					.build());
 		}
 
 		if (statusCommentOpt.isPresent() && statusCommentOpt.get().getStatus().equals(EnumStatusComment.BLOCKED)) {

@@ -91,8 +91,6 @@ public class StatusCommentServiceImpl implements StatusCommentService{
 			response = statusCommentRepository.searchAll(usernameCurrent, pageable);
 		}
 
-		
-
 		return new PageResponseModel<>(response.getNumber() + 1, response.getTotalPages(),
 				response.getContent().stream().map(status ->{
 					status.getCourse().setLessons(null);

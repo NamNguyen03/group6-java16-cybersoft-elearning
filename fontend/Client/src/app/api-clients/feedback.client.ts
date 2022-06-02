@@ -30,5 +30,5 @@ export class FeedBackClient {
 
     myRating(lessonId:string): Observable<Response<RatingResponse>>{
         return this.httpClient.get<Response<RatingResponse>>(this._apiMyRating+"/"+lessonId);
-}
+    }
 }

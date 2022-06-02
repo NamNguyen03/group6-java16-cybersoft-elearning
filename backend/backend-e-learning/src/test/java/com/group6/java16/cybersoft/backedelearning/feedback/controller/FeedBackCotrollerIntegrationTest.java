@@ -91,13 +91,6 @@ public class FeedBackCotrollerIntegrationTest {
 
 	@Test
 	@WithMockUser
-	public void whenFindRatingIntoLesson_thenReturnStatus200() throws Exception {
-		mvc.perform(get("/api/v1/ratings/" + UUID.randomUUID().toString()))
-		.andExpect(status().isOk());
-	}
-
-	@Test
-	@WithMockUser
 	public void whenFindMyRatingIntoLesson_thenReturnStatus200() throws Exception {
 		mvc.perform(get("/api/v1/ratings/me/" + UUID.randomUUID().toString()))
 		.andExpect(status().isOk());

@@ -33,4 +33,6 @@ public class ELComment extends BaseEntity  {
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinColumn(name = "lesson_id",referencedColumnName = "id")
     private ELLesson lesson;
+    
+    
 }

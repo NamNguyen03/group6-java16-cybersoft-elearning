@@ -1,6 +1,5 @@
 package com.group6.java16.cybersoft.feedback.repository;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.feedback.model.ELComment;
