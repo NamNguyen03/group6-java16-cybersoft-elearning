@@ -124,7 +124,12 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public void delete(String commentId) {
 		ELComment comment = getById(commentId);
-		repository.delete(comment);
+
+		String user = UserPrincipal.getUsernameCurrent();
+
+		if (user.equals(comment.getCreatedBy()) || user.equals(comment.getLesson().getCreatedBy())) {
+			repository.delete(comment);
+		}
 	}
 
 	private ELComment getById(String id) {

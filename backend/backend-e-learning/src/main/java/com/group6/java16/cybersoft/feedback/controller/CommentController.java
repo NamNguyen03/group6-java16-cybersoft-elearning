@@ -20,6 +20,7 @@ import com.group6.java16.cybersoft.common.util.ResponseHelper;
 import com.group6.java16.cybersoft.feedback.dto.CommentCreateDTO;
 import com.group6.java16.cybersoft.feedback.dto.CommentResponseDTO;
 import com.group6.java16.cybersoft.feedback.service.CommentService;
+import com.group6.java16.cybersoft.security.authorization.ELPermission;
 
 @RestController
 @RequestMapping("api/v1/comments")
@@ -34,6 +35,7 @@ public class CommentController {
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
 
+	@ELPermission("create comment")
 	@PostMapping
 	public Object createComment(@Valid @RequestBody CommentCreateDTO dto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
@@ -43,6 +45,7 @@ public class CommentController {
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
 
+	@ELPermission("delete comment")
 	@DeleteMapping("{comment-id}")
 	public Object deleteComment(@PathVariable("comment-id") String commentId) {
 

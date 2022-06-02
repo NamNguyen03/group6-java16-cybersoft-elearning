@@ -1,5 +1,6 @@
 package com.group6.java16.cybersoft.course.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,5 +36,8 @@ public interface ELCourseRepository extends JpaRepository<ELCourse, UUID> {
 			+ " and u.starAvg  >= :#{#rq.fromRating} AND u.starAvg < :#{#rq.toRating}"
 			+ " and u.courseTime >= :#{#rq.fromTime} AND u.courseTime < :#{#rq.toTime}")
 	Page<ELCourse> findCourseClient(@Param("rq")QueryCourseClientDTO queryCourseClientDTO, Pageable pageable);
+	
+	@Query(value = "Select u from ELCourse u where u.createdBy = :username ")
+	List<ELCourse> getListCourse(@Param("username") String username);
 
 }

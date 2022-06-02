@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FeedBackClient } from 'src/app/api-clients/feedback.client';
 import { LessonClient } from 'src/app/api-clients/lesson.client';
+import { AuthorRp } from 'src/app/api-clients/model/author.model';
 import { PageRequest } from 'src/app/api-clients/model/common.model';
 import { CourseDetailsReponseClientDTO, CourseRp } from 'src/app/api-clients/model/course.model';
 import { CommentCreate } from 'src/app/api-clients/model/feedback.model';
@@ -20,14 +21,15 @@ export class CoursedetailsmainComponent implements OnInit {
   public listCardLesson2: CardLessonReponseClientDTO[] = [];
   public listCardLessonResult: CardLessonReponseClientDTO[] = [];
   public courseDetail: CourseDetailsReponseClientDTO = new CourseDetailsReponseClientDTO();
+  public author: AuthorRp = new AuthorRp();
   public lessonDetails: LessonDetailsResponseClientDTO = new LessonDetailsResponseClientDTO();
   public isShow = false;
-  public isNotShow = true;
   public isShowLesson = false;
   public isShowContent = false;
   public isHideContent = true;
   public isShow3 = true;
   public isShowAll = false;
+  public isNotShow = true;
   constructor(
     private route: ActivatedRoute,
     private lessonClient: LessonClient,
@@ -45,6 +47,8 @@ export class CoursedetailsmainComponent implements OnInit {
         response => {
 
           this.lessonDetails = response.content;
+
+          this.author = this.lessonDetails.author == null ? new AuthorRp() : this.lessonDetails.author;
 
           this.courseDetail = this.lessonDetails.course == null ? new CourseDetailsReponseClientDTO() : this.lessonDetails.course;
 
@@ -74,9 +78,4 @@ export class CoursedetailsmainComponent implements OnInit {
     this.isHideContent = !this.isHideContent;
   }
 
-  getLessonDetail(id: String): void {
-    this.lessonClient.getInfoLesson(id)
-  }
-
-  
 }

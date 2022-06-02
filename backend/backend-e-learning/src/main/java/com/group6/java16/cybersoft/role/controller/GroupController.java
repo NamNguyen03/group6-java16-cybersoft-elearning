@@ -23,6 +23,7 @@ import com.group6.java16.cybersoft.role.dto.GroupDTO;
 import com.group6.java16.cybersoft.role.dto.GroupResponseDTO;
 import com.group6.java16.cybersoft.role.dto.GroupUpdateDTO;
 import com.group6.java16.cybersoft.role.service.GroupService;
+import com.group6.java16.cybersoft.security.authorization.ELPermission;
 
 
 
@@ -33,8 +34,9 @@ public class GroupController {
 	@Autowired
 	private GroupService service;
 
+	@ELPermission("search group")
 	@GetMapping
-	public Object search(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
+	public Object searchGroup(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
 			@RequestParam(value = "itemPerPage", defaultValue = "10") int itemPerPage,
 			@RequestParam(value = "fieldNameSort", required = false) String fieldNameSort,
 			@RequestParam(value = "isIncrementSort", defaultValue = "true") boolean isIncrementSort,
@@ -53,6 +55,7 @@ public class GroupController {
 
 	}
 
+	@ELPermission("create group")
 	@PostMapping
 	public Object createGroup(@RequestBody @Valid GroupDTO dto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
@@ -64,14 +67,16 @@ public class GroupController {
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 
 	}
-
+	
+	@ELPermission("update group")
 	@PutMapping("{id}")
 	public Object updateGroup(@PathVariable("id") String id, @RequestBody GroupUpdateDTO dto) {
 		GroupResponseDTO response = service.update(id, dto);
 
 		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
 	}
-
+	
+	@ELPermission("delete group")
 	@DeleteMapping("{id}")
 	public Object deleteGroup(@PathVariable("id") String id) {
 
@@ -79,6 +84,7 @@ public class GroupController {
 		return ResponseHelper.getResponse("Delete successfully", HttpStatus.OK, false);
 	}
 
+	@ELPermission("add role into group")
 	@PostMapping("{group-id}/{role-id}")
 	public Object addRoleIntoGroup(@PathVariable(value = "group-id") String groupId,
 			@PathVariable(value = "role-id") String roleId) {
@@ -88,6 +94,7 @@ public class GroupController {
 
 	}
 
+	@ELPermission("delete role into group")
 	@DeleteMapping("{group-id}/{role-id}")
 	public Object deleteRoleIntoGroup(@PathVariable("group-id") String groupId,
 			@PathVariable("role-id") String roleId) {
@@ -96,6 +103,7 @@ public class GroupController {
 
 	}
 
+	@ELPermission("get group details")
 	@GetMapping("{id}")
 	public Object getGroupDetail(@PathVariable("id") String id) {
 

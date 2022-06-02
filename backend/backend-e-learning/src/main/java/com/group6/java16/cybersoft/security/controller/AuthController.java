@@ -3,6 +3,7 @@ package com.group6.java16.cybersoft.security.controller;
 import javax.validation.Valid;
 
 import com.group6.java16.cybersoft.common.util.ResponseHelper;
+import com.group6.java16.cybersoft.security.authorization.ELPermission;
 import com.group6.java16.cybersoft.security.dto.LoginRequestDTO;
 import com.group6.java16.cybersoft.security.dto.RegisterDTO;
 import com.group6.java16.cybersoft.security.service.AuthService;
@@ -21,15 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "*")
 public class AuthController {
-    
+
     @Autowired
     private AuthService service;
 
     @PostMapping("login")
-    public Object login(@RequestBody @Valid LoginRequestDTO rq, BindingResult result){
-        if(result.hasErrors()) {
-			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
-		}
+    public Object login(@RequestBody @Valid LoginRequestDTO rq, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
+        }
 
         String rp = service.login(rq);
 
@@ -37,10 +38,10 @@ public class AuthController {
     }
 
     @PostMapping("register")
-    public Object register(@RequestBody @Valid RegisterDTO rq, BindingResult result){
-        if(result.hasErrors()) {
-			return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
-		}
+    public Object register(@RequestBody @Valid RegisterDTO rq, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseHelper.getResponse(result, HttpStatus.BAD_REQUEST, true);
+        }
 
         UserResponseDTO rp = service.register(rq);
 

@@ -25,6 +25,7 @@ import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
 import com.group6.java16.cybersoft.course.dto.client.LessonDetailsResponseClientDTO;
 import com.group6.java16.cybersoft.course.service.LessonManagementService;
+import com.group6.java16.cybersoft.security.authorization.ELPermission;
 
 @RestController
 @RequestMapping("api/v1/lessons")
@@ -33,6 +34,7 @@ public class LessonController {
 	@Autowired
 	private LessonManagementService service;
 
+	@ELPermission("create lesson")
 	@PostMapping
 	public Object createLesson(@Valid @RequestBody LessonCreateDTO rq, BindingResult result) {
 		if (result.hasErrors()) {
@@ -44,15 +46,17 @@ public class LessonController {
 		return ResponseHelper.getResponse(rp, HttpStatus.CREATED, false);
 	}
 
+	@ELPermission("update lesson")
 	@PutMapping("{id}")
-	public Object updateLesson(@PathVariable("id") String id,@RequestBody LessonUpdateDTO rq) {
+	public Object updateLesson(@PathVariable("id") String id, @RequestBody LessonUpdateDTO rq) {
 		LessonResponseDTO rp = service.updateLesson(rq, id);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
 
-	@GetMapping()
-	public Object search(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
+	@ELPermission("search lesson")
+	@GetMapping
+	public Object searchLesson(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
 			@RequestParam(value = "itemPerPage", defaultValue = "10") int itemPerPage,
 			@RequestParam(value = "fieldNameSort", required = false) String fieldNameSort,
 			@RequestParam(value = "isIncrementSort", defaultValue = "true") boolean isIncrementSort,
@@ -70,35 +74,38 @@ public class LessonController {
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
 
+	@ELPermission("delete lesson")
 	@DeleteMapping("{id}")
-	public Object delete(@PathVariable("id") String id) {
+	public Object deleteLesson(@PathVariable("id") String id) {
 
 		service.deleteById(id);
 
 		return ResponseHelper.getResponse("", HttpStatus.OK, false);
 	}
 
+	@ELPermission("get lesson details")
 	@GetMapping("{id}")
-	public Object getInfoLesson(@PathVariable("id") String id) {
+	public Object getLessonDetails(@PathVariable("id") String id) {
 
 		LessonResponseDTO rp = service.getInfoLesson(id);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
-	
+
+	@ELPermission("update img lesson")
 	@PostMapping("/img")
-	public Object postImg(@RequestParam(name = "file") MultipartFile file) {
-        String rp = service.postImg(file);
-        
-        return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
+	public Object updateImgLesson(@RequestParam(name = "file") MultipartFile file) {
+		String rp = service.postImg(file);
+
+		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
-	
+
 	@GetMapping("client/{id}")
-	public Object getLessonDetail(@PathVariable("id") String id) {
+	public Object getLessonDetailsClient(@PathVariable("id") String id) {
 
 		LessonDetailsResponseClientDTO rp = service.getLessonDetail(id);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
-	
+
 }
