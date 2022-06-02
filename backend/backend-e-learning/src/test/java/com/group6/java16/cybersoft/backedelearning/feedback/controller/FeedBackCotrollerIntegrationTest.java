@@ -3,6 +3,7 @@
  */
 package com.group6.java16.cybersoft.backedelearning.feedback.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -12,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.UUID;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -31,6 +33,7 @@ import com.group6.java16.cybersoft.feedback.model.EnumStatusComment;
 import com.group6.java16.cybersoft.feedback.service.CommentService;
 import com.group6.java16.cybersoft.feedback.service.RatingService;
 import com.group6.java16.cybersoft.feedback.service.StatusCommentService;
+import com.group6.java16.cybersoft.role.repository.ELProgramRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -47,9 +50,18 @@ public class FeedBackCotrollerIntegrationTest {
 	@MockBean
 	private StatusCommentService statusCommentService;
 
+	@MockBean
+	private ELProgramRepository programRepository;
+	
+    @BeforeEach
+    public void setUp(){
+        when(programRepository.existsByNameProgramAndUsername(any(), any())).thenReturn(true);
+    }
+
+
 	@Test
 	@WithMockUser
-	public void whenfindCommentIntoLesson_thenReturnStatus200() throws Exception {
+	public void whenFindCommentIntoLesson_thenReturnStatus200() throws Exception {
 		mvc.perform(get("/api/v1/comments/" + UUID.randomUUID().toString()))
 		.andExpect(status().isOk());
 	}
