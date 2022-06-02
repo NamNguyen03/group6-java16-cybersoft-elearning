@@ -30,7 +30,6 @@ export class CourseCreate{
 export class CourseRp{
     id!: string;
     courseName!: string;
-    courseTime!: string;
     description!: string;
     img: string;
     category: string;
