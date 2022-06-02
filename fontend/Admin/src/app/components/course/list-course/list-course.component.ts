@@ -75,6 +75,10 @@ export class ListCourseComponent implements OnInit {
         title: 'Description',
         editable: true,
       },
+      courseTime: {
+        title: 'Lesson',
+        editable: true,
+      },
 
     },
   };
@@ -176,9 +180,9 @@ export class ListCourseComponent implements OnInit {
   }
 
   search() {
-    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
+    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value == "NONE" ? null :this.searchForm.controls['fieldNameSort'].value;
     let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
-    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
+    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value== "NONE" ? null :this.searchForm.controls['fieldNameSearch'].value;
     let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
 
     this._router.navigate(['/courses/list-course'], {

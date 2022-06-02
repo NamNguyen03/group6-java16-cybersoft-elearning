@@ -140,7 +140,7 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 		Page<ELCourse> rp = null;
 		String userCurrent = UserPrincipal.getUsernameCurrent();
 
-		if (null != fieldNameSort && fieldNameSort.matches("courseName")) {
+		if (null != fieldNameSort && fieldNameSort.matches("courseName|coursTime")) {
 			pageable = PageRequest.of(page, size,
 					isAscending ? Sort.by(fieldNameSort).ascending() : Sort.by(fieldNameSort).descending());
 		} else {
