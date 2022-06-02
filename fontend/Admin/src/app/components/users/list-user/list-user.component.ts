@@ -127,6 +127,10 @@ export class ListUserComponent implements OnInit {
     );
   }
 
+  clickSearch(){
+    this.pageCurrent = 1;
+    this.search();
+  }
 
   onDeleteConfirm(event: any): void {
     Swal.fire({
@@ -217,7 +221,6 @@ export class ListUserComponent implements OnInit {
   }
   onUserRowSelected(event) {
      let userId = event.data.id;
-     console.log(userId)
     
     this._router.navigate(['/users/user-details'],{
       queryParams: {'userId':userId}})
@@ -236,7 +239,6 @@ export class ListUserComponent implements OnInit {
   }
 
   setDefaultValueForm(){
-    console.log(this.profileForm)
     this.profileForm.patchValue({
       firstName: this.profile.firstName,
       lastName: this.profile.lastName,

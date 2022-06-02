@@ -15,9 +15,33 @@ import lombok.Setter;
 public class RatingResponseDTO {
 	private UUID id;
 	
-	private String value;
+	private int value;
 	
 	private UserResponseClientDTO user;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RatingResponseDTO other = (RatingResponseDTO) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		if (value != other.value)
+			return false;
+		return true;
+	}
 		
 
 }

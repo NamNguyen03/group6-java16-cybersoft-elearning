@@ -63,7 +63,7 @@ public class AuthServiceImpl implements AuthService{
         Set<ELGroup> groups = new LinkedHashSet<>(); 
 
         groups.add(
-            groupRepository.findByName("customer").
+            groupRepository.findByName("student").
                orElseThrow(()-> new BusinessException(messageRegisterNotAvailable)));
         
         user.setGroups(groups);

@@ -22,14 +22,12 @@ import { ExceptionInterceptor } from './shared/service/interceptor/exception.int
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ToastrModule } from 'ngx-toastr';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { LessonInfoComponent } from './components/lesson-info/lesson-info.component';
 import { ProgramModule } from './components/program/program.module';
 import { CommentModule } from './components/comment/comment.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LessonInfoComponent,
   ],
   imports: [
     BrowserAnimationsModule,

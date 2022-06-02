@@ -164,7 +164,12 @@ export class ListGroupComponent implements OnInit {
     let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
     let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
     this._router.navigate(['/groups/list-group'],{
-      queryParams: {'fieldNameSort':fieldNameSort,'isIncrementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
+      queryParams: {
+        'page':this.pageCurrent,
+        'fieldNameSort':fieldNameSort,
+        'isIncrementSort':isIncrementSort,
+        'fieldNameSearch':fieldNameSearch,
+        'valueFieldNameSearch':valueFieldNameSearch}
 
     })
   }
@@ -174,19 +179,22 @@ export class ListGroupComponent implements OnInit {
    this._router.navigate(['/groups/group-details'],{
      queryParams: {'groupId':groupId}})
 
- }
- clickPage(index: string): void {
-  if(index == 'next'){
-    this.pageCurrent++;
   }
-  if(index == 'prev'){
-    this.pageCurrent--;
+  clickPage(index: string): void {
+    if(index == 'next'){
+      this.pageCurrent++;
+    }
+    if(index == 'prev'){
+      this.pageCurrent--;
+    }
+    if(index != 'prev' && index != 'next'){
+      this.pageCurrent = Number(index);
+    }
+    this.search();
   }
-  if(index != 'prev' && index != 'next'){
-    this.pageCurrent = Number(index);
+    
+  clickSearch(){
+    this.pageCurrent = 1;
+    this.search();
   }
-  this.search();
-}
-  
-
 }

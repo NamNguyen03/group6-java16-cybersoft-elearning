@@ -71,15 +71,16 @@ public class CommentServiceImpl implements CommentService {
 
 		UUID idCourse = lesson.getCourse().getId();
 
-		if (userCurrent.equals(lesson.getCourse().getCreatedBy())) {
-			response = repository.findByIdLesson(UUID.fromString(idLesson), page);
-		}
-
-		if (userCurrent.equals(null)) {
+		if (null == userCurrent) {
 			response = repository.findByIdLesson(UUID.fromString(idLesson), idCourse, page);
 		}
-		if (!userCurrent.equals(lesson.getCourse().getCreatedBy()) && !userCurrent.equals(null)) {
+
+		if (null != userCurrent && !userCurrent.equals(lesson.getCourse().getCreatedBy())) {
 			response = repository.findByIdLessonAndUserCurrent(UUID.fromString(idLesson), idCourse, userCurrent, page);
+		}
+
+		if (null != userCurrent && userCurrent.equals(lesson.getCourse().getCreatedBy())) {
+			response = repository.findByIdLesson(UUID.fromString(idLesson), page);
 		}
 
 		return response.stream().map(CommentMapper.INSTANCE::toResponseDTO).collect(Collectors.toList());
@@ -98,11 +99,11 @@ public class CommentServiceImpl implements CommentService {
 		if (statusCommentOpt.isEmpty()) {
 			statusCommentRepository.save(
 					ELStatusComment.builder()
-							.id(UUID.randomUUID())
-							.user(user)
-							.course(lesson.getCourse())
-							.status(EnumStatusComment.PRIVATE)
-							.build());
+					.id(UUID.randomUUID())
+					.user(user)
+					.course(lesson.getCourse())
+					.status(EnumStatusComment.PRIVATE)
+					.build());
 		}
 
 		if (statusCommentOpt.isPresent() && statusCommentOpt.get().getStatus().equals(EnumStatusComment.BLOCKED)) {

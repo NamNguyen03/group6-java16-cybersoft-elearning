@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="profile-details text-center" style="cursor: pointer;" (click)="toggleAction()">
-                        <img src="{{profile.avatar}}" alt=""
+                        <img [src]="profile.avatar? profile.avatar : './assets/images/user.png'" alt=""
                             class="img-fluid img-90 rounded-circle blur-up lazyloaded">
                         <h5 class="f-w-600 mb-0">{{profile.displayName}}</h5>
                         <span>{{profile.email}}</span>

@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.group6.java16.cybersoft.user.dto.client.UserResponseClientDTO;
-import com.group6.java16.cybersoft.course.dto.LessonResponseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +22,5 @@ public class CommentResponseDTO {
 	private UserResponseClientDTO user;
 
 	private LocalDateTime createdAt;
-
-	private LessonResponseDTO lesson;
 
 }

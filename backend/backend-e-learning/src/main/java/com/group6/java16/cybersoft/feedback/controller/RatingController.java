@@ -1,7 +1,4 @@
 package com.group6.java16.cybersoft.feedback.controller;
-
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +25,6 @@ public class RatingController {
 	@Autowired
 	private RatingService service;
 
-	@GetMapping("{lesson-id}")
-	public Object findRatingIntoLesson(@PathVariable("lesson-id") String lessonId) {
-		List<RatingResponseDTO> response = service.search(lessonId);
-		return ResponseHelper.getResponse(response, HttpStatus.OK, false);
-	}
-
-	@ELPermission("create rating")
 	@PostMapping
 	public Object createRating(@Valid @RequestBody RatingCreateDTO dto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {

@@ -1,14 +1,10 @@
 package com.group6.java16.cybersoft.feedback.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
 import com.group6.java16.cybersoft.course.model.ELCourse;
@@ -33,6 +29,7 @@ public class RatingServiceImpl implements RatingService {
 
 	@Autowired
 	private ELUserRepository userRepository;
+	
 	@Autowired
 	private ELCourseRepository courseRepository;
 
@@ -52,29 +49,11 @@ public class RatingServiceImpl implements RatingService {
 	private String errorsRatingExists;
 
 	@Override
-	public List<RatingResponseDTO> search(String lessonId) {
-		ELLesson lesson = lessonRepository.findById(UUID.fromString(lessonId))
-				.orElseThrow(() -> new BusinessException(errorsLessonNotFound));
-		String userCurrent = UserPrincipal.getUsernameCurrent();
-		List<ELRating> response = new ArrayList<ELRating>();
-
-		if (userCurrent.equals(lesson.getCreatedBy())) {
-			response = repository.findAll();
-		} else {
-			response = repository.findByIdLesson(UUID.fromString(lessonId));
-
-		}
-
-		return response.stream().map(RatingMapper.INSTANCE::toResponseDTO).collect(Collectors.toList());
-
-	}
-
-	@Override
 	public RatingResponseDTO create(RatingCreateDTO dto) {
-		ELUser user = userRepository.findByUsername(UserPrincipal.getUsernameCurrent()).get();
-
 		ELLesson lesson = lessonRepository.findById(UUID.fromString(dto.getLessonId()))
 				.orElseThrow(() -> new BusinessException(errorsLessonNotFound));
+		
+		ELUser user = userRepository.findByUsername(UserPrincipal.getUsernameCurrent()).get();
 
 		ELCourse course = lesson.getCourse();
 

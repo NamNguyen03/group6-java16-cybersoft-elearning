@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -38,6 +39,7 @@ import com.group6.java16.cybersoft.role.dto.RoleResponseDTO;
 import com.group6.java16.cybersoft.role.dto.RoleUpdateDTO;
 import com.group6.java16.cybersoft.role.model.ProgramModule;
 import com.group6.java16.cybersoft.role.model.ProgramType;
+import com.group6.java16.cybersoft.role.repository.ELProgramRepository;
 import com.group6.java16.cybersoft.role.service.GroupService;
 import com.group6.java16.cybersoft.role.service.ProgramService;
 import com.group6.java16.cybersoft.role.service.RoleService;
@@ -56,6 +58,15 @@ public class RoleModuleControllerIntegrationTest {
 	
 	@Autowired
 	private MockMvc mvc;
+
+	@MockBean
+	private ELProgramRepository programRepository;
+	
+    @BeforeEach
+    public void setUp(){
+        when(programRepository.existsByNameProgramAndUsername(any(), any())).thenReturn(true);
+    }
+
 
 	@Test
 	@WithMockUser("hau")
