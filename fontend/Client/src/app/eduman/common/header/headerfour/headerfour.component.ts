@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HostListener } from '@angular/core';
+import { UserRp } from 'src/app/api-clients/model/user.model';
+import { UserService } from 'src/app/share/user/user.service';
 
 @Component({
   selector: 'app-headerfour',
@@ -89,8 +91,19 @@ signinclick(){
   checkScroll() {
     this.isSticky = window.pageYOffset >= 50;
   }
-  constructor() { }
+  public profile: UserRp = new UserRp();
+  public isLogin: boolean = false;
+  constructor( private userService: UserService,) {
+    this.userService.$userCurrent.subscribe(user => {
+      this.profile = user
+      this.isLogin = user.username != undefined && user.username != null && user.username != "" ;
+  })
+   }
 
   ngOnInit(): void {}
+
+  public getUrlAvatar(): string {
+    return this.profile.avatar || 'assets/img/header/user-avatar.png'; 
+  }
 
 }

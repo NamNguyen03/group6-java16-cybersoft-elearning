@@ -109,7 +109,6 @@ signinclick(){
       userService.$userCurrent.subscribe(user => {
         this.profile = user
         this.isLogin = user.username != undefined && user.username != null && user.username != "" ;
-        console.log(this.isLogin)
       });  
       userClient.getMyProfile().subscribe(rp => userService.setUserCurrent(rp.content));
      }
