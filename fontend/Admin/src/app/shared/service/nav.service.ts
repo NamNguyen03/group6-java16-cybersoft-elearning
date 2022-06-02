@@ -41,17 +41,28 @@ export class NavService {
 			path: '/dashboard/default', title: 'Dashboard', icon: 'home', type: 'link', badgeType: 'primary', active: false
 		},
 		{
-			title: 'Program', icon: 'dollar-sign', type: 'sub', active: false, children: [
-				{ path: '/programs/create-program', title: 'Create Program', type: 'link' },
-				{ path: '/programs/list-program', title: 'List Program', type: 'link' },
-			]
-		},
-		{
-			title: 'Courses', icon: 'tag', type: 'sub', active: false, children: [
+			title: 'Courses', icon: 'clipboard', type: 'sub', active: false, children: [
 				{ path: '/courses/list-course', title: 'List Courses', type: 'link' },
 				{ path: '/courses/create-course', title: 'Create Courses', type: 'link' },
 			]
 		},
+		{
+			title: 'Lessons', icon: 'users', type: 'sub', active: false, children: [
+				{ path: '/lessons/create-lesson', title: 'Create Lesson', type: 'link' },
+			]
+		},
+		{
+			title: 'Comment', icon: 'users', type: 'sub', active: false, children: [
+				{ path: '/comments/list-status-comment', title: 'List Status Comment', type: 'link' },
+			]
+		},
+		{
+			title: 'Program', icon: 'clipboard', type: 'sub', active: false, children: [
+				{ path: '/programs/create-program', title: 'Create Program', type: 'link' },
+				{ path: '/programs/list-program', title: 'List Program', type: 'link' },
+			]
+		},
+		
 		{
 			title: 'Role', icon: 'clipboard', type: 'sub', active: false, children: [
 				{ path: '/roles/list-role', title: 'List Role', type: 'link' },
@@ -65,14 +76,9 @@ export class NavService {
 			]
 		},
 		{
-			title: 'Users', icon: 'user-plus', type: 'sub', active: false, children: [
+			title: 'Users', icon: 'users', type: 'sub', active: false, children: [
 				{ path: '/users/list-user', title: 'User List', type: 'link' },
 				{ path: '/users/create-user', title: 'Create User', type: 'link' },
-			]
-		},
-		{
-			title: 'Comment', icon: 'users', type: 'sub', active: false, children: [
-				{ path: '/comments/list-status-comment', title: 'List Status Comment', type: 'link' },
 			]
 		},
 		{
