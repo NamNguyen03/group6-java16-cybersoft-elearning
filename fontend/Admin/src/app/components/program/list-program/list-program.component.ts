@@ -168,13 +168,24 @@ export class ListProgramComponent implements OnInit {
            }
           });
   }
+  
+  clickSearch(){
+    this.pageCurrent = 1;
+    this.search();
+  }
+
   search(){
-    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
+    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value == "NONE" ? null :this.searchForm.controls['fieldNameSort'].value;
     let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
-    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
+    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value== "NONE" ? null :this.searchForm.controls['fieldNameSearch'].value;
     let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
-    this._router.navigate(['/program/list-program'],{
-      queryParams: {'fieldNameSort':fieldNameSort,'isIncrementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
+    this._router.navigate(['/programs/list-program'],{
+      queryParams: {
+        'page':this.pageCurrent,
+        'fieldNameSort':fieldNameSort,
+        'isIncrementSort':isIncrementSort,
+        'fieldNameSearch':fieldNameSearch,
+        'valueFieldNameSearch':valueFieldNameSearch}
 
     })
    }

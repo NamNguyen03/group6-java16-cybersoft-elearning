@@ -7,9 +7,9 @@ spring:
       password: 1234
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/elearning
+    url: jdbc:postgresql://localhost:55419/elearning
     username: postgres
-    password: admin
+    password: postgres
     
   jpa:
     hibernate:

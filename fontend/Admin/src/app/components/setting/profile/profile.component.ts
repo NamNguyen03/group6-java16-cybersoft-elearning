@@ -73,8 +73,6 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  
-
   getData(): void{
     this._userClient.getMyProfile().subscribe(
       response =>{

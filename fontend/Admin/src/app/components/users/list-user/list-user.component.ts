@@ -127,6 +127,10 @@ export class ListUserComponent implements OnInit {
     );
   }
 
+  clickSearch(){
+    this.pageCurrent = 1;
+    this.search();
+  }
 
   onDeleteConfirm(event: any): void {
     Swal.fire({
@@ -187,9 +191,9 @@ export class ListUserComponent implements OnInit {
   }
 
   search(){
-    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
+    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value == "NONE" ? null :this.searchForm.controls['fieldNameSort'].value;
     let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
-    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
+    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value== "NONE" ? null :this.searchForm.controls['fieldNameSearch'].value;
     let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
     
     this._router.navigate(['/users/list-user'],{
@@ -217,7 +221,6 @@ export class ListUserComponent implements OnInit {
   }
   onUserRowSelected(event) {
      let userId = event.data.id;
-     console.log(userId)
     
     this._router.navigate(['/users/user-details'],{
       queryParams: {'userId':userId}})
@@ -236,7 +239,6 @@ export class ListUserComponent implements OnInit {
   }
 
   setDefaultValueForm(){
-    console.log(this.profileForm)
     this.profileForm.patchValue({
       firstName: this.profile.firstName,
       lastName: this.profile.lastName,

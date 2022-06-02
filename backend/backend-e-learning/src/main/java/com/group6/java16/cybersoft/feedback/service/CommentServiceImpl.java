@@ -75,7 +75,7 @@ public class CommentServiceImpl implements CommentService {
 			response = repository.findByIdLesson(UUID.fromString(idLesson), idCourse, page);
 		}
 
-		if (null != userCurrent && !userCurrent.equals(lesson.getCourse().getCreatedBy()) ) {
+		if (null != userCurrent && !userCurrent.equals(lesson.getCourse().getCreatedBy())) {
 			response = repository.findByIdLessonAndUserCurrent(UUID.fromString(idLesson), idCourse, userCurrent, page);
 		}
 

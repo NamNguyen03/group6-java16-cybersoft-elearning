@@ -137,7 +137,6 @@ export class ListRoleComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         let isLoadData = false;
-        console.log(event.newdata)
           let roleUpdate = new BaseRole(event.newData.name,event.newData.description)
          this.roleClient.updateById(event.data.id,roleUpdate).subscribe(
           () =>{ 
@@ -151,13 +150,19 @@ export class ListRoleComponent implements OnInit {
   }
 
   search(){
-    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
+    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value == "NONE" ? null :this.searchForm.controls['fieldNameSort'].value;
     let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
-    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
+    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value== "NONE" ? null :this.searchForm.controls['fieldNameSearch'].value;
     let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
 
     this._router.navigate(['/roles/list-role'],{
-      queryParams: {'fieldNameSort':fieldNameSort,'isIncrementSort':isIncrementSort,'fieldNameSearch':fieldNameSearch,'valueFieldNameSearch':valueFieldNameSearch}
+      queryParams: {
+        'page':this.pageCurrent,
+        'fieldNameSort':fieldNameSort,
+        'isIncrementSort':isIncrementSort,
+        'fieldNameSearch':fieldNameSearch,
+        'valueFieldNameSearch':valueFieldNameSearch}
+
     })}
     onRoleRowSelected(event) {
       let roleId = event.data.id;
@@ -178,5 +183,8 @@ export class ListRoleComponent implements OnInit {
     }
     this.search();
   }
-  
+  clickSearch(){
+    this.pageCurrent = 1;
+    this.search();
+  }
 }

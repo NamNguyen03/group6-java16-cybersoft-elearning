@@ -41,6 +41,11 @@ export class ListCourseComponent implements OnInit {
     this.selected.push(...selected);
   }
 
+  clickSearch(){
+    this.pageCurrent = 1;
+    this.search();
+  }
+
   toggleSearch() {
     this.isSearch = !this.isSearch;
   }
@@ -70,6 +75,10 @@ export class ListCourseComponent implements OnInit {
         title: 'Description',
         editable: true,
       },
+      courseTime: {
+        title: 'Lesson',
+        editable: true,
+      },
 
     },
   };
@@ -92,22 +101,7 @@ export class ListCourseComponent implements OnInit {
   }
 
   loadData() {
-    this.route.queryParams.subscribe(params => {
-      let fieldNameSort = params['fieldNameSort'] == undefined ? null : params['fieldNameSort'];
-      let isIncrementSort = params['isIncrementSort'] == (undefined || null) ? true : params['isIncrementSort'];
-      let fieldNameSearch = params['fieldNameSearch'] == undefined ? '' : params['fieldNameSearch'];
-      let valueFieldNameSearch = params['valueFieldNameSearch'] == undefined ? '' : params['valueFieldNameSearch'];
-
-      this.pageRequest = new PageRequest(1, 10, fieldNameSort, isIncrementSort, fieldNameSearch, valueFieldNameSearch)
-      this.courseClient.searchRequest(this.pageRequest).subscribe(
-        response => {
-          this.course_list = response.content.items;
-          this.pages = this._pageService.getPager(response.content.pageCurrent, response.content.totalPage);
-
-        }
-
-      );
-    })
+  
     this.courseClient.searchRequest(this.pageRequest).subscribe(
       response => {
         this.course_list = response.content.items;
@@ -186,9 +180,9 @@ export class ListCourseComponent implements OnInit {
   }
 
   search() {
-    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value;
+    let fieldNameSort = this.searchForm.controls['fieldNameSort'].value == "NONE" ? null :this.searchForm.controls['fieldNameSort'].value;
     let isIncrementSort = this.searchForm.controls['isIncrementSort'].value;
-    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value;
+    let fieldNameSearch = this.searchForm.controls['fieldNameSearch'].value== "NONE" ? null :this.searchForm.controls['fieldNameSearch'].value;
     let valueFieldNameSearch = this.searchForm.controls['valueFieldNameSearch'].value;
 
     this._router.navigate(['/courses/list-course'], {

@@ -16,7 +16,7 @@
                                     </label>
                                     <select class="form-control digits col-xl-8 col-sm-7" id="exampleFormControlSelect1"
                                         name="fieldNameSort" formControlName="fieldNameSort">
-                                        <option value="">--Select--</option>
+                                        <option selected value="NONE">None</option>
                                         <option value="name">Name</option>
 
                                     </select>
@@ -34,7 +34,7 @@
                                     </label>
                                     <select class="form-control digits col-xl-8 col-sm-7" id="exampleFormControlSelect1"
                                         name="fieldNameSearch" formControlName="fieldNameSearch">
-                                        <option value="">--Select--</option>
+                                        <option selected value="NONE">None</option>
                                         <option value="name">Name</option>
 
                                     </select>
@@ -62,6 +62,13 @@
                     [settings]="settings"
                     [source]="lesson_list"
                     ></ng2-smart-table>
+                </div>
+                <div class="mt-3">
+                    <div *ngFor="let pageIndex of pages">
+                        <button class="btn mr-2" style="float: left;"
+                            (click)="clickPage(pageIndex)"
+                            [ngClass]="pageIndex==pageCurrent ? 'btn-secondary' : 'btn-primary'">{{pageIndex}}</button>
+                    </div>
                 </div>
             </div>
         </div>

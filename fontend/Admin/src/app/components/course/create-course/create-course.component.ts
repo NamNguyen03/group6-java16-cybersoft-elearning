@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbDateStruct, NgbDate, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { response } from 'express';
 import { ToastrService } from 'ngx-toastr';
 import { CourseClient } from 'src/app/api-clients/course.client';
 import { CourseCreate } from 'src/app/api-clients/model/course.model';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-course',

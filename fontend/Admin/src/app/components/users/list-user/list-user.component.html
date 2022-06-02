@@ -15,6 +15,7 @@
                                 <label for="validationCustom01" class="col-xl-3 col-sm-4 mb-0">Field Name Sort </label>
                                 <select class="form-control digits col-xl-8 col-sm-7"
                                     id="exampleFormControlSelect1" name="fieldNameSort" formControlName="fieldNameSort">
+                                    <option selected value="NONE">None</option>
                                     <option value ="username" >Username</option>
                                     <option value ="email" >Email</option>
                                     <option value ="major" >Major</option>
@@ -34,6 +35,7 @@
                                 <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Field Name Search </label>
                                 <select class="form-control digits col-xl-8 col-sm-7"
                                     id="exampleFormControlSelect1" name="fieldNameSearch" formControlName="fieldNameSearch">
+                                    <option selected value="NONE">None</option>
                                     <option value ="username" >Username</option>
                                     <option value ="email" >Email</option>
 
@@ -49,7 +51,7 @@
                     </form>
                     <div class="form-group row mb-0">
                         <div class="product-buttons col-sm-8 offset-xl-3 offset-sm-4">
-                            <button type="button" class="btn btn-primary mr-1 mb-5"(click)="search()">Search</button>
+                            <button type="button" class="btn btn-primary mr-1 mb-5"(click)="clickSearch()">Search</button>
                         
                         </div>
                     </div>
