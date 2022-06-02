@@ -74,7 +74,6 @@ export class CourseDetailsComponent implements OnInit {
       let id = params['courseId'];
       this.courseClient.getDetailCourse(id).subscribe(
         response => {
-          console.log(response)
           this.detailCourse = response.content
            this.createProfileForm();
            this.setDefaultValueForm();

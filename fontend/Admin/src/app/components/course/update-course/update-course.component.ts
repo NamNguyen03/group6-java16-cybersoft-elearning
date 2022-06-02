@@ -45,7 +45,6 @@ export class UpdateCourseComponent implements OnInit {
       console.log(id)
       this.courseClient.getDetailCourse(id).subscribe(
         response => {
-          console.log(response)
           this.detailCourse = response.content;
            this.setDefaultValueForm();
            this.imgCourse = response.content.img;
