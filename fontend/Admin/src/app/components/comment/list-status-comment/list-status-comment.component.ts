@@ -36,6 +36,10 @@ export class ListStatusCommentComponent implements OnInit {
     this.getPageDetails();
   }
 
+  clickSearch(){
+    this.pageCurrent = 1;
+    this.search();
+  }
 
   getPageDetails(): void{
    
