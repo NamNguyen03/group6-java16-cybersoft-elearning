@@ -25,7 +25,7 @@ public class UserInformationController {
 	@Autowired
 	private UserInformationService service;
 
-	@ELPermission("searchUser")
+	@ELPermission("search user")
 	@GetMapping
 	public Object searchUser(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent,
 			@RequestParam(value = "itemPerPage", defaultValue = "10") int itemPerPage,
