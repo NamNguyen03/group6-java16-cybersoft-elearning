@@ -111,7 +111,6 @@ public class UserInformationServiceImpl implements UserInformationService {
         ELUser user = repository.findByUsername(username).orElseThrow(() -> new BusinessException(errorsUserNotFound));
         List<ELCourse> listCourse = courseRepository.getListCourse(user.getUsername());
         InstructorCourseClientDTO clientDTO = UserMapper.INSTANCE.toUserResponseClientDTO(user);
-        System.out.println(listCourse);
         clientDTO.setCourses(listCourse );
         return clientDTO;
     }
