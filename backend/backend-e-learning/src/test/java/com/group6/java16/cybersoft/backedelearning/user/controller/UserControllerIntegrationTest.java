@@ -3,6 +3,7 @@ package com.group6.java16.cybersoft.backedelearning.user.controller;
 import com.google.gson.Gson;
 import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.exception.UnauthorizedException;
+import com.group6.java16.cybersoft.role.repository.ELProgramRepository;
 import com.group6.java16.cybersoft.user.dto.UpdateMyProfileDTO;
 import com.group6.java16.cybersoft.user.dto.UpdateUserDTO;
 import com.group6.java16.cybersoft.user.dto.UserCreateDTO;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -48,6 +50,15 @@ public class UserControllerIntegrationTest {
     
     @Autowired
     private MockMvc mvc;
+
+    @MockBean
+	private ELProgramRepository programRepository;
+	
+    @BeforeEach
+    public void setUp(){
+        when(programRepository.existsByNameProgramAndUsername(any(), any())).thenReturn(true);
+    }
+
 
     @Test
     @WithMockUser("nam")

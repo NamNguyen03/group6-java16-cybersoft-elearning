@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.UUID;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,6 +29,7 @@ import com.group6.java16.cybersoft.course.dto.LessonCreateDTO;
 import com.group6.java16.cybersoft.course.dto.LessonUpdateDTO;
 import com.group6.java16.cybersoft.course.service.CourseManagementService;
 import com.group6.java16.cybersoft.course.service.LessonManagementService;
+import com.group6.java16.cybersoft.role.repository.ELProgramRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -40,7 +42,15 @@ public class CourseMoudleControllerIntegrationTest {
 
     @MockBean
 	private CourseManagementService courseManagementService;
+
+    @MockBean
+	private ELProgramRepository programRepository;
 	
+    @BeforeEach
+    public void setUp(){
+        when(programRepository.existsByNameProgramAndUsername(any(), any())).thenReturn(true);
+    }
+
     @Test
     @WithMockUser
     public void givenJsonObject_whenSearchLesson_theReturnStatus200() throws Exception{

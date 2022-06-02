@@ -1,10 +1,12 @@
 package com.group6.java16.cybersoft.backedelearning.user.controller;
 
 import com.google.gson.Gson;
+import com.group6.java16.cybersoft.role.repository.ELProgramRepository;
 import com.group6.java16.cybersoft.user.dto.UpdatePasswordDTO;
 import com.group6.java16.cybersoft.user.repository.ELUserRepository;
 import com.group6.java16.cybersoft.user.service.UserPasswordService;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -30,6 +33,15 @@ public class UserPasswordControllerIntegrationTest {
     @Autowired
     private MockMvc mvc;
 
+    @MockBean
+	private ELProgramRepository programRepository;
+	
+    @BeforeEach
+    public void setUp(){
+        when(programRepository.existsByNameProgramAndUsername(any(), any())).thenReturn(true);
+    }
+
+
     @Test
     @WithMockUser("nam")
     public void givenJsonObject_whenGetToken_thenReturnReturnStatus200() throws Exception{
@@ -38,8 +50,6 @@ public class UserPasswordControllerIntegrationTest {
             
             .andExpect(status().isOk());
     }
-    
-
 
     @Test
     @WithMockUser("nam")
