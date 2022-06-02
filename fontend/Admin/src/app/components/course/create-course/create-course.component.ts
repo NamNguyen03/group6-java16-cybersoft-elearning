@@ -60,7 +60,6 @@ export class CreateCourseComponent implements OnInit {
     
       this.courseClient.createCourse(new CourseCreate(coursename,description,category,level,img,skill1,skill2,skill3,skill4,skill5)).subscribe(
         response =>{
-          console.log(response)
           this.toastr.success('Success','Create course success');
         }
       )
