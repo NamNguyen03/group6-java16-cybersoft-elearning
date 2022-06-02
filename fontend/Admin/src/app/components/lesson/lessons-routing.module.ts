@@ -26,7 +26,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'info-lesson',
+        path: 'lesson-info/:lessonId',
         component: LessonInfoComponent,
         data: {
           title: "Info Lesson",

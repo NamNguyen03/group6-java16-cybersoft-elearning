@@ -25,7 +25,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'role-details',
+        path: 'role-details/:roleId',
         component: RoleDetailsComponent,
         data: {
           title: "Role details",

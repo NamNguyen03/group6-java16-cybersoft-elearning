@@ -196,10 +196,7 @@ export class ListCourseComponent implements OnInit {
 
   onUserRowSelected(event) {
     let courseId = event.data.id;
-    this._router.navigate(['/courses/course-details'], {
-      queryParams: { 'courseId': courseId }
-    })
-
+    this._router.navigate(['/courses/course-details/' + courseId]);
   }
 
 }

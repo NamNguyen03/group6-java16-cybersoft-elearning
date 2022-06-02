@@ -47,7 +47,7 @@ import { GroupResponse } from 'src/app/api-clients/model/group.model';
     }
     
     getData(): void{
-        this.route.queryParams.subscribe(params =>{
+        this.route.params.subscribe(params =>{
         let id  =  params['userId'] ; 
         
         this._userClient.getProfile(id).subscribe(
