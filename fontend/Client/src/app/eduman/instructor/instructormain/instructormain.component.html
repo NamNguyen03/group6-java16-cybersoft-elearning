@@ -19,7 +19,7 @@
                                        <div class="member-body text-center">
                                           <div class="member-item">
                                              <div class="member-thumb">
-                                                <a [routerLink]="['/instructor-profile',user.id]"><img [src]="user.avatar"
+                                                <a [routerLink]="['/instructor-profile',user.id]"><img [src]="user.avatar ? user.avatar : './assets/img/about/235-2350646_login-user-name-user-avatar-svg-hd-png.png'"
                                                       alt="member-img"></a>
                                              </div>
                                              <div class="member-content">

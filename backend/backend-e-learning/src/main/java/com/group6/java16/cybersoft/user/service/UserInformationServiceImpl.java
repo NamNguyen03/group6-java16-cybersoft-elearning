@@ -8,7 +8,9 @@ import com.group6.java16.cybersoft.common.exception.BusinessException;
 import com.group6.java16.cybersoft.common.model.PageRequestModel;
 import com.group6.java16.cybersoft.common.model.PageResponseModel;
 import com.group6.java16.cybersoft.common.util.UserPrincipal;
+import com.group6.java16.cybersoft.course.dto.client.CardCourseReponseClientDTO;
 import com.group6.java16.cybersoft.course.dto.client.CourseDetailsReponseClientDTO;
+import com.group6.java16.cybersoft.course.mapper.CourseMapper;
 import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.repository.ELCourseRepository;
 import com.group6.java16.cybersoft.user.dto.UserResponseDTO;
@@ -107,11 +109,15 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
     
     @Override
-    public InstructorCourseClientDTO getProfileFindUserName(String username) {
-        ELUser user = repository.findByUsername(username).orElseThrow(() -> new BusinessException(errorsUserNotFound));
-        List<ELCourse> listCourse = courseRepository.getListCourse(user.getUsername());
-        InstructorCourseClientDTO clientDTO = UserMapper.INSTANCE.toUserResponseClientDTO(user);
-        clientDTO.setCourses(listCourse );
+    public InstructorCourseClientDTO getProfileFindById(String id) {
+        ELUser user = repository.findById(UUID.fromString(id)).orElseThrow(() -> new BusinessException(errorsUserNotFound));
+        InstructorCourseClientDTO clientDTO = UserMapper.INSTANCE.toInstructorCourseClientDTO(user) ;
+		clientDTO .setCourses(
+        	courseRepository.getListCourse(user.getUsername())
+        		.stream()
+        		.map(CourseMapper.INSTANCE::toCourseResponseClientDTO)
+        		.collect(Collectors.toList())
+        	);
         return clientDTO;
     }
 }

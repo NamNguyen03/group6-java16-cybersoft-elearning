@@ -13,5 +13,5 @@ public interface UserInformationService {
 
     UserResponseDTO getProfile(String id);
 
-    InstructorCourseClientDTO getProfileFindUserName(String username);
+    InstructorCourseClientDTO getProfileFindById(String id);
 }
