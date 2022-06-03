@@ -46,11 +46,11 @@ export class NavService {
 				{ path: '/courses/create-course', title: 'Create Courses', type: 'link' },
 			]
 		},
-		{
-			title: 'Lessons', icon: 'users', type: 'sub', active: false, children: [
-				{ path: '/lessons/create-lesson', title: 'Create Lesson', type: 'link' },
-			]
-		},
+		// {
+		// 	title: 'Lessons', icon: 'users', type: 'sub', active: false, children: [
+		// 		{ path: '/lessons/create-lesson', title: 'Create Lesson', type: 'link' },
+		// 	]
+		// },
 		{
 			title: 'Comment', icon: 'users', type: 'sub', active: false, children: [
 				{ path: '/comments/list-status-comment', title: 'List Status Comment', type: 'link' },
