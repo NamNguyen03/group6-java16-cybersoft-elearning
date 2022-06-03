@@ -48,7 +48,7 @@
                         </div>
                         <div class="progress">
                             <div class="progress-bar wow fadeInLeft" role="progressbar" 
-                                [ngStyle]="{'width': (lessonDetails.totalFiveStar/lessonDetails.totalRating)*100 + '%'} "  aria-valuenow="25" aria-valuemin="0"
+                                [ngStyle]="{'width': (lessonDetails.totalFiveStar/(lessonDetails.totalRating <1 ? 1 : lessonDetails.totalRating))*100 + '%'} "  aria-valuenow="25" aria-valuemin="0"
                                 aria-valuemax="100" data-wow-duration="1s"
                                 data-wow-delay="0.5s"></div>
                         </div>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="progress">
                             <div class="progress-bar wow fadeInLeft" role="progressbar"
-                            [ngStyle]="{'width': (lessonDetails.totalFourStar/lessonDetails.totalRating)*100 + '%'} " aria-valuenow="25" aria-valuemin="0"
+                            [ngStyle]="{'width': (lessonDetails.totalFourStar/(lessonDetails.totalRating <1 ? 1 : lessonDetails.totalRating))*100 + '%'} " aria-valuenow="25" aria-valuemin="0"
                                 aria-valuemax="100" data-wow-duration="1s"
                                 data-wow-delay="0.5s"></div>
                         </div>
@@ -86,7 +86,7 @@
                         </div>
                         <div class="progress">
                             <div class="progress-bar wow fadeInLeft" role="progressbar"
-                            [ngStyle]="{'width': (lessonDetails.totalThreeStar/lessonDetails.totalRating)*100 + '%'} " aria-valuenow="25" aria-valuemin="0"
+                            [ngStyle]="{'width': (lessonDetails.totalThreeStar/(lessonDetails.totalRating <1 ? 1 : lessonDetails.totalRating))*100 + '%'} " aria-valuenow="25" aria-valuemin="0"
                                 aria-valuemax="100" data-wow-duration="1s"
                                 data-wow-delay="0.5s"></div>
                         </div>
@@ -105,7 +105,7 @@
                         </div>
                         <div class="progress">
                             <div class="progress-bar wow fadeInLeft" role="progressbar"
-                            [ngStyle]="{'width': (lessonDetails.totalTwoStar/lessonDetails.totalRating)*100 + '%'} " aria-valuenow="25" aria-valuemin="0"
+                            [ngStyle]="{'width': (lessonDetails.totalTwoStar/(lessonDetails.totalRating <1 ? 1 : lessonDetails.totalRating))*100 + '%'} " aria-valuenow="25" aria-valuemin="0"
                                 aria-valuemax="100" data-wow-duration="1s"
                                 data-wow-delay="0.5s"></div>
                         </div>
@@ -124,7 +124,7 @@
                         </div>
                         <div class="progress">
                             <div class="progress-bar wow fadeInLeft" role="progressbar"
-                            [ngStyle]="{'width': (lessonDetails.totalOneStar/lessonDetails.totalRating)*100 + '%'} " aria-valuenow="25" aria-valuemin="0"
+                            [ngStyle]="{'width': (lessonDetails.totalOneStar/(lessonDetails.totalRating <1 ? 1 : lessonDetails.totalRating))*100 + '%'} " aria-valuenow="25" aria-valuemin="0"
                                 aria-valuemax="100" data-wow-duration="1s"
                                 data-wow-delay="0.5s"></div>
                         </div>

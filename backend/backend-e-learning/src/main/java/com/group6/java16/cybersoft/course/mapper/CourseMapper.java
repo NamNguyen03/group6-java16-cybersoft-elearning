@@ -13,6 +13,8 @@ import com.group6.java16.cybersoft.course.dto.client.CardCourseReponseClientDTO;
 import com.group6.java16.cybersoft.course.model.CategoryEnum;
 import com.group6.java16.cybersoft.course.model.ELCourse;
 import com.group6.java16.cybersoft.course.model.ELLesson;
+import com.group6.java16.cybersoft.user.dto.client.InstructorCourseClientDTO;
+import com.group6.java16.cybersoft.user.model.ELUser;
 
 @Mapper
 public interface CourseMapper {
@@ -40,4 +42,6 @@ public interface CourseMapper {
     	ELLesson lesson = lessons.iterator().next();
         return lesson == null ? "" : lesson.getId().toString();
     }
+
+	InstructorCourseClientDTO toCardCourseClientDTO(ELCourse course);
 }

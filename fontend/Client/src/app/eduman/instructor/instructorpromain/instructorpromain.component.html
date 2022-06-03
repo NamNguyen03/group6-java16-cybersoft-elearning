@@ -20,7 +20,7 @@
                <div class="course-detiles-meta">
                   <div class="total-course">
                      <span>Total Courses</span>
-                     <label>22</label>
+                     <label>{{myCourse.length}} Course</label>
                   </div>
                   <div class="student course">
                      <span>Gender</span>
@@ -29,7 +29,7 @@
 
                   <div class="student course">
                      <span>Update Date</span>
-                     <label>{{myProfile.lastModifiedBy}}</label>
+                     <label>{{myProfile.lastModifiedAt}}</label>
                   </div>
 
                   <div class="course-details-action">
@@ -315,6 +315,16 @@
                                                    </li>
                                                 </ul>
                                              </div>
+
+                                             <div class="course-action">
+                                                <a [routerLink]="['/course-details', course.idFirstLesson] "
+                                                    class="view-details-btn">View Details</a>
+                                                <button class="wishlist-btn"><i
+                                                        class="flaticon-like"></i></button>
+                                                <a [routerLink]="['/course-details']"
+                                                    class="c-share-btn"><i
+                                                        class="flaticon-previous"></i></a>
+                                            </div>
                                              
                                           </div>
                                        </div>
@@ -353,7 +363,7 @@
                                                 [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=4) ? '' : 'gray'}"></i>
                                              <i class="fas fa-star"
                                                 [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=5) ? '' : 'gray'}"></i>
-                                             <span>{{course.starAvg }}({{course.totalRating }})</span>
+                                             <span>{{course.starAvg?.toFixed(2) }}({{course.totalRating }})</span>
                                           </div>
                                        </div>
                                     </div>
