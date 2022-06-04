@@ -61,15 +61,15 @@ export class StudentfeedbackComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Reviews it!',
-    }).then(() => {
-      
+    }).then((results) => {
+      if (results.isConfirmed) {
        this.feedBackClient.writeRating(new RatingCreate(number,this.idLesson)).subscribe(
           () => {
            this._toastr.success('Success','Reviews Successfully')
            this.loadData();
           }
         )
-       
+       }
       })}
 
   
