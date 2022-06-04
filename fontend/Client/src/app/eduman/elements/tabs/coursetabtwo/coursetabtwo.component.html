@@ -20,7 +20,7 @@
                                         <div *ngFor="let course of coursesAll">
                                             <div class="course-wrapper-2 mb-30">
                                                 <div class="student-course-img">
-                                                    <img [src]="course.img" alt="image not found" style="width:400px;height: 300px;">
+                                                    <img [src]="course.img?course.img: 'assets/img/course/book.jpg'" alt="image not found" style="width:400px;height: 300px;">
                                                 </div>
                                                 <div class="course-cart course-cart-box-size">
                                                     <div class="course-info-wrapper">

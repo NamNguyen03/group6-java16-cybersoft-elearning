@@ -18,7 +18,8 @@
                     <p style="float: left;">{{comment.content}}</p>
                 </div>
                 </div>
-                <p *ngIf="comment.user.id == userCurrent.id || userCurrent.username == authorCourse" (click)="deleteComment(comment.id)">delete</p>
+                <p *ngIf="comment.user.id == userCurrent.id || userCurrent.username == authorCourse" (click)="deleteComment(comment.id)"
+                 style="cursor:pointer ;color:red">delete</p>
                 </div>  
         </div>
     </div>
