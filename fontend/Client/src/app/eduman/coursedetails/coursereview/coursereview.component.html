@@ -5,7 +5,7 @@
     <div *ngFor="let comment of listComments">
         <div class="course-review-item mb-30">
             <div class="course-reviews-img">
-                <a href="#"><img style="width: 60px; height: 60; border-radius: 50%; padding-top: auto;" [src]="comment.user.avatar"
+                <a href="#"><img style="width: 80px; height: 80px; border-radius: 40px; padding-top: auto;" [src]="comment.user.avatar ? comment.user.avatar : 'assets/img/header/user-avatar.png'"
                         alt="avatar not found"></a>
             </div>
             <div class="row">
@@ -18,7 +18,8 @@
                     <p style="float: left;">{{comment.content}}</p>
                 </div>
                 </div>
-                <p *ngIf="comment.user.id == userCurrent.id || userCurrent.username == authorCourse" (click)="deleteComment(comment.id)">delete</p>
+                <p *ngIf="comment.user.id == userCurrent.id || userCurrent.username == authorCourse" (click)="deleteComment(comment.id)"
+                 style="cursor:pointer ;color:red">delete</p>
                 </div>  
         </div>
     </div>

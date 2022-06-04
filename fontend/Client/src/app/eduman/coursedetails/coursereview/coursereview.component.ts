@@ -72,8 +72,13 @@ export class CoursereviewComponent implements OnInit {
   }
   postComment(){
     this.myComment=this.formComment.controls['comment'].value;
-    this.feedBackClient.writeComment(new CommentCreate(this.myComment,this.idLesson)).subscribe( ()=> 
+    this.feedBackClient.writeComment(new CommentCreate(this.myComment,this.idLesson)).subscribe( ()=> {
+
       this.findComment()
+      this.formComment = this.form.group({
+        comment: [''],
+      })
+    }
     );
   
   }
@@ -92,6 +97,7 @@ export class CoursereviewComponent implements OnInit {
           () => {
            this._toastr.success('Success','Delete Comment Successfully')
            this.findComment();
+           
           }
         )
        
