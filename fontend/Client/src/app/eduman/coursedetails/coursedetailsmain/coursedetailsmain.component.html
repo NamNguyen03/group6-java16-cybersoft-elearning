@@ -22,7 +22,7 @@
                                 [ngStyle]="{'color' :  ( courseDetail.starAvg === undefined ||courseDetail.starAvg>=4) ? '' : 'gray'}"></i>
                             <i class="fas fa-star"
                                 [ngStyle]="{'color' :  ( courseDetail.starAvg === undefined ||courseDetail.starAvg>=5) ? '' : 'gray'}"></i>
-                            <span>{{courseDetail.starAvg }}({{courseDetail.totalRating}} reviews)</span>
+                            <span>{{courseDetail.starAvg?.toFixed(2) }}({{courseDetail.totalRating}} reviews)</span>
                         </div>
                     </div>
                     <div class="course-detelis-meta">
@@ -33,7 +33,7 @@
                             </div>
                             <div class="course-meta-text">
                                 <span>Created By</span>
-                                <h6><a [routerLink]="['/instructor-profile', author.username] ">{{author.username}}</a></h6>
+                                <h6><a [routerLink]="['/instructor-profile', author.id] ">{{author.username}}</a></h6>
                             </div>
                         </div>
                         <div class="course-Enroll border-line-meta">
@@ -268,8 +268,8 @@
             </div>
         </div>
 
-        <a class="btn btn-secondary mr-1 w-20 mb-5 " *ngIf="isNotShow" style="margin-left:47%;"
-            (click)="toggleShow()">Show All Lesson</a>
+        <a class="btn btn-secondary mr-1 w-20 mb-5 " style="margin-left:47%;"
+            (click)="toggleShow()" *ngIf="listCardLesson.length > 3 && isNotShow">Show All Lesson</a>
 
 
         

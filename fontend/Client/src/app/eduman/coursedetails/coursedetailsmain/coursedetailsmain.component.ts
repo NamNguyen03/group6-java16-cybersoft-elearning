@@ -58,6 +58,7 @@ export class CoursedetailsmainComponent implements OnInit {
             this.listCardLesson2 = this.listCardLesson;
           } else {
             for (let i = 0; i < 3; i++) {
+             
               this.listCardLesson2[i] = this.listCardLesson[i];
             }
           }

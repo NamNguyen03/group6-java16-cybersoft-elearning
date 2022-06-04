@@ -33,21 +33,26 @@ export class StudentfeedbackComponent implements OnInit {
       this.idLesson = params["id"];
       this.lessonClient.getLessonDetails(this.idLesson).subscribe(
         response => {
-      this.lessonDetails = response.content
+        this.lessonDetails = response.content;
+        console.log(this.lessonDetails);
+       })
+     this.findMyRating();
   })
-  })
-  this.findMyRating();
+ 
   }
 
   findMyRating(){
       this.feedBackClient.myRating(this.idLesson).subscribe(
-        response => 
-          this.myRating = response.content ? response.content.value : 0
+        response => {
+
+          this.myRating = response.content ? response.content.value : 0;
+        }
         ) ;
     }
   
 
   rating(number: number): void{
+    if (this.myRating==0) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -56,16 +61,16 @@ export class StudentfeedbackComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Reviews it!',
-    }).then(() => {
-      if (this.myRating==0) {
+    }).then((results) => {
+      if (results.isConfirmed) {
        this.feedBackClient.writeRating(new RatingCreate(number,this.idLesson)).subscribe(
           () => {
            this._toastr.success('Success','Reviews Successfully')
            this.loadData();
           }
         )
-       
-      }})
+       }
+      })}
 
   
 }

@@ -32,10 +32,7 @@ export class CoursevideoComponent implements OnInit {
         for (let i = 0; i < 3; i++) {
           this.coursesList3[i] = this.coursesAll[i];
         }
-
         this.coursesList3;
-
-        console.log(this.coursesList3);
       }
     )
   }

@@ -56,10 +56,10 @@ public class UserInformationController {
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}
 
-	@GetMapping("client/{username}")
-	public Object getProfileFindUserName(@PathVariable("username") String username) {
+	@GetMapping("client/{idUser}")
+	public Object getProfileFindUserName(@PathVariable("idUser") String idUser) {
 
-		InstructorCourseClientDTO rp = service.getProfileFindUserName(username);
+		InstructorCourseClientDTO rp = service.getProfileFindById(idUser);
 
 		return ResponseHelper.getResponse(rp, HttpStatus.OK, false);
 	}

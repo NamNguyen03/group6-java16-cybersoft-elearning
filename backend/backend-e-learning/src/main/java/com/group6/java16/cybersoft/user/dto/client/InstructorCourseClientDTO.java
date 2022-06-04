@@ -42,5 +42,5 @@ public class InstructorCourseClientDTO {
 
 	private String phone;
 	
-	private List<ELCourse> courses;
+	private List<CardCourseReponseClientDTO> courses;
 }

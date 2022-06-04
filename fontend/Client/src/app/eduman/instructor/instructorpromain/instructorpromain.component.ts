@@ -48,7 +48,6 @@ export class InstructorpromainComponent implements OnInit {
   getData(): void {
     this.route.params.subscribe((params) => {
       let username = params["username"];
-      console.log(username);
       this.userClient.getMyProfileFindUserName(username).subscribe(
         response => {
           this.myProfile = response.content
@@ -62,9 +61,7 @@ export class InstructorpromainComponent implements OnInit {
               this.myCourse2[i] = this.myCourse[i];
             }
           }
-          this.myCourse2;
-          
-          
+          this.myCourse2;   
         }
       )
     })

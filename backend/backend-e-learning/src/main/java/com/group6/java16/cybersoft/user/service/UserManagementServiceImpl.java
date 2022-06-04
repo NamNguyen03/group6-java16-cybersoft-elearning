@@ -65,8 +65,8 @@ public class UserManagementServiceImpl implements UserManagementService {
         String password = user.getPassword();
         user.setPassword(encoder.encode(password));
         ELUser rp = userRepository.save(UserMapper.INSTANCE.toModel(user));
-        serviceSendEmailCreateUserSuccess.send("User Service", user.getEmail(), "Create Account Success",
-                new UserCreateModel(user.getUsername(), password));
+//        serviceSendEmailCreateUserSuccess.send("User Service", user.getEmail(), "Create Account Success",
+//                new UserCreateModel(user.getUsername(), password));
         return UserMapper.INSTANCE.toUserResponseDTO(rp);
     }
 
