@@ -51,7 +51,7 @@ export class InstructorpromainComponent implements OnInit {
       this.userClient.getMyProfileFindUserName(username).subscribe(
         response => {
           this.myProfile = response.content
-
+          console.log(this.myProfile);
           this.myCourse = this.myProfile.courses==undefined ?  [] : this.myProfile.courses
 
           if (this.myCourse.length < 3) {
@@ -61,7 +61,8 @@ export class InstructorpromainComponent implements OnInit {
               this.myCourse2[i] = this.myCourse[i];
             }
           }
-          this.myCourse2;   
+          this.myCourse2;
+          
         }
       )
     })

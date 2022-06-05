@@ -8,7 +8,7 @@
       <div class="row">
          <div class="col-xl-3 col-lg-3">
             <div class="course-instructors-img mb-30">
-               <img [src]="myProfile.avatar" alt="nstructors-img">
+               <img  [src]="myProfile.avatar ? myProfile.avatar : 'assets/img/about/235-2350646_login-user-name-user-avatar-svg-hd-png.png'" alt="nstructors-img">
             </div>
          </div>
          <div class="col-xl-8 col-lg-9">
@@ -52,20 +52,16 @@
                         <div class="col-xl-6">
                            <div class="course-leran-text f-left">
 
-                              <div *ngIf="myProfile.hobbies != null" class="course-leran-text">
+                              <div *ngIf="myProfile.email != null" class="course-leran-text">
                                  <ul>
                                     <li >Email: {{myProfile.email}}</li>
                                  </ul>
                               </div>
-                              <div *ngIf="myProfile.phone != null" class="course-leran-text">
+                              <div *ngIf="myProfile.facebook != null" class="course-leran-text">
                                  <ul>
-   
-   
                                     <li>Facebook: {{myProfile.facebook}}</li>
                                  </ul>
                               </div>
-
-                              
                            </div>
                         </div>
                         <div class="col-xl-6">
@@ -285,7 +281,9 @@
                               <div *ngFor="let course of myCourse2">
                                  <div class="course-wrapper-2 mb-30">
                                     <div class="student-course-img">
-                                       <img [src]="course.img" alt="image not found">
+                                       <div class="student-course-img">
+                                          <img [src]="course.img?course.img: 'assets/img/course/book.jpg'" alt="image not found" style="width:400px;height: 300px;">
+                                      </div>
                                     </div>
                                     <div class="course-cart course-cart-box-size">
                                        <div class="course-info-wrapper">
@@ -348,10 +346,10 @@
                                           </h3>
                                        </div>
                                        <div class="portfolio-user">
-                                          <div class="user-icon">
+                                          <!-- <div class="user-icon">
                                              <a [routerLink]="['/instructor-profile']"><i
                                                    class="fas fa-user"></i>{{course.createdBy}}</a>
-                                          </div>
+                                          </div> -->
                                           <div class="course-icon">
                                              <i class="fas fa-star"
                                                 [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=1) ? '' : 'gray'}"></i>
@@ -387,7 +385,7 @@
                               <div *ngFor="let course of myCourse">
                                  <div class="course-wrapper-2 mb-30">
                                     <div class="student-course-img">
-                                       <img [src]="course.img" alt="image not found">
+                                       <img [src]="course.img ? course.img : 'assets/img/course/book.jpg'" alt="image not found" style="width:400px;height: 300px;">
                                     </div>
                                     <div class="course-cart course-cart-box-size">
                                        <div class="course-info-wrapper">
@@ -440,10 +438,10 @@
                                           </h3>
                                        </div>
                                        <div class="portfolio-user">
-                                          <div class="user-icon">
+                                          <!-- <div class="user-icon">
                                              <a [routerLink]="['/instructor-profile']"><i
                                                    class="fas fa-user"></i>{{course.createdBy}}</a>
-                                          </div>
+                                          </div> -->
                                           <div class="course-icon">
                                              <i class="fas fa-star"
                                                 [ngStyle]="{'color' :  ( course.starAvg === undefined ||course.starAvg>=1) ? '' : 'gray'}"></i>

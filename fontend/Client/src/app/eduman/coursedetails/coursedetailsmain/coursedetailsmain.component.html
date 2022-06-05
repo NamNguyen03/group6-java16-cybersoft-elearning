@@ -28,12 +28,12 @@
                     <div class="course-detelis-meta">
                         <div class="course-meta-wrapper border-line-meta">
                             <div class="course-meta-img">
-                                <a [routerLink]="['/instructor-profile']"><img src="{{author.avatar}}"
+                                <a [routerLink]="['/instructor-profile', author.id]"><img src="{{author.avatar ? author.avatar : 'assets/img/about/235-2350646_login-user-name-user-avatar-svg-hd-png.png'}}"
                                         alt="course-meta"></a>
                             </div>
                             <div class="course-meta-text">
                                 <span>Created By</span>
-                                <h6><a [routerLink]="['/instructor-profile', author.id] ">{{author.username}}</a></h6>
+                                <h6><a [routerLink]="['/instructor-profile', author.id] ">{{author.displayName}}</a></h6>
                             </div>
                         </div>
                         <div class="course-Enroll border-line-meta">

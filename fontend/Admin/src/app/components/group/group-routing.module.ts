@@ -25,7 +25,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'group-details/:groupId',
+        path: 'group-details',
         component: GroupDetailsComponent,
         data: {
           title: "Group Details",
