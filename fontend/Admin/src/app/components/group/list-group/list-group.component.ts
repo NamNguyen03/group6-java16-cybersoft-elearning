@@ -170,7 +170,6 @@ export class ListGroupComponent implements OnInit {
         'isIncrementSort':isIncrementSort,
         'fieldNameSearch':fieldNameSearch,
         'valueFieldNameSearch':valueFieldNameSearch}
-
     })
   }
   onGroupRowSelected(event) {

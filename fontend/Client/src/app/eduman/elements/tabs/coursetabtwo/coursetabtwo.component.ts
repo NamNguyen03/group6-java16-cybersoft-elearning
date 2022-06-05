@@ -52,6 +52,8 @@ export class CoursetabtwoComponent implements OnInit {
     this._courseClient.searchRequest(new PageRequest(1, 6, '', 0, 0, 100, [], [])).subscribe(
       response => {
         this.coursesAll = response.content.items || [];
+        console.log(this.coursesAll);
+        
       }
     )
   }

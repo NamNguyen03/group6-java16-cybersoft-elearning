@@ -100,7 +100,7 @@ export class GroupDetailsComponent implements OnInit {
   }
  
   getData(): void{
-      this.route.params.subscribe(params =>{
+      this.route.queryParams.subscribe(params =>{
       let id  =  params['groupId'] ; 
       this._groupClient.getGroupDetails(id).subscribe(
       response =>{
